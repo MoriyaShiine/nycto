@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+	"has_aconite": {
+	  "conditions": {
+		"items": [
+		  {
+			"items": "nycto:aconite"
+		  }
+		]
+	  },
+	  "trigger": "minecraft:inventory_changed"
+	},
+	"has_the_recipe": {
+	  "conditions": {
+		"recipe": "nycto:aconite_garland"
+	  },
+	  "trigger": "minecraft:recipe_unlocked"
+	}
+  },
+  "requirements": [
+	[
+	  "has_the_recipe",
+	  "has_aconite"
+	]
+  ],
+  "rewards": {
+	"recipes": [
+	  "nycto:aconite_garland"
+	]
+  }
+}

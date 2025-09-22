@@ -1,0 +1,14 @@
+{
+  "model": {
+	"type": "minecraft:condition",
+	"on_false": {
+	  "type": "minecraft:model",
+	  "model": "nycto:item/vampiric_dagger"
+	},
+	"on_true": {
+	  "type": "minecraft:model",
+	  "model": "nycto:item/vampiric_dagger_full"
+	},
+	"property": "nycto:full_dagger"
+  }
+}

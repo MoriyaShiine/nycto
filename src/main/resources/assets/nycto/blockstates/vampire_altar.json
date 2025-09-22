@@ -1,0 +1,19 @@
+{
+  "variants": {
+	"facing=north": {
+	  "model": "nycto:block/vampire_altar"
+	},
+	"facing=south": {
+	  "model": "nycto:block/vampire_altar",
+	  "y": 180
+	},
+	"facing=east": {
+	  "model": "nycto:block/vampire_altar",
+	  "y": 90
+	},
+	"facing=west": {
+	  "model": "nycto:block/vampire_altar",
+	  "y": 270
+	}
+  }
+}

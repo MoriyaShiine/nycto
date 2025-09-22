@@ -1,0 +1,22 @@
+{
+  "values": [
+	"#c:bosses",
+	"#minecraft:arthropod",
+	"#minecraft:frog_food",
+	"#minecraft:undead",
+	"minecraft:allay",
+	"minecraft:armor_stand",
+	"minecraft:blaze",
+	"minecraft:breeze",
+	"minecraft:creaking",
+	"minecraft:creeper",
+	"minecraft:enderman",
+	"minecraft:ghast",
+	"minecraft:happy_ghast",
+	"minecraft:iron_golem",
+	"minecraft:shulker",
+	"minecraft:snow_golem",
+	"minecraft:vex",
+	"minecraft:warden"
+  ]
+}

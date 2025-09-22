@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+	"B": "#minecraft:beds",
+	"P": "minecraft:dark_oak_planks"
+  },
+  "pattern": [
+	"PPP",
+	"PBP",
+	"PPP"
+  ],
+  "result": {
+	"count": 1,
+	"id": "nycto:dark_oak_coffin"
+  }
+}

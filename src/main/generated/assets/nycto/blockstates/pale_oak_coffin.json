@@ -1,0 +1,64 @@
+{
+  "variants": {
+	"facing=east,occupied=false,part=foot": {
+	  "model": "nycto:block/pale_oak_coffin",
+	  "y": 270
+	},
+	"facing=east,occupied=false,part=head": {
+	  "model": "minecraft:block/pale_oak_sign",
+	  "y": 270
+	},
+	"facing=east,occupied=true,part=foot": {
+	  "model": "nycto:block/pale_oak_coffin_closed",
+	  "y": 270
+	},
+	"facing=east,occupied=true,part=head": {
+	  "model": "minecraft:block/pale_oak_sign",
+	  "y": 270
+	},
+	"facing=north,occupied=false,part=foot": {
+	  "model": "nycto:block/pale_oak_coffin",
+	  "y": 180
+	},
+	"facing=north,occupied=false,part=head": {
+	  "model": "minecraft:block/pale_oak_sign",
+	  "y": 180
+	},
+	"facing=north,occupied=true,part=foot": {
+	  "model": "nycto:block/pale_oak_coffin_closed",
+	  "y": 180
+	},
+	"facing=north,occupied=true,part=head": {
+	  "model": "minecraft:block/pale_oak_sign",
+	  "y": 180
+	},
+	"facing=south,occupied=false,part=foot": {
+	  "model": "nycto:block/pale_oak_coffin"
+	},
+	"facing=south,occupied=false,part=head": {
+	  "model": "minecraft:block/pale_oak_sign"
+	},
+	"facing=south,occupied=true,part=foot": {
+	  "model": "nycto:block/pale_oak_coffin_closed"
+	},
+	"facing=south,occupied=true,part=head": {
+	  "model": "minecraft:block/pale_oak_sign"
+	},
+	"facing=west,occupied=false,part=foot": {
+	  "model": "nycto:block/pale_oak_coffin",
+	  "y": 90
+	},
+	"facing=west,occupied=false,part=head": {
+	  "model": "minecraft:block/pale_oak_sign",
+	  "y": 90
+	},
+	"facing=west,occupied=true,part=foot": {
+	  "model": "nycto:block/pale_oak_coffin_closed",
+	  "y": 90
+	},
+	"facing=west,occupied=true,part=head": {
+	  "model": "minecraft:block/pale_oak_sign",
+	  "y": 90
+	}
+  }
+}

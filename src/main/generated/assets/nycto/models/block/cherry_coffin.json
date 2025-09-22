@@ -1,0 +1,7 @@
+{
+  "parent": "nycto:block/template_coffin",
+  "textures": {
+	"base": "nycto:block/coffin_cherry",
+	"particle": "minecraft:block/cherry_planks"
+  }
+}

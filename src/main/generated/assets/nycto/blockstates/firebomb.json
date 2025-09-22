@@ -1,0 +1,90 @@
+{
+  "multipart": [
+	{
+	  "apply": [
+		{
+		  "model": "nycto:block/firebomb_floor0"
+		},
+		{
+		  "model": "nycto:block/firebomb_floor1"
+		}
+	  ]
+	},
+	{
+	  "apply": [
+		{
+		  "model": "nycto:block/firebomb_side0"
+		},
+		{
+		  "model": "nycto:block/firebomb_side1"
+		},
+		{
+		  "model": "nycto:block/firebomb_side_alt0"
+		},
+		{
+		  "model": "nycto:block/firebomb_side_alt1"
+		}
+	  ]
+	},
+	{
+	  "apply": [
+		{
+		  "model": "nycto:block/firebomb_side0",
+		  "y": 90
+		},
+		{
+		  "model": "nycto:block/firebomb_side1",
+		  "y": 90
+		},
+		{
+		  "model": "nycto:block/firebomb_side_alt0",
+		  "y": 90
+		},
+		{
+		  "model": "nycto:block/firebomb_side_alt1",
+		  "y": 90
+		}
+	  ]
+	},
+	{
+	  "apply": [
+		{
+		  "model": "nycto:block/firebomb_side0",
+		  "y": 180
+		},
+		{
+		  "model": "nycto:block/firebomb_side1",
+		  "y": 180
+		},
+		{
+		  "model": "nycto:block/firebomb_side_alt0",
+		  "y": 180
+		},
+		{
+		  "model": "nycto:block/firebomb_side_alt1",
+		  "y": 180
+		}
+	  ]
+	},
+	{
+	  "apply": [
+		{
+		  "model": "nycto:block/firebomb_side0",
+		  "y": 270
+		},
+		{
+		  "model": "nycto:block/firebomb_side1",
+		  "y": 270
+		},
+		{
+		  "model": "nycto:block/firebomb_side_alt0",
+		  "y": 270
+		},
+		{
+		  "model": "nycto:block/firebomb_side_alt1",
+		  "y": 270
+		}
+	  ]
+	}
+  ]
+}

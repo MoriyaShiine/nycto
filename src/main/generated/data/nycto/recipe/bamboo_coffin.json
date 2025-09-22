@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+	"B": "#minecraft:beds",
+	"P": "minecraft:bamboo_planks"
+  },
+  "pattern": [
+	"PPP",
+	"PBP",
+	"PPP"
+  ],
+  "result": {
+	"count": 1,
+	"id": "nycto:bamboo_coffin"
+  }
+}

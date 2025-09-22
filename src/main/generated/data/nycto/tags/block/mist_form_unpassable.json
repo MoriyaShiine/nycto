@@ -1,0 +1,17 @@
+{
+  "values": [
+	"#minecraft:climbable",
+	"#minecraft:doors",
+	"#minecraft:dry_vegetation_may_place_on",
+	"#minecraft:slabs",
+	"#minecraft:snow",
+	"#minecraft:snow_layer_can_survive_on",
+	"#minecraft:stairs",
+	"#minecraft:trapdoors",
+	"#minecraft:wither_immune",
+	"minecraft:calibrated_sculk_sensor",
+	"minecraft:dirt_path",
+	"minecraft:sculk_sensor",
+	"minecraft:sculk_shrieker"
+  ]
+}

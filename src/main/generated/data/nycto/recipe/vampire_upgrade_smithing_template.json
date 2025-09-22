@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+	"B": "#nycto:usable_blood_bottles",
+	"D": "#c:gems/diamond",
+	"I": "#c:ingots/iron"
+  },
+  "pattern": [
+	"III",
+	"IBI",
+	"IDI"
+  ],
+  "result": {
+	"count": 1,
+	"id": "nycto:vampire_upgrade_smithing_template"
+  }
+}

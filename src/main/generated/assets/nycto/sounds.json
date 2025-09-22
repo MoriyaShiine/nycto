@@ -1,0 +1,314 @@
+{
+  "block.altar.use": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:block/altar/use"
+	],
+	"subtitle": "subtitles.nycto.block.altar.use"
+  },
+  "entity.blood_flechette.hit_block": {
+	"category": "neutral",
+	"sounds": [
+	  {
+		"name": "nycto:entity/blood_flechette/hit_block",
+		"volume": 0.5
+	  }
+	],
+	"subtitle": "subtitles.nycto.entity.blood_flechette.impact"
+  },
+  "entity.blood_flechette.hit_entity": {
+	"category": "neutral",
+	"sounds": [
+	  {
+		"name": "nycto:entity/blood_flechette/hit_block",
+		"volume": 0.15
+	  }
+	],
+	"subtitle": "subtitles.nycto.entity.blood_flechette.impact"
+  },
+  "entity.dark_form.flap": {
+	"category": "neutral",
+	"sounds": [
+	  {
+		"type": "event",
+		"name": "minecraft:entity.phantom.flap"
+	  }
+	],
+	"subtitle": "subtitles.nycto.entity.dark_form.flap"
+  },
+  "entity.firebomb.impact": {
+	"category": "neutral",
+	"sounds": [
+	  {
+		"type": "event",
+		"name": "minecraft:block.fire.extinguish"
+	  }
+	],
+	"subtitle": "subtitles.nycto.entity.firebomb.impact"
+  },
+  "entity.generic.blood_drain_blocked": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:entity/blood_drain_blocked"
+	],
+	"subtitle": "subtitles.nycto.entity.generic.blood_drain_blocked"
+  },
+  "entity.generic.remove_power": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:entity/remove_power"
+	],
+	"subtitle": "subtitles.nycto.entity.generic.remove_power"
+  },
+  "entity.generic.sizzle": {
+	"category": "neutral",
+	"sounds": [
+	  {
+		"type": "event",
+		"name": "minecraft:block.candle.extinguish"
+	  }
+	],
+	"subtitle": "subtitles.nycto.entity.generic.sizzle"
+  },
+  "entity.generic.transform.vampire": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:entity/transform_vampire"
+	],
+	"subtitle": "subtitles.nycto.entity.generic.transform"
+  },
+  "entity.generic.transform_human": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:entity/transform_human"
+	],
+	"subtitle": "subtitles.nycto.entity.generic.transform"
+  },
+  "entity.hunter.ambient": {
+	"category": "neutral",
+	"sounds": [
+	  {
+		"type": "event",
+		"name": "minecraft:entity.villager.ambient"
+	  }
+	],
+	"subtitle": "subtitles.nycto.entity.hunter.ambient"
+  },
+  "entity.hunter.death": {
+	"category": "neutral",
+	"sounds": [
+	  {
+		"type": "event",
+		"name": "minecraft:entity.villager.death"
+	  }
+	],
+	"subtitle": "subtitles.nycto.entity.hunter.death"
+  },
+  "entity.hunter.hurt": {
+	"category": "neutral",
+	"sounds": [
+	  {
+		"type": "event",
+		"name": "minecraft:entity.villager.hurt"
+	  }
+	],
+	"subtitle": "subtitles.nycto.entity.hunter.hurt"
+  },
+  "entity.vampire.ambient": {
+	"category": "neutral",
+	"sounds": [
+	  {
+		"type": "event",
+		"name": "minecraft:entity.vindicator.ambient"
+	  }
+	],
+	"subtitle": "subtitles.nycto.entity.vampire.ambient"
+  },
+  "entity.vampire.death": {
+	"category": "neutral",
+	"sounds": [
+	  {
+		"type": "event",
+		"name": "minecraft:entity.vindicator.death"
+	  }
+	],
+	"subtitle": "subtitles.nycto.entity.vampire.death"
+  },
+  "entity.vampire.hurt": {
+	"category": "neutral",
+	"sounds": [
+	  {
+		"type": "event",
+		"name": "minecraft:entity.vindicator.hurt"
+	  }
+	],
+	"subtitle": "subtitles.nycto.entity.vampire.hurt"
+  },
+  "item.blood_bottle.drink": {
+	"category": "neutral",
+	"sounds": [
+	  {
+		"type": "event",
+		"name": "minecraft:item.honey_bottle.drink"
+	  }
+	],
+	"subtitle": "subtitles.item.honey_bottle.drink"
+  },
+  "item.vampiric_dagger.extract_fail": {
+	"category": "neutral",
+	"sounds": [
+	  {
+		"type": "event",
+		"name": "minecraft:item.bundle.insert_fail"
+	  }
+	],
+	"subtitle": "subtitles.nycto.item.vampiric_dagger.extract_fail"
+  },
+  "power.bat_form.off": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/vampire_form_change_off"
+	]
+  },
+  "power.bat_form.on": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/bat_form/on"
+	]
+  },
+  "power.bat_swarm.use": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/bat_swarm/use"
+	]
+  },
+  "power.batstep.use": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/batstep/use"
+	]
+  },
+  "power.blood_barrier.break": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/blood_barrier/break"
+	]
+  },
+  "power.blood_barrier.hit": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/blood_barrier/hit"
+	]
+  },
+  "power.blood_barrier.use": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/blood_barrier/use"
+	]
+  },
+  "power.blood_flechettes.life_drain": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/blood_flechettes/life_drain"
+	]
+  },
+  "power.blood_flechettes.use": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/blood_flechettes/use"
+	]
+  },
+  "power.bloodrush.use": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/bloodrush/use"
+	]
+  },
+  "power.carnage.hit": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/carnage/hit"
+	]
+  },
+  "power.carnage.use": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/carnage/use"
+	]
+  },
+  "power.dark_form.off": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/vampire_form_change_off"
+	]
+  },
+  "power.dark_form.on": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/dark_form/on"
+	]
+  },
+  "power.haemogenesis.use": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/haemogenesis/use"
+	]
+  },
+  "power.hypnotize.use": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/hypnotize/use"
+	]
+  },
+  "power.keen_senses.heartbeat": {
+	"category": "neutral",
+	"sounds": [
+	  {
+		"type": "event",
+		"name": "minecraft:entity.warden.heartbeat"
+	  }
+	]
+  },
+  "power.keen_senses.off": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/night_vision/off"
+	]
+  },
+  "power.keen_senses.on": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/keen_senses/on"
+	]
+  },
+  "power.mist_form.off": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/vampire_form_change_off"
+	]
+  },
+  "power.mist_form.on": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/mist_form/on"
+	]
+  },
+  "power.night_vision.off": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/night_vision/off"
+	]
+  },
+  "power.night_vision.on": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/night_vision/on"
+	]
+  },
+  "power.vampiric_thrall.convert": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/vampiric_thrall/convert"
+	]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "nycto:block/template_coffin_closed",
+  "textures": {
+	"base": "nycto:block/coffin_pale_oak",
+	"particle": "minecraft:block/pale_oak_planks"
+  }
+}

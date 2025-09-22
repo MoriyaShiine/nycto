@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+	"B": "minecraft:bone",
+	"C": "#minecraft:candles",
+	"E": "minecraft:ender_pearl",
+	"I": "#c:ingots/copper",
+	"S": "minecraft:skeleton_skull"
+  },
+  "pattern": [
+	" S ",
+	"BEB",
+	"CIC"
+  ],
+  "result": {
+	"count": 1,
+	"id": "nycto:werewolf_altar"
+  }
+}

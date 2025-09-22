@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "minecraft:bone_block",
+  "result": {
+	"count": 1,
+	"id": "minecraft:skeleton_skull"
+  }
+}

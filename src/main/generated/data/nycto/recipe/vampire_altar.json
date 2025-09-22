@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+	"B": "#nycto:usable_blood_bottles",
+	"C": "#minecraft:candles",
+	"I": "#c:ingots/copper",
+	"W": "#minecraft:planks"
+  },
+  "pattern": [
+	"C C",
+	"WBW",
+	"IWI"
+  ],
+  "result": {
+	"count": 1,
+	"id": "nycto:vampire_altar"
+  }
+}

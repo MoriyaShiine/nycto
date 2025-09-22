@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "#c:ingots/gold",
+  "base": "minecraft:leather_chestplate",
+  "result": {
+	"id": "nycto:werewolf_hunter_chestplate"
+  },
+  "template": "nycto:werewolf_hunter_upgrade_smithing_template"
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+	"nycto:hunter_contract",
+	"nycto:garlic"
+  ],
+  "result": {
+	"count": 1,
+	"id": "nycto:vampire_hunter_contract"
+  }
+}

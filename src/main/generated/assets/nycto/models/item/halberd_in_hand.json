@@ -1,0 +1,7 @@
+{
+  "parent": "nycto:item/template_halberd_in_hand",
+  "textures": {
+	"base": "nycto:item/halberd_in_hand",
+	"extra": "minecraft:block/redstone_dust_overlay"
+  }
+}

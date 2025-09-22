@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+	"layer0": "nycto:item/vampiric_dagger_full"
+  }
+}

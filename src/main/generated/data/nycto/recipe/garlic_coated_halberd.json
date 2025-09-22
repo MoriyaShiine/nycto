@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+	"nycto:halberd",
+	"nycto:garlic_wreath"
+  ],
+  "result": {
+	"count": 1,
+	"id": "nycto:garlic_coated_halberd"
+  }
+}

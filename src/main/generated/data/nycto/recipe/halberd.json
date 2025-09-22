@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+	"A": "minecraft:iron_axe",
+	"G": "#c:ingots/gold",
+	"I": "#c:ingots/iron",
+	"S": "minecraft:stick"
+  },
+  "pattern": [
+	" GI",
+	" AI",
+	"S  "
+  ],
+  "result": {
+	"count": 1,
+	"id": "nycto:halberd"
+  }
+}

@@ -1,0 +1,22 @@
+accessWidener v2 named
+accessible class net/minecraft/entity/effect/HungerStatusEffect
+accessible class net/minecraft/entity/effect/RegenerationStatusEffect
+accessible class net/minecraft/entity/effect/SaturationStatusEffect
+accessible class net/minecraft/entity/mob/EvokerEntity$SummonVexGoal
+
+accessible method net/minecraft/entity/Entity isBeingRainedOn ()Z
+accessible method net/minecraft/entity/passive/WolfEntity getVariant ()Lnet/minecraft/registry/entry/RegistryEntry;
+accessible method net/minecraft/item/ToolMaterial createToolAttributeModifiers (FF)Lnet/minecraft/component/type/AttributeModifiersComponent;
+accessible method net/minecraft/world/gen/feature/ConfiguredFeatures createBlockPredicate (Ljava/util/List;)Lnet/minecraft/world/gen/blockpredicate/BlockPredicate;
+
+accessible field net/minecraft/entity/LivingEntity jumping Z
+accessible field net/minecraft/entity/ai/goal/TemptGoal TEMPTING_ENTITY_PREDICATE Lnet/minecraft/entity/ai/TargetPredicate;
+accessible field net/minecraft/entity/ai/goal/TemptGoal cooldown I
+accessible field net/minecraft/entity/ai/goal/TemptGoal predicate Lnet/minecraft/entity/ai/TargetPredicate;
+mutable field net/minecraft/entity/ai/goal/TemptGoal predicate Lnet/minecraft/entity/ai/TargetPredicate;
+accessible field net/minecraft/entity/mob/MobEntity targetSelector Lnet/minecraft/entity/ai/goal/GoalSelector;
+
+accessible method net/minecraft/client/gui/hud/InGameHud renderOverlay (Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/util/Identifier;F)V
+accessible method net/minecraft/client/particle/SpellParticle <init> (Lnet/minecraft/client/world/ClientWorld;DDDDDDLnet/minecraft/client/particle/SpriteProvider;)V
+
+accessible field net/minecraft/client/data/BlockStateModelGenerator SOUTH_DEFAULT_HORIZONTAL_ROTATION_OPERATIONS Lnet/minecraft/client/data/BlockStateVariantMap;

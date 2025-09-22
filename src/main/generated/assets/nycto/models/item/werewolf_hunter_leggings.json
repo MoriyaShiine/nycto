@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+	"layer0": "nycto:item/werewolf_hunter_leggings"
+  }
+}

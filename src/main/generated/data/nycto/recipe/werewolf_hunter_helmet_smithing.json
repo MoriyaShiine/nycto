@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "#c:ingots/gold",
+  "base": "minecraft:leather_helmet",
+  "result": {
+	"id": "nycto:werewolf_hunter_helmet"
+  },
+  "template": "nycto:werewolf_hunter_upgrade_smithing_template"
+}

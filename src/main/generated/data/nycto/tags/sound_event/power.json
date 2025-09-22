@@ -1,0 +1,28 @@
+{
+  "values": [
+	"nycto:power.night_vision.on",
+	"nycto:power.night_vision.off",
+	"nycto:power.bat_form.on",
+	"nycto:power.bat_form.off",
+	"nycto:power.bat_swarm.use",
+	"nycto:power.batstep.use",
+	"nycto:power.blood_barrier.use",
+	"nycto:power.blood_barrier.hit",
+	"nycto:power.blood_barrier.break",
+	"nycto:power.blood_flechettes.use",
+	"nycto:power.blood_flechettes.life_drain",
+	"nycto:power.bloodrush.use",
+	"nycto:power.carnage.use",
+	"nycto:power.carnage.hit",
+	"nycto:power.dark_form.on",
+	"nycto:power.dark_form.off",
+	"nycto:power.haemogenesis.use",
+	"nycto:power.hypnotize.use",
+	"nycto:power.keen_senses.on",
+	"nycto:power.keen_senses.off",
+	"nycto:power.keen_senses.heartbeat",
+	"nycto:power.mist_form.on",
+	"nycto:power.mist_form.off",
+	"nycto:power.vampiric_thrall.convert"
+  ]
+}

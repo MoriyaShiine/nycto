@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+	"D": "#c:gems/diamond",
+	"G": "nycto:garlic_wreath",
+	"I": "#c:ingots/iron"
+  },
+  "pattern": [
+	"III",
+	"IGI",
+	"IDI"
+  ],
+  "result": {
+	"count": 1,
+	"id": "nycto:vampire_hunter_upgrade_smithing_template"
+  }
+}

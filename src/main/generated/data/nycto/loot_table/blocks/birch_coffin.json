@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+	{
+	  "bonus_rolls": 0.0,
+	  "conditions": [
+		{
+		  "condition": "minecraft:survives_explosion"
+		}
+	  ],
+	  "entries": [
+		{
+		  "type": "minecraft:item",
+		  "conditions": [
+			{
+			  "block": "nycto:birch_coffin",
+			  "condition": "minecraft:block_state_property",
+			  "properties": {
+				"part": "head"
+			  }
+			}
+		  ],
+		  "name": "nycto:birch_coffin"
+		}
+	  ],
+	  "rolls": 1.0
+	}
+  ]
+}

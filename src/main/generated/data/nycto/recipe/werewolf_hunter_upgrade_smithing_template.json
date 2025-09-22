@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+	"A": "nycto:aconite_garland",
+	"D": "#c:gems/diamond",
+	"I": "#c:ingots/iron"
+  },
+  "pattern": [
+	"III",
+	"IAI",
+	"IDI"
+  ],
+  "result": {
+	"count": 1,
+	"id": "nycto:werewolf_hunter_upgrade_smithing_template"
+  }
+}

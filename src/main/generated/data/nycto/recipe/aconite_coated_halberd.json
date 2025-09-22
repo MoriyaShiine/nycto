@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+	"nycto:halberd",
+	"nycto:aconite_garland"
+  ],
+  "result": {
+	"count": 1,
+	"id": "nycto:aconite_coated_halberd"
+  }
+}

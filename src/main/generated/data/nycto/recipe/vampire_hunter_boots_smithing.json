@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "#c:ingots/gold",
+  "base": "minecraft:leather_boots",
+  "result": {
+	"id": "nycto:vampire_hunter_boots"
+  },
+  "template": "nycto:vampire_hunter_upgrade_smithing_template"
+}

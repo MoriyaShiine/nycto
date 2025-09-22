@@ -1,0 +1,86 @@
+plugins {
+    id 'fabric-loom' version "${loom_version}"
+    id 'io.github.ladysnake.chenille' version "${chenille_version}"
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+chenille {
+    customLicense = rootProject.file("LICENSE")
+    github = new URL("https://github.com/MoriyaShiine/nycto")
+    javaVersion = 21
+    configurePublishing {
+        withLadysnakeMaven()
+        withGithubRelease()
+        withModrinthRelease()
+        withCurseforgeRelease()
+    }
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/nycto.accesswidener")
+}
+
+fabricApi {
+    configureDataGeneration() {
+        client = true
+    }
+}
+
+repositories {
+    chenille.repositories.ladysnake()
+    maven {
+        name "datasync"
+        url "https://maven.uuid.gg/releases"
+    }
+    chenille.repositories.jitpack()
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings "net.fabricmc:yarn:${yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${loader_version}"
+
+    modApi "org.ladysnake.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
+    modApi "org.ladysnake.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
+    modIncludeImplementation "org.ladysnake.cardinal-components-api:cardinal-components-world:${cardinal_components_version}"
+    modIncludeImplementation "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
+    modIncludeImplementation "com.github.MoriyaShiine:tooltipfix:${tooltipfix_version}"
+
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    modImplementation "moriyashiine:strawberrylib:${strawberrylib_version}"
+
+    modCompileOnly("moriyashiine:hearty-meals:${hearty_meals_version}") {
+        exclude("group": "*")
+    }
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 21
+}
+
+java {
+    withSourcesJar()
+
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${project.base.archivesName.get()}" }
+    }
+}

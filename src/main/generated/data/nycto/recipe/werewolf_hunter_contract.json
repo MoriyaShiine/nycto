@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+	"nycto:hunter_contract",
+	"nycto:aconite"
+  ],
+  "result": {
+	"count": 1,
+	"id": "nycto:werewolf_hunter_contract"
+  }
+}

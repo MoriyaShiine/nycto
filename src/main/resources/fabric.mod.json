@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "id": "nycto",
+  "version": "${version}",
+  "name": "Nycto",
+  "description": "Adds vampires (and later werewolves), and allows you turn into or hunt them",
+  "authors": [
+	"MoriyaShiine",
+	"cybercat5555"
+  ],
+  "contact": {
+	"homepage": "https://modrinth.com/project/nycto",
+	"sources": "https://github.com/MoriyaShiine/nycto",
+	"issues": "https://github.com/MoriyaShiine/nycto/issues"
+  },
+  "license": "All Rights Reserved",
+  "icon": "assets/nycto/icon.png",
+  "environment": "*",
+  "entrypoints": {
+	"fabric-datagen": [
+	  "moriyashiine.nycto.data.ModDataGenerator"
+	],
+	"main": [
+	  "moriyashiine.nycto.common.Nycto"
+	],
+	"client": [
+	  "moriyashiine.nycto.client.NyctoClient"
+	],
+	"cardinal-components-entity": [
+	  "moriyashiine.nycto.common.init.ModEntityComponents"
+	],
+	"cardinal-components-world": [
+	  "moriyashiine.nycto.common.init.ModWorldComponents"
+	]
+  },
+  "mixins": [
+	"nycto.mixins.json"
+  ],
+  "accessWidener": "nycto.accesswidener",
+  "depends": {
+	"fabricloader": "*",
+	"minecraft": "~1.21.8",
+	"java": ">=21",
+	"fabric-api": "*",
+	"strawberrylib": "*"
+  },
+  "custom": {
+	"cardinal-components": [
+	  "nycto:aura",
+	  "nycto:bat_swarm",
+	  "nycto:blood",
+	  "nycto:heal_block",
+	  "nycto:hunter_heat",
+	  "nycto:respawn_leniency",
+	  "nycto:sun_exposure",
+	  "nycto:transformation",
+	  "nycto:vampire_charge_jump",
+	  "nycto:night_vision",
+	  "nycto:bat_form",
+	  "nycto:blood_barrier",
+	  "nycto:bloodrush",
+	  "nycto:carnage",
+	  "nycto:dark_form",
+	  "nycto:haemogenesis",
+	  "nycto:hypnotized",
+	  "nycto:keen_senses",
+	  "nycto:mist_form",
+	  "nycto:vampiric_thrall",
+	  "nycto:vampiric_vex"
+	]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+	"A": "minecraft:arrow",
+	"P": "nycto:aconite"
+  },
+  "pattern": [
+	" A ",
+	"APA",
+	" A "
+  ],
+  "result": {
+	"count": 4,
+	"id": "nycto:aconite_arrow"
+  }
+}

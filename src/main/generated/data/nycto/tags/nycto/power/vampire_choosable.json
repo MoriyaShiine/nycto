@@ -1,0 +1,23 @@
+{
+  "values": [
+	"nycto:bat_form",
+	"nycto:bat_swarm",
+	"nycto:batstep",
+	"nycto:blood_barrier",
+	"nycto:blood_flechettes",
+	"nycto:bloodrush",
+	"nycto:carnage",
+	"nycto:dark_form",
+	"nycto:haemogenesis",
+	"nycto:hypnotize",
+	"nycto:keen_senses",
+	"nycto:mist_form",
+	"nycto:vampiric_thrall",
+	"nycto:hydrophobia",
+	"nycto:photophobia",
+	"nycto:pyrophobia",
+	"nycto:rich_tastes",
+	"nycto:thin_blood",
+	"nycto:vile_presence"
+  ]
+}

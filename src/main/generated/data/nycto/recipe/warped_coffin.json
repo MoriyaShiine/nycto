@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+	"B": "#minecraft:beds",
+	"P": "minecraft:warped_planks"
+  },
+  "pattern": [
+	"PPP",
+	"PBP",
+	"PPP"
+  ],
+  "result": {
+	"count": 1,
+	"id": "nycto:warped_coffin"
+  }
+}

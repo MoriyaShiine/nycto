@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+	"has_grilled_garlic": {
+	  "conditions": {
+		"items": [
+		  {
+			"items": "nycto:grilled_garlic"
+		  }
+		]
+	  },
+	  "trigger": "minecraft:inventory_changed"
+	},
+	"has_the_recipe": {
+	  "conditions": {
+		"recipe": "nycto:garlic_bread"
+	  },
+	  "trigger": "minecraft:recipe_unlocked"
+	}
+  },
+  "requirements": [
+	[
+	  "has_the_recipe",
+	  "has_grilled_garlic"
+	]
+  ],
+  "rewards": {
+	"recipes": [
+	  "nycto:garlic_bread"
+	]
+  }
+}

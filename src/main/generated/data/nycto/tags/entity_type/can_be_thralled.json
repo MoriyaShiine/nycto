@@ -1,0 +1,15 @@
+{
+  "values": [
+	"minecraft:evoker",
+	"minecraft:horse",
+	"minecraft:illusioner",
+	"minecraft:piglin",
+	"minecraft:piglin_brute",
+	"minecraft:pillager",
+	"minecraft:villager",
+	"minecraft:vindicator",
+	"minecraft:wandering_trader",
+	"minecraft:witch",
+	"minecraft:wolf"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "strawberrylib:block/crop_cross",
+  "textures": {
+	"crop": "nycto:block/aconite_stage3"
+  }
+}

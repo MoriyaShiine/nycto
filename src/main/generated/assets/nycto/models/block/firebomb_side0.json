@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_fire_side",
+  "textures": {
+	"fire": "nycto:block/firebomb_0"
+  }
+}

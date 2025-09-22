@@ -1,0 +1,13 @@
+{
+  "values": [
+	"#minecraft:illager",
+	"minecraft:piglin",
+	"minecraft:piglin_brute",
+	"minecraft:player",
+	"minecraft:villager",
+	"minecraft:wandering_trader",
+	"minecraft:witch",
+	"nycto:hunter",
+	"nycto:vampire"
+  ]
+}

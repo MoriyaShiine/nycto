@@ -1,0 +1,16 @@
+{
+  "values": [
+	{
+	  "id": "nycto:bleed",
+	  "required": false
+	},
+	{
+	  "id": "nycto:sun",
+	  "required": false
+	},
+	{
+	  "id": "nycto:toxic_touch",
+	  "required": false
+	}
+  ]
+}

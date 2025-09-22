@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+	"A": "minecraft:arrow",
+	"L": "#minecraft:logs"
+  },
+  "pattern": [
+	" A ",
+	"ALA",
+	" A "
+  ],
+  "result": {
+	"count": 4,
+	"id": "nycto:wooden_stake"
+  }
+}

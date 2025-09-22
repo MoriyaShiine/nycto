@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+	"B": "minecraft:glass_bottle",
+	"F": "minecraft:flint",
+	"I": "#c:ingots/iron"
+  },
+  "pattern": [
+	"  I",
+	" F ",
+	"B  "
+  ],
+  "result": {
+	"count": 1,
+	"id": "nycto:vampiric_dagger"
+  }
+}

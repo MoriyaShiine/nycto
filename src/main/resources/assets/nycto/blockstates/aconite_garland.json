@@ -1,0 +1,34 @@
+{
+  "variants": {
+	"facing=north,hanging=false": {
+	  "model": "nycto:block/aconite_garland_side"
+	},
+	"facing=north,hanging=true": {
+	  "model": "nycto:block/aconite_garland_hanging"
+	},
+	"facing=south,hanging=false": {
+	  "model": "nycto:block/aconite_garland_side",
+	  "y": 180
+	},
+	"facing=south,hanging=true": {
+	  "model": "nycto:block/aconite_garland_hanging",
+	  "y": 180
+	},
+	"facing=east,hanging=false": {
+	  "model": "nycto:block/aconite_garland_side",
+	  "y": 90
+	},
+	"facing=east,hanging=true": {
+	  "model": "nycto:block/aconite_garland_hanging",
+	  "y": 90
+	},
+	"facing=west,hanging=false": {
+	  "model": "nycto:block/aconite_garland_side",
+	  "y": 270
+	},
+	"facing=west,hanging=true": {
+	  "model": "nycto:block/aconite_garland_hanging",
+	  "y": 270
+	}
+  }
+}

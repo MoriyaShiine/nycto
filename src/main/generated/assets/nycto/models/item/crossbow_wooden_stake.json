@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/crossbow",
+  "textures": {
+	"layer0": "nycto:item/crossbow_wooden_stake"
+  }
+}

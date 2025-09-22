@@ -1,0 +1,19 @@
+{
+  "variants": {
+	"facing=north": {
+	  "model": "nycto:block/werewolf_altar"
+	},
+	"facing=south": {
+	  "model": "nycto:block/werewolf_altar",
+	  "y": 180
+	},
+	"facing=east": {
+	  "model": "nycto:block/werewolf_altar",
+	  "y": 90
+	},
+	"facing=west": {
+	  "model": "nycto:block/werewolf_altar",
+	  "y": 270
+	}
+  }
+}
