@@ -41,7 +41,9 @@ public class HunterContractItem extends Item {
 	private static ActionResult use(PlayerEntity user, Hand hand, ActionResult result) {
 		if (user != null) {
 			user.sendMessage(result.isAccepted() ? SUCCEED_TEXT : FAIL_TEXT, true);
-			user.getStackInHand(hand).decrementUnlessCreative(1, user);
+			if (result.isAccepted()) {
+				user.getStackInHand(hand).decrementUnlessCreative(1, user);
+			}
 		}
 		return result;
 	}
