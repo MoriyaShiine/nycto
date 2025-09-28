@@ -13,7 +13,6 @@ import moriyashiine.nycto.common.tag.ModEntityTypeTags;
 import moriyashiine.strawberrylib.api.event.AfterDamageIncludingDeathEvent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 
@@ -33,9 +32,6 @@ public class VampiricDaggerEvent implements AfterDamageIncludingDeathEvent {
 						BloodComponent bloodComponent = ModEntityComponents.BLOOD.get(entity);
 						if (bloodComponent.drainAttack(drainAmount)) {
 							fillAmount = VampireEvent.DrinkBlood.getFillAmount(bloodComponent, entity.getRandom(), true, drainAmount, drainAmount);
-						}
-						if (attacker instanceof PlayerEntity player) {
-							NyctoAPI.increaseHunterHeat(player, entity);
 						}
 					}
 					if (fillAmount > 0) {

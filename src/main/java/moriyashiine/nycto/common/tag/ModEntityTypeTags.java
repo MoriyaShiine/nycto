@@ -13,6 +13,7 @@ public class ModEntityTypeTags {
 	public static final TagKey<EntityType<?>> HAS_NO_BLOOD = TagKey.of(RegistryKeys.ENTITY_TYPE, Nycto.id("has_no_blood"));
 
 	public static final TagKey<EntityType<?>> BYPASSES_BLOOD_VEIL = TagKey.of(RegistryKeys.ENTITY_TYPE, Nycto.id("bypasses_blood_veil"));
+	public static final TagKey<EntityType<?>> CALLS_HUNTERS = TagKey.of(RegistryKeys.ENTITY_TYPE, Nycto.id("calls_hunters"));
 	public static final TagKey<EntityType<?>> VAMPIRES = TagKey.of(RegistryKeys.ENTITY_TYPE, Nycto.id("vampires"));
 
 	public static final TagKey<EntityType<?>> CAN_BE_THRALLED = TagKey.of(RegistryKeys.ENTITY_TYPE, Nycto.id("can_be_thralled"));

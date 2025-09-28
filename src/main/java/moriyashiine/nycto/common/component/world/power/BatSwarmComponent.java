@@ -217,15 +217,12 @@ public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComp
 				if (!qualityBlood && owner instanceof PlayerEntity player && NyctoAPI.hasPower(player, ModPowers.RICH_TASTES)) {
 					canDrain = false;
 				}
-				target.serverDamage(target.getDamageSources().create(ModDamageTypes.BLEED), 1);
+				target.serverDamage(target.getDamageSources().create(ModDamageTypes.BLEED, null, owner), 1);
 				if (canDrain) {
 					if (ModEntityComponents.BLOOD.get(target).drainAttack(BLOOD_DRAIN_AMOUNT)) {
 						SLibUtils.playSound(target, ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK.value());
 						blood += BLOOD_DRAIN_AMOUNT / (qualityBlood ? 1 : 2);
 						ModWorldComponents.BAT_SWARM.sync(target.getWorld());
-					}
-					if (owner instanceof PlayerEntity player) {
-						NyctoAPI.increaseHunterHeat(player, target);
 					}
 				}
 			}

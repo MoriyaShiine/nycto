@@ -118,7 +118,6 @@ public class VampireEvent {
 							}
 						} else {
 							living.damage(serverWorld, world.getDamageSources().create(ModDamageTypes.BLEED, player), 2);
-							NyctoAPI.increaseHunterHeat(player, living);
 						}
 						if (livingBloodComponent.drainAttack(toDrain)) {
 							SLibUtils.playSound(entity, ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK.value());

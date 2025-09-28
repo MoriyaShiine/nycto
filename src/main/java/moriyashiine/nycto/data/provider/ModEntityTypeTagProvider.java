@@ -54,6 +54,12 @@ public class ModEntityTypeTagProvider extends FabricTagProvider.EntityTypeTagPro
 		valueLookupBuilder(ModEntityTypeTags.BYPASSES_BLOOD_VEIL)
 				.forceAddTag(ConventionalEntityTypeTags.BOSSES)
 				.add(EntityType.WARDEN);
+		valueLookupBuilder(ModEntityTypeTags.CALLS_HUNTERS)
+				.forceAddTag(EntityTypeTags.ILLAGER)
+				.add(EntityType.IRON_GOLEM)
+				.add(EntityType.VILLAGER)
+				.add(EntityType.WANDERING_TRADER)
+				.add(EntityType.WITCH);
 		valueLookupBuilder(ModEntityTypeTags.VAMPIRES)
 				.add(ModEntityTypes.VAMPIRE);
 

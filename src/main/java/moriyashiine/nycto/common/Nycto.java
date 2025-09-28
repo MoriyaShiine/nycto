@@ -91,6 +91,7 @@ public class Nycto implements ModInitializer {
 		ServerEntityEvents.ENTITY_UNLOAD.register(new BloodEvent.Unload());
 		ServerPlayerEvents.COPY_FROM.register(new BloodEvent.Copy());
 		PreventEquipmentUsageEvent.EVENT.register(new CannotUseEquipmentEvent());
+		AfterDamageIncludingDeathEvent.EVENT.register(new HunterEvent.Heat());
 		TickEntityEvent.EVENT.register(new HunterEvent.Aura());
 		ModifyCriticalStatusEvent.EVENT.register(new HunterEvent.CriticalImmunity());
 		PreventHostileTargetingEvent.EVENT.register(new HunterEvent.PreventTargeting());
