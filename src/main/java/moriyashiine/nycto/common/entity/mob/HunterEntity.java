@@ -273,6 +273,7 @@ public class HunterEntity extends PillagerEntity {
 		HorseEntity horse = EntityType.HORSE.create(entity.getWorld(), SpawnReason.TRIGGERED);
 		if (horse.teleport(entity.getX(), entity.getY(), entity.getZ(), false)) {
 			horse.initialize((ServerWorldAccess) entity.getWorld(), entity.getWorld().getLocalDifficulty(entity.getBlockPos()), SpawnReason.TRIGGERED, null);
+			horse.getAttributeInstance(EntityAttributes.MOVEMENT_SPEED).setBaseValue(0.3375);
 			horse.setOwner(entity);
 			horse.setTame(true);
 			entity.getWorld().spawnEntity(horse);
