@@ -34,10 +34,13 @@ import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 
 public class Nycto implements ModInitializer {
 	public static final String MOD_ID = "nycto";
+
+	public static boolean superbSteedsLoaded = false;
 
 	@Override
 	public void onInitialize() {
@@ -46,6 +49,7 @@ public class Nycto implements ModInitializer {
 		initCommands();
 		initEvents();
 		initPayloads();
+		superbSteedsLoaded = FabricLoader.getInstance().isModLoaded("superbsteeds");
 	}
 
 	public static Identifier id(String value) {

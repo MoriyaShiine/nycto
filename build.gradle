@@ -58,6 +58,9 @@ dependencies {
     modCompileOnly("moriyashiine:hearty-meals:${hearty_meals_version}") {
         exclude("group": "*")
     }
+    modCompileOnly("moriyashiine:superb-steeds:${superb_steeds_version}") {
+        exclude("group": "*")
+    }
 }
 
 processResources {

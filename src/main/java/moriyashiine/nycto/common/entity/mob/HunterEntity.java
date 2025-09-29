@@ -11,6 +11,8 @@ import moriyashiine.nycto.common.entity.ai.goal.hunter.PathToContractPosGoal;
 import moriyashiine.nycto.common.entity.ai.goal.hunter.UltimateTargetGoal;
 import moriyashiine.nycto.common.init.ModItems;
 import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.superbsteeds.common.component.entity.HorseAttributesComponent;
+import moriyashiine.superbsteeds.common.init.ModEntityComponents;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -273,11 +275,19 @@ public class HunterEntity extends PillagerEntity {
 		HorseEntity horse = EntityType.HORSE.create(entity.getWorld(), SpawnReason.TRIGGERED);
 		if (horse.teleport(entity.getX(), entity.getY(), entity.getZ(), false)) {
 			horse.initialize((ServerWorldAccess) entity.getWorld(), entity.getWorld().getLocalDifficulty(entity.getBlockPos()), SpawnReason.TRIGGERED, null);
-			horse.getAttributeInstance(EntityAttributes.MOVEMENT_SPEED).setBaseValue(0.3375);
 			horse.setOwner(entity);
 			horse.setTame(true);
 			entity.getWorld().spawnEntity(horse);
 			entity.startRiding(horse);
+			if (Nycto.superbSteedsLoaded) {
+				HorseAttributesComponent horseAttributesComponent = ModEntityComponents.HORSE_ATTRIBUTES.get(horse);
+				while (horseAttributesComponent.getSpeed() < 5) {
+					horseAttributesComponent.incrementSpeed();
+				}
+				horseAttributesComponent.sync();
+			} else {
+				horse.getAttributeInstance(EntityAttributes.MOVEMENT_SPEED).setBaseValue(0.3375);
+			}
 		}
 	}
 
