@@ -1,4 +1,11 @@
 ------------------------------------------------------
+Version 1.21.8-b3
+------------------------------------------------------
+- add Russian translation (thank you artmax9082 on Discord!)
+- fix crash when spectating non-players
+- properly adjust hunter horse speed with superb steeds installed
+
+------------------------------------------------------
 Version 1.21.8-b2
 ------------------------------------------------------
 - streamline hunter spawning so they spawn more frequently when doing vampire stuff
