@@ -159,7 +159,7 @@
   "subtitles.nycto.entity.blood_flechette.impact": "Кровавые флешете ударяются",
   "subtitles.nycto.entity.firebomb.impact": "Коктейль молотова ударяется",
   "command.nycto.transformation.get": "Трансформация игрока %1$s это %2$s",
-  "command.nycto.transformation.set": "Трансформация игрока %1$s была изменена на %2$s",
+  "command.nycto.transformation.set.single": "Трансформация игрока %1$s была изменена на %2$s",
   "death.attack.nycto.bleed": "Игрок %1$s был опустошён",
   "death.attack.nycto.bleed.player": "Игрок %1$s был опустошён, пытаясь сбежать от %2$s",
   "death.attack.nycto.toxic_touch": "Игрок %1$s потрогал что-то токсичное",

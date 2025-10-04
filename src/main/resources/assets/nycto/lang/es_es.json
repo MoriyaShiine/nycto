@@ -159,7 +159,7 @@
   "subtitles.nycto.entity.blood_flechette.impact": "Impacto de dardos de sangre",
   "subtitles.nycto.entity.firebomb.impact": "Impacto de bomba incendiaria",
   "command.nycto.transformation.get": "La transformación de %1$s es %2$s",
-  "command.nycto.transformation.set": "%1$s se transformo en %2$s",
+  "command.nycto.transformation.set.single": "%1$s se transformo en %2$s",
   "death.attack.nycto.bleed": "%1$s fue exanguinado",
   "death.attack.nycto.bleed.player": "%1$s fue exanguinado intentando escapar de %2$s",
   "death.attack.nycto.toxic_touch": "%1$s tocó algo tóxico",
