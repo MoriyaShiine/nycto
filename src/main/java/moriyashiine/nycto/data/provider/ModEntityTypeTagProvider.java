@@ -40,6 +40,7 @@ public class ModEntityTypeTagProvider extends FabricTagProvider.EntityTypeTagPro
 				.add(EntityType.ARMOR_STAND)
 				.add(EntityType.BLAZE)
 				.add(EntityType.BREEZE)
+				.add(EntityType.COPPER_GOLEM)
 				.add(EntityType.CREAKING)
 				.add(EntityType.CREEPER)
 				.add(EntityType.ENDERMAN)
