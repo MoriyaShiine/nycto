@@ -4,7 +4,7 @@
 package moriyashiine.nycto.mixin.power.vampire.carnage.client;
 
 import moriyashiine.nycto.client.render.entity.feature.carnage.PlayerCarnageAuraFeatureRenderer;
-import moriyashiine.nycto.client.render.entity.state.CarnageRenderStateAddition;
+import moriyashiine.nycto.client.render.entity.state.CarnageRenderState;
 import net.minecraft.client.network.ClientPlayerLikeEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
@@ -30,6 +30,6 @@ public abstract class PlayerEntityRendererMixin<AvatarlikeEntity extends PlayerL
 
 	@Inject(method = "updateRenderState(Lnet/minecraft/entity/PlayerLikeEntity;Lnet/minecraft/client/render/entity/state/PlayerEntityRenderState;F)V", at = @At("TAIL"))
 	private void nycto$carnage(AvatarlikeEntity entity, PlayerEntityRenderState state, float tickProgress, CallbackInfo ci) {
-		CarnageRenderStateAddition.updateRenderState(entity, state);
+		CarnageRenderState.updateRenderState(entity, state);
 	}
 }

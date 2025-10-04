@@ -3,7 +3,7 @@
  */
 package moriyashiine.nycto.client.render.entity.feature;
 
-import moriyashiine.nycto.client.render.entity.state.BloodrushRenderStateAddition;
+import moriyashiine.nycto.client.render.entity.state.BloodrushRenderState;
 import moriyashiine.nycto.common.Nycto;
 import net.minecraft.client.render.entity.feature.EnergySwirlOverlayFeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
@@ -13,6 +13,7 @@ import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.render.entity.state.PlayerEntityRenderState;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import org.jetbrains.annotations.Nullable;
 
 public class BloodrushAuraFeatureRenderer extends EnergySwirlOverlayFeatureRenderer<PlayerEntityRenderState, PlayerEntityModel> {
 	public static final EntityModelLayer LAYER = new EntityModelLayer(Nycto.id("player"), "bloodrush_aura");
@@ -28,7 +29,8 @@ public class BloodrushAuraFeatureRenderer extends EnergySwirlOverlayFeatureRende
 
 	@Override
 	protected boolean shouldRender(PlayerEntityRenderState state) {
-		return ((BloodrushRenderStateAddition) state).nycto$usingBloodrush();
+		@Nullable BloodrushRenderState bloodrushRenderState = state.getData(BloodrushRenderState.KEY);
+		return bloodrushRenderState != null && bloodrushRenderState.usingBloodrush;
 	}
 
 	@Override

@@ -4,7 +4,7 @@
 package moriyashiine.nycto.mixin.power.vampire.bloodbarrier.client;
 
 import moriyashiine.nycto.client.render.entity.feature.BloodBarrierFeatureRenderer;
-import moriyashiine.nycto.client.render.entity.state.BloodBarrierRenderStateAddition;
+import moriyashiine.nycto.client.render.entity.state.BloodBarrierRenderState;
 import net.minecraft.client.render.entity.BatEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
@@ -29,6 +29,6 @@ public abstract class BatEntityRendererMixin extends MobEntityRenderer<BatEntity
 
 	@Inject(method = "updateRenderState(Lnet/minecraft/entity/passive/BatEntity;Lnet/minecraft/client/render/entity/state/BatEntityRenderState;F)V", at = @At("TAIL"))
 	private void nycto$bloodBarrier(BatEntity entity, BatEntityRenderState state, float tickProgress, CallbackInfo ci) {
-		BloodBarrierRenderStateAddition.updateRenderState(entity, state);
+		BloodBarrierRenderState.updateRenderState(entity, state);
 	}
 }

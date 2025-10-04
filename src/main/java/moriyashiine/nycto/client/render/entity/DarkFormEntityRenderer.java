@@ -6,8 +6,8 @@ package moriyashiine.nycto.client.render.entity;
 import moriyashiine.nycto.client.render.entity.feature.BloodBarrierFeatureRenderer;
 import moriyashiine.nycto.client.render.entity.feature.carnage.DarkFormCarnageAuraFeatureRenderer;
 import moriyashiine.nycto.client.render.entity.model.DarkFormEntityModel;
-import moriyashiine.nycto.client.render.entity.state.BloodBarrierRenderStateAddition;
-import moriyashiine.nycto.client.render.entity.state.CarnageRenderStateAddition;
+import moriyashiine.nycto.client.render.entity.state.BloodBarrierRenderState;
+import moriyashiine.nycto.client.render.entity.state.CarnageRenderState;
 import moriyashiine.nycto.client.render.entity.state.DarkFormEntityRenderState;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.entity.mob.DarkFormEntity;
@@ -41,8 +41,8 @@ public class DarkFormEntityRenderer extends MobEntityRenderer<DarkFormEntity, Da
 	public void updateRenderState(DarkFormEntity entity, DarkFormEntityRenderState state, float tickDelta) {
 		super.updateRenderState(entity, state, tickDelta);
 		ArmedEntityRenderState.updateRenderState(entity, state, itemModelResolver);
-		BloodBarrierRenderStateAddition.updateRenderState(entity, state);
-		CarnageRenderStateAddition.updateRenderState(entity, state);
+		BloodBarrierRenderState.updateRenderState(entity, state);
+		CarnageRenderState.updateRenderState(entity, state);
 		state.idleAnimationState.copyFrom(entity.idleAnimationState);
 		state.idleSneakAnimationState.copyFrom(entity.idleSneakAnimationState);
 		state.jumpAnimationState.copyFrom(entity.jumpAnimationState);

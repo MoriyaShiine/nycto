@@ -5,7 +5,7 @@ package moriyashiine.nycto.mixin.power.vampire.vampiricthrall.client;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import moriyashiine.nycto.api.NyctoClientAPI;
-import moriyashiine.nycto.client.render.entity.state.VampiricThrallRenderStateAddition;
+import moriyashiine.nycto.client.render.entity.state.VampiricThrallRenderState;
 import moriyashiine.nycto.common.Nycto;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -31,31 +31,28 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, S extend
 	@Unique
 	private static final Map<EntityType<?>, Identifier> THRALL_IDENTIFIERS = new HashMap<>();
 
-	@Unique
-	@Nullable
-	private Identifier thrallTexture = null;
-
 	protected LivingEntityRendererMixin(EntityRendererFactory.Context context) {
 		super(context);
 	}
 
 	@ModifyExpressionValue(method = "getRenderLayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/LivingEntityRenderer;getTexture(Lnet/minecraft/client/render/entity/state/LivingEntityRenderState;)Lnet/minecraft/util/Identifier;"))
-	private Identifier nycto$vampiricThrall(Identifier original) {
-		if (thrallTexture != null) {
-			return thrallTexture;
+	private Identifier nycto$vampiricThrall(Identifier original, S state) {
+		@Nullable VampiricThrallRenderState vampiricThrallRenderState = state.getData(VampiricThrallRenderState.KEY);
+		if (vampiricThrallRenderState != null && vampiricThrallRenderState.thrallTexture != null) {
+			return vampiricThrallRenderState.thrallTexture;
 		}
 		return original;
 	}
 
 	@Inject(method = "updateRenderState(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/client/render/entity/state/LivingEntityRenderState;F)V", at = @At("TAIL"))
 	private void nycto$vampiricThrall(T entity, S state, float tickProgress, CallbackInfo ci) {
-		thrallTexture = null;
+		VampiricThrallRenderState vampiricThrallRenderState = new VampiricThrallRenderState();
 		if (NyctoClientAPI.hasThrallTexture(entity)) {
-			thrallTexture = Objects.requireNonNullElseGet(NyctoClientAPI.getSpecialThrallTexture(entity), () -> THRALL_IDENTIFIERS.computeIfAbsent(entity.getType(), type -> {
+			vampiricThrallRenderState.thrallTexture = Objects.requireNonNullElseGet(NyctoClientAPI.getSpecialThrallTexture(entity), () -> THRALL_IDENTIFIERS.computeIfAbsent(entity.getType(), type -> {
 				Identifier entityTypeId = Registries.ENTITY_TYPE.getId(type);
 				return Nycto.id("textures/entity/vampiric_thrall/" + entityTypeId.getNamespace() + "/" + entityTypeId.getPath() + ".png");
 			}));
 		}
-		((VampiricThrallRenderStateAddition) state).nycto$setThralled(thrallTexture != null);
+		state.setData(VampiricThrallRenderState.KEY, vampiricThrallRenderState);
 	}
 }

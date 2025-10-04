@@ -4,7 +4,7 @@
 package moriyashiine.nycto.client.render.armor;
 
 import moriyashiine.nycto.client.render.armor.model.ThralledHorseHornsModel;
-import moriyashiine.nycto.client.render.entity.state.VampiricThrallRenderStateAddition;
+import moriyashiine.nycto.client.render.entity.state.VampiricThrallRenderState;
 import moriyashiine.nycto.common.Nycto;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.OverlayTexture;
@@ -19,6 +19,7 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
@@ -40,7 +41,8 @@ public class ThralledHorseHornsRenderer extends FeatureRenderer<HorseEntityRende
 
 	@Override
 	public void render(MatrixStack matrices, OrderedRenderCommandQueue queue, int light, HorseEntityRenderState state, float limbAngle, float limbDistance) {
-		if (((VampiricThrallRenderStateAddition) state).nycto$isThralled() && TEXTURE_MAP.containsKey(state.armor.getItem())) {
+		@Nullable VampiricThrallRenderState vampiricThrallRenderState = state.getData(VampiricThrallRenderState.KEY);
+		if (vampiricThrallRenderState != null && vampiricThrallRenderState.thrallTexture != null && TEXTURE_MAP.containsKey(state.armor.getItem())) {
 			int color = 0xFFFFFFFF;
 			if (state.armor.contains(DataComponentTypes.DYED_COLOR)) {
 				color = state.armor.get(DataComponentTypes.DYED_COLOR).rgb();
