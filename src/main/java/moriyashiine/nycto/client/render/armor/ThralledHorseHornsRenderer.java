@@ -25,6 +25,7 @@ import java.util.Map;
 public class ThralledHorseHornsRenderer extends FeatureRenderer<HorseEntityRenderState, HorseEntityModel> {
 	private static final Map<Item, Identifier> TEXTURE_MAP = Map.of(
 			Items.LEATHER_HORSE_ARMOR, Nycto.id("textures/entity/vampiric_thrall/minecraft/horse_horns/leather.png"),
+			Items.COPPER_HORSE_ARMOR, Nycto.id("textures/entity/vampiric_thrall/minecraft/horse_horns/copper.png"),
 			Items.IRON_HORSE_ARMOR, Nycto.id("textures/entity/vampiric_thrall/minecraft/horse_horns/iron.png"),
 			Items.GOLDEN_HORSE_ARMOR, Nycto.id("textures/entity/vampiric_thrall/minecraft/horse_horns/golden.png"),
 			Items.DIAMOND_HORSE_ARMOR, Nycto.id("textures/entity/vampiric_thrall/minecraft/horse_horns/diamond.png")
