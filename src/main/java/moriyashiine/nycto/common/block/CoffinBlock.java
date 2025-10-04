@@ -4,6 +4,7 @@
 package moriyashiine.nycto.common.block;
 
 import moriyashiine.nycto.common.block.entity.CoffinBlockEntity;
+import moriyashiine.nycto.common.init.ModItems;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.BedPart;
@@ -50,11 +51,11 @@ public class CoffinBlock extends BedBlock {
 
 	@Override
 	protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		if (state.get(Properties.BED_PART) == BedPart.HEAD) {
+		if (stack.isOf(ModItems.WOODEN_STAKE) && state.get(Properties.BED_PART) == BedPart.HEAD) {
 			for (PlayerEntity otherPlayer : world.getPlayers()) {
 				if (pos.equals(otherPlayer.getSleepingPosition().orElse(null))) {
 					if (world instanceof ServerWorld serverWorld && otherPlayer.damage(serverWorld, otherPlayer.getDamageSources().playerAttack(player), Integer.MAX_VALUE)) {
-						player.getStackInHand(hand).postHit(otherPlayer, player);
+						stack.postHit(otherPlayer, player);
 					}
 					return ActionResult.SUCCESS;
 				}
