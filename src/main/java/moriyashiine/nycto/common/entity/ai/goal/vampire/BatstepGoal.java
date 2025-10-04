@@ -28,6 +28,6 @@ public class BatstepGoal extends Goal {
 		mob.useAbility(ModPowers.BATSTEP);
 		SLibUtils.playAnchoredSound(mob, ModSoundEvents.POWER_BATSTEP_USE);
 		mob.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, mob.getTarget().getEyePos());
-		BatstepPower.teleport(mob.getWorld(), mob);
+		BatstepPower.teleport(mob.getEntityWorld(), mob);
 	}
 }

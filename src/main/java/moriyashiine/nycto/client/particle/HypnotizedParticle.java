@@ -12,21 +12,22 @@ import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 
 public class HypnotizedParticle extends AnchoredParticle {
 	private final SpriteProvider spriteProvider;
 
 	public HypnotizedParticle(ClientWorld world, double x, double z, int entityId, double yOffset, double speed, double intensity, SpriteProvider spriteProvider) {
-		super(world, x, z, entityId, yOffset, speed, intensity);
+		super(world, x, z, entityId, yOffset, speed, intensity, spriteProvider.getFirst());
 		this.spriteProvider = spriteProvider;
 		setMaxAge(12);
-		setSpriteForAge(spriteProvider);
+		updateSprite(spriteProvider);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
-		setSpriteForAge(spriteProvider);
+		updateSprite(spriteProvider);
 		if (entity != null) {
 			Vec3d rotation = Vec3d.fromPolar(new Vec2f(entity.getPitch(), entity.getHeadYaw())).multiply(entity.getWidth());
 			x += rotation.getX();
@@ -37,7 +38,7 @@ public class HypnotizedParticle extends AnchoredParticle {
 
 	public record Factory(SpriteProvider spriteProvider) implements ParticleFactory<SimpleParticleType> {
 		@Override
-		public Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double z, double entityId, double yOffset, double speed, double intensity) {
+		public Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double z, double entityId, double yOffset, double speed, double intensity, Random random) {
 			return new HypnotizedParticle(world, x, z, MathHelper.floor(entityId), yOffset, speed, intensity, spriteProvider());
 		}
 	}

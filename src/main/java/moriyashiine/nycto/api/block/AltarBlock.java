@@ -36,7 +36,7 @@ public abstract class AltarBlock extends Block {
 
 	@Override
 	protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-		if (!world.isClient) {
+		if (!world.isClient()) {
 			if (canUse(player)) {
 				player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
 			} else {

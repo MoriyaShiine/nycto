@@ -80,7 +80,7 @@ public class VampiricThrallEvent {
 						if (fillAmount > 0) {
 							BloodComponent bloodComponent = ModEntityComponents.BLOOD.get(entity);
 							if (bloodComponent.canFill()) {
-								if (!world.isClient) {
+								if (!world.isClient()) {
 									bloodComponent.fill(fillAmount);
 									NyctoUtil.spawnBloodParticles(entity);
 									SLibUtils.playSound(entity, ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK.value());

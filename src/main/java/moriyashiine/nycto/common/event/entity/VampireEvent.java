@@ -77,7 +77,7 @@ public class VampireEvent {
 			if (entity instanceof PlayerEntity player && NyctoAPI.isVampire(player)) {
 				float boostProgress = ModEntityComponents.VAMPIRE_CHARGE_JUMP.get(entity).getBoostProgress();
 				if (boostProgress > 0) {
-					if (boostProgress > 0.25F && entity.getWorld() instanceof ServerWorld world) {
+					if (boostProgress > 0.25F && entity.getEntityWorld() instanceof ServerWorld world) {
 						world.spawnParticles(ModParticleTypes.BLOOD, entity.getX(), entity.getY() + entity.getHeight() * 0.5, entity.getZ(), 8, entity.getWidth() / 2, 0, entity.getWidth() / 2, 0.15);
 						SLibUtils.playSound(entity, SoundEvents.BLOCK_SLIME_BLOCK_FALL, 1, 0.75F);
 						entity.emitGameEvent(GameEvent.ENTITY_ACTION);

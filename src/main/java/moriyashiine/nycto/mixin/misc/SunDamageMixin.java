@@ -25,7 +25,7 @@ public abstract class SunDamageMixin extends Entity {
 	@ModifyVariable(method = "damage", at = @At("HEAD"), argsOnly = true)
 	private DamageSource nycto$sunDamage(DamageSource value) {
 		if (value.isIn(DamageTypeTags.IS_FIRE) && NyctoUtil.shouldTakeSunDamage(this)) {
-			return getWorld().getDamageSources().create(ModDamageTypes.SUN, value.getSource(), value.getAttacker());
+			return getDamageSources().create(ModDamageTypes.SUN, value.getSource(), value.getAttacker());
 		}
 		return value;
 	}

@@ -51,7 +51,7 @@ public class VampireTransformation extends Transformation {
 
 	@Override
 	public void tick(ServerPlayerEntity player) {
-		if (player.getWorld().getTime() % 6000 == 0) {
+		if (player.getEntityWorld().getTime() % 6000 == 0) {
 			player.resetStat(Stats.CUSTOM.getOrCreateStat(Stats.TIME_SINCE_REST));
 		}
 	}

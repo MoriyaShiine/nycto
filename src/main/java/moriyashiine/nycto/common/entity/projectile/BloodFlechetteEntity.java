@@ -40,7 +40,7 @@ public class BloodFlechetteEntity extends ThrownEntity {
 		super.onEntityHit(entityHitResult);
 		playSoundIfNotSilent(ModSoundEvents.ENTITY_BLOOD_FLECHETTE_HIT_ENTITY);
 		Entity entity = entityHitResult.getEntity();
-		if (getWorld() instanceof ServerWorld serverWorld) {
+		if (getEntityWorld() instanceof ServerWorld serverWorld) {
 			entity.timeUntilRegen = 0;
 			boolean damage = entity.damage(serverWorld, getDamageSources().thrown(this, getOwner()), 2);
 			if (damage && !entity.getType().isIn(ModEntityTypeTags.HAS_NO_BLOOD) && entity instanceof LivingEntity living) {
@@ -52,7 +52,7 @@ public class BloodFlechetteEntity extends ThrownEntity {
 	@Override
 	protected void onCollision(HitResult hitResult) {
 		super.onCollision(hitResult);
-		if (!getWorld().isClient) {
+		if (!getEntityWorld().isClient()) {
 			NyctoUtil.spawnBloodParticles(this);
 			discard();
 		}

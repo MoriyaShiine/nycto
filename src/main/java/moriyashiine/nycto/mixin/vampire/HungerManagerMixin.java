@@ -53,7 +53,7 @@ public abstract class HungerManagerMixin {
 					exhaustion = 0;
 					bloodComponent.drain(1);
 				}
-				if (player.getWorld().getTime() % 15 == 0 && player.canFoodHeal() && player.getWorld().getGameRules().getBoolean(GameRules.NATURAL_REGENERATION)) {
+				if (player.getEntityWorld().getTime() % 15 == 0 && player.canFoodHeal() && player.getEntityWorld().getGameRules().getBoolean(GameRules.NATURAL_REGENERATION)) {
 					player.heal(1);
 					addExhaustion(2 / VampireTransformation.VAMPIRE_EXHAUSTION_MULTIPLIER);
 				}

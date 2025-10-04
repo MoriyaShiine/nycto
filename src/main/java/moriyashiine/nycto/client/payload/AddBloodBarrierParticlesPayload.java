@@ -36,9 +36,9 @@ public record AddBloodBarrierParticlesPayload(int entityId, int barrier) impleme
 	public static class Receiver implements ClientPlayNetworking.PlayPayloadHandler<AddBloodBarrierParticlesPayload> {
 		@Override
 		public void receive(AddBloodBarrierParticlesPayload payload, ClientPlayNetworking.Context context) {
-			if (context.player().getWorld().getEntityById(payload.entityId()) instanceof LivingEntity entity && SLibClientUtils.shouldAddParticles(entity)) {
+			if (context.player().getEntityWorld().getEntityById(payload.entityId()) instanceof LivingEntity entity && SLibClientUtils.shouldAddParticles(entity)) {
 				for (int i = 0; i < 24; i++) {
-					entity.getWorld().addParticleClient(ParticleTypes.SMOKE, entity.getParticleX(1), entity.getY() + BloodBarrierComponent.getHeightOffset(payload.barrier(), entity.getHeight()), entity.getParticleZ(1), entity.getRandom().nextGaussian() / 16, entity.getRandom().nextGaussian() / 32, entity.getRandom().nextGaussian() / 16);
+					entity.getEntityWorld().addParticleClient(ParticleTypes.SMOKE, entity.getParticleX(1), entity.getY() + BloodBarrierComponent.getHeightOffset(payload.barrier(), entity.getHeight()), entity.getParticleZ(1), entity.getRandom().nextGaussian() / 16, entity.getRandom().nextGaussian() / 32, entity.getRandom().nextGaussian() / 16);
 				}
 			}
 		}

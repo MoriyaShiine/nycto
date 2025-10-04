@@ -84,7 +84,7 @@ public class GarlicWreathBlock extends Block {
 
 	@Override
 	protected void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
-		if (!world.isClient) {
+		if (!world.isClient()) {
 			AuraComponent auraComponent = ModWorldComponents.AURA.get(world);
 			auraComponent.getGarlicWreaths().add(pos);
 			auraComponent.sync();

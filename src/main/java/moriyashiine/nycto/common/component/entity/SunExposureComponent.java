@@ -116,10 +116,10 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 	}
 
 	private boolean updateExposed() {
-		if (NyctoAPI.hasRespawnLeniency(obj) || !obj.getWorld().isDay() || !obj.canTakeDamage() || obj.isBeingRainedOn()) {
+		if (NyctoAPI.hasRespawnLeniency(obj) || !obj.getEntityWorld().isDay() || !obj.canTakeDamage() || obj.isBeingRainedOn()) {
 			return false;
 		}
-		if (obj.getSleepingPosition().isPresent() && obj.getWorld().getBlockState(obj.getSleepingPosition().get()).isIn(ModBlockTags.COFFINS)) {
+		if (obj.getSleepingPosition().isPresent() && obj.getEntityWorld().getBlockState(obj.getSleepingPosition().get()).isIn(ModBlockTags.COFFINS)) {
 			return false;
 		}
 		return exposedAtPos(obj, obj.getBlockPos());
@@ -127,7 +127,7 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 
 	public static boolean exposedAtPos(Entity entity, BlockPos pos) {
 		for (int i = MathHelper.ceil(entity.getHeight()) - 1; i >= 0; i--) {
-			if (entity.getWorld().isSkyVisible(pos.up(i))) {
+			if (entity.getEntityWorld().isSkyVisible(pos.up(i))) {
 				return true;
 			}
 		}

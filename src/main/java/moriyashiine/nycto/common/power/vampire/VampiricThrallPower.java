@@ -74,7 +74,7 @@ public class VampiricThrallPower extends VampireActivePower {
 				if (!isTamed(target)) {
 					return false;
 				}
-				if (!player.getWorld().isClient) {
+				if (!player.getEntityWorld().isClient()) {
 					if (tameable.getOwnerReference() == null || !tameable.getOwnerReference().uuidEquals(player)) {
 						return false;
 					}

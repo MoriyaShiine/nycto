@@ -37,7 +37,7 @@ public record SetTransformationPayload(int entityId, Transformation transformati
 	public static class Receiver implements ClientPlayNetworking.PlayPayloadHandler<SetTransformationPayload> {
 		@Override
 		public void receive(SetTransformationPayload payload, ClientPlayNetworking.Context context) {
-			Entity entity = context.player().getWorld().getEntityById(payload.entityId());
+			Entity entity = context.player().getEntityWorld().getEntityById(payload.entityId());
 			if (entity instanceof PlayerEntity player) {
 				NyctoAPIImpl.setTransformation(player, payload.transformation());
 			}

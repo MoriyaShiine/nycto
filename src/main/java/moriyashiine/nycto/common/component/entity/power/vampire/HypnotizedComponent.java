@@ -19,7 +19,7 @@ public class HypnotizedComponent extends HasOwnerComponent implements ServerTick
 	public void serverTick() {
 		if (obj.hasStatusEffect(ModStatusEffects.HYPNOTIZED)) {
 			if (ownerUuid == null && obj.age % 20 == 0 && obj.getType() != EntityType.PLAYER) {
-				setOwner(obj.getWorld().getClosestPlayer(obj, 16));
+				setOwner(obj.getEntityWorld().getClosestPlayer(obj, 16));
 			}
 		} else if (ownerUuid != null) {
 			HypnotizePower.forget(obj);

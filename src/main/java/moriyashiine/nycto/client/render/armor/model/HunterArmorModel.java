@@ -3,12 +3,15 @@
  */
 package moriyashiine.nycto.client.render.armor.model;
 
+import moriyashiine.nycto.client.render.armor.HunterArmorRenderer;
+import moriyashiine.nycto.client.util.NyctoClientUtil;
 import moriyashiine.nycto.common.Nycto;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
 import net.minecraft.client.render.entity.state.BipedEntityRenderState;
+import net.minecraft.entity.EquipmentSlot;
 
 public class HunterArmorModel<S extends BipedEntityRenderState> extends BipedEntityModel<S> {
 	public static final EntityModelLayer MODEL_LAYER = new EntityModelLayer(Nycto.id("hunter_armor"), "main");
@@ -45,17 +48,31 @@ public class HunterArmorModel<S extends BipedEntityRenderState> extends BipedEnt
 		ModelPartData chestFlowers = body.addChild("chest_flowers", ModelPartBuilder.create().uv(115, 16).cuboid(-1.25F, 0, -0.75F, 4, 5, 0, Dilation.NONE).uv(115, 23).cuboid(-8.25F, -6.75F, 4.76F, 4, 5, 0, Dilation.NONE).uv(115, 23).cuboid(-6.25F, -3.75F, -0.49F, 4, 5, 0, Dilation.NONE).uv(102, 80).cuboid(-5.5F, -8, -0.75F, 5, 6, 0, Dilation.NONE), ModelTransform.origin(2, 10, -2.25F));
 		chestFlowers.addChild("chest_flowers_cube", ModelPartBuilder.create().uv(115, 23).cuboid(-2, -0.0019F, -0.9872F, 4, 5, 0, Dilation.NONE), ModelTransform.of(-3, -3.75F, 5.75F, 0.0436F, 0, 0));
 
-		root.addChild(EntityModelPartNames.LEFT_ARM, ModelPartBuilder.create().uv(98, 16).mirrored().cuboid(-1, -2, -2, 4, 12, 4, new Dilation(0.32F)).mirrored(false), ModelTransform.NONE);
-		root.addChild(EntityModelPartNames.RIGHT_ARM, ModelPartBuilder.create().uv(98, 16).cuboid(-3, -2, -2, 4, 12, 4, new Dilation(0.32F)), ModelTransform.NONE);
+		root.addChild(EntityModelPartNames.LEFT_ARM, ModelPartBuilder.create().uv(98, 16).mirrored().cuboid(-1, -2, -2, 4, 12, 4, new Dilation(0.32F)).mirrored(false), ModelTransform.origin(5, 2, 0));
+		root.addChild(EntityModelPartNames.RIGHT_ARM, ModelPartBuilder.create().uv(98, 16).cuboid(-3, -2, -2, 4, 12, 4, new Dilation(0.32F)), ModelTransform.origin(-5, 2, 0));
 
-		ModelPartData leftLeg = root.addChild(EntityModelPartNames.LEFT_LEG, ModelPartBuilder.create(), ModelTransform.NONE);
+		ModelPartData leftLeg = root.addChild(EntityModelPartNames.LEFT_LEG, ModelPartBuilder.create(), ModelTransform.origin(1.9F, 12, 0));
 		leftLeg.addChild("left_leg_real", ModelPartBuilder.create().uv(58, 16).mirrored().cuboid(-2.1F, 0, -2, 4, 12, 4, new Dilation(0.35F)).mirrored(false), ModelTransform.NONE);
 		leftLeg.addChild("left_foot", ModelPartBuilder.create().uv(79, 65).mirrored().cuboid(-2.1F, 0, -2, 4, 12, 4, new Dilation(0.36F)).mirrored(false), ModelTransform.NONE);
 
-		ModelPartData rightLeg = root.addChild(EntityModelPartNames.RIGHT_LEG, ModelPartBuilder.create(), ModelTransform.NONE);
+		ModelPartData rightLeg = root.addChild(EntityModelPartNames.RIGHT_LEG, ModelPartBuilder.create(), ModelTransform.origin(-1.9F, 12, 0));
 		rightLeg.addChild("right_leg_real", ModelPartBuilder.create().uv(58, 16).cuboid(-1.9F, 0, -2, 4, 12, 4, new Dilation(0.35F)), ModelTransform.NONE);
 		rightLeg.addChild("right_foot", ModelPartBuilder.create().uv(79, 65).cuboid(-1.9F, 0, -2, 4, 12, 4, new Dilation(0.36F)), ModelTransform.NONE);
 
 		return TexturedModelData.of(data, 128, 128);
+	}
+
+	@Override
+	public void setAngles(S state) {
+		super.setAngles(state);
+		coatFlap.pitch = Math.max(leftLeg.pitch, rightLeg.pitch);
+		if (state.sneaking) {
+			coatFlap.pitch /= 3;
+		}
+
+		head.visible = NyctoClientUtil.isArmorRenderer(state, EquipmentSlot.HEAD, r -> r instanceof HunterArmorRenderer);
+		body.visible = leftArm.visible = rightArm.visible = NyctoClientUtil.isArmorRenderer(state, EquipmentSlot.CHEST, r -> r instanceof HunterArmorRenderer);
+		leftLegReal.visible = rightLegReal.visible = NyctoClientUtil.isArmorRenderer(state, EquipmentSlot.LEGS, r -> r instanceof HunterArmorRenderer);
+		leftFoot.visible = rightFoot.visible = NyctoClientUtil.isArmorRenderer(state, EquipmentSlot.FEET, r -> r instanceof HunterArmorRenderer);
 	}
 }

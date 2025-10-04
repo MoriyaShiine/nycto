@@ -32,7 +32,7 @@ public class VampireWardStatusEffect extends EntityRemovableStatusEffect {
 	public void onApplied(LivingEntity entity, int amplifier) {
 		if (entity instanceof ServerPlayerEntity player && NyctoAPI.isVampire(player)) {
 			NyctoAPI.applyHealBlock(player, 100);
-			NyctoUtil.disableFormChangePowers(player.getWorld(), player, null);
+			NyctoUtil.disableFormChangePowers(player.getEntityWorld(), player, null);
 		}
 	}
 

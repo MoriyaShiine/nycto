@@ -117,7 +117,7 @@ public class ItemDescriptionsEvent implements ItemTooltipCallback {
 	private static Optional<List<Text>> getDescriptionText(ItemStack stack, List<Text> descriptions, Predicate<ItemStack> predicate) {
 		if (predicate.test(stack)) {
 			List<Text> lines = new ArrayList<>();
-			if (InputUtil.isKeyPressed(client.getWindow().getHandle(), InputUtil.GLFW_KEY_LEFT_SHIFT)) {
+			if (InputUtil.isKeyPressed(client.getWindow(), InputUtil.GLFW_KEY_LEFT_SHIFT)) {
 				lines.addAll(descriptions);
 			} else {
 				lines.add(HOLD_LEFT_SHEFT_TEXT);

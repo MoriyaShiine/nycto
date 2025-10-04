@@ -50,7 +50,6 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
@@ -65,6 +64,7 @@ import net.minecraft.client.option.SimpleOption;
 import net.minecraft.client.option.StickyKeyBinding;
 import net.minecraft.client.particle.SpellParticle;
 import net.minecraft.client.render.BlockRenderLayer;
+import net.minecraft.client.render.entity.EntityRendererFactories;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.render.entity.model.BatEntityModel;
 import net.minecraft.client.render.entity.model.ModelTransformer;
@@ -73,10 +73,12 @@ import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 
 public class NyctoClient implements ClientModInitializer {
+	private static final KeyBinding.Category KEY_CATEGORY = KeyBinding.Category.create(Nycto.id(Nycto.MOD_ID));
 	private static final String POWER_HOTBAR_TRANSLATION_KEY = "key." + Nycto.MOD_ID + ".power_hotbar";
+
 	public static final SimpleOption<Boolean> POWER_HOTBAR_TOGGLED = new SimpleOption<>(POWER_HOTBAR_TRANSLATION_KEY, SimpleOption.emptyTooltip(), (optionText, value) -> value ? Text.translatable("options.key.toggle") : Text.translatable("options.key.hold"), SimpleOption.BOOLEAN, false, value -> {
 	});
-	public static final KeyBinding POWER_HOTBAR_KEYBINDING = KeyBindingHelper.registerKeyBinding(new StickyKeyBinding(POWER_HOTBAR_TRANSLATION_KEY, GLFW.GLFW_KEY_R, "key.categories." + Nycto.MOD_ID, POWER_HOTBAR_TOGGLED::getValue));
+	public static final KeyBinding POWER_HOTBAR_KEYBINDING = KeyBindingHelper.registerKeyBinding(new StickyKeyBinding(POWER_HOTBAR_TRANSLATION_KEY, GLFW.GLFW_KEY_R, KEY_CATEGORY, POWER_HOTBAR_TOGGLED::getValue, true));
 
 	@Override
 	public void onInitializeClient() {
@@ -105,10 +107,10 @@ public class NyctoClient implements ClientModInitializer {
 	}
 
 	private void initEntities() {
-		EntityRendererRegistry.register(ModEntityTypes.WOODEN_STAKE, WoodenStakeEntityRenderer::new);
-		EntityRendererRegistry.register(ModEntityTypes.ACONITE_ARROW, AconiteArrowEntityRenderer::new);
-		EntityRendererRegistry.register(ModEntityTypes.FIREBOMB, FlyingItemEntityRenderer::new);
-		EntityRendererRegistry.register(ModEntityTypes.BLOOD_FLECHETTE, BloodFlechetteEntityRenderer::new);
+		EntityRendererFactories.register(ModEntityTypes.WOODEN_STAKE, WoodenStakeEntityRenderer::new);
+		EntityRendererFactories.register(ModEntityTypes.ACONITE_ARROW, AconiteArrowEntityRenderer::new);
+		EntityRendererFactories.register(ModEntityTypes.FIREBOMB, FlyingItemEntityRenderer::new);
+		EntityRendererFactories.register(ModEntityTypes.BLOOD_FLECHETTE, BloodFlechetteEntityRenderer::new);
 		EntityModelLayerRegistry.registerModelLayer(BloodrushAuraFeatureRenderer.LAYER, () -> TexturedModelData.of(PlayerEntityModel.getTexturedModelData(new Dilation(1), false), 64, 64));
 		EntityModelLayerRegistry.registerModelLayer(BloodrushAuraFeatureRenderer.LAYER_SLIM, () -> TexturedModelData.of(PlayerEntityModel.getTexturedModelData(new Dilation(1), true), 64, 64));
 		EntityModelLayerRegistry.registerModelLayer(BloodBarrierModel.LAYER, BloodBarrierModel::getTexturedModelData);
@@ -119,11 +121,11 @@ public class NyctoClient implements ClientModInitializer {
 		EntityModelLayerRegistry.registerModelLayer(VampireCarnageAuraFeatureRenderer.LAYER, VampireEntityModel::getTexturedModelData);
 
 		EntityModelLayerRegistry.registerModelLayer(VampireEntityModel.LAYER, VampireEntityModel::getTexturedModelData);
-		EntityRendererRegistry.register(ModEntityTypes.VAMPIRE, VampireEntityRenderer::new);
+		EntityRendererFactories.register(ModEntityTypes.VAMPIRE, VampireEntityRenderer::new);
 		EntityModelLayerRegistry.registerModelLayer(HunterEntityModel.LAYER, HunterEntityModel::getHunterTexturedModelData);
-		EntityRendererRegistry.register(ModEntityTypes.HUNTER, HunterEntityRenderer::new);
+		EntityRendererFactories.register(ModEntityTypes.HUNTER, HunterEntityRenderer::new);
 		EntityModelLayerRegistry.registerModelLayer(DarkFormEntityModel.LAYER, DarkFormEntityModel::getTexturedModelData);
-		EntityRendererRegistry.register(ModEntityTypes.DARK_FORM, DarkFormEntityRenderer::new);
+		EntityRendererFactories.register(ModEntityTypes.DARK_FORM, DarkFormEntityRenderer::new);
 
 		EntityModelLayerRegistry.registerModelLayer(VampireArmorModel.MODEL_LAYER, VampireArmorModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(HunterArmorModel.MODEL_LAYER, HunterArmorModel::getTexturedModelData);

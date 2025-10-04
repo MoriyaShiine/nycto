@@ -33,8 +33,8 @@ public class VampiricThrallComponent extends HasOwnerComponent implements AutoSy
 		super.readData(readView);
 		followMode = FollowMode.valueOf(readView.getString("FollowMode", FollowMode.FOLLOW.name()));
 		alternateDrain = readView.getBoolean("AlternateDrain", false);
-		if (ownerUuid != null && obj instanceof VillagerEntity villager && villager.getWorld() instanceof ServerWorld serverWorld) {
-			villager.reinitializeBrain(serverWorld);
+		if (ownerUuid != null && obj instanceof VillagerEntity villager && villager.getEntityWorld() instanceof ServerWorld world) {
+			villager.reinitializeBrain(world);
 		}
 	}
 
@@ -59,7 +59,7 @@ public class VampiricThrallComponent extends HasOwnerComponent implements AutoSy
 				}
 			}
 			if (obj.age % 20 == 0 && getFollowMode() == FollowMode.FOLLOW && (obj.getTarget() == null || obj.getTarget().isDead())) {
-				Entity owner = obj.getWorld().getEntity(ownerUuid);
+				Entity owner = obj.getEntityWorld().getEntity(ownerUuid);
 				if (owner instanceof LivingEntity living && obj.distanceTo(owner) > 24 && living.isPartOfGame()) {
 					obj.teleport(owner.getX() + obj.getRandom().nextBetween(-3, 3), owner.getY(), owner.getZ() + obj.getRandom().nextBetween(-3, 3), false);
 				}

@@ -51,7 +51,7 @@ public class DarkFormEntity extends HostileEntity {
 		} else if (jumpCooldown > 0) {
 			jumpCooldown--;
 		}
-		if (getWorld().isClient) {
+		if (getEntityWorld().isClient()) {
 			idleAnimationState.setRunning(!isInSneakingPose(), age);
 			idleSneakAnimationState.setRunning(isInSneakingPose(), age);
 			jumpAnimationState.setRunning(jumpCooldown > 0 && !isOnGround(), age);

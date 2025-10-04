@@ -170,7 +170,7 @@
   "message.nycto.cycle_follow_mode.follow": "%s теперь следует за вами",
   "message.nycto.cycle_follow_mode.stay": "%s теперь стоит смирно",
   "message.nycto.cycle_follow_mode.wander": "%s теперь блуждает",
-  "key.categories.nycto": "Nycto",
+  "key.category.nycto.nycto": "Nycto",
   "key.nycto.power_hotbar": "Хотбар способностей",
   "tooltip.nycto.hold_left_shift": "Удерживайте [%s] для полной информации.",
   "tooltip.nycto.holding_player_blood": "Держите кровь игрока",

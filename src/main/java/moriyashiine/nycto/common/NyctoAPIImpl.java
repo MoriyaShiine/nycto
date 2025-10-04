@@ -45,7 +45,7 @@ public class NyctoAPIImpl {
 		if (entity instanceof PlayerEntity player) {
 			return NyctoAPI.getTransformation(player) == ModTransformations.VAMPIRE;
 		}
-		for (PlayerEntity player : entity.getWorld().getPlayers()) {
+		for (PlayerEntity player : entity.getEntityWorld().getPlayers()) {
 			if (SLibUtils.getModelReplacement(player) == entity) {
 				return isPlayerVampire(player);
 			}

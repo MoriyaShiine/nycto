@@ -30,7 +30,7 @@ public record ClearNegativeEffectsConsumeEffect() implements ConsumeEffect {
 
 	@Override
 	public boolean onConsume(World world, ItemStack stack, LivingEntity user) {
-		if (world.isClient) {
+		if (world.isClient()) {
 			return false;
 		}
 		boolean removed = false;

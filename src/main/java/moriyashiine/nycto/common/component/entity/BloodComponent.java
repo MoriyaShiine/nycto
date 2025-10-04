@@ -54,7 +54,7 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 
 	@Override
 	public void serverTick() {
-		if (obj.getWorld().getTime() % 20 == 0 && obj.getWorld().getDifficulty() == Difficulty.PEACEFUL) {
+		if (obj.getEntityWorld().getTime() % 20 == 0 && obj.getEntityWorld().getDifficulty() == Difficulty.PEACEFUL) {
 			fill(5);
 		}
 		if (bleedTicks > 0 && --bleedTicks % 20 == 0) {
@@ -67,7 +67,7 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 		if (!shouldRegenerateNaturally) {
 			return;
 		}
-		if (canFill() && obj.getWorld().getTime() % 20 == 0 && obj.isAlive()) {
+		if (canFill() && obj.getEntityWorld().getTime() % 20 == 0 && obj.isAlive()) {
 			if (lowBlood()) {
 				obj.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 60, 1, true, false));
 				obj.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 60, 0, true, false));
@@ -76,7 +76,7 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 					obj.serverDamage(obj.getDamageSources().create(ModDamageTypes.BLEED), 2);
 				}
 			}
-			if (regenerationBlockTicks <= 0 && obj.getWorld().getTime() % REGEN_TIME == 0) {
+			if (regenerationBlockTicks <= 0 && obj.getEntityWorld().getTime() % REGEN_TIME == 0) {
 				fill(obj.isSleeping() ? 5 : 1);
 			}
 		}

@@ -87,7 +87,7 @@ public class DarkFormComponent extends VampireFormChangeComponent implements Com
 		super.serverTick();
 		tick();
 		if (enabled && NyctoUtil.isSurvival(obj) && obj.age % 20 == 0) {
-			obj.getWorld().getEntitiesByClass(VillagerEntity.class, obj.getBoundingBox().expand(16), LivingEntity::isAlive).forEach(villager -> villager.getBrain().doExclusively(Activity.PANIC));
+			obj.getEntityWorld().getEntitiesByClass(VillagerEntity.class, obj.getBoundingBox().expand(16), LivingEntity::isAlive).forEach(villager -> villager.getBrain().doExclusively(Activity.PANIC));
 		}
 	}
 

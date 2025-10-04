@@ -52,14 +52,14 @@ public class FirebombEntity extends ThrownItemEntity {
 	@Override
 	protected void onCollision(HitResult hitResult) {
 		super.onCollision(hitResult);
-		if (getWorld() instanceof ServerWorld serverWorld) {
-			Box box = getBoundingBox().offset(hitResult.getPos().subtract(getPos())).expand(3, 2, 3);
+		if (getEntityWorld() instanceof ServerWorld serverWorld) {
+			Box box = getBoundingBox().offset(hitResult.getPos().subtract(getEntityPos())).expand(3, 2, 3);
 			BlockPos.Mutable mutable = new BlockPos.Mutable();
 			for (double x = box.minX; x <= box.maxX; x++) {
 				for (double y = box.minY; y <= box.maxY; y++) {
 					for (double z = box.minZ; z <= box.maxZ; z++) {
 						mutable.set(x, y, z);
-						if (mutable.equals(getBlockPos()) || (getRandom().nextInt(3) == 0 && mutable.isWithinDistance(getPos(), 2.5))) {
+						if (mutable.equals(getBlockPos()) || (getRandom().nextInt(3) == 0 && mutable.isWithinDistance(getEntityPos(), 2.5))) {
 							if (!serverWorld.hasRain(mutable)) {
 								BlockState state = serverWorld.getBlockState(mutable);
 								if (state.isReplaceable() && state.getFluidState().isEmpty() && ModBlocks.FIREBOMB.getDefaultState().canPlaceAt(serverWorld, mutable)) {
@@ -70,7 +70,7 @@ public class FirebombEntity extends ThrownItemEntity {
 					}
 				}
 			}
-			getWorld().getNonSpectatingEntities(LivingEntity.class, box).forEach(foundEntity -> {
+			getEntityWorld().getNonSpectatingEntities(LivingEntity.class, box).forEach(foundEntity -> {
 				if (!foundEntity.isTouchingWaterOrRain()) {
 					foundEntity.setOnFireFor(8);
 				}
@@ -90,8 +90,8 @@ public class FirebombEntity extends ThrownItemEntity {
 
 	@Override
 	public DoubleDoubleImmutablePair getKnockback(LivingEntity target, DamageSource source) {
-		double dX = target.getPos().getX() - this.getPos().getX();
-		double dZ = target.getPos().getZ() - this.getPos().getZ();
+		double dX = target.getEntityPos().getX() - getEntityPos().getX();
+		double dZ = target.getEntityPos().getZ() - getEntityPos().getZ();
 		return DoubleDoubleImmutablePair.of(dX, dZ);
 	}
 }

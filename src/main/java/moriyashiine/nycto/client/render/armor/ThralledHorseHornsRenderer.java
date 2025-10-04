@@ -9,7 +9,7 @@ import moriyashiine.nycto.common.Nycto;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.HorseEntityModel;
@@ -38,7 +38,7 @@ public class ThralledHorseHornsRenderer extends FeatureRenderer<HorseEntityRende
 	}
 
 	@Override
-	public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, HorseEntityRenderState state, float limbAngle, float limbDistance) {
+	public void render(MatrixStack matrices, OrderedRenderCommandQueue queue, int light, HorseEntityRenderState state, float limbAngle, float limbDistance) {
 		if (((VampiricThrallRenderStateAddition) state).nycto$isThralled() && TEXTURE_MAP.containsKey(state.armor.getItem())) {
 			int color = 0xFFFFFFFF;
 			if (state.armor.contains(DataComponentTypes.DYED_COLOR)) {
@@ -46,8 +46,7 @@ public class ThralledHorseHornsRenderer extends FeatureRenderer<HorseEntityRende
 			} else if (state.armor.isOf(Items.LEATHER_HORSE_ARMOR)) {
 				color = 0xA06540;
 			}
-			hornsModel.setAngles(state);
-			hornsModel.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(TEXTURE_MAP.get(state.armor.getItem()))), light, OverlayTexture.DEFAULT_UV, color);
+			queue.submitModel(hornsModel, state, matrices, RenderLayer.getEntityCutoutNoCull(TEXTURE_MAP.get(state.armor.getItem())), light, OverlayTexture.DEFAULT_UV, color, null, state.outlineColor, null);
 		}
 	}
 }

@@ -41,7 +41,7 @@ public class HasOwnerEvent implements ServerLivingEntityEvents.AfterDamage {
 
 	public static void revenge(LivingEntity victim, DamageSource source, RevengeFunction revengeFunction) {
 		if (source.getAttacker() instanceof LivingEntity attacker) {
-			victim.getWorld().getEntitiesByClass(MobEntity.class, victim.getBoundingBox().expand(16), EntityPredicates.EXCEPT_CREATIVE_OR_SPECTATOR.and(
+			victim.getEntityWorld().getEntitiesByClass(MobEntity.class, victim.getBoundingBox().expand(16), EntityPredicates.EXCEPT_CREATIVE_OR_SPECTATOR.and(
 							entity -> entity instanceof MobEntity mob && revengeFunction.shouldHelp(mob, attacker, victim)))
 					.forEach(foundEntity -> {
 						LivingEntity target = revengeFunction.targetAttacker() ? attacker : victim;

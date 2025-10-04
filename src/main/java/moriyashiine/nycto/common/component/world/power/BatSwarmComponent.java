@@ -142,7 +142,7 @@ public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComp
 						targetIds.remove(i);
 					} else if (canSee(target)) {
 						LivingEntity living = (LivingEntity) target;
-						if (!world.isClient && age % 20 == 0 && pos.distanceTo(living.getPos()) < RANGE + 1) {
+						if (!world.isClient() && age % 20 == 0 && pos.distanceTo(living.getEntityPos()) < RANGE + 1) {
 							feed(living);
 						}
 						if (!moveTo) {
@@ -158,7 +158,7 @@ public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComp
 				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_BAT_AMBIENT, SoundCategory.PLAYERS, 0.15F, 1);
 				nextSoundTimer = owner.getRandom().nextBetween(4, 12);
 			}
-			if (world.isClient && age < MAX_AGE - 20) {
+			if (world.isClient() && age < MAX_AGE - 20) {
 				spawnParticles(world, owner.getRandom());
 			}
 		}
@@ -184,11 +184,11 @@ public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComp
 		}
 
 		private boolean canSee(Vec3d pos) {
-			return owner.getWorld().raycast(new RaycastContext(getPos(), pos, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, owner)).getType() == HitResult.Type.MISS;
+			return owner.getEntityWorld().raycast(new RaycastContext(getPos(), pos, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, owner)).getType() == HitResult.Type.MISS;
 		}
 
 		private boolean canSee(Entity entity) {
-			return entity != null && getPos().distanceTo(entity.getPos()) < 64 && canSee(entity.getEyePos());
+			return entity != null && getPos().distanceTo(entity.getEntityPos()) < 64 && canSee(entity.getEyePos());
 		}
 
 		private boolean shouldDie() {
@@ -208,7 +208,7 @@ public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComp
 				if (getBlood() >= BLOOD_FILL_AMOUNT && ModEntityComponents.BLOOD.get(target).fill(BLOOD_FILL_AMOUNT)) {
 					SLibUtils.playSound(target, ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK.value());
 					blood -= BLOOD_FILL_AMOUNT;
-					ModWorldComponents.BAT_SWARM.sync(target.getWorld());
+					ModWorldComponents.BAT_SWARM.sync(target.getEntityWorld());
 				}
 			} else {
 				boolean hasBlood = !target.getType().isIn(ModEntityTypeTags.HAS_NO_BLOOD);
@@ -222,7 +222,7 @@ public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComp
 					if (ModEntityComponents.BLOOD.get(target).drainAttack(BLOOD_DRAIN_AMOUNT)) {
 						SLibUtils.playSound(target, ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK.value());
 						blood += BLOOD_DRAIN_AMOUNT / (qualityBlood ? 1 : 2);
-						ModWorldComponents.BAT_SWARM.sync(target.getWorld());
+						ModWorldComponents.BAT_SWARM.sync(target.getEntityWorld());
 					}
 				}
 			}

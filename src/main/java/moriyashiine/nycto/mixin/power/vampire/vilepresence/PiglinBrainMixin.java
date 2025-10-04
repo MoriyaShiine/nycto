@@ -25,7 +25,7 @@ public abstract class PiglinBrainMixin {
 	@Inject(method = "tickActivities", at = @At("TAIL"))
 	private static void nycto$vilePresence(PiglinEntity piglin, CallbackInfo ci) {
 		if (piglin.age % 5 == 0) {
-			piglin.getWorld().getEntitiesByType(EntityType.PLAYER, piglin.getBoundingBox().expand(piglin.getAttributeValue(EntityAttributes.FOLLOW_RANGE)), foundPlayer -> piglin.canSee(foundPlayer) && piglin.distanceTo(foundPlayer) < piglin.getAttributeValue(EntityAttributes.FOLLOW_RANGE) && VilePresencePower.isAffected(piglin, foundPlayer)).forEach(player -> onAttacked((ServerWorld) piglin.getWorld(), piglin, player));
+			piglin.getEntityWorld().getEntitiesByType(EntityType.PLAYER, piglin.getBoundingBox().expand(piglin.getAttributeValue(EntityAttributes.FOLLOW_RANGE)), foundPlayer -> piglin.canSee(foundPlayer) && piglin.distanceTo(foundPlayer) < piglin.getAttributeValue(EntityAttributes.FOLLOW_RANGE) && VilePresencePower.isAffected(piglin, foundPlayer)).forEach(player -> onAttacked((ServerWorld) piglin.getEntityWorld(), piglin, player));
 		}
 	}
 }

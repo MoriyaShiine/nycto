@@ -23,12 +23,12 @@ public class VilePresencePower extends NegativePower {
 	@Override
 	public void tick(ServerPlayerEntity player) {
 		if (!player.isCreative()) {
-			player.getWorld().getEntitiesByType(EntityType.CAT, player.getBoundingBox().expand(16), VilePresencePower::canBeAffected).forEach(cat -> {
+			player.getEntityWorld().getEntitiesByType(EntityType.CAT, player.getBoundingBox().expand(16), VilePresencePower::canBeAffected).forEach(cat -> {
 				if ((cat.age + cat.getId()) % 100 == 0) {
 					cat.hiss();
 				}
 			});
-			player.getWorld().getEntitiesByType(EntityType.WOLF, player.getBoundingBox().expand(16), VilePresencePower::canBeAffected).forEach(wolf -> {
+			player.getEntityWorld().getEntitiesByType(EntityType.WOLF, player.getBoundingBox().expand(16), VilePresencePower::canBeAffected).forEach(wolf -> {
 				if ((wolf.age + wolf.getId()) % 100 == 0) {
 					wolf.chooseRandomAngerTime();
 				}
@@ -42,7 +42,7 @@ public class VilePresencePower extends NegativePower {
 
 	public static boolean isAffected(Entity entity, double distance) {
 		if (canBeAffected(entity)) {
-			for (PlayerEntity player : entity.getWorld().getPlayers()) {
+			for (PlayerEntity player : entity.getEntityWorld().getPlayers()) {
 				if (player.distanceTo(entity) <= distance && shouldApply(player)) {
 					return true;
 				}

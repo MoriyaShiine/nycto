@@ -7,13 +7,13 @@ import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.entity.projectile.BloodFlechetteEntity;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.model.ArrowEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.render.entity.state.ProjectileEntityRenderState;
+import net.minecraft.client.render.state.CameraRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
@@ -34,15 +34,13 @@ public class BloodFlechetteEntityRenderer extends EntityRenderer<BloodFlechetteE
 	}
 
 	@Override
-	public void render(ProjectileEntityRenderState state, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
+	public void render(ProjectileEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue queue, CameraRenderState cameraState) {
 		matrices.push();
 		matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(state.yaw - 90));
 		matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(state.pitch));
-		VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityCutout(TEXTURE));
-		model.setAngles(state);
-		model.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV);
+		queue.submitModel(model, state, matrices, RenderLayer.getEntityCutout(TEXTURE), state.light, OverlayTexture.DEFAULT_UV, state.outlineColor, null);
 		matrices.pop();
-		super.render(state, matrices, vertexConsumers, light);
+		super.render(state, matrices, queue, cameraState);
 	}
 
 	@Override

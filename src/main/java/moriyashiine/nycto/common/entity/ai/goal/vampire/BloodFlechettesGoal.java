@@ -28,6 +28,6 @@ public class BloodFlechettesGoal extends Goal {
 		mob.useAbility(ModPowers.BLOOD_FLECHETTES);
 		SLibUtils.playAnchoredSound(mob, ModSoundEvents.POWER_BLOOD_FLECHETTES_USE);
 		mob.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, mob.getTarget().getEyePos());
-		BloodFlechettesPower.spawnProjectiles(mob.getWorld(), mob);
+		BloodFlechettesPower.spawnProjectiles(mob.getEntityWorld(), mob);
 	}
 }

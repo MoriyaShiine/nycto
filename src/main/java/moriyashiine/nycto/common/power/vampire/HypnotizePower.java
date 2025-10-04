@@ -77,7 +77,7 @@ public class HypnotizePower extends VampireActivePower {
 
 	@SuppressWarnings("unchecked")
 	public static void forget(MobEntity mob) {
-		ServerWorld serverWorld = (ServerWorld) mob.getWorld();
+		ServerWorld serverWorld = (ServerWorld) mob.getEntityWorld();
 		if (mob instanceof VillagerEntity villager) {
 			villager.reinitializeBrain(serverWorld);
 		} else {

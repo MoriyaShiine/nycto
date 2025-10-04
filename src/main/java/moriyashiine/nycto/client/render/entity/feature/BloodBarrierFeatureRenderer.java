@@ -8,7 +8,7 @@ import moriyashiine.nycto.client.render.entity.state.BloodBarrierRenderStateAddi
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.component.entity.power.vampire.BloodBarrierComponent;
 import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.EntityModel;
@@ -29,7 +29,7 @@ public class BloodBarrierFeatureRenderer<S extends LivingEntityRenderState, M ex
 	}
 
 	@Override
-	public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, S state, float limbAngle, float limbDistance) {
+	public void render(MatrixStack matrices, OrderedRenderCommandQueue queue, int light, S state, float limbAngle, float limbDistance) {
 		int barriers = ((BloodBarrierRenderStateAddition) state).nycto$getBloodBarriers();
 		for (int i = 0; i < barriers; i++) {
 			matrices.push();
@@ -39,7 +39,7 @@ public class BloodBarrierFeatureRenderer<S extends LivingEntityRenderState, M ex
 				yRotation *= -1;
 			}
 			matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-state.bodyYaw + yRotation));
-			model.render(matrices, vertexConsumers.getBuffer(model.getLayer(TEXTURE)), light, OverlayTexture.DEFAULT_UV);
+			queue.getBatchingQueue(1).submitModel(model, state, matrices, model.getLayer(TEXTURE), light, OverlayTexture.DEFAULT_UV, state.outlineColor, null);
 			matrices.pop();
 		}
 	}

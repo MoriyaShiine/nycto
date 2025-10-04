@@ -33,7 +33,7 @@ public abstract class TameableEntityMixin extends AnimalEntity {
 
 	@Inject(method = "setOwner(Lnet/minecraft/entity/LazyEntityReference;)V", at = @At("HEAD"), cancellable = true)
 	private void nycto$vilePresence(@Nullable LazyEntityReference<LivingEntity> owner, CallbackInfo ci) {
-		if (owner != null && owner.resolve(getWorld(), LivingEntity.class) instanceof PlayerEntity player && VilePresencePower.isAffected(this, player)) {
+		if (owner != null && LazyEntityReference.resolve(owner, getEntityWorld(), LivingEntity.class) instanceof PlayerEntity player && VilePresencePower.isAffected(this, player)) {
 			ci.cancel();
 		}
 	}

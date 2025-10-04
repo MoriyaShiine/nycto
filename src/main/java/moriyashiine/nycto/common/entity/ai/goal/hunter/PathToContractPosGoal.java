@@ -25,7 +25,7 @@ public class PathToContractPosGoal extends Goal {
 	public void tick() {
 		@Nullable BlockPos contractPos = mob.getContractPos();
 		if (contractPos != null) {
-			if (contractPos.isWithinDistance(mob.getPos(), 5)) {
+			if (contractPos.isWithinDistance(mob.getEntityPos(), 5)) {
 				mob.getNavigation().stop();
 				mob.setContractPos(null);
 			} else if (mob.getNavigation().isIdle()) {

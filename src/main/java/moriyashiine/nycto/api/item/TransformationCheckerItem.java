@@ -35,7 +35,7 @@ public class TransformationCheckerItem extends Item {
 	public static ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Predicate<LivingEntity> predicate, Supplier<ActionResult> supplier) {
 		if (predicate.test(entity)) {
 			entity.playSoundIfNotSilent(ModSoundEvents.ENTITY_GENERIC_SIZZLE);
-			if (entity.getWorld().isClient) {
+			if (entity.getEntityWorld().isClient()) {
 				SLibClientUtils.addParticles(entity, ParticleTypes.SMOKE, 8, ParticleAnchor.BODY);
 			} else {
 				entity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 60));

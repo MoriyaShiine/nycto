@@ -11,7 +11,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public class SyncTruncatedWorldSeedEvent implements ServerPlayerEvents.Join {
 	@Override
 	public void onJoin(ServerPlayerEntity player) {
-		NyctoUtil.truncatedWorldSeed = (int) player.getWorld().getSeed();
+		NyctoUtil.truncatedWorldSeed = (int) player.getEntityWorld().getSeed();
 		SyncTruncatedWorldSeedPayload.send(player, NyctoUtil.truncatedWorldSeed);
 	}
 }

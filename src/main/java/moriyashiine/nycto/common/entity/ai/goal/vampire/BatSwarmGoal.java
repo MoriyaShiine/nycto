@@ -26,6 +26,6 @@ public class BatSwarmGoal extends Goal {
 	public void start() {
 		mob.useAbility(ModPowers.BAT_SWARM);
 		SLibUtils.playAnchoredSound(mob, ModSoundEvents.POWER_BAT_SWARM_USE);
-		BatSwarmPower.spawnSwarm(mob.getWorld(), mob);
+		BatSwarmPower.spawnSwarm(mob.getEntityWorld(), mob);
 	}
 }

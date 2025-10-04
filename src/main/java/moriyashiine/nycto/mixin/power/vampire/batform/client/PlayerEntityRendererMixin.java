@@ -8,7 +8,7 @@ import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
@@ -33,7 +33,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 	}
 
 	@Inject(method = "renderArm", at = @At("HEAD"), cancellable = true)
-	private void nycto$batForm(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, Identifier skinTexture, ModelPart arm, boolean sleeveVisible, CallbackInfo ci) {
+	private void nycto$batForm(MatrixStack matrices, OrderedRenderCommandQueue queue, int light, Identifier skinTexture, ModelPart arm, boolean sleeveVisible, CallbackInfo ci) {
 		if (FormChangeClientEvent.batModel != null) {
 			boolean left = arm == model.leftArm;
 			ModelPart body = FormChangeClientEvent.batModel.getRootPart().getChild(EntityModelPartNames.BODY);
@@ -41,7 +41,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 			batFormArm.resetTransform();
 			batFormArm.visible = true;
 			batFormArm.originY += 5.5F;
-			batFormArm.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityCutout(BAT_TEXTURE)), light, OverlayTexture.DEFAULT_UV);
+			queue.submitModelPart(batFormArm, matrices, RenderLayer.getEntityTranslucent(BAT_TEXTURE), light, OverlayTexture.DEFAULT_UV, null);
 			ci.cancel();
 		}
 	}

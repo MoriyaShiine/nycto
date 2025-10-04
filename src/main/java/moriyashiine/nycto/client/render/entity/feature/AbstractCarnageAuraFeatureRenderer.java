@@ -7,8 +7,7 @@ import moriyashiine.nycto.client.render.entity.state.CarnageRenderStateAddition;
 import moriyashiine.nycto.common.Nycto;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.feature.EnergySwirlOverlayFeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.EntityModel;
@@ -25,11 +24,11 @@ public abstract class AbstractCarnageAuraFeatureRenderer<S extends EntityRenderS
 	}
 
 	@Override
-	public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, S state, float limbAngle, float limbDistance) {
+	public void render(MatrixStack matrices, OrderedRenderCommandQueue queue, int light, S state, float limbAngle, float limbDistance) {
 		if (shouldRender(state)) {
-			VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getBreezeWind(TEXTURE, 0, state.age * -0.01F % 1));
-			getEnergySwirlModel().setAngles(state);
-			getEnergySwirlModel().render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, ColorHelper.getArgb((int) (((CarnageRenderStateAddition) state).nycto$getCarnageOpacity() * 255), 255, 255, 255));
+			RenderLayer renderLayer = RenderLayer.getBreezeWind(TEXTURE, 0, state.age * -0.01F % 1);
+			int color = ColorHelper.getArgb((int) (((CarnageRenderStateAddition) state).nycto$getCarnageOpacity() * 255), 255, 255, 255);
+			queue.getBatchingQueue(1).submitModel(getEnergySwirlModel(), state, matrices, renderLayer, light, OverlayTexture.DEFAULT_UV, color, null, state.outlineColor, null);
 		}
 	}
 

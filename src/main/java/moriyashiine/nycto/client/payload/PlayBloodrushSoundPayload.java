@@ -37,7 +37,7 @@ public record PlayBloodrushSoundPayload(int entityId) implements CustomPayload {
 		@SuppressWarnings("DataFlowIssue")
 		@Override
 		public void receive(PlayBloodrushSoundPayload payload, ClientPlayNetworking.Context context) {
-			if (context.player().getWorld().getEntityById(payload.entityId()) instanceof PlayerEntity player) {
+			if (context.player().getEntityWorld().getEntityById(payload.entityId()) instanceof PlayerEntity player) {
 				MinecraftClient.getInstance().getSoundManager().play(new AnchoredSoundInstance(player, ModPowers.BLOODRUSH.getUseSound(player), currentEntity -> !ModEntityComponents.BLOODRUSH.get(currentEntity).isActive(false)));
 			}
 		}

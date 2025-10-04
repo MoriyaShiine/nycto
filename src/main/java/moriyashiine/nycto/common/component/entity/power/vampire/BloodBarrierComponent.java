@@ -41,7 +41,7 @@ public class BloodBarrierComponent implements AutoSyncedComponent, CommonTicking
 	@Override
 	public void tick() {
 		if (ticks > 0 && --ticks == 0) {
-			if (!obj.getWorld().isClient) {
+			if (!obj.getEntityWorld().isClient()) {
 				for (int i = 0; i < barriers; i++) {
 					addParticles(i);
 				}

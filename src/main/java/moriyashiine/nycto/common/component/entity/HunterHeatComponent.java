@@ -42,7 +42,7 @@ public class HunterHeatComponent implements ServerTickingComponent {
 
 	public void increaseHeat() {
 		if (heatLevel + 1 >= MAXIMUM_HEAT) {
-			if (HunterContractItem.spawnHunter(obj.getWorld(), obj, NyctoAPI.isVampire(obj) ? HunterEntity.HunterType.VAMPIRE : HunterEntity.HunterType.WEREWOLF, obj.getRandom().nextBetween(1, 3)).isAccepted()) {
+			if (HunterContractItem.spawnHunter(obj.getEntityWorld(), obj, NyctoAPI.isVampire(obj) ? HunterEntity.HunterType.VAMPIRE : HunterEntity.HunterType.WEREWOLF, obj.getRandom().nextBetween(1, 3)).isAccepted()) {
 				heatLevel = decayTicks = 0;
 			}
 		} else {

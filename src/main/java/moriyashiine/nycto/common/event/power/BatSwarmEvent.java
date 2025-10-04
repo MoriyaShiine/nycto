@@ -20,7 +20,7 @@ public class BatSwarmEvent implements ServerLivingEntityEvents.AfterDamage {
 	}
 
 	private static void addTarget(LivingEntity player, LivingEntity target) {
-		BatSwarmComponent batSwarmComponent = ModWorldComponents.BAT_SWARM.get(player.getWorld());
+		BatSwarmComponent batSwarmComponent = ModWorldComponents.BAT_SWARM.get(player.getEntityWorld());
 		batSwarmComponent.addTarget(player, target);
 		batSwarmComponent.sync();
 	}

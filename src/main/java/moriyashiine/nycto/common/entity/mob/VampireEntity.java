@@ -190,12 +190,12 @@ public class VampireEntity extends HostileEntity {
 
 	@Override
 	public boolean canImmediatelyDespawn(double distanceSquared) {
-		return super.canImmediatelyDespawn(distanceSquared) && !getWorld().isNight();
+		return super.canImmediatelyDespawn(distanceSquared) && !getEntityWorld().isNight();
 	}
 
 	@Override
 	public boolean cannotDespawn() {
-		return super.cannotDespawn() || getWorld().isNight();
+		return super.cannotDespawn() || getEntityWorld().isNight();
 	}
 
 	public boolean canUsePower(Power power) {

@@ -204,7 +204,7 @@ public class HunterEntity extends PillagerEntity {
 
 	@Nullable
 	public PlayerEntity getUltimateTarget() {
-		return ultimateTarget == null ? null : getWorld().getPlayerByUuid(ultimateTarget);
+		return ultimateTarget == null ? null : getEntityWorld().getPlayerByUuid(ultimateTarget);
 	}
 
 	public void setUltimateTarget(PlayerEntity ultimateTarget) {
@@ -272,12 +272,12 @@ public class HunterEntity extends PillagerEntity {
 	}
 
 	public static void mountHorse(LivingEntity entity) {
-		HorseEntity horse = EntityType.HORSE.create(entity.getWorld(), SpawnReason.TRIGGERED);
+		HorseEntity horse = EntityType.HORSE.create(entity.getEntityWorld(), SpawnReason.TRIGGERED);
 		if (horse.teleport(entity.getX(), entity.getY(), entity.getZ(), false)) {
-			horse.initialize((ServerWorldAccess) entity.getWorld(), entity.getWorld().getLocalDifficulty(entity.getBlockPos()), SpawnReason.TRIGGERED, null);
+			horse.initialize((ServerWorldAccess) entity.getEntityWorld(), entity.getEntityWorld().getLocalDifficulty(entity.getBlockPos()), SpawnReason.TRIGGERED, null);
 			horse.setOwner(entity);
 			horse.setTame(true);
-			entity.getWorld().spawnEntity(horse);
+			entity.getEntityWorld().spawnEntity(horse);
 			entity.startRiding(horse);
 			if (Nycto.superbSteedsLoaded) {
 				HorseAttributesComponent horseAttributesComponent = ModEntityComponents.HORSE_ATTRIBUTES.get(horse);

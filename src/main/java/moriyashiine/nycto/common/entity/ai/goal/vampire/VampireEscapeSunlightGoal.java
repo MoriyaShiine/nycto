@@ -36,7 +36,7 @@ public class VampireEscapeSunlightGoal extends EscapeSunlightGoal {
 
 	@Override
 	protected @Nullable Vec3d locateShadedPos() {
-		World world = mob.getWorld();
+		World world = mob.getEntityWorld();
 		BlockPos origin = mob.getBlockPos();
 		Random random = mob.getRandom();
 

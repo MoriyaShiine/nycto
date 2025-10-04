@@ -9,6 +9,7 @@ import moriyashiine.nycto.api.power.Power;
 import moriyashiine.nycto.api.screenhandler.AltarScreenHandler;
 import moriyashiine.nycto.common.payload.ApplyPowerFromAltarPayload;
 import net.minecraft.client.gl.RenderPipelines;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.CyclingSlotIcon;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -67,12 +68,12 @@ public abstract class AltarScreen<T extends AltarScreenHandler> extends HandledS
 	}
 
 	@Override
-	public boolean mouseClicked(double mouseX, double mouseY, int button) {
+	public boolean mouseClicked(Click click, boolean doubled) {
 		int posX = (width - backgroundWidth) / 2;
 		int posY = (height - backgroundHeight) / 2;
 		if (handler.getPositivePowers() < MAX_POSITIVE_POWERS) {
 			boolean needsNegative = needsNegative();
-			if (selectedIndex != -1 && (!needsNegative || selectedNegativeIndex != -1) && handler.canUpgrade(client.player) && isCheckmarkInBounds(posX, posY, (int) mouseX, (int) mouseY)) {
+			if (selectedIndex != -1 && (!needsNegative || selectedNegativeIndex != -1) && handler.canUpgrade(client.player) && isCheckmarkInBounds(posX, posY, (int) click.x(), (int) click.y())) {
 				int rawId = NyctoRegistries.POWER.getRawId(handler.selectablePowers.get(selectedIndex));
 				if (handler.onButtonClick(client.player, rawId)) {
 					client.interactionManager.clickButton(handler.syncId, rawId);
@@ -86,7 +87,7 @@ public abstract class AltarScreen<T extends AltarScreenHandler> extends HandledS
 					return true;
 				}
 			}
-			Pair<Integer, Boolean> clicked = clickPower(posX + 13, posY + 17, (int) mouseX, (int) mouseY);
+			Pair<Integer, Boolean> clicked = clickPower(posX + 13, posY + 17, (int) click.x(), (int) click.y());
 			int clickedIndex = clicked.getFirst();
 			if (clickedIndex != -1) {
 				if (clicked.getSecond()) {
@@ -102,7 +103,7 @@ public abstract class AltarScreen<T extends AltarScreenHandler> extends HandledS
 				}
 			}
 		}
-		return super.mouseClicked(mouseX, mouseY, button);
+		return super.mouseClicked(click, doubled);
 	}
 
 	private void drawSlots(DrawContext context, int posX, int posY, float delta) {

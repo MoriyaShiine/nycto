@@ -4,27 +4,31 @@
 package moriyashiine.nycto.client.particle;
 
 import moriyashiine.nycto.common.init.ModParticleTypes;
-import net.minecraft.client.particle.*;
+import net.minecraft.client.particle.BillboardParticle;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleFactory;
+import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.random.Random;
 
-public class BatSwarmParticle extends SpriteBillboardParticle {
+public class BatSwarmParticle extends BillboardParticle {
 	private final SpriteProvider spriteProvider;
 	private final boolean hasBlood;
 	private int spriteIndex = 0;
 
 	public BatSwarmParticle(ClientWorld world, double x, double y, double z, SpriteProvider spriteProvider, boolean hasBlood) {
-		super(world, x, y, z, 0, 0, 0);
+		super(world, x, y, z, 0, 0, 0, spriteProvider.getFirst());
 		this.spriteProvider = spriteProvider;
 		this.hasBlood = hasBlood;
 		init();
-		setSpriteForAge(spriteProvider);
+		updateSprite(spriteProvider);
 	}
 
 	@Override
-	public ParticleTextureSheet getType() {
-		return ParticleTextureSheet.PARTICLE_SHEET_OPAQUE;
+	protected RenderType getRenderType() {
+		return RenderType.PARTICLE_ATLAS_OPAQUE;
 	}
 
 	@Override
@@ -48,14 +52,14 @@ public class BatSwarmParticle extends SpriteBillboardParticle {
 
 	public record BatSwarmFactory(SpriteProvider spriteProvider) implements ParticleFactory<SimpleParticleType> {
 		@Override
-		public Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+		public Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Random random) {
 			return new BatSwarmParticle(world, x, y, z, spriteProvider(), velocityX != 0);
 		}
 	}
 
 	public record BatstepFactory(SpriteProvider spriteProvider) implements ParticleFactory<SimpleParticleType> {
 		@Override
-		public Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+		public Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Random random) {
 			return new BatSwarmParticle(world, x, y, z, spriteProvider(), velocityX != 0) {
 				@Override
 				protected void init() {

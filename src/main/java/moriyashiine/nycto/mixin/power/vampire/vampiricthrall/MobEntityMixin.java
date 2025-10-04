@@ -3,9 +3,11 @@
  */
 package moriyashiine.nycto.mixin.power.vampire.vampiricthrall;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import moriyashiine.nycto.common.init.ModEntityComponents;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -28,5 +30,10 @@ public class MobEntityMixin {
 			value += 5;
 		}
 		return value;
+	}
+
+	@ModifyExpressionValue(method = "checkDespawn", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityType;isAllowedInPeaceful()Z"))
+	private boolean nycto$vampiricThrall(boolean original) {
+		return original || ModEntityComponents.VAMPIRIC_THRALL.get(this).isThralled();
 	}
 }

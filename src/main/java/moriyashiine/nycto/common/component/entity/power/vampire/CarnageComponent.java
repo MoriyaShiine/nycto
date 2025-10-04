@@ -38,7 +38,7 @@ public class CarnageComponent implements AutoSyncedComponent, CommonTickingCompo
 
 	@Override
 	public void tick() {
-		if (ticks > 0 && --ticks == 0 && !obj.getWorld().isClient) {
+		if (ticks > 0 && --ticks == 0 && !obj.getEntityWorld().isClient()) {
 			obj.getAttributeInstance(EntityAttributes.ATTACK_DAMAGE).removeModifier(ATTACK_DAMAGE_MODIFIER);
 		}
 	}

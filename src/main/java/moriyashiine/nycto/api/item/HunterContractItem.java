@@ -61,7 +61,7 @@ public class HunterContractItem extends Item {
 			for (int j = 0; j < amount; j++) {
 				HunterEntity hunter = ModEntityTypes.HUNTER.create(world, SpawnReason.TRIGGERED);
 				if (hunter.teleport(user.getX() + dX, user.getY() + dY, user.getZ() + dZ, false)) {
-					if (!world.isClient) {
+					if (!world.isClient()) {
 						hunter.initialize((ServerWorldAccess) world, world.getLocalDifficulty(hunter.getBlockPos()), SpawnReason.TRIGGERED, null);
 						if (type.shouldTarget(user) && NyctoUtil.isSurvival(user)) {
 							hunter.setUltimateTarget(user);

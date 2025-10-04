@@ -170,7 +170,7 @@
   "message.nycto.cycle_follow_mode.follow": "%s ahora está siguiendo",
   "message.nycto.cycle_follow_mode.stay": "%s ahora se queda en su sitio",
   "message.nycto.cycle_follow_mode.wander": "%s ahora está vagando",
-  "key.categories.nycto": "Nycto",
+  "key.category.nycto.nycto": "Nycto",
   "key.nycto.power_hotbar": "Barra rápida de poderes",
   "tooltip.nycto.hold_left_shift": "Mantén [%s] para ver detalles.",
   "tooltip.nycto.holding_player_blood": "Sosteniendo sangre de jugador",

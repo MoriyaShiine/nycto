@@ -57,7 +57,7 @@ public class KeenSensesClientEvent {
 					if (mistFormComponent != null && mistFormComponent.isEnabled()) {
 						distance /= 4;
 					}
-					return living.distanceTo(client.player) <= distance && !NyctoUtil.hasGarlicAura(living) && ModWorldComponents.AURA.get(living.getWorld()).getGarlicWreaths().stream().noneMatch(pos -> pos.isWithinDistance(living.getPos(), AuraComponent.RADIUS));
+					return living.distanceTo(client.player) <= distance && !NyctoUtil.hasGarlicAura(living) && ModWorldComponents.AURA.get(living.getEntityWorld()).getGarlicWreaths().stream().noneMatch(pos -> pos.isWithinDistance(living.getEntityPos(), AuraComponent.RADIUS));
 				}
 			}
 			return false;

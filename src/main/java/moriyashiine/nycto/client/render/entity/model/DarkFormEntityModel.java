@@ -14,7 +14,7 @@ import net.minecraft.client.render.entity.model.ModelWithArms;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Arm;
 
-public class DarkFormEntityModel extends EntityModel<DarkFormEntityRenderState> implements ModelWithArms {
+public class DarkFormEntityModel extends EntityModel<DarkFormEntityRenderState> implements ModelWithArms<DarkFormEntityRenderState> {
 	public static final EntityModelLayer LAYER = new EntityModelLayer(Nycto.id("dark_form"), "main");
 
 	private final ModelPart head;
@@ -128,7 +128,7 @@ public class DarkFormEntityModel extends EntityModel<DarkFormEntityRenderState> 
 	}
 
 	@Override
-	public void setArmAngle(Arm arm, MatrixStack matrices) {
+	public void setArmAngle(DarkFormEntityRenderState state, Arm arm, MatrixStack matrices) {
 		for (ModelPart part : arm == Arm.LEFT ? leftHeldItemTranslations : rightHeldItemTranslations) {
 			part.applyTransform(matrices);
 		}

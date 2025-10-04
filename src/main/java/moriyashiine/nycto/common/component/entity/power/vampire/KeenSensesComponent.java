@@ -75,7 +75,7 @@ public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingCo
 		tick();
 		if (enabled && obj.age % 20 == 0) {
 			int time = 60;
-			for (Entity entity : obj.getWorld().getOtherEntities(obj, obj.getBoundingBox().expand(12), EntityPredicates.EXCEPT_SPECTATOR.and(entity -> entity instanceof LivingEntity && entity.isAlive() && !entity.getType().isIn(ModEntityTypeTags.HAS_NO_BLOOD)))) {
+			for (Entity entity : obj.getEntityWorld().getOtherEntities(obj, obj.getBoundingBox().expand(12), EntityPredicates.EXCEPT_SPECTATOR.and(entity -> entity instanceof LivingEntity && entity.isAlive() && !entity.getType().isIn(ModEntityTypeTags.HAS_NO_BLOOD)))) {
 				float distance = obj.distanceTo(entity);
 				if (time != 40 && distance <= 10) {
 					time = 40;

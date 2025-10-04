@@ -31,7 +31,7 @@ public record UsePowerPayload(int powerIndex) implements CustomPayload {
 	public static class Receiver implements ServerPlayNetworking.PlayPayloadHandler<UsePowerPayload> {
 		@Override
 		public void receive(UsePowerPayload payload, ServerPlayNetworking.Context context) {
-			NyctoUtil.usePower(context.player().getWorld(), context.player(), NyctoAPI.getPowers(context.player()).get(payload.powerIndex()));
+			NyctoUtil.usePower(context.player().getEntityWorld(), context.player(), NyctoAPI.getPowers(context.player()).get(payload.powerIndex()));
 		}
 	}
 }

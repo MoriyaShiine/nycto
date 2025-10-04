@@ -122,11 +122,11 @@ public class NyctoUtil {
 	}
 
 	public static void spawnBloodParticles(Entity entity) {
-		((ServerWorld) entity.getWorld()).spawnParticles(ModParticleTypes.BLOOD, entity.getX(), entity.getEyeY(), entity.getZ(), ModParticleTypes.BLOOD_PARTICLE_COUNT, entity.getWidth() / 2F, MathHelper.nextFloat(entity.getWorld().getRandom(), -0.1F, 0.1F), entity.getWidth() / 2F, 0);
+		((ServerWorld) entity.getEntityWorld()).spawnParticles(ModParticleTypes.BLOOD, entity.getX(), entity.getEyeY(), entity.getZ(), ModParticleTypes.BLOOD_PARTICLE_COUNT, entity.getWidth() / 2F, MathHelper.nextFloat(entity.getEntityWorld().getRandom(), -0.1F, 0.1F), entity.getWidth() / 2F, 0);
 	}
 
 	public static void damageWithToxicTouch(LivingEntity living, float amount) {
-		if (living.getWorld() instanceof ServerWorld world && living.damage(world, world.getDamageSources().create(ModDamageTypes.TOXIC_TOUCH), amount)) {
+		if (living.getEntityWorld() instanceof ServerWorld world && living.damage(world, world.getDamageSources().create(ModDamageTypes.TOXIC_TOUCH), amount)) {
 			living.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 110, 1));
 		}
 	}

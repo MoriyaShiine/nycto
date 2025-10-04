@@ -38,7 +38,7 @@ public record ModifyPowerPayload(int entityId, Power power, boolean add) impleme
 	public static class Receiver implements ClientPlayNetworking.PlayPayloadHandler<ModifyPowerPayload> {
 		@Override
 		public void receive(ModifyPowerPayload payload, ClientPlayNetworking.Context context) {
-			Entity entity = context.player().getWorld().getEntityById(payload.entityId());
+			Entity entity = context.player().getEntityWorld().getEntityById(payload.entityId());
 			if (entity instanceof PlayerEntity player) {
 				if (payload.add()) {
 					NyctoAPIImpl.addPower(player, payload.power());

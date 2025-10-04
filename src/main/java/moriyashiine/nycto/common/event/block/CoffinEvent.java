@@ -18,14 +18,14 @@ public class CoffinEvent {
 	public static class AllowBed implements EntitySleepEvents.AllowBed {
 		@Override
 		public ActionResult allowBed(LivingEntity entity, BlockPos sleepingPos, BlockState state, boolean vanillaResult) {
-			return entity.getWorld().isNight() && entity.getWorld().getBlockState(sleepingPos).isIn(ModBlockTags.COFFINS) ? ActionResult.FAIL : ActionResult.PASS;
+			return entity.getEntityWorld().isNight() && entity.getEntityWorld().getBlockState(sleepingPos).isIn(ModBlockTags.COFFINS) ? ActionResult.FAIL : ActionResult.PASS;
 		}
 	}
 
 	public static class AllowSleeping implements EntitySleepEvents.AllowSleeping {
 		@Override
 		public PlayerEntity.@Nullable SleepFailureReason allowSleep(PlayerEntity player, BlockPos sleepingPos) {
-			if (player.getWorld().isNight() && player.getWorld().getBlockState(sleepingPos).isIn(ModBlockTags.COFFINS)) {
+			if (player.getEntityWorld().isNight() && player.getEntityWorld().getBlockState(sleepingPos).isIn(ModBlockTags.COFFINS)) {
 				player.sendMessage(Text.translatable("block." + Nycto.MOD_ID + ".coffin.no_sleep"), true);
 				return PlayerEntity.SleepFailureReason.OTHER_PROBLEM;
 			}
@@ -36,7 +36,7 @@ public class CoffinEvent {
 	public static class AllowSleepTime implements EntitySleepEvents.AllowSleepTime {
 		@Override
 		public ActionResult allowSleepTime(PlayerEntity player, BlockPos sleepingPos, boolean vanillaResult) {
-			return player.getWorld().isDay() && player.getWorld().getBlockState(sleepingPos).isIn(ModBlockTags.COFFINS) ? ActionResult.SUCCESS : ActionResult.PASS;
+			return player.getEntityWorld().isDay() && player.getEntityWorld().getBlockState(sleepingPos).isIn(ModBlockTags.COFFINS) ? ActionResult.SUCCESS : ActionResult.PASS;
 		}
 	}
 }

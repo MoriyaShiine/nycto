@@ -136,8 +136,8 @@ public class ModItems {
 	public static final Item VAMPIRE_HUNTER_CONTRACT = registerItem("vampire_hunter_contract", settings -> new HunterContractItem(settings, HunterEntity.HunterType.VAMPIRE));
 	public static final Item WEREWOLF_HUNTER_CONTRACT = registerItem("werewolf_hunter_contract", settings -> new HunterContractItem(settings, HunterEntity.HunterType.WEREWOLF));
 
-	public static final Item VAMPIRE_SPAWN_EGG = registerItem("vampire_spawn_egg", settings -> new SpawnEggItem(ModEntityTypes.VAMPIRE, settings));
-	public static final Item HUNTER_SPAWN_EGG = registerItem("hunter_spawn_egg", settings -> new SpawnEggItem(ModEntityTypes.HUNTER, settings));
+	public static final Item VAMPIRE_SPAWN_EGG = registerItem("vampire_spawn_egg", SpawnEggItem::new, settings().spawnEgg(ModEntityTypes.VAMPIRE));
+	public static final Item HUNTER_SPAWN_EGG = registerItem("hunter_spawn_egg", SpawnEggItem::new, settings().spawnEgg(ModEntityTypes.HUNTER));
 
 	public static Item registerHunterArmor(String name, EquipmentType type, RegistryEntry<EntityAttribute> attribute) {
 		EntityAttributeModifier resistanceModifier = new EntityAttributeModifier(Nycto.id("hunter_armor_resistance_" + type.getName()), 1, EntityAttributeModifier.Operation.ADD_VALUE);
