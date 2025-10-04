@@ -44,7 +44,7 @@ public class ModEntityComponents implements EntityComponentInitializer {
 		registry.registerFor(LivingEntity.class, BLOOD, BloodComponent::new);
 		registry.registerFor(LivingEntity.class, HEAL_BLOCK, HealBlockComponent::new);
 		registry.registerForPlayers(HUNTER_HEAT, HunterHeatComponent::new, RespawnCopyStrategy.LOSSLESS_ONLY);
-		registry.registerFor(LivingEntity.class, RESPAWN_LENIENCY, RespawnLeniencyComponent::new);
+		registry.registerForPlayers(RESPAWN_LENIENCY, RespawnLeniencyComponent::new, RespawnCopyStrategy.LOSSLESS_ONLY);
 		registry.registerFor(LivingEntity.class, SUN_EXPOSURE, entity -> new SunExposureComponent(entity, false));
 		registry.registerForPlayers(TRANSFORMATION, TransformationComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
 		registry.registerForPlayers(VAMPIRE_CHARGE_JUMP, VampireChargeJumpComponent::new, RespawnCopyStrategy.ALWAYS_COPY);

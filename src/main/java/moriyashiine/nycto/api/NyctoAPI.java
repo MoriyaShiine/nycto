@@ -11,6 +11,7 @@ import moriyashiine.nycto.client.payload.SetPowerCooldownPayload;
 import moriyashiine.nycto.client.payload.SetTransformationPayload;
 import moriyashiine.nycto.common.NyctoAPIImpl;
 import moriyashiine.nycto.common.component.entity.HealBlockComponent;
+import moriyashiine.nycto.common.component.entity.RespawnLeniencyComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.HaemogenesisComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
@@ -134,11 +135,15 @@ public class NyctoAPI {
 	}
 
 	public static boolean hasRespawnLeniency(LivingEntity entity) {
-		return ModEntityComponents.RESPAWN_LENIENCY.get(entity).hasLeniency();
+		@Nullable RespawnLeniencyComponent respawnLeniencyComponent = ModEntityComponents.RESPAWN_LENIENCY.getNullable(entity);
+		return respawnLeniencyComponent != null && respawnLeniencyComponent.hasLeniency();
 	}
 
 	public static void giveRespawnLeniency(LivingEntity entity) {
-		ModEntityComponents.RESPAWN_LENIENCY.get(entity).giveLeniency();
+		@Nullable RespawnLeniencyComponent respawnLeniencyComponent = ModEntityComponents.RESPAWN_LENIENCY.getNullable(entity);
+		if (respawnLeniencyComponent != null) {
+			respawnLeniencyComponent.giveLeniency();
+		}
 	}
 
 	public static void partiallyCureTransformation(ServerPlayerEntity player, TagKey<Power> tagKey) {

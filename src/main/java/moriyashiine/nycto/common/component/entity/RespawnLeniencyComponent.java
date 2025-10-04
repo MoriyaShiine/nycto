@@ -4,7 +4,7 @@
 package moriyashiine.nycto.common.component.entity;
 
 import moriyashiine.nycto.common.init.ModEntityComponents;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
@@ -13,10 +13,10 @@ import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
 public class RespawnLeniencyComponent implements AutoSyncedComponent, CommonTickingComponent {
 	private static final int MAX_TICKS = 600;
 
-	private final LivingEntity obj;
+	private final PlayerEntity obj;
 	private int ticks = MAX_TICKS;
 
-	public RespawnLeniencyComponent(LivingEntity obj) {
+	public RespawnLeniencyComponent(PlayerEntity obj) {
 		this.obj = obj;
 	}
 
