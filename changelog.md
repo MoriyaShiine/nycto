@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 1.21.8-b4
+------------------------------------------------------
+- fix coffin stake code running with any item instead of just wooden stakes
+
+------------------------------------------------------
 Version 1.21.8-b3
 ------------------------------------------------------
 - add Russian translation (thank you artmax9082 on Discord!)
