@@ -1,4 +1,13 @@
 ------------------------------------------------------
+Version 1.21.9-b1
+------------------------------------------------------
+- update to 1.21.9
+  - copper golems have no blood
+  - add thralled horse copper horns texture
+- vampire mobs and thralls no longer have respawn leniency
+- transformation set command now supports multiple players
+
+------------------------------------------------------
 Version 1.21.8-b4
 ------------------------------------------------------
 - fix coffin stake code running with any item instead of just wooden stakes
