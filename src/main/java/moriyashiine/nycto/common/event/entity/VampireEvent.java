@@ -101,15 +101,15 @@ public class VampireEvent {
 				}
 				BloodComponent playerBloodComponent = ModEntityComponents.BLOOD.get(player);
 				BloodComponent livingBloodComponent = ModEntityComponents.BLOOD.get(living);
-				int toFill = (qualityBlood ? 5 : 1) + (NyctoUtil.getsMoreBlood(player) ? 2 : 0);
-				int toDrain = qualityBlood ? 10 : 25;
+				int fillAmount = (qualityBlood ? 5 : 1) + (NyctoUtil.getsMoreBlood(player) ? 2 : 0);
+				int drainAmount = qualityBlood ? 10 : 25;
 				double armorMultiplier = getArmorMultiplier(living);
-				toFill = MathHelper.ceil(toFill * armorMultiplier);
-				toDrain = MathHelper.ceil(toDrain * armorMultiplier);
-				if (toFill > 0 && playerBloodComponent.canFill() && livingBloodComponent.getBlood() > 0) {
+				fillAmount = MathHelper.ceil(fillAmount * armorMultiplier);
+				drainAmount = MathHelper.ceil(drainAmount * armorMultiplier);
+				if (fillAmount > 0 && playerBloodComponent.canFill() && livingBloodComponent.getBlood() > 0) {
 					if (world instanceof ServerWorld serverWorld) {
 						player.swingHand(Hand.MAIN_HAND, true);
-						if (canSafelyDrain(player, living, livingBloodComponent, toDrain)) {
+						if (canSafelyDrain(player, living, livingBloodComponent, drainAmount)) {
 							living.hurtTime = living.maxHurtTime = 10;
 							if (NyctoUtil.isVillager(living)) {
 								NyctoUtil.notifyNearbyVillagers(living, player, VillagerGossipType.MINOR_NEGATIVE, 10);
@@ -117,9 +117,9 @@ public class VampireEvent {
 						} else {
 							living.damage(serverWorld, world.getDamageSources().create(ModDamageTypes.BLEED, player), 2);
 						}
-						if (livingBloodComponent.drainAttack(toDrain)) {
+						if (livingBloodComponent.drainAttack(drainAmount)) {
 							SLibUtils.playSound(entity, ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK.value());
-							int fillAmount = getFillAmount(livingBloodComponent, living.getRandom(), qualityBlood, toFill, toDrain);
+							fillAmount = getModifiedFillAmount(fillAmount, qualityBlood, living.getRandom());
 							if (fillAmount > 0) {
 								playerBloodComponent.fill(fillAmount);
 							}
@@ -135,14 +135,14 @@ public class VampireEvent {
 			return Math.max(1 / 3F, MathHelper.lerp(living.getArmor() / ((ClampedEntityAttribute) EntityAttributes.ARMOR.value()).getMaxValue(), 1, 0));
 		}
 
-		public static int getFillAmount(BloodComponent bloodComponent, Random random, boolean qualityBlood, int baseFillAmount, int drainAmount) {
-			if (qualityBlood || random.nextFloat() < 0.25F) {
-				float percent = (float) bloodComponent.getBlood() / drainAmount;
-				if (qualityBlood || random.nextFloat() < percent) {
-					return Math.max(1, (int) (baseFillAmount * Math.min(1, percent)));
+		private static int getModifiedFillAmount(int fillAmount, boolean qualityBlood, Random random) {
+			if (!qualityBlood) {
+				fillAmount /= 2;
+				if (fillAmount == 0 && random.nextBoolean()) {
+					fillAmount = 1;
 				}
 			}
-			return 0;
+			return fillAmount;
 		}
 
 		private static boolean canSafelyDrain(PlayerEntity attacker, LivingEntity target, BloodComponent targetBloodComponent, int toDrain) {

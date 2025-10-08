@@ -4,7 +4,6 @@
 package moriyashiine.nycto.common.event.item;
 
 import moriyashiine.nycto.api.NyctoAPI;
-import moriyashiine.nycto.common.component.entity.BloodComponent;
 import moriyashiine.nycto.common.event.entity.VampireEvent;
 import moriyashiine.nycto.common.init.ModComponentTypes;
 import moriyashiine.nycto.common.init.ModEntityComponents;
@@ -28,11 +27,8 @@ public class VampiricDaggerEvent implements AfterDamageIncludingDeathEvent {
 				if (!VampiricDaggerItem.isFull(bloodCharge)) {
 					int drainAmount = MathHelper.ceil(damageTaken * VampireEvent.DrinkBlood.getArmorMultiplier(entity));
 					int fillAmount = 0;
-					if (drainAmount >= DAMAGE_THRESHOLD) {
-						BloodComponent bloodComponent = ModEntityComponents.BLOOD.get(entity);
-						if (bloodComponent.drainAttack(drainAmount)) {
-							fillAmount = VampireEvent.DrinkBlood.getFillAmount(bloodComponent, entity.getRandom(), true, drainAmount, drainAmount);
-						}
+					if (drainAmount >= DAMAGE_THRESHOLD && ModEntityComponents.BLOOD.get(entity).drainAttack(drainAmount)) {
+						fillAmount = drainAmount;
 					}
 					if (fillAmount > 0) {
 						boolean player = stack.getOrDefault(ModComponentTypes.PLAYER_BLOOD, false), vampire = stack.getOrDefault(ModComponentTypes.VAMPIRE_BLOOD, false);
