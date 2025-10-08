@@ -48,8 +48,8 @@ public class HypnotizePower extends VampireActivePower {
 		world.getEntitiesByClass(LivingEntity.class, new Box(player.getBlockPos()).expand(RANGE + 2), entity -> entity.distanceTo(player) <= RANGE && canBeHypnotized(player, entity)).forEach(entity -> {
 			SLibUtils.addAnchoredParticle(entity, ModParticleTypes.HYPNOTIZED, entity.getStandingEyeHeight(), 0, 0);
 			if (entity.isPlayer()) {
-				entity.addStatusEffect(new StatusEffectInstance(ModStatusEffects.HYPNOTIZED, 60));
-				entity.addStatusEffect(new StatusEffectInstance(ModStatusEffects.STUNNED, 60));
+				entity.addStatusEffect(new StatusEffectInstance(ModStatusEffects.HYPNOTIZED, 100));
+				entity.addStatusEffect(new StatusEffectInstance(ModStatusEffects.STUNNED, 100));
 			} else {
 				entity.addStatusEffect(new StatusEffectInstance(ModStatusEffects.HYPNOTIZED, 12000));
 			}
