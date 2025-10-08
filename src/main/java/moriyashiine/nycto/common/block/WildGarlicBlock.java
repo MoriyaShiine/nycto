@@ -18,7 +18,7 @@ public class WildGarlicBlock extends WildCropBlock {
 	}
 
 	@Override
-	protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler) {
+	protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean bl) {
 		if (entity instanceof LivingEntity living && living.hurtTime == 0 && NyctoUtil.affectedByHurtsVampiresTag(entity)) {
 			NyctoUtil.damageWithToxicTouch(living, 1);
 		}

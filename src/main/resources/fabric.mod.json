@@ -39,7 +39,7 @@
   "accessWidener": "nycto.accesswidener",
   "depends": {
 	"fabricloader": "*",
-	"minecraft": "~1.21.9",
+	"minecraft": "~1.21.10",
 	"java": ">=21",
 	"fabric-api": "*",
 	"strawberrylib": "*"
