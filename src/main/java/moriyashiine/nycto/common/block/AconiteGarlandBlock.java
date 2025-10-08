@@ -63,15 +63,10 @@ public class AconiteGarlandBlock extends Block {
 		BlockPos offset = pos.up();
 		if (state.get(Properties.HANGING)) {
 			return world.getBlockState(offset).isSideSolid(world, offset, Direction.DOWN, SideShapeType.FULL);
-		} else {
-			for (Direction direction : Direction.Type.HORIZONTAL) {
-				offset = pos.offset(direction);
-				if (world.getBlockState(offset).isSideSolid(world, offset, direction, SideShapeType.FULL)) {
-					return true;
-				}
-			}
 		}
-		return false;
+		Direction direction = state.get(Properties.HORIZONTAL_FACING).getOpposite();
+		offset = pos.offset(direction);
+		return world.getBlockState(offset).isSideSolid(world, offset, direction, SideShapeType.FULL);
 	}
 
 	@Override
