@@ -6,6 +6,7 @@ package moriyashiine.nycto.common.event.entity;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.component.world.AuraComponent;
 import moriyashiine.nycto.common.entity.mob.HunterEntity;
+import moriyashiine.nycto.common.init.ModEntityTypes;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.strawberrylib.api.event.AfterDamageIncludingDeathEvent;
 import moriyashiine.strawberrylib.api.event.ModifyCriticalStatusEvent;
@@ -18,16 +19,26 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.village.VillagerGossipType;
 
 public class HunterEvent {
 	public static class Heat implements AfterDamageIncludingDeathEvent {
 		@Override
 		public void afterDamage(LivingEntity entity, DamageSource source, float baseDamageTaken, float damageTaken, boolean blocked) {
-			if (source.getAttacker() instanceof PlayerEntity player && NyctoAPI.isVampire(player)) {
-				if (entity.isDead()) {
-					NyctoAPI.maximizeHunterHeat(player, entity);
-				} else if (baseDamageTaken > 1 || entity.getRandom().nextBoolean()) {
-					NyctoAPI.increaseHunterHeat(player, entity);
+			if (source.getAttacker() instanceof PlayerEntity player) {
+				if (entity.getType() == ModEntityTypes.HUNTER) {
+					if (entity.isDead()) {
+						NyctoUtil.notifyNearbyVillagers(entity, player, VillagerGossipType.MAJOR_NEGATIVE, 25);
+					} else {
+						NyctoUtil.notifyNearbyVillagers(entity, player, VillagerGossipType.MINOR_NEGATIVE, 5);
+					}
+				}
+				if (NyctoAPI.isVampire(player)) {
+					if (entity.isDead()) {
+						NyctoAPI.maximizeHunterHeat(player, entity);
+					} else if (baseDamageTaken > 1 || entity.getRandom().nextBoolean()) {
+						NyctoAPI.increaseHunterHeat(player, entity);
+					}
 				}
 			}
 		}

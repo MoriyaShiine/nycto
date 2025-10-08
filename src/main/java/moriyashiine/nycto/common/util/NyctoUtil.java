@@ -9,6 +9,7 @@ import moriyashiine.nycto.api.power.FormChanger;
 import moriyashiine.nycto.api.power.PowerInstance;
 import moriyashiine.nycto.common.init.ModDamageTypes;
 import moriyashiine.nycto.common.init.ModParticleTypes;
+import moriyashiine.nycto.common.init.ModStatusEffects;
 import moriyashiine.nycto.common.power.vampire.DarkFormPower;
 import moriyashiine.nycto.common.tag.ModDamageTypeTags;
 import moriyashiine.nycto.common.tag.ModEnchantmentTags;
@@ -31,7 +32,9 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.village.VillagerGossipType;
 import org.jetbrains.annotations.Nullable;
 
 public class NyctoUtil {
@@ -119,6 +122,10 @@ public class NyctoUtil {
 			}
 		}
 		return count;
+	}
+
+	public static void notifyNearbyVillagers(LivingEntity living, PlayerEntity player, VillagerGossipType gossipType, int value) {
+		living.getEntityWorld().getEntitiesByClass(VillagerEntity.class, new Box(living.getBlockPos()).expand(16), foundVillager -> living != foundVillager && !foundVillager.isSleeping() && !foundVillager.hasStatusEffect(ModStatusEffects.HYPNOTIZED) && foundVillager.canSee(player)).forEach(foundVillager -> foundVillager.getGossip().startGossip(player.getUuid(), gossipType, value));
 	}
 
 	public static void spawnBloodParticles(Entity entity) {

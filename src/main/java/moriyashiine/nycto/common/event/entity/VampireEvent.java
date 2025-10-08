@@ -31,7 +31,6 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
@@ -42,7 +41,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
@@ -114,7 +112,7 @@ public class VampireEvent {
 						if (canSafelyDrain(player, living, livingBloodComponent, toDrain)) {
 							living.hurtTime = living.maxHurtTime = 10;
 							if (NyctoUtil.isVillager(living)) {
-								world.getEntitiesByClass(VillagerEntity.class, new Box(living.getBlockPos()).expand(16), foundVillager -> living != foundVillager && !foundVillager.isSleeping() && !foundVillager.hasStatusEffect(ModStatusEffects.HYPNOTIZED) && foundVillager.canSee(player)).forEach(foundVillager -> foundVillager.getGossip().startGossip(player.getUuid(), VillagerGossipType.MINOR_NEGATIVE, 10));
+								NyctoUtil.notifyNearbyVillagers(living, player, VillagerGossipType.MINOR_NEGATIVE, 10);
 							}
 						} else {
 							living.damage(serverWorld, world.getDamageSources().create(ModDamageTypes.BLEED, player), 2);
