@@ -12,10 +12,11 @@ import net.minecraft.storage.WriteView;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
 public class HunterHeatComponent implements ServerTickingComponent {
-	private static final int DECAY_TIMER = 6000, MAXIMUM_HEAT = 5;
+	private static final int DECAY_TIMER = 6000, MAXIMUM_HEAT = 5, MAXIMUM_SPAWNS = 3;
 
 	private final PlayerEntity obj;
 	private int heatLevel = 0, decayTicks = 0;
+	private int timesSpawned = 0, spawnDecayTicks = 0;
 
 	public HunterHeatComponent(PlayerEntity obj) {
 		this.obj = obj;
@@ -24,13 +25,17 @@ public class HunterHeatComponent implements ServerTickingComponent {
 	@Override
 	public void readData(ReadView readView) {
 		heatLevel = readView.getInt("HeatLevel", 0);
-		decayTicks = readView.getInt("DecayTicks", decayTicks);
+		decayTicks = readView.getInt("DecayTicks", 0);
+		timesSpawned = readView.getInt("TimesSpawned", 0);
+		spawnDecayTicks = readView.getInt("SpawnDecayTicks", 0);
 	}
 
 	@Override
 	public void writeData(WriteView writeView) {
 		writeView.putInt("HeatLevel", heatLevel);
 		writeView.putInt("DecayTicks", decayTicks);
+		writeView.putInt("TimesSpawned", timesSpawned);
+		writeView.putInt("SpawnDecayTicks", spawnDecayTicks);
 	}
 
 	@Override
@@ -38,12 +43,19 @@ public class HunterHeatComponent implements ServerTickingComponent {
 		if (heatLevel > 0 && --decayTicks == 0 && --heatLevel > 0) {
 			decayTicks = DECAY_TIMER;
 		}
+		if (timesSpawned > 0 && --spawnDecayTicks == 0 && --timesSpawned > 0) {
+			spawnDecayTicks = DECAY_TIMER;
+		}
 	}
 
 	public void increaseHeat() {
 		if (heatLevel + 1 >= MAXIMUM_HEAT) {
-			if (HunterContractItem.spawnHunter(obj.getEntityWorld(), obj, NyctoAPI.isVampire(obj) ? HunterEntity.HunterType.VAMPIRE : HunterEntity.HunterType.WEREWOLF, obj.getRandom().nextBetween(1, 3)).isAccepted()) {
-				heatLevel = decayTicks = 0;
+			if (timesSpawned < MAXIMUM_SPAWNS) {
+				if (HunterContractItem.spawnHunter(obj.getEntityWorld(), obj, NyctoAPI.isVampire(obj) ? HunterEntity.HunterType.VAMPIRE : HunterEntity.HunterType.WEREWOLF, obj.getRandom().nextBetween(1, 3)).isAccepted()) {
+					heatLevel = decayTicks = 0;
+					timesSpawned++;
+					spawnDecayTicks = DECAY_TIMER;
+				}
 			}
 		} else {
 			heatLevel++;
