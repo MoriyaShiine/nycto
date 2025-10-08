@@ -101,13 +101,19 @@ public class NyctoAPI {
 
 	public static void increaseHunterHeat(PlayerEntity attacker, LivingEntity target) {
 		if (!attacker.isCreative() && target.getType().isIn(ModEntityTypeTags.CALLS_HUNTERS) && attacker.getEntityWorld() instanceof ServerWorld world && world.getGameRules().getBoolean(ModGameRules.DO_HUNTER_SPAWNING)) {
-			ModEntityComponents.HUNTER_HEAT.get(attacker).increaseHeat();
+			@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(target);
+			if (vampiricThrallComponent == null || !vampiricThrallComponent.isThralled()) {
+				ModEntityComponents.HUNTER_HEAT.get(attacker).increaseHeat();
+			}
 		}
 	}
 
 	public static void maximizeHunterHeat(PlayerEntity attacker, LivingEntity target) {
 		if (!attacker.isCreative() && target.getType().isIn(ModEntityTypeTags.CALLS_HUNTERS) && attacker.getEntityWorld() instanceof ServerWorld world && world.getGameRules().getBoolean(ModGameRules.DO_HUNTER_SPAWNING)) {
-			ModEntityComponents.HUNTER_HEAT.get(attacker).maximizeHeat();
+			@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(target);
+			if (vampiricThrallComponent == null || !vampiricThrallComponent.isThralled()) {
+				ModEntityComponents.HUNTER_HEAT.get(attacker).maximizeHeat();
+			}
 		}
 	}
 
