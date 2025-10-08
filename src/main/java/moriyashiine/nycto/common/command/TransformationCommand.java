@@ -25,7 +25,7 @@ import static net.minecraft.server.command.CommandManager.literal;
 public class TransformationCommand implements CommandRegistrationCallback {
 	@Override
 	public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-		dispatcher.register(literal("transformation").requires(src -> src.hasPermissionLevel(4))
+		dispatcher.register(literal("transformation").requires(src -> src.hasPermissionLevel(2))
 				.then(literal("get")
 						.then(argument("player", EntityArgumentType.player())
 								.executes(ctx -> {
