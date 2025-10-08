@@ -37,7 +37,7 @@ public class HunterEvent {
 		@Override
 		public void tick(ServerWorld world, Entity entity) {
 			if (entity.age % 10 == 0 && entity instanceof LivingEntity living && NyctoUtil.hasGarlicAura(living)) {
-				AuraComponent.applyAura(world, living.getBlockPos(), 2, NyctoAPI::isVampire);
+				AuraComponent.applyAura(world, living.getBlockPos(), 2, false, NyctoAPI::isVampire);
 			}
 		}
 	}

@@ -46,7 +46,7 @@ public class AuraComponent implements AutoSyncedComponent, ServerTickingComponen
 	@Override
 	public void serverTick() {
 		if (obj.getTime() % 10 == 0) {
-			garlicWreaths.forEach(pos -> applyAura(obj, pos, RADIUS, NyctoAPI::isVampire));
+			garlicWreaths.forEach(pos -> applyAura(obj, pos, RADIUS, true, NyctoAPI::isVampire));
 		}
 	}
 
@@ -58,12 +58,14 @@ public class AuraComponent implements AutoSyncedComponent, ServerTickingComponen
 		return garlicWreaths;
 	}
 
-	public static void applyAura(World world, BlockPos pos, int radius, Predicate<LivingEntity> predicate) {
+	public static void applyAura(World world, BlockPos pos, int radius, boolean healBlock, Predicate<LivingEntity> predicate) {
 		world.getNonSpectatingEntities(LivingEntity.class, new Box(pos.toCenterPos().add(-radius, -radius, -radius), pos.toCenterPos().add(radius, radius, radius))).forEach(foundEntity -> {
 			if (predicate.test(foundEntity)) {
-				NyctoAPI.applyHealBlock(foundEntity, 30);
 				foundEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 30, 1, true, false));
 				foundEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.MINING_FATIGUE, 30, 1, true, false));
+				if (healBlock) {
+					NyctoAPI.applyHealBlock(foundEntity, 30);
+				}
 			}
 		});
 	}
