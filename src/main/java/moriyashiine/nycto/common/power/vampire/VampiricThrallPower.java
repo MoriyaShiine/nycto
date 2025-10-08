@@ -59,13 +59,17 @@ public class VampiricThrallPower extends VampireActivePower {
 			mob.setPersistent();
 			mob.removeStatusEffect(ModStatusEffects.HYPNOTIZED);
 			world.getEntitiesByClass(MobEntity.class, new Box(mob.getBlockPos()).expand(32), entity -> ModEntityComponents.VAMPIRIC_THRALL.get(entity).isOwner(player)).forEach(HypnotizePower::forget);
-			VampireTransformation.setComponents(mob, true);
-			VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.get(mob);
-			vampiricThrallComponent.setOwner(player);
-			vampiricThrallComponent.sync();
-			HypnotizePower.forget(mob);
+			setThrall(mob, player);
 		}
 		ModEntityComponents.BLOOD.get(player).drain(getCost(player));
+	}
+
+	public static void setThrall(MobEntity mob, @Nullable PlayerEntity owner) {
+		VampireTransformation.setComponents(mob, owner != null);
+		VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.get(mob);
+		vampiricThrallComponent.setOwner(owner);
+		vampiricThrallComponent.sync();
+		HypnotizePower.forget(mob);
 	}
 
 	public static boolean canBeThralled(PlayerEntity player, MobEntity target) {

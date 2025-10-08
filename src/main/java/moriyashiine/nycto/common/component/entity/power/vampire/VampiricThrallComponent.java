@@ -3,14 +3,22 @@
  */
 package moriyashiine.nycto.common.component.entity.power.vampire;
 
+import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.component.entity.BloodComponent;
 import moriyashiine.nycto.common.component.entity.power.util.HasOwnerComponent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.ModPowers;
+import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.power.vampire.VampiricThrallPower;
+import moriyashiine.strawberrylib.api.module.SLibUtils;
+import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.passive.VillagerEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
@@ -58,10 +66,18 @@ public class VampiricThrallComponent extends HasOwnerComponent implements AutoSy
 					alternateDrain = !alternateDrain;
 				}
 			}
-			if (obj.age % 20 == 0 && getFollowMode() == FollowMode.FOLLOW && (obj.getTarget() == null || obj.getTarget().isDead())) {
+			if ((obj.age + obj.getId()) % 20 == 0) {
 				Entity owner = obj.getEntityWorld().getEntity(ownerUuid);
-				if (owner instanceof LivingEntity living && obj.distanceTo(owner) > 24 && living.isPartOfGame()) {
-					obj.teleport(owner.getX() + obj.getRandom().nextBetween(-3, 3), owner.getY(), owner.getZ() + obj.getRandom().nextBetween(-3, 3), false);
+				if (owner instanceof PlayerEntity player && !NyctoAPI.hasPower(player, ModPowers.VAMPIRIC_THRALL)) {
+					SLibUtils.addParticles(obj, ParticleTypes.SMOKE, 16, ParticleAnchor.BODY);
+					SLibUtils.playSound(obj, ModSoundEvents.ENTITY_GENERIC_TRANSFORM_HUMAN);
+					VampiricThrallPower.setThrall(obj, null);
+					return;
+				}
+				if (getFollowMode() == FollowMode.FOLLOW && (obj.getTarget() == null || obj.getTarget().isDead())) {
+					if (owner instanceof LivingEntity living && obj.distanceTo(owner) > 24 && living.isPartOfGame()) {
+						obj.teleport(owner.getX() + obj.getRandom().nextBetween(-3, 3), owner.getY(), owner.getZ() + obj.getRandom().nextBetween(-3, 3), false);
+					}
 				}
 			}
 		}
