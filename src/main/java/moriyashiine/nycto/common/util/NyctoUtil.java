@@ -85,7 +85,7 @@ public class NyctoUtil {
 		return getEquippedArmorPieces(entity, ModItemTags.VAMPIRE_ARMOR) >= 4;
 	}
 
-	public static boolean hasBloodDrainImmunity(LivingEntity entity) {
+	public static boolean hasBloodDrainResistance(LivingEntity entity) {
 		return getEquippedArmorPieces(entity, ModItemTags.VAMPIRE_HUNTER_ARMOR) >= 1;
 	}
 
