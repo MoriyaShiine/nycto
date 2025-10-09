@@ -48,6 +48,7 @@
 	"cardinal-components": [
 	  "nycto:aura",
 	  "nycto:bat_swarm",
+	  "nycto:synced_config_values",
 	  "nycto:blood",
 	  "nycto:heal_block",
 	  "nycto:hunter_heat",

@@ -22,6 +22,8 @@ import net.minecraft.stat.Stats;
 import java.util.stream.Collectors;
 
 public class VampireTransformation extends Transformation {
+	public static final EntityAttributeModifier STEP_HEIGHT_MODIFIER = new EntityAttributeModifier(Nycto.id("vampire_bonus"), 1, EntityAttributeModifier.Operation.ADD_VALUE);
+
 	public static final float VAMPIRE_EXHAUSTION_MULTIPLIER = 3.25F;
 
 	private static final PowerHotbarTextureSet POWER_HOTBAR_TEXTURE_SET = new PowerHotbarTextureSet(
@@ -64,7 +66,6 @@ public class VampireTransformation extends Transformation {
 		attributeModifierSet.addModifier(EntityAttributes.MOVEMENT_SPEED, new EntityAttributeModifier(Nycto.id("vampire_bonus"), 0.15 + (0.1 * negativePowers), EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 		attributeModifierSet.addModifier(EntityAttributes.JUMP_STRENGTH, new EntityAttributeModifier(Nycto.id("vampire_bonus"), 0.06 * negativePowers, EntityAttributeModifier.Operation.ADD_VALUE));
 		attributeModifierSet.addModifier(EntityAttributes.SAFE_FALL_DISTANCE, new EntityAttributeModifier(Nycto.id("vampire_bonus"), 1 + negativePowers, EntityAttributeModifier.Operation.ADD_VALUE));
-		attributeModifierSet.addModifier(EntityAttributes.STEP_HEIGHT, new EntityAttributeModifier(Nycto.id("vampire_bonus"), 1, EntityAttributeModifier.Operation.ADD_VALUE));
 		return attributeModifierSet;
 	}
 

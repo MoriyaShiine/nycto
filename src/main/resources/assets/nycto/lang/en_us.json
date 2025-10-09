@@ -194,5 +194,10 @@
   "tooltip.nycto.experience_level_cost": "Experience Cost: %d levels",
   "tooltip.nycto.material_cost": "Material Cost: %d %s",
   "tooltip.nycto.power_required": "A power must be selected",
-  "tooltip.nycto.weakness_required": "A weakness must be selected"
+  "tooltip.nycto.weakness_required": "A weakness must be selected",
+  "nycto.midnightconfig.title": "Nycto",
+  "nycto.midnightconfig.category.client": "Client",
+  "nycto.midnightconfig.spawnVampires": "Spawn Vampires",
+  "nycto.midnightconfig.vampireChargeJump": "Vampire Charge Jump",
+  "nycto.midnightconfig.vampireStepHeight": "Vampire Step Height"
 }

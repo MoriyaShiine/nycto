@@ -39,6 +39,8 @@ repositories {
         name "datasync"
         url "https://maven.uuid.gg/releases"
     }
+    chenille.repositories.terraformers()
+    chenille.repositories.modrinth()
     chenille.repositories.jitpack()
 }
 
@@ -50,6 +52,7 @@ dependencies {
     modApi "org.ladysnake.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
     modApi "org.ladysnake.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
     modIncludeImplementation "org.ladysnake.cardinal-components-api:cardinal-components-world:${cardinal_components_version}"
+    modIncludeImplementation "maven.modrinth:midnightlib:${midnightlib_version}"
     modIncludeImplementation "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
     modIncludeImplementation "com.github.MoriyaShiine:tooltipfix:${tooltipfix_version}"
 
@@ -62,6 +65,8 @@ dependencies {
     modCompileOnly("moriyashiine:superb-steeds:${superb_steeds_version}") {
         exclude("group": "*")
     }
+
+    modLocalRuntime "com.terraformersmc:modmenu:${mod_menu_version}"
 }
 
 processResources {

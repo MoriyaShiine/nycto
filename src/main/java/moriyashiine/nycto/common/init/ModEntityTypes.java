@@ -3,6 +3,7 @@
  */
 package moriyashiine.nycto.common.init;
 
+import moriyashiine.nycto.common.ModConfig;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.entity.mob.DarkFormEntity;
 import moriyashiine.nycto.common.entity.mob.HunterEntity;
@@ -41,7 +42,9 @@ public class ModEntityTypes {
 
 	public static void init() {
 		SpawnRestriction.register(VAMPIRE, SpawnLocationTypes.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, VampireEntity::canSpawn);
-		BiomeModifications.addSpawn(BiomeSelectors.tag(ModBiomeTags.SPAWNS_VAMPIRES).and(ctx -> ctx.getBiomeKey() != BiomeKeys.PALE_GARDEN), VAMPIRE.getSpawnGroup(), VAMPIRE, 30, 1, 1);
+		if (ModConfig.spawnVampires) {
+			BiomeModifications.addSpawn(BiomeSelectors.tag(ModBiomeTags.SPAWNS_VAMPIRES).and(ctx -> ctx.getBiomeKey() != BiomeKeys.PALE_GARDEN), VAMPIRE.getSpawnGroup(), VAMPIRE, 30, 1, 1);
+		}
 
 		FabricTrackedDataRegistry.register(Nycto.id("hunter_type"), HunterEntity.HUNTER_TYPE_TRACKED_DATA);
 		TradeOfferHelper.registerVillagerOffers(VillagerProfession.CLERIC, 4, factories -> factories.add(new TradeOffers.SellItemFactory(ModItems.HUNTER_CONTRACT, 8, 1, 30)));

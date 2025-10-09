@@ -35,7 +35,7 @@ public class VampireChargeJumpComponent implements AutoSyncedComponent, CommonTi
 	@Override
 	public void tick() {
 		if (enabled) {
-			if (obj.isOnGround() && obj.isSneaking()) {
+			if (obj.isOnGround() && obj.isSneaking() && ModEntityComponents.SYNCED_CONFIG_VALUES.get(obj).hasVampireChargeJump()) {
 				if (jumpStrength < 20) {
 					jumpStrength++;
 				}

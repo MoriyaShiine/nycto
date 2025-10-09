@@ -157,6 +157,7 @@ public class NyctoClient implements ClientModInitializer {
 
 	private void initEvents() {
 		// internal
+		ClientTickEvents.END_WORLD_TICK.register(new ConfigSyncEvent());
 		ClientTickEvents.END_CLIENT_TICK.register(new FormChangeClientEvent());
 		ReplaceHeartTexturesEvent.EVENT.register(new HealBlockClientEvent());
 		ItemTooltipCallback.EVENT.register(new ItemDescriptionsEvent());

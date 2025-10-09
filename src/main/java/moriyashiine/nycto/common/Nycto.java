@@ -3,6 +3,7 @@
  */
 package moriyashiine.nycto.common;
 
+import eu.midnightdust.lib.config.MidnightConfig;
 import moriyashiine.nycto.api.init.NyctoRegistries;
 import moriyashiine.nycto.client.payload.*;
 import moriyashiine.nycto.common.command.TransformationCommand;
@@ -18,10 +19,7 @@ import moriyashiine.nycto.common.event.power.*;
 import moriyashiine.nycto.common.event.power.weakness.HydrophobiaEvent;
 import moriyashiine.nycto.common.event.power.weakness.PyrophobiaEvent;
 import moriyashiine.nycto.common.init.*;
-import moriyashiine.nycto.common.payload.ApplyPowerFromAltarPayload;
-import moriyashiine.nycto.common.payload.DarkFormJumpPayload;
-import moriyashiine.nycto.common.payload.SyncPowerIndexPayload;
-import moriyashiine.nycto.common.payload.UsePowerPayload;
+import moriyashiine.nycto.common.payload.*;
 import moriyashiine.strawberrylib.api.SLib;
 import moriyashiine.strawberrylib.api.event.*;
 import net.fabricmc.api.ModInitializer;
@@ -45,6 +43,7 @@ public class Nycto implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		MidnightConfig.init(MOD_ID, ModConfig.class);
 		SLib.init(MOD_ID);
 		initRegistries();
 		initCommands();
@@ -150,11 +149,15 @@ public class Nycto implements ModInitializer {
 		PayloadTypeRegistry.playC2S().register(ApplyPowerFromAltarPayload.ID, ApplyPowerFromAltarPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(DarkFormJumpPayload.ID, DarkFormJumpPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(SyncPowerIndexPayload.ID, SyncPowerIndexPayload.CODEC);
+		PayloadTypeRegistry.playC2S().register(SyncVampireChargeJumpStatusPayload.ID, SyncVampireChargeJumpStatusPayload.CODEC);
+		PayloadTypeRegistry.playC2S().register(SyncVampireStepHeightStatusPayload.ID, SyncVampireStepHeightStatusPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(UsePowerPayload.ID, UsePowerPayload.CODEC);
 		// common receivers
 		ServerPlayNetworking.registerGlobalReceiver(ApplyPowerFromAltarPayload.ID, new ApplyPowerFromAltarPayload.Receiver());
 		ServerPlayNetworking.registerGlobalReceiver(DarkFormJumpPayload.ID, new DarkFormJumpPayload.Receiver());
 		ServerPlayNetworking.registerGlobalReceiver(SyncPowerIndexPayload.ID, new SyncPowerIndexPayload.Receiver());
+		ServerPlayNetworking.registerGlobalReceiver(SyncVampireChargeJumpStatusPayload.ID, new SyncVampireChargeJumpStatusPayload.Receiver());
+		ServerPlayNetworking.registerGlobalReceiver(SyncVampireStepHeightStatusPayload.ID, new SyncVampireStepHeightStatusPayload.Receiver());
 		ServerPlayNetworking.registerGlobalReceiver(UsePowerPayload.ID, new UsePowerPayload.Receiver());
 	}
 }

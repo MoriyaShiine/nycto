@@ -17,6 +17,8 @@ import org.ladysnake.cca.api.v3.entity.EntityComponentInitializer;
 import org.ladysnake.cca.api.v3.entity.RespawnCopyStrategy;
 
 public class ModEntityComponents implements EntityComponentInitializer {
+	public static final ComponentKey<SyncedConfigValuesComponent> SYNCED_CONFIG_VALUES = ComponentRegistry.getOrCreate(Nycto.id("synced_config_values"), SyncedConfigValuesComponent.class);
+
 	public static final ComponentKey<BloodComponent> BLOOD = ComponentRegistry.getOrCreate(Nycto.id("blood"), BloodComponent.class);
 	public static final ComponentKey<HealBlockComponent> HEAL_BLOCK = ComponentRegistry.getOrCreate(Nycto.id("heal_block"), HealBlockComponent.class);
 	public static final ComponentKey<HunterHeatComponent> HUNTER_HEAT = ComponentRegistry.getOrCreate(Nycto.id("hunter_heat"), HunterHeatComponent.class);
@@ -41,6 +43,8 @@ public class ModEntityComponents implements EntityComponentInitializer {
 
 	@Override
 	public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
+		registry.registerForPlayers(SYNCED_CONFIG_VALUES, SyncedConfigValuesComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
+
 		registry.registerFor(LivingEntity.class, BLOOD, BloodComponent::new);
 		registry.registerFor(LivingEntity.class, HEAL_BLOCK, HealBlockComponent::new);
 		registry.registerForPlayers(HUNTER_HEAT, HunterHeatComponent::new, RespawnCopyStrategy.LOSSLESS_ONLY);
