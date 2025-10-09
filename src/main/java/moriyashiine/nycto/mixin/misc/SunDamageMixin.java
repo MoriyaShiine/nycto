@@ -3,8 +3,8 @@
  */
 package moriyashiine.nycto.mixin.misc;
 
+import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.init.ModDamageTypes;
-import moriyashiine.nycto.common.util.NyctoUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -24,7 +24,7 @@ public abstract class SunDamageMixin extends Entity {
 
 	@ModifyVariable(method = "damage", at = @At("HEAD"), argsOnly = true)
 	private DamageSource nycto$sunDamage(DamageSource value) {
-		if (value.isIn(DamageTypeTags.IS_FIRE) && NyctoUtil.shouldTakeSunDamage(this)) {
+		if (value.isIn(DamageTypeTags.IS_FIRE) && !value.isIn(DamageTypeTags.IS_PROJECTILE) && NyctoAPI.isVampire(this)) {
 			return getDamageSources().create(ModDamageTypes.SUN, value.getSource(), value.getAttacker());
 		}
 		return value;
