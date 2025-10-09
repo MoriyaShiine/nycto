@@ -12,6 +12,8 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.Identifier;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -24,5 +26,7 @@ public class ModStatusEffectTagProvider extends FabricTagProvider.FabricValueLoo
 	protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
 		valueLookupBuilder(ModStatusEffectTags.INFECTION)
 				.add(ModStatusEffects.VAMPIRISM.value());
+		valueLookupBuilder(TagKey.of(RegistryKeys.STATUS_EFFECT, Identifier.of("enchancement", "chaos_unchoosable")))
+				.addTag(ModStatusEffectTags.INFECTION);
 	}
 }
