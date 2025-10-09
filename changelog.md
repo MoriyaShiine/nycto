@@ -1,4 +1,25 @@
 ------------------------------------------------------
+Version 1.21.10-b2
+------------------------------------------------------
+- thralls are now unthralled if their owner doesn't have the vampiric thrall power
+- hypnotize now stuns players for longer
+- hurting or killing hunters now gives negative villager reputation
+- hurting or killing thralls no longer increases hunter heat
+- hunter heat now has a limit on how many hunters can spawn in quick succession
+- shears are now effective on garlic wreaths and aconite garlands
+- animal blood is now somewhat sustainable
+- vampire hunter armor blood drain immunity is now only blood drain resistance
+- vampire hunter armor garlic aura no longer applies heal block
+- add config
+  - spawnVampires (common)
+  - vampireChargeJump (client)
+  - vampireStepHeight (client)
+- fireballs no longer bypass shields on vampires
+- fix transformation command not working in command blocks or datapacks
+- fix garlic wreaths and aconite garlands not breaking when unsupported
+- enchancement's chaos enchantment can no longer choose infection effects
+
+------------------------------------------------------
 Version 1.21.10-b1
 ------------------------------------------------------
 - update to 1.21.10
