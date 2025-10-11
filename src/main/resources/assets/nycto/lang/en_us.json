@@ -187,7 +187,7 @@
   "tooltip.nycto.vampire_hunter_armor.bonus_3": " 3/4: Reduced wooden stake cooldown",
   "tooltip.nycto.vampire_hunter_armor.bonus_4": " 4/4: Vampire critical hit immunity",
   "tooltip.nycto.vampiric_dagger.desc.0": " - Attack mobs with quality blood to fill. Sneak use to fill with your own blood.",
-  "tooltip.nycto.vampiric_dagger.desc.1": " - When filled, craft with a Glass Bottle to extract blood.",
+  "tooltip.nycto.vampiric_dagger.desc.1": " - When filled, craft or right click with a Glass Bottle to extract blood.",
   "tooltip.nycto.garlic_brew.desc.0": " - Removes powers when consumed by a vampire.",
   "tooltip.nycto.garlic_brew.desc.1": " - If consumed by a vampire with no powers, their vampirism is cured.",
   "tooltip.nycto.player_blood": "Player blood - Unusable in recipes",
