@@ -5,10 +5,18 @@ package moriyashiine.nycto.common.component.entity;
 
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.api.item.HunterContractItem;
+import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
 import moriyashiine.nycto.common.entity.mob.HunterEntity;
+import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.ModGameRules;
+import moriyashiine.nycto.common.tag.ModEntityTypeTags;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
+import org.jetbrains.annotations.Nullable;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
 public class HunterHeatComponent implements ServerTickingComponent {
@@ -45,6 +53,23 @@ public class HunterHeatComponent implements ServerTickingComponent {
 		}
 		if (timesSpawned > 0 && --spawnDecayTicks == 0 && --timesSpawned > 0) {
 			spawnDecayTicks = DECAY_TIMER;
+		}
+	}
+
+	public void maybeIncreaseHeat(LivingEntity target, boolean maximize) {
+		if (!obj.isCreative() && target.getType().isIn(ModEntityTypeTags.CALLS_HUNTERS) && obj.getEntityWorld() instanceof ServerWorld world && world.getGameRules().getBoolean(ModGameRules.DO_HUNTER_SPAWNING)) {
+			if (target instanceof Monster && target.getRandom().nextBoolean()) {
+				return;
+			}
+			@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(target);
+			if (vampiricThrallComponent != null && vampiricThrallComponent.isThralled()) {
+				return;
+			}
+			if (maximize) {
+				maximizeHeat();
+			} else {
+				increaseHeat();
+			}
 		}
 	}
 

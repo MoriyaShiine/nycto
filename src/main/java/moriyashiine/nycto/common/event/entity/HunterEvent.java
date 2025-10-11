@@ -6,6 +6,7 @@ package moriyashiine.nycto.common.event.entity;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.component.world.AuraComponent;
 import moriyashiine.nycto.common.entity.mob.HunterEntity;
+import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModEntityTypes;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.strawberrylib.api.event.AfterDamageIncludingDeathEvent;
@@ -34,10 +35,8 @@ public class HunterEvent {
 					}
 				}
 				if (NyctoAPI.isVampire(player)) {
-					if (entity.isDead()) {
-						NyctoAPI.maximizeHunterHeat(player, entity);
-					} else if (baseDamageTaken > 1 || entity.getRandom().nextBoolean()) {
-						NyctoAPI.increaseHunterHeat(player, entity);
+					if (baseDamageTaken > 1 || entity.getRandom().nextBoolean() || entity.isDead()) {
+						ModEntityComponents.HUNTER_HEAT.get(player).maybeIncreaseHeat(entity, entity.isDead());
 					}
 				}
 			}

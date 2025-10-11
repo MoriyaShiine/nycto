@@ -15,7 +15,6 @@ import moriyashiine.nycto.common.component.entity.RespawnLeniencyComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.HaemogenesisComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModGameRules;
 import moriyashiine.nycto.common.init.ModSoundEvents;
 import moriyashiine.nycto.common.init.ModTransformations;
 import moriyashiine.nycto.common.power.vampire.DarkFormPower;
@@ -31,7 +30,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
@@ -97,24 +95,6 @@ public class NyctoAPI {
 
 	public static void applyHealBlock(LivingEntity entity, int ticks) {
 		applyHealBlock(entity, ticks, null);
-	}
-
-	public static void increaseHunterHeat(PlayerEntity attacker, LivingEntity target) {
-		if (!attacker.isCreative() && target.getType().isIn(ModEntityTypeTags.CALLS_HUNTERS) && attacker.getEntityWorld() instanceof ServerWorld world && world.getGameRules().getBoolean(ModGameRules.DO_HUNTER_SPAWNING)) {
-			@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(target);
-			if (vampiricThrallComponent == null || !vampiricThrallComponent.isThralled()) {
-				ModEntityComponents.HUNTER_HEAT.get(attacker).increaseHeat();
-			}
-		}
-	}
-
-	public static void maximizeHunterHeat(PlayerEntity attacker, LivingEntity target) {
-		if (!attacker.isCreative() && target.getType().isIn(ModEntityTypeTags.CALLS_HUNTERS) && attacker.getEntityWorld() instanceof ServerWorld world && world.getGameRules().getBoolean(ModGameRules.DO_HUNTER_SPAWNING)) {
-			@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(target);
-			if (vampiricThrallComponent == null || !vampiricThrallComponent.isThralled()) {
-				ModEntityComponents.HUNTER_HEAT.get(attacker).maximizeHeat();
-			}
-		}
 	}
 
 	public static boolean isWerewolf(Entity entity) {
