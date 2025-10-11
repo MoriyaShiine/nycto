@@ -14,6 +14,7 @@ import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.render.entity.state.PlayerEntityRenderState;
 import net.minecraft.entity.PlayerLikeEntity;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -32,10 +33,12 @@ public abstract class PlayerEntityRendererMixin<AvatarlikeEntity extends PlayerL
 
 	@Inject(method = "updateRenderState(Lnet/minecraft/entity/PlayerLikeEntity;Lnet/minecraft/client/render/entity/state/PlayerEntityRenderState;F)V", at = @At("TAIL"))
 	private void nycto$bloodrush(AvatarlikeEntity entity, PlayerEntityRenderState state, float tickProgress, CallbackInfo ci) {
-		BloodrushRenderState bloodrushRenderState = new BloodrushRenderState();
-		BloodrushComponent bloodrushComponent = ModEntityComponents.BLOODRUSH.get(entity);
-		bloodrushRenderState.usingBloodrush = bloodrushComponent.isActive(false);
-		bloodrushRenderState.usingBloodrushLenient = bloodrushComponent.isActive(true);
-		state.setData(BloodrushRenderState.KEY, bloodrushRenderState);
+		@Nullable BloodrushComponent bloodrushComponent = ModEntityComponents.BLOODRUSH.getNullable(entity);
+		if (bloodrushComponent != null) {
+			BloodrushRenderState bloodrushRenderState = new BloodrushRenderState();
+			bloodrushRenderState.usingBloodrush = bloodrushComponent.isActive(false);
+			bloodrushRenderState.usingBloodrushLenient = bloodrushComponent.isActive(true);
+			state.setData(BloodrushRenderState.KEY, bloodrushRenderState);
+		}
 	}
 }
