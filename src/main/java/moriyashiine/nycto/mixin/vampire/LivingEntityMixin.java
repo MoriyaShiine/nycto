@@ -12,15 +12,22 @@ import net.fabricmc.fabric.api.tag.convention.v2.ConventionalEntityTypeTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
+	@Shadow
+	public abstract double getAttributeBaseValue(RegistryEntry<EntityAttribute> attribute);
+
 	public LivingEntityMixin(EntityType<?> type, World world) {
 		super(type, world);
 	}
@@ -60,5 +67,10 @@ public abstract class LivingEntityMixin extends Entity {
 			return original / 4;
 		}
 		return original;
+	}
+
+	@ModifyReturnValue(method = "getAttributeValue", at = @At("RETURN"))
+	private double nycto$vampire(double original, RegistryEntry<EntityAttribute> attribute) {
+		return attribute == EntityAttributes.BURNING_TIME && NyctoAPI.isVampire(this) ? getAttributeBaseValue(attribute) : original;
 	}
 }
