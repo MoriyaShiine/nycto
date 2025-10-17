@@ -1,4 +1,21 @@
 ------------------------------------------------------
+Version 1.21.10-b3
+------------------------------------------------------
+- hypnotize now removes hypnosis when sneaking
+- thralls no longer count as monsters for the purpose of sleeping
+- thralls no longer count towards raids
+- tamed mobs can now be thralled regardless of health
+- hunter heat now only increases half the time when hurting or killing hostile mobs
+- hunter heat is no longer increased when entities are alone
+- hunters are no longer called when hurting raiders during a raid
+- increase vampire hunter armor blood drain resistance chance
+- vampiric dagger tooltip now clarifies inventory right click usage
+- vampire spawning is now controlled with the doVampireSpawning gamerule instead of a config
+- vampires no longer get burn time reduction from attribute modifiers
+- fix https://github.com/MoriyaShiine/nycto/issues/7
+- hunters can no longer be disarmed with enchancement
+
+------------------------------------------------------
 Version 1.21.10-b2
 ------------------------------------------------------
 - thralls are now unthralled if their owner doesn't have the vampiric thrall power
