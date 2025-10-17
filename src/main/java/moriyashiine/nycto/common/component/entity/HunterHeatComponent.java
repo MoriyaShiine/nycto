@@ -17,6 +17,7 @@ import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
+import net.minecraft.util.math.Box;
 import org.jetbrains.annotations.Nullable;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
@@ -58,21 +59,16 @@ public class HunterHeatComponent implements ServerTickingComponent {
 	}
 
 	public void maybeIncreaseHeat(LivingEntity target, boolean maximize) {
-		if (!obj.isCreative() && target.getType().isIn(ModEntityTypeTags.CALLS_HUNTERS) && obj.getEntityWorld() instanceof ServerWorld world && world.getGameRules().getBoolean(ModGameRules.DO_HUNTER_SPAWNING)) {
+		if (!obj.isCreative() && obj.getEntityWorld() instanceof ServerWorld world && world.getGameRules().getBoolean(ModGameRules.DO_HUNTER_SPAWNING) && canIncreaseHeat(target)) {
 			if (target instanceof Monster && target.getRandom().nextBoolean()) {
 				return;
 			}
-			if (target instanceof RaiderEntity raider && raider.getRaid() != null) {
-				return;
-			}
-			@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(target);
-			if (vampiricThrallComponent != null && vampiricThrallComponent.isThralled()) {
-				return;
-			}
-			if (maximize) {
-				maximizeHeat();
-			} else {
-				increaseHeat();
+			if (!obj.getEntityWorld().getEntitiesByClass(LivingEntity.class, new Box(target.getBlockPos()).expand(16), foundEntity -> target != foundEntity && canIncreaseHeat(foundEntity)).isEmpty()) {
+				if (maximize) {
+					maximizeHeat();
+				} else {
+					increaseHeat();
+				}
 			}
 		}
 	}
@@ -96,5 +92,16 @@ public class HunterHeatComponent implements ServerTickingComponent {
 		for (int i = heatLevel; i < MAXIMUM_HEAT; i++) {
 			increaseHeat();
 		}
+	}
+
+	private static boolean canIncreaseHeat(LivingEntity target) {
+		if (target.getType().isIn(ModEntityTypeTags.CALLS_HUNTERS)) {
+			if (target instanceof RaiderEntity raider && raider.getRaid() != null) {
+				return false;
+			}
+			@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(target);
+			return vampiricThrallComponent == null || !vampiricThrallComponent.isThralled();
+		}
+		return false;
 	}
 }
