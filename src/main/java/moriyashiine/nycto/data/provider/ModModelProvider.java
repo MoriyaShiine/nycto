@@ -121,7 +121,7 @@ public class ModModelProvider extends FabricModelProvider {
 							}
 							return BlockStateModelGenerator.createWeightedVariant(TextureMap.getSubId(block, stringBuilder.toString()));
 						}))
-						.coordinate(BlockStateModelGenerator.SOUTH_DEFAULT_HORIZONTAL_ROTATION_OPERATIONS)
+						.apply(BlockStateModelGenerator.SOUTH_DEFAULT_HORIZONTAL_ROTATION_OPERATIONS)
 		);
 	}
 
