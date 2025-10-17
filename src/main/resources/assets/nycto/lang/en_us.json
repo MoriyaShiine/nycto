@@ -101,6 +101,7 @@
   "attribute.name.nycto.vampire_resistance": "Vampire Resistance",
   "attribute.name.nycto.werewolf_resistance": "Werewolf Resistance",
   "gamerule.doHunterSpawning": "Spawn hunters",
+  "gamerule.doVampireSpawning": "Spawn vampires",
   "transformation.nycto.human": "Human",
   "transformation.nycto.vampire": "Vampire",
   "power.nycto.night_vision": "Night Vision",
@@ -195,9 +196,7 @@
   "tooltip.nycto.material_cost": "Material Cost: %d %s",
   "tooltip.nycto.power_required": "A power must be selected",
   "tooltip.nycto.weakness_required": "A weakness must be selected",
-  "nycto.midnightconfig.title": "Nycto",
-  "nycto.midnightconfig.category.client": "Client",
-  "nycto.midnightconfig.spawnVampires": "Spawn Vampires",
+  "nycto.midnightconfig.title": "Nycto (Client)",
   "nycto.midnightconfig.vampireChargeJump": "Vampire Charge Jump",
   "nycto.midnightconfig.vampireStepHeight": "Vampire Step Height"
 }

@@ -3,7 +3,6 @@
  */
 package moriyashiine.nycto.common;
 
-import eu.midnightdust.lib.config.MidnightConfig;
 import moriyashiine.nycto.api.init.NyctoRegistries;
 import moriyashiine.nycto.client.payload.*;
 import moriyashiine.nycto.common.command.TransformationCommand;
@@ -43,7 +42,6 @@ public class Nycto implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		MidnightConfig.init(MOD_ID, ModConfig.class);
 		SLib.init(MOD_ID);
 		initRegistries();
 		initCommands();

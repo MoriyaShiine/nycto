@@ -3,6 +3,7 @@
  */
 package moriyashiine.nycto.client;
 
+import eu.midnightdust.lib.config.MidnightConfig;
 import moriyashiine.heartymeals.api.event.DisableHudRepositioningEvent;
 import moriyashiine.nycto.client.event.*;
 import moriyashiine.nycto.client.event.integration.HeartyMealsEvent;
@@ -82,6 +83,7 @@ public class NyctoClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
+		MidnightConfig.init(Nycto.MOD_ID, ModConfig.class);
 		initBlocks();
 		initItems();
 		initEntities();

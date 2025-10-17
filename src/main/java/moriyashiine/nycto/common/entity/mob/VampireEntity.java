@@ -13,6 +13,7 @@ import moriyashiine.nycto.api.power.Power;
 import moriyashiine.nycto.common.component.entity.BloodComponent;
 import moriyashiine.nycto.common.entity.ai.goal.vampire.*;
 import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.ModGameRules;
 import moriyashiine.nycto.common.init.ModPowers;
 import moriyashiine.nycto.common.init.ModSoundEvents;
 import moriyashiine.nycto.common.tag.ModEntityTypeTags;
@@ -73,7 +74,7 @@ public class VampireEntity extends HostileEntity {
 	}
 
 	public static boolean canSpawn(EntityType<VampireEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-		return HostileEntity.canSpawnInDark(type, world, spawnReason, pos, random) && world.getMoonPhase() == 4;
+		return HostileEntity.canSpawnInDark(type, world, spawnReason, pos, random) && world.getMoonPhase() == 4 && world.toServerWorld().getGameRules().getBoolean(ModGameRules.DO_VAMPIRE_SPAWNING);
 	}
 
 	@Override

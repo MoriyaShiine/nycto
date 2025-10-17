@@ -3,7 +3,7 @@
  */
 package moriyashiine.nycto.client.event;
 
-import moriyashiine.nycto.common.ModConfig;
+import moriyashiine.nycto.client.ModConfig;
 import moriyashiine.nycto.common.component.entity.SyncedConfigValuesComponent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.payload.SyncVampireChargeJumpStatusPayload;
