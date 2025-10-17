@@ -21,11 +21,13 @@ import net.minecraft.entity.passive.AbstractHorseEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
+import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Box;
+import net.minecraft.village.raid.Raid;
 import org.jetbrains.annotations.Nullable;
 
 public class VampiricThrallPower extends VampireActivePower {
@@ -68,6 +70,15 @@ public class VampiricThrallPower extends VampireActivePower {
 		VampireTransformation.setComponents(mob, owner != null);
 		ModEntityComponents.VAMPIRIC_THRALL.get(mob).setOwner(owner);
 		HypnotizePower.forget(mob);
+		if (mob instanceof RaiderEntity raider) {
+			Raid raid = raider.getRaid();
+			if (raid != null) {
+				if (raider.isPatrolLeader()) {
+					raid.removeLeader(raider.getWave());
+				}
+				raid.removeFromWave((ServerWorld) raider.getEntityWorld(), raider, true);
+			}
+		}
 	}
 
 	public static boolean canBeThralled(PlayerEntity player, MobEntity target) {

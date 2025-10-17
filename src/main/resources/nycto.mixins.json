@@ -35,6 +35,7 @@
 	"power.vampire.vampiricthrall.HostileEntityMixin",
 	"power.vampire.vampiricthrall.MobEntityMixin",
 	"power.vampire.vampiricthrall.PassiveEntityMixin",
+	"power.vampire.vampiricthrall.RadierEntityMixin",
 	"power.vampire.vampiricthrall.brain.PiglinBrainMixin",
 	"power.vampire.vampiricthrall.brain.task.FleeTaskMixin",
 	"power.vampire.vampiricthrall.brain.task.GoAroundTaskMixin",
