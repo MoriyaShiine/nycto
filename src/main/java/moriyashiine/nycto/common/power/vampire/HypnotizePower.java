@@ -3,6 +3,7 @@
  */
 package moriyashiine.nycto.common.power.vampire;
 
+import moriyashiine.nycto.common.component.entity.power.vampire.HypnotizedComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModParticleTypes;
@@ -35,33 +36,41 @@ public class HypnotizePower extends VampireActivePower {
 
 	@Override
 	protected int getBaseCost(LivingEntity entity) {
-		return 10;
+		return entity.isSneaking() ? 3 : 10;
 	}
 
 	@Override
 	public SoundEvent getUseSound(PlayerEntity player) {
-		return ModSoundEvents.POWER_HYPNOTIZE_USE;
+		return player.isSneaking() ? ModSoundEvents.POWER_HYPNOTIZE_USE_INVERSE : ModSoundEvents.POWER_HYPNOTIZE_USE;
 	}
 
 	@Override
 	public void use(ServerWorld world, ServerPlayerEntity player) {
-		world.getEntitiesByClass(LivingEntity.class, new Box(player.getBlockPos()).expand(RANGE + 2), entity -> entity.distanceTo(player) <= RANGE && canBeHypnotized(player, entity)).forEach(entity -> {
+		world.getEntitiesByClass(LivingEntity.class, new Box(player.getBlockPos()).expand(RANGE + 2), entity -> entity.distanceTo(player) <= RANGE && canUseOn(player, entity)).forEach(entity -> {
 			SLibUtils.addAnchoredParticle(entity, ModParticleTypes.HYPNOTIZED, entity.getStandingEyeHeight(), 0, 0);
-			if (entity.isPlayer()) {
-				entity.addStatusEffect(new StatusEffectInstance(ModStatusEffects.HYPNOTIZED, 100));
-				entity.addStatusEffect(new StatusEffectInstance(ModStatusEffects.STUNNED, 100));
+			if (player.isSneaking()) {
+				entity.removeStatusEffect(ModStatusEffects.HYPNOTIZED);
+				if (entity.isPlayer()) {
+					entity.removeStatusEffect(ModStatusEffects.STUNNED);
+				} else if (entity instanceof MobEntity mob) {
+					forget(mob);
+					ModEntityComponents.HYPNOTIZED.get(mob).setOwner(null);
+				}
 			} else {
-				entity.addStatusEffect(new StatusEffectInstance(ModStatusEffects.HYPNOTIZED, 12000));
-			}
-			if (entity instanceof MobEntity mob) {
-				forget(mob);
-				ModEntityComponents.HYPNOTIZED.get(mob).setOwner(player);
+				if (entity.isPlayer()) {
+					entity.addStatusEffect(new StatusEffectInstance(ModStatusEffects.HYPNOTIZED, 100));
+					entity.addStatusEffect(new StatusEffectInstance(ModStatusEffects.STUNNED, 100));
+				} else if (entity instanceof MobEntity mob) {
+					mob.addStatusEffect(new StatusEffectInstance(ModStatusEffects.HYPNOTIZED, 12000));
+					forget(mob);
+					ModEntityComponents.HYPNOTIZED.get(mob).setOwner(player);
+				}
 			}
 		});
 		ModEntityComponents.BLOOD.get(player).drain(getCost(player));
 	}
 
-	public static boolean canBeHypnotized(PlayerEntity player, LivingEntity target) {
+	public static boolean canUseOn(PlayerEntity player, LivingEntity target) {
 		if (target.isInCreativeMode() || !target.isPartOfGame() || target.getType().isIn(ModEntityTypeTags.CANNOT_BE_HYPNOTIZED)) {
 			return false;
 		}
@@ -69,6 +78,13 @@ public class HypnotizePower extends VampireActivePower {
 			@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(target);
 			if (vampiricThrallComponent != null && vampiricThrallComponent.isThralled()) {
 				return false;
+			}
+			if (player.isSneaking()) {
+				if (target.isPlayer()) {
+					return true;
+				}
+				@Nullable HypnotizedComponent hypnotizedComponent = ModEntityComponents.HYPNOTIZED.getNullable(target);
+				return hypnotizedComponent != null && hypnotizedComponent.hasOwner();
 			}
 			return target.getHealth() <= THRESHOLD && SLibUtils.shouldHurt(player, target);
 		}

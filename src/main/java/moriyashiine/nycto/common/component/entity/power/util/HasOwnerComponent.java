@@ -10,12 +10,12 @@ import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
 import net.minecraft.util.Uuids;
 import org.jetbrains.annotations.Nullable;
-import org.ladysnake.cca.api.v3.component.Component;
 import org.ladysnake.cca.api.v3.component.ComponentKey;
+import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 
 import java.util.UUID;
 
-public class HasOwnerComponent implements Component {
+public abstract class HasOwnerComponent implements AutoSyncedComponent {
 	protected final MobEntity obj;
 	@Nullable
 	protected UUID ownerUuid = null;
@@ -46,6 +46,7 @@ public class HasOwnerComponent implements Component {
 		} else {
 			ownerUuid = player.getUuid();
 		}
+		sync();
 	}
 
 	public static boolean isOwner(Entity entity, Entity potentialOwner) {
@@ -56,4 +57,6 @@ public class HasOwnerComponent implements Component {
 		}
 		return false;
 	}
+
+	public abstract void sync();
 }

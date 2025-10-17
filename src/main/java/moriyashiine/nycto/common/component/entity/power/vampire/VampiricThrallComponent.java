@@ -23,12 +23,11 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
 import org.jetbrains.annotations.Nullable;
-import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
 import java.util.UUID;
 
-public class VampiricThrallComponent extends HasOwnerComponent implements AutoSyncedComponent, ServerTickingComponent {
+public class VampiricThrallComponent extends HasOwnerComponent implements ServerTickingComponent {
 	private FollowMode followMode = FollowMode.FOLLOW;
 	private boolean alternateDrain = false;
 
@@ -83,6 +82,7 @@ public class VampiricThrallComponent extends HasOwnerComponent implements AutoSy
 		}
 	}
 
+	@Override
 	public void sync() {
 		ModEntityComponents.VAMPIRIC_THRALL.sync(obj);
 	}

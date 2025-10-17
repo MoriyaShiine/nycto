@@ -4,6 +4,7 @@
 package moriyashiine.nycto.common.component.entity.power.vampire;
 
 import moriyashiine.nycto.common.component.entity.power.util.HasOwnerComponent;
+import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModStatusEffects;
 import moriyashiine.nycto.common.power.vampire.HypnotizePower;
 import net.minecraft.entity.EntityType;
@@ -25,5 +26,14 @@ public class HypnotizedComponent extends HasOwnerComponent implements ServerTick
 			HypnotizePower.forget(obj);
 			setOwner(null);
 		}
+	}
+
+	@Override
+	public void sync() {
+		ModEntityComponents.HYPNOTIZED.sync(obj);
+	}
+
+	public boolean hasOwner() {
+		return ownerUuid != null;
 	}
 }

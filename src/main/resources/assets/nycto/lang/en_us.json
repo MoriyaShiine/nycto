@@ -124,7 +124,7 @@
   "power.nycto.haemogenesis": "Haemogenesis",
   "power.nycto.haemogenesis.desc": "Rapidly regenerates health, removes heal block, and extinguishes you if you're on fire.",
   "power.nycto.hypnotize": "Hypnotize",
-  "power.nycto.hypnotize.desc": "Forces all nearby mobs to follow and defend you for some time, or briefly stuns them if they're a player. Hypnotized mobs can have their blood sucked without damaging them. Success is dependent on their current health.",
+  "power.nycto.hypnotize.desc": "Forces all nearby mobs to follow and defend you for some time, or briefly stuns them if they're a player. Hypnotized mobs can have their blood sucked without damaging them. Success is dependent on their current health. Removes hypnosis instead when sneaking.",
   "power.nycto.keen_senses": "Keen Senses",
   "power.nycto.keen_senses.desc": "Muffles sounds and highlights mobs with a color depending on their blood type, including those that are invisible or behind walls. Grants a speed boost while active. Costs blood to maintain.",
   "power.nycto.mist_form": "Mist Form",

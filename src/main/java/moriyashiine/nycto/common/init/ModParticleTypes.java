@@ -22,6 +22,7 @@ public class ModParticleTypes {
 	public static final SimpleParticleType BATSTEP_RIGHT = registerParticleType("batstep_right", FabricParticleTypes.simple());
 
 	public static final SimpleParticleType HYPNOSIS_INDICATOR = registerParticleType("hypnosis_indicator", FabricParticleTypes.simple());
+	public static final SimpleParticleType HYPNOSIS_INDICATOR_INVERSE = registerParticleType("hypnosis_indicator_inverse", FabricParticleTypes.simple());
 	public static final SimpleParticleType HYPNOSIS_SMALL = registerParticleType("hypnosis_small", FabricParticleTypes.simple());
 	public static final SimpleParticleType HYPNOSIS_STAR = registerParticleType("hypnosis_star", FabricParticleTypes.simple());
 	public static final SimpleParticleType HYPNOTIZED = registerParticleType("hypnotized", FabricParticleTypes.simple());

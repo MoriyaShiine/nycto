@@ -114,6 +114,8 @@ public class ModSoundsProvider extends FabricSoundsProvider {
 
 		exporter.add(ModSoundEvents.POWER_HYPNOTIZE_USE, of()
 				.sound(ofFile(id("power/hypnotize/use"))));
+		exporter.add(ModSoundEvents.POWER_HYPNOTIZE_USE_INVERSE, of()
+				.sound(ofFile(id("power/hypnotize/use_inverse"))));
 
 		exporter.add(ModSoundEvents.POWER_KEEN_SENSES_ON, of()
 				.sound(ofFile(id("power/keen_senses/on"))));

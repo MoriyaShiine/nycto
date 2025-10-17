@@ -64,6 +64,7 @@ public class ModSoundEvents {
 	public static final SoundEvent POWER_HAEMOGENESIS_USE = registerSoundEvent("power.haemogenesis.use");
 
 	public static final SoundEvent POWER_HYPNOTIZE_USE = registerSoundEvent("power.hypnotize.use");
+	public static final SoundEvent POWER_HYPNOTIZE_USE_INVERSE = registerSoundEvent("power.hypnotize.use_inverse");
 
 	public static final SoundEvent POWER_KEEN_SENSES_ON = registerSoundEvent("power.keen_senses.on");
 	public static final SoundEvent POWER_KEEN_SENSES_OFF = registerSoundEvent("power.keen_senses.off");

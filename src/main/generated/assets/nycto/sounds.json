@@ -260,6 +260,12 @@
 	  "nycto:power/hypnotize/use"
 	]
   },
+  "power.hypnotize.use_inverse": {
+	"category": "neutral",
+	"sounds": [
+	  "nycto:power/hypnotize/use_inverse"
+	]
+  },
   "power.keen_senses.heartbeat": {
 	"category": "neutral",
 	"sounds": [

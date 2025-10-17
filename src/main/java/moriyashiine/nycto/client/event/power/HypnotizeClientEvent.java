@@ -24,7 +24,7 @@ public class HypnotizeClientEvent {
 	private static final MinecraftClient client = MinecraftClient.getInstance();
 
 	private static boolean shouldHighlight(PlayerEntity player, LivingEntity living, int range) {
-		return player != living && player != null && !player.isSpectator() && living.distanceTo(player) <= range && NyctoClientAPI.isHighlightingPower(player, ModPowers.HYPNOTIZE) && HypnotizePower.canBeHypnotized(player, living);
+		return player != living && player != null && !player.isSpectator() && living.distanceTo(player) <= range && NyctoClientAPI.isHighlightingPower(player, ModPowers.HYPNOTIZE) && HypnotizePower.canUseOn(player, living);
 	}
 
 	public static class Tick implements ClientTickEvents.EndWorldTick {
@@ -32,7 +32,7 @@ public class HypnotizeClientEvent {
 		public void onEndTick(ClientWorld world) {
 			for (Entity entity : world.getEntities()) {
 				if (entity instanceof LivingEntity living && shouldHighlight(client.player, living, HypnotizePower.RANGE * 2)) {
-					SLibClientUtils.addAnchoredParticle(living, ModParticleTypes.HYPNOSIS_INDICATOR, living.getHeight() + 0.5, 1 / 6F, 1 / 24F);
+					SLibClientUtils.addAnchoredParticle(living, client.player.isSneaking() ? ModParticleTypes.HYPNOSIS_INDICATOR_INVERSE : ModParticleTypes.HYPNOSIS_INDICATOR, living.getHeight() + 0.5, 1 / 6F, 1 / 24F);
 					if (living.age % 4 == 0) {
 						SLibClientUtils.addParticles(living, ModParticleTypes.HYPNOSIS_STAR, 1, ParticleAnchor.BODY);
 						if (living.age % 12 == 0) {

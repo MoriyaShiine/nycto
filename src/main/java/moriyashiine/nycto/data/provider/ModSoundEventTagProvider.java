@@ -34,7 +34,7 @@ public class ModSoundEventTagProvider extends FabricTagProvider.FabricValueLooku
 				.add(ModSoundEvents.POWER_CARNAGE_USE).add(ModSoundEvents.POWER_CARNAGE_HIT)
 				.add(ModSoundEvents.POWER_DARK_FORM_ON).add(ModSoundEvents.POWER_DARK_FORM_OFF)
 				.add(ModSoundEvents.POWER_HAEMOGENESIS_USE)
-				.add(ModSoundEvents.POWER_HYPNOTIZE_USE)
+				.add(ModSoundEvents.POWER_HYPNOTIZE_USE).add(ModSoundEvents.POWER_HYPNOTIZE_USE_INVERSE)
 				.add(ModSoundEvents.POWER_KEEN_SENSES_ON).add(ModSoundEvents.POWER_KEEN_SENSES_OFF).add(ModSoundEvents.POWER_KEEN_SENSES_HEARTBEAT)
 				.add(ModSoundEvents.POWER_MIST_FORM_ON).add(ModSoundEvents.POWER_MIST_FORM_OFF)
 				.add(ModSoundEvents.POWER_VAMPIRIC_THRALL_CONVERT);

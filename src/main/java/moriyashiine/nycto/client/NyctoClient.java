@@ -144,6 +144,7 @@ public class NyctoClient implements ClientModInitializer {
 		ParticleFactoryRegistry.getInstance().register(ModParticleTypes.BATSTEP_RIGHT, BatSwarmParticle.BatstepFactory::new);
 
 		ParticleFactoryRegistry.getInstance().register(ModParticleTypes.HYPNOSIS_INDICATOR, AnchoredParticle.Factory::new);
+		ParticleFactoryRegistry.getInstance().register(ModParticleTypes.HYPNOSIS_INDICATOR_INVERSE, AnchoredParticle.Factory::new);
 		ParticleFactoryRegistry.getInstance().register(ModParticleTypes.HYPNOSIS_SMALL, SmallSpellParticle.Factory::new);
 		ParticleFactoryRegistry.getInstance().register(ModParticleTypes.HYPNOSIS_STAR, SpellParticle.DefaultFactory::new);
 		ParticleFactoryRegistry.getInstance().register(ModParticleTypes.HYPNOTIZED, HypnotizedParticle.Factory::new);
