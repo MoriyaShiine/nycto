@@ -34,6 +34,6 @@ public class MobEntityMixin {
 
 	@ModifyExpressionValue(method = "checkDespawn", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityType;isAllowedInPeaceful()Z"))
 	private boolean nycto$vampiricThrall(boolean original) {
-		return original || ModEntityComponents.VAMPIRIC_THRALL.get(this).isThralled();
+		return original || ModEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner();
 	}
 }

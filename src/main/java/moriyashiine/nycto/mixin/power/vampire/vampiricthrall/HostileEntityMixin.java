@@ -13,6 +13,6 @@ import org.spongepowered.asm.mixin.injection.At;
 public class HostileEntityMixin {
 	@ModifyReturnValue(method = "isAngryAt", at = @At("RETURN"))
 	private boolean nycto$vampiricThrall(boolean original) {
-		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(this).isThralled();
+		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner();
 	}
 }

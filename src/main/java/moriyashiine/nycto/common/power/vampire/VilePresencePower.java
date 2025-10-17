@@ -66,6 +66,6 @@ public class VilePresencePower extends NegativePower {
 			return false;
 		}
 		@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
-		return vampiricThrallComponent == null || !vampiricThrallComponent.isThralled();
+		return vampiricThrallComponent == null || !vampiricThrallComponent.hasOwner();
 	}
 }

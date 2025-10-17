@@ -54,10 +54,10 @@ public class NyctoClientAPI {
 
 	public static boolean hasThrallTexture(Entity entity) {
 		@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
-		if (vampiricThrallComponent != null && vampiricThrallComponent.isThralled()) {
+		if (vampiricThrallComponent != null && vampiricThrallComponent.hasOwner()) {
 			return true;
 		}
 		@Nullable VampiricVexComponent vampiricVexComponent = ModEntityComponents.VAMPIRIC_VEX.getNullable(entity);
-		return vampiricVexComponent != null && vampiricVexComponent.isThralled();
+		return vampiricVexComponent != null && vampiricVexComponent.hasOwner();
 	}
 }

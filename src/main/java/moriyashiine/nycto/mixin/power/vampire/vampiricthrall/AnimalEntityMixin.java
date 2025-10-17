@@ -13,6 +13,6 @@ import org.spongepowered.asm.mixin.injection.At;
 public class AnimalEntityMixin {
 	@ModifyExpressionValue(method = "interactMob", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/passive/AnimalEntity;isBreedingItem(Lnet/minecraft/item/ItemStack;)Z"))
 	private boolean nycto$vampiricThrall(boolean original) {
-		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(this).isThralled();
+		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner();
 	}
 }

@@ -63,7 +63,7 @@ public class VampiricThrallEvent {
 			if (player.isPartOfGame() && player.isSneaking()) {
 				@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
 				if (vampiricThrallComponent != null) {
-					if (vampiricThrallComponent.isThralled()) {
+					if (vampiricThrallComponent.hasOwner()) {
 						Set<ApplyEffectsConsumeEffect> effects = new HashSet<>();
 						int fillAmount = 0;
 						ItemStack stack = player.getStackInHand(hand);

@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class PiglinBrainMixin {
 	@ModifyReturnValue(method = "getNearestZombifiedPiglin", at = @At("RETURN"))
 	private static boolean nycto$vampiricThrall(boolean original, PiglinEntity piglin) {
-		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(piglin).isThralled();
+		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(piglin).hasOwner();
 	}
 
 	@Definition(id = "attacker", local = @Local(type = LivingEntity.class))
@@ -27,6 +27,6 @@ public class PiglinBrainMixin {
 	@Expression("attacker instanceof PiglinEntity")
 	@ModifyExpressionValue(method = "onAttacked", at = @At(value = "MIXINEXTRAS:EXPRESSION"))
 	private static boolean nycto$vampiricThrallInstanceof(boolean value, @Local(argsOnly = true) PiglinEntity piglin) {
-		return !ModEntityComponents.VAMPIRIC_THRALL.get(piglin).isThralled();
+		return !ModEntityComponents.VAMPIRIC_THRALL.get(piglin).hasOwner();
 	}
 }

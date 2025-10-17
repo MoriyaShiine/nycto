@@ -20,7 +20,7 @@ public abstract class ActiveTargetGoalMixin extends TrackTargetGoal {
 
 	@Inject(method = "canStart", at = @At("HEAD"), cancellable = true)
 	private void nycto$vampiricThrall(CallbackInfoReturnable<Boolean> cir) {
-		if (ModEntityComponents.VAMPIRIC_THRALL.get(mob).isThralled()) {
+		if (ModEntityComponents.VAMPIRIC_THRALL.get(mob).hasOwner()) {
 			cir.setReturnValue(false);
 		}
 	}

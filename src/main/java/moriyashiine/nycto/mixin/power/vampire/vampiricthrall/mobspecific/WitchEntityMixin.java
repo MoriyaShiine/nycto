@@ -27,7 +27,7 @@ public class WitchEntityMixin {
 
 	@ModifyArg(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/component/type/PotionContentsComponent;createStack(Lnet/minecraft/item/Item;Lnet/minecraft/registry/entry/RegistryEntry;)Lnet/minecraft/item/ItemStack;"))
 	private RegistryEntry<Potion> nycto$vampiricThrall(RegistryEntry<Potion> potion) {
-		if (potion == Potions.HEALING && ModEntityComponents.VAMPIRIC_THRALL.get(this).isThralled()) {
+		if (potion == Potions.HEALING && ModEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner()) {
 			return Potions.HARMING;
 		}
 		return potion;
@@ -45,7 +45,7 @@ public class WitchEntityMixin {
 
 	@WrapWithCondition(method = "shootAt", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/WitchEntity;setTarget(Lnet/minecraft/entity/LivingEntity;)V"))
 	private boolean nycto$vampiricThrall(WitchEntity instance, LivingEntity entity) {
-		if (ModEntityComponents.VAMPIRIC_THRALL.get(instance).isThralled()) {
+		if (ModEntityComponents.VAMPIRIC_THRALL.get(instance).hasOwner()) {
 			reverseBecauseThrall = true;
 			return false;
 		}

@@ -32,8 +32,4 @@ public class HypnotizedComponent extends HasOwnerComponent implements ServerTick
 	public void sync() {
 		ModEntityComponents.HYPNOTIZED.sync(obj);
 	}
-
-	public boolean hasOwner() {
-		return ownerUuid != null;
-	}
 }

@@ -14,6 +14,6 @@ public class ThralledMeleeAttackGoal extends MeleeAttackGoal {
 
 	@Override
 	public boolean canStart() {
-		return ModEntityComponents.VAMPIRIC_THRALL.get(mob).isThralled() && super.canStart();
+		return ModEntityComponents.VAMPIRIC_THRALL.get(mob).hasOwner() && super.canStart();
 	}
 }

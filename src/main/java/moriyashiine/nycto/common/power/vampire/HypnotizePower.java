@@ -76,7 +76,7 @@ public class HypnotizePower extends VampireActivePower {
 		}
 		if (target.isPlayer() || ModEntityComponents.HYPNOTIZED.isProvidedBy(target)) {
 			@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(target);
-			if (vampiricThrallComponent != null && vampiricThrallComponent.isThralled()) {
+			if (vampiricThrallComponent != null && vampiricThrallComponent.hasOwner()) {
 				return false;
 			}
 			if (player.isSneaking()) {

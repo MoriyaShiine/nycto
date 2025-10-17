@@ -36,6 +36,10 @@ public abstract class HasOwnerComponent implements AutoSyncedComponent {
 		}
 	}
 
+	public boolean hasOwner() {
+		return ownerUuid != null;
+	}
+
 	public boolean isOwner(Entity entity) {
 		return entity != null && entity.getUuid().equals(ownerUuid);
 	}

@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 public class WolfEntityMixin {
 	@ModifyArg(method = "isBreedingItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isIn(Lnet/minecraft/registry/tag/TagKey;)Z"))
 	private TagKey<Item> nycto$vampiricThrall(TagKey<Item> tag) {
-		if (ModEntityComponents.VAMPIRIC_THRALL.get(this).isThralled()) {
+		if (ModEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner()) {
 			return ModItemTags.USABLE_BLOOD_BOTTLES;
 		}
 		return tag;

@@ -21,7 +21,7 @@ public class AnimalMateGoalMixin {
 
 	@Inject(method = {"canStart", "shouldContinue"}, at = @At("HEAD"), cancellable = true)
 	private void nycto$vampiricThrall(CallbackInfoReturnable<Boolean> cir) {
-		if (ModEntityComponents.VAMPIRIC_THRALL.get(animal).isThralled()) {
+		if (ModEntityComponents.VAMPIRIC_THRALL.get(animal).hasOwner()) {
 			cir.setReturnValue(false);
 		}
 	}

@@ -45,7 +45,7 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
 
 	@ModifyArg(method = "initBrain", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/ai/brain/Brain;setSchedule(Lnet/minecraft/entity/ai/brain/Schedule;)V"))
 	private Schedule nycto$vampiricThrall(Schedule schedule) {
-		if (ModEntityComponents.VAMPIRIC_THRALL.get(this).isThralled()) {
+		if (ModEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner()) {
 			return isBaby() ? VAMPIRE_BABY : VAMPIRE_DEFAULT;
 		}
 		return schedule;
@@ -53,17 +53,17 @@ public abstract class VillagerEntityMixin extends MerchantEntity {
 
 	@ModifyReturnValue(method = "isReadyToBreed", at = @At("RETURN"))
 	private boolean nycto$vampiricThrallBreed(boolean original) {
-		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(this).isThralled();
+		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner();
 	}
 
 	@ModifyReturnValue(method = "canEatFood", at = @At("RETURN"))
 	private boolean nycto$vampiricThrallFood(boolean original) {
-		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(this).isThralled();
+		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner();
 	}
 
 	@ModifyReturnValue(method = "canSummonGolem", at = @At("RETURN"))
 	private boolean nycto$vampiricThrallGolem(boolean original) {
-		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(this).isThralled();
+		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner();
 	}
 
 	@Unique

@@ -23,7 +23,7 @@ public abstract class VillagerEntityMixin extends LivingEntity {
 	@ModifyReturnValue(method = "getReputation", at = @At("RETURN"))
 	private int nycto$vilePresence(int original, PlayerEntity player) {
 		if (VilePresencePower.isAffected(this, player)) {
-			return original - (ModEntityComponents.VAMPIRIC_THRALL.get(this).isThralled() ? 128 : 256);
+			return original - (ModEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner() ? 128 : 256);
 		}
 		return original;
 	}

@@ -13,11 +13,11 @@ import org.spongepowered.asm.mixin.injection.At;
 public class WanderingTraderEntityMixin {
 	@ModifyExpressionValue(method = "method_18067", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;isDay()Z"))
 	private boolean nycto$vampiricThrallMilk(boolean original) {
-		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(this).isThralled();
+		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner();
 	}
 
 	@ModifyExpressionValue(method = "method_18068", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;isNight()Z"))
 	private boolean nycto$vampiricThrallPotion(boolean original) {
-		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(this).isThralled();
+		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner();
 	}
 }

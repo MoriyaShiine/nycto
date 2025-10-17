@@ -106,7 +106,7 @@ public class NyctoAPI {
 			return false;
 		}
 		@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
-		if (vampiricThrallComponent != null && vampiricThrallComponent.isThralled()) {
+		if (vampiricThrallComponent != null && vampiricThrallComponent.hasOwner()) {
 			return true;
 		}
 		return entity.getType().isIn(ModEntityTypeTags.VAMPIRES) || NyctoAPIImpl.isPlayerVampire(entity);

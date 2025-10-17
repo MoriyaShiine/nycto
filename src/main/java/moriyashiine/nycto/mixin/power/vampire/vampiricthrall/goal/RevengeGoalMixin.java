@@ -22,11 +22,11 @@ public abstract class RevengeGoalMixin extends TrackTargetGoal {
 
 	@ModifyExpressionValue(method = "canStart", at = @At(value = "INVOKE", target = "Ljava/lang/Class;isAssignableFrom(Ljava/lang/Class;)Z"))
 	private boolean nycto$vampiricThrall(boolean original, @Local LivingEntity attacker) {
-		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(mob).isThralled() && !ModEntityComponents.VAMPIRIC_THRALL.get(attacker).isThralled();
+		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(mob).hasOwner() && !ModEntityComponents.VAMPIRIC_THRALL.get(attacker).hasOwner();
 	}
 
 	@WrapWithCondition(method = "callSameTypeForRevenge", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/ai/goal/RevengeGoal;setMobEntityTarget(Lnet/minecraft/entity/mob/MobEntity;Lnet/minecraft/entity/LivingEntity;)V"))
 	private boolean nycto$vampiricThrall(RevengeGoal instance, MobEntity mob, LivingEntity target) {
-		return !ModEntityComponents.VAMPIRIC_THRALL.get(mob).isThralled();
+		return !ModEntityComponents.VAMPIRIC_THRALL.get(mob).hasOwner();
 	}
 }

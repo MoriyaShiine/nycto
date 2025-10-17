@@ -19,8 +19,8 @@ public class EvokerEntitySummonVexGoalMixin {
 	@Inject(method = "castSpell", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;emitGameEvent(Lnet/minecraft/registry/entry/RegistryEntry;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/event/GameEvent$Emitter;)V"))
 	private void nycto$vampiricThrall(CallbackInfo ci, @Local VexEntity vex) {
 		@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(vex.getOwner());
-		if (vampiricThrallComponent != null && vampiricThrallComponent.isThralled()) {
-			ModEntityComponents.VAMPIRIC_VEX.get(vex).setThralled();
+		if (vampiricThrallComponent != null && vampiricThrallComponent.hasOwner()) {
+			ModEntityComponents.VAMPIRIC_VEX.get(vex).setOwned();
 		}
 	}
 }

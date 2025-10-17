@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class PassiveEntityMixin {
 	@Inject(method = "setBreedingAge", at = @At("HEAD"), cancellable = true)
 	private void nycto$vampiricThrall(int age, CallbackInfo ci) {
-		if (ModEntityComponents.VAMPIRIC_THRALL.get(this).isThralled()) {
+		if (ModEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner()) {
 			ci.cancel();
 		}
 	}

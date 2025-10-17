@@ -15,6 +15,6 @@ import org.spongepowered.asm.mixin.injection.At;
 public class FleeTaskMixin {
 	@ModifyReturnValue(method = "shouldRun(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/mob/PathAwareEntity;)Z", at = @At("RETURN"))
 	private boolean nycto$vampiricThrall(boolean original, @Local(argsOnly = true) PathAwareEntity entity) {
-		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(entity).isThralled();
+		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(entity).hasOwner();
 	}
 }

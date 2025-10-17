@@ -17,12 +17,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class PanicTaskMixin {
 	@ModifyReturnValue(method = "shouldKeepRunning(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/passive/VillagerEntity;J)Z", at = @At("RETURN"))
 	private boolean nycto$vampiricThrall(boolean original, ServerWorld world, VillagerEntity villager) {
-		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(villager).isThralled();
+		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(villager).hasOwner();
 	}
 
 	@Inject(method = "run(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/passive/VillagerEntity;J)V", at = @At("HEAD"), cancellable = true)
 	private void nycto$vampiricThrall(ServerWorld world, VillagerEntity villager, long l, CallbackInfo ci) {
-		if (ModEntityComponents.VAMPIRIC_THRALL.get(villager).isThralled()) {
+		if (ModEntityComponents.VAMPIRIC_THRALL.get(villager).hasOwner()) {
 			ci.cancel();
 		}
 	}

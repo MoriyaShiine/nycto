@@ -20,6 +20,6 @@ public class EscapeDangerGoalMixin {
 
 	@ModifyReturnValue(method = "isInDanger", at = @At("RETURN"))
 	private boolean nycto$vampiricThrall(boolean original) {
-		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(mob).isThralled();
+		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(mob).hasOwner();
 	}
 }

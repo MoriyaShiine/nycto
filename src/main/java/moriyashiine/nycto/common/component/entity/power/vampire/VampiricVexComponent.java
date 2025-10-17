@@ -16,7 +16,7 @@ import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
 public class VampiricVexComponent implements AutoSyncedComponent, ServerTickingComponent {
 	private final VexEntity obj;
-	private boolean isThralled = false;
+	private boolean hasOwner = false;
 	private int despawnTimer = 0;
 
 	public VampiricVexComponent(VexEntity obj) {
@@ -25,20 +25,20 @@ public class VampiricVexComponent implements AutoSyncedComponent, ServerTickingC
 
 	@Override
 	public void readData(ReadView readView) {
-		isThralled = readView.getBoolean("IsThralled", false);
+		hasOwner = readView.getBoolean("HasOwner", false);
 		despawnTimer = readView.getInt("DespawnTimer", 0);
 	}
 
 	@Override
 	public void writeData(WriteView writeView) {
-		writeView.putBoolean("IsThralled", isThralled);
+		writeView.putBoolean("HasOwner", hasOwner);
 		writeView.putInt("DespawnTimer", despawnTimer);
 	}
 
 	@Override
 	public void serverTick() {
-		if (isThralled) {
-			if (obj.getOwner() == null || obj.getOwner().isDead() || obj.getOwner().getTarget() == null || obj.getOwner().getTarget().isDead() || !ModEntityComponents.VAMPIRIC_THRALL.get(obj.getOwner()).isThralled() || ++despawnTimer == 600) {
+		if (hasOwner) {
+			if (obj.getOwner() == null || obj.getOwner().isDead() || obj.getOwner().getTarget() == null || obj.getOwner().getTarget().isDead() || !ModEntityComponents.VAMPIRIC_THRALL.get(obj.getOwner()).hasOwner() || ++despawnTimer == 600) {
 				kill();
 			} else {
 				obj.setTarget(obj.getOwner().getTarget());
@@ -46,12 +46,12 @@ public class VampiricVexComponent implements AutoSyncedComponent, ServerTickingC
 		}
 	}
 
-	public boolean isThralled() {
-		return isThralled;
+	public boolean hasOwner() {
+		return hasOwner;
 	}
 
-	public void setThralled() {
-		isThralled = true;
+	public void setOwned() {
+		hasOwner = true;
 		ModEntityComponents.VAMPIRIC_VEX.sync(obj);
 	}
 

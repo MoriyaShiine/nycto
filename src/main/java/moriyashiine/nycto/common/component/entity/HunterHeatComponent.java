@@ -100,7 +100,7 @@ public class HunterHeatComponent implements ServerTickingComponent {
 				return false;
 			}
 			@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(target);
-			return vampiricThrallComponent == null || !vampiricThrallComponent.isThralled();
+			return vampiricThrallComponent == null || !vampiricThrallComponent.hasOwner();
 		}
 		return false;
 	}

@@ -54,7 +54,7 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 
 	@Override
 	public void serverTick() {
-		if (isThralled() && obj.isAlive()) {
+		if (hasOwner() && obj.isAlive()) {
 			if (obj.getHealth() < obj.getMaxHealth() && obj.age % 15 == 0 && !ModEntityComponents.HEAL_BLOCK.get(obj).isHealingBlocked()) {
 				BloodComponent bloodComponent = ModEntityComponents.BLOOD.get(obj);
 				if (bloodComponent.getBlood() > 0) {
@@ -92,10 +92,6 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 		return ownerUuid;
 	}
 
-	public boolean isThralled() {
-		return ownerUuid != null;
-	}
-
 	public FollowMode getFollowMode() {
 		return hasFollowModes() ? followMode : FollowMode.NONE;
 	}
@@ -105,7 +101,7 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 	}
 
 	public boolean hasFollowModes() {
-		return isThralled() && !(obj instanceof TameableEntity);
+		return hasOwner() && !(obj instanceof TameableEntity);
 	}
 
 	public void cycleFollowMode() {
