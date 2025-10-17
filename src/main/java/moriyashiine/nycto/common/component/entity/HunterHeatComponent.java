@@ -13,6 +13,7 @@ import moriyashiine.nycto.common.tag.ModEntityTypeTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
@@ -59,6 +60,9 @@ public class HunterHeatComponent implements ServerTickingComponent {
 	public void maybeIncreaseHeat(LivingEntity target, boolean maximize) {
 		if (!obj.isCreative() && target.getType().isIn(ModEntityTypeTags.CALLS_HUNTERS) && obj.getEntityWorld() instanceof ServerWorld world && world.getGameRules().getBoolean(ModGameRules.DO_HUNTER_SPAWNING)) {
 			if (target instanceof Monster && target.getRandom().nextBoolean()) {
+				return;
+			}
+			if (target instanceof RaiderEntity raider && raider.getRaid() != null) {
 				return;
 			}
 			@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(target);
