@@ -84,7 +84,7 @@ public class VampiricThrallPower extends VampireActivePower {
 			}
 			@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(target);
 			if (vampiricThrallComponent != null && !vampiricThrallComponent.isThralled()) {
-				return target.getHealth() <= THRESHOLD;
+				return target.getHealth() <= THRESHOLD || target instanceof Tameable;
 			}
 		}
 		return false;
