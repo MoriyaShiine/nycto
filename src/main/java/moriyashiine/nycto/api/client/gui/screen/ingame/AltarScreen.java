@@ -8,6 +8,7 @@ import moriyashiine.nycto.api.init.NyctoRegistries;
 import moriyashiine.nycto.api.power.Power;
 import moriyashiine.nycto.api.screenhandler.AltarScreenHandler;
 import moriyashiine.nycto.common.payload.ApplyPowerFromAltarPayload;
+import moriyashiine.strawberrylib.api.module.SLibClientUtils;
 import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
@@ -22,6 +23,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AltarScreen<T extends AltarScreenHandler> extends HandledScreen<T> {
@@ -198,9 +200,9 @@ public abstract class AltarScreen<T extends AltarScreenHandler> extends HandledS
 	private void renderPowerInfo(Power power, DrawContext context, int posX, int posY, int mouseX, int mouseY) {
 		if (isInBounds(posX, posY, mouseX, mouseY, 0, 16, 0, 16)) {
 			if (infoTexts == null) {
-				infoTexts = List.of(
-						Text.translatable(power.getTranslationKey()),
-						Text.literal(" - ").formatted(Formatting.GRAY).append(Text.translatable(power.getTranslationKey() + ".desc")));
+				infoTexts = new ArrayList<>();
+				infoTexts.add(Text.translatable(power.getTranslationKey()));
+				infoTexts.addAll(SLibClientUtils.wrapText(Text.literal(" - ").formatted(Formatting.GRAY).append(Text.translatable(power.getTranslationKey() + ".desc"))));
 			}
 			context.drawTooltip(textRenderer, infoTexts, mouseX, mouseY);
 		} else {
