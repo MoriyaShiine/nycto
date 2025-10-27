@@ -1,4 +1,10 @@
 ------------------------------------------------------
+Version 1.21.10-b4
+------------------------------------------------------
+- mannequins now have quality blood
+- use new tooltip wrapping for specific cases instead of depending on tooltipfix
+
+------------------------------------------------------
 Version 1.21.10-b3
 ------------------------------------------------------
 - hypnotize now removes hypnosis when sneaking
