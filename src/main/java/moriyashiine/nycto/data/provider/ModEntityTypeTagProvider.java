@@ -26,6 +26,7 @@ public class ModEntityTypeTagProvider extends FabricTagProvider.EntityTypeTagPro
 	protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
 		valueLookupBuilder(ModEntityTypeTags.HAS_QUALITY_BLOOD)
 				.forceAddTag(EntityTypeTags.ILLAGER)
+				.add(EntityType.MANNEQUIN)
 				.add(EntityType.PIGLIN)
 				.add(EntityType.PIGLIN_BRUTE)
 				.add(EntityType.PLAYER)
