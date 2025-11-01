@@ -17,6 +17,7 @@
 	"healblock.LivingEntityMixin",
 	"hunter.RangedWeaponItemMixin",
 	"misc.LivingEntityMixin",
+	"misc.PowderSnowBlockMixin",
 	"misc.SunDamageMixin",
 	"power.hasowner.EntityMixin",
 	"power.hasowner.MobEntityMixin",
