@@ -59,9 +59,9 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
 				.add(ModItems.WEREWOLF_HUNTER_LEGGINGS)
 				.add(ModItems.WEREWOLF_HUNTER_BOOTS);
 		valueLookupBuilder(ModItemTags.REPAIRS_VAMPIRE_ARMOR)
-				.forceAddTag(ItemTags.REPAIRS_LEATHER_ARMOR);
+				.forceAddTag(ItemTags.REPAIRS_IRON_ARMOR);
 		valueLookupBuilder(ModItemTags.REPAIRS_HUNTER_ARMOR)
-				.forceAddTag(ItemTags.REPAIRS_LEATHER_ARMOR);
+				.forceAddTag(ItemTags.REPAIRS_IRON_ARMOR);
 
 		valueLookupBuilder(ModItemTags.HALBERD_TOOL_MATERIALS)
 				.forceAddTag(ItemTags.IRON_TOOL_MATERIALS);
