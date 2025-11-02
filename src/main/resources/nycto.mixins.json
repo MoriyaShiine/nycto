@@ -87,11 +87,11 @@
 	"woodenstake.RangedWeaponItemMixin"
   ],
   "client": [
+	"api.power.client.ControlsOptionScreenMixin",
 	"api.power.client.GameOptionsMixin",
 	"api.power.client.InGameHudMixin",
 	"api.power.client.MinecraftClientMixin",
 	"api.power.client.MouseMixin",
-	"api.power.client.PowerOptionsScreenMixin",
 	"brew.client.ItemModelManagerMixin",
 	"coffin.client.LivingEntityRendererMixin",
 	"misc.client.ItemStackMixin",

@@ -5,7 +5,6 @@ package moriyashiine.nycto.mixin.api.power.client;
 
 import moriyashiine.nycto.client.NyctoClient;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.option.AccessibilityOptionsScreen;
 import net.minecraft.client.gui.screen.option.ControlsOptionsScreen;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
 import net.minecraft.client.option.GameOptions;
@@ -15,9 +14,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin({AccessibilityOptionsScreen.class, ControlsOptionsScreen.class})
-public abstract class PowerOptionsScreenMixin extends GameOptionsScreen {
-	public PowerOptionsScreenMixin(Screen parent, GameOptions gameOptions, Text title) {
+@Mixin(ControlsOptionsScreen.class)
+public abstract class ControlsOptionScreenMixin extends GameOptionsScreen {
+	public ControlsOptionScreenMixin(Screen parent, GameOptions gameOptions, Text title) {
 		super(parent, gameOptions, title);
 	}
 
