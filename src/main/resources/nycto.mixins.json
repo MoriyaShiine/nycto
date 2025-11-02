@@ -34,6 +34,7 @@
 	"power.vampire.vampiricthrall.EntityMixin",
 	"power.vampire.vampiricthrall.EntityNavigationMixin",
 	"power.vampire.vampiricthrall.HostileEntityMixin",
+	"power.vampire.vampiricthrall.IllagerEntityMixin",
 	"power.vampire.vampiricthrall.MobEntityMixin",
 	"power.vampire.vampiricthrall.PassiveEntityMixin",
 	"power.vampire.vampiricthrall.RadierEntityMixin",

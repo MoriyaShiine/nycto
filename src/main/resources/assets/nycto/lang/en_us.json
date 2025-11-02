@@ -172,6 +172,7 @@
   "message.nycto.cycle_follow_mode.follow": "%s is now following",
   "message.nycto.cycle_follow_mode.stay": "%s is now staying put",
   "message.nycto.cycle_follow_mode.wander": "%s is now wandering",
+  "message.nycto.cycle_follow_mode.defend": "%s is now defending",
   "key.category.nycto.nycto": "Nycto",
   "key.nycto.power_hotbar": "Power Hotbar",
   "tooltip.nycto.hold_left_shift": "Hold [%s] to show details.",

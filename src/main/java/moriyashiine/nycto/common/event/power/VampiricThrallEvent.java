@@ -9,6 +9,7 @@ import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModSoundEvents;
 import moriyashiine.nycto.common.item.consume.FillBloodConsumeEffect;
 import moriyashiine.nycto.common.util.NyctoUtil;
+import moriyashiine.strawberrylib.api.event.TickEntityEvent;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
@@ -17,10 +18,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.consume.ApplyEffectsConsumeEffect;
 import net.minecraft.item.consume.ConsumeEffect;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -30,6 +33,7 @@ import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -54,6 +58,28 @@ public class VampiricThrallEvent {
 		@Override
 		public void afterDamage(LivingEntity entity, DamageSource source, float baseDamageTaken, float damageTaken, boolean blocked) {
 			HasOwnerEvent.revenge(entity, source, REVENGE);
+		}
+	}
+
+	public static class Defend implements TickEntityEvent {
+		@Override
+		public void tick(ServerWorld world, Entity entity) {
+			if ((entity.age + entity.getId()) % 20 == 0 && entity instanceof MobEntity mob && !NyctoUtil.isSurvival(mob.getTarget())) {
+				VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.get(mob);
+				if (vampiricThrallComponent.hasOwner() && vampiricThrallComponent.getFollowMode() == VampiricThrallComponent.FollowMode.DEFEND) {
+					List<MobEntity> targets = mob.getEntityWorld().getEntitiesByClass(MobEntity.class, mob.getBoundingBox().expand(16), foundEntity ->
+							foundEntity instanceof Monster && SLibUtils.shouldHurt(mob, foundEntity) && !ModEntityComponents.VAMPIRIC_THRALL.get(foundEntity).hasOwner());
+					MobEntity closest = null;
+					for (MobEntity target : targets) {
+						if (closest == null || target.distanceTo(mob) < closest.distanceTo(mob)) {
+							closest = target;
+						}
+					}
+					if (closest != null) {
+						HasOwnerEvent.setTarget(mob, closest);
+					}
+				}
+			}
 		}
 	}
 

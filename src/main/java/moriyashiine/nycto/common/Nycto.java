@@ -129,6 +129,7 @@ public class Nycto implements ModInitializer {
 		ServerLivingEntityEvents.ALLOW_DAMAGE.register(new MistFormEvent.AllowDamage());
 		ModifyCriticalStatusEvent.EVENT.register(new MistFormEvent.ForceCritical());
 		ServerLivingEntityEvents.AFTER_DAMAGE.register(new VampiricThrallEvent.Revenge());
+		TickEntityEvent.EVENT.register(new VampiricThrallEvent.Defend());
 		UseEntityCallback.EVENT.register(new VampiricThrallEvent.RightClickOverride());
 		// weakness
 		ModifyMovementEvents.MOVEMENT_VELOCITY.register(new HydrophobiaEvent());

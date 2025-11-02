@@ -97,7 +97,7 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 	}
 
 	public boolean cannotWanderIfThralled() {
-		return hasFollowModes() && getFollowMode() != FollowMode.WANDER;
+		return hasFollowModes() && !getFollowMode().canWander;
 	}
 
 	public boolean hasFollowModes() {
@@ -108,11 +108,18 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 		followMode = switch (followMode) {
 			case FOLLOW -> FollowMode.STAY;
 			case STAY -> FollowMode.WANDER;
+			case WANDER -> FollowMode.DEFEND;
 			default -> FollowMode.FOLLOW;
 		};
 	}
 
 	public enum FollowMode {
-		NONE, FOLLOW, STAY, WANDER
+		NONE(false), FOLLOW(false), STAY(false), WANDER(true), DEFEND(true);
+
+		public final boolean canWander;
+
+		FollowMode(boolean canWander) {
+			this.canWander = canWander;
+		}
 	}
 }
