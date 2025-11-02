@@ -11,6 +11,7 @@ import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.payload.SyncPowerIndexPayload;
 import moriyashiine.nycto.common.payload.UsePowerPayload;
 import moriyashiine.nycto.common.util.NyctoUtil;
+import moriyashiine.strawberrylib.api.module.SLibClientUtils;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
@@ -113,7 +114,7 @@ public class PowerClientEvent {
 	private static boolean use(PlayerEntity player) {
 		TransformationComponent transformationComponent = ModEntityComponents.TRANSFORMATION.get(player);
 		if (isActive(player, transformationComponent)) {
-			if (Tick.cooldown == 0 && NyctoUtil.canUsePower(player, transformationComponent.getPowers().get(transformationComponent.getPowerIndex()))) {
+			if (Tick.cooldown == 0 && SLibClientUtils.isHost(player) && NyctoUtil.canUsePower(player, transformationComponent.getPowers().get(transformationComponent.getPowerIndex()))) {
 				Tick.cooldown = 5;
 				UsePowerPayload.send(transformationComponent.getPowerIndex());
 			}
