@@ -176,6 +176,7 @@
   "key.category.nycto.nycto": "Nycto",
   "key.nycto.power_hotbar": "Power Hotbar",
   "tooltip.nycto.hold_left_shift": "Hold [%s] to show details.",
+  "tooltip.nycto.show_cape": "Show Cape",
   "tooltip.nycto.holding_player_blood": "Holding player blood",
   "tooltip.nycto.holding_vampire_blood": "Holding vampire blood",
   "tooltip.nycto.in_weakness_tag": "Hurts to touch!",

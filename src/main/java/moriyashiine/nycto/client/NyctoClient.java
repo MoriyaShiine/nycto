@@ -51,6 +51,7 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRenderEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
@@ -168,6 +169,7 @@ public class NyctoClient implements ClientModInitializer {
 		UseEntityCallback.EVENT.register(new PowerClientEvent.UseEntity());
 		UseItemCallback.EVENT.register(new PowerClientEvent.UseItem());
 		ClientTickEvents.END_WORLD_TICK.register(new PowerClientEvent.Tick());
+		LivingEntityFeatureRenderEvents.ALLOW_CAPE_RENDER.register(new ShowCapeEvent());
 		// vampire
 		DisableHudBarEvent.EVENT.register(new VampireClientEvent());
 		// power

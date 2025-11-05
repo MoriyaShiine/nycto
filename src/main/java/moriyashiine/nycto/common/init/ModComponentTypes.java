@@ -11,6 +11,8 @@ import net.minecraft.util.dynamic.Codecs;
 import static moriyashiine.strawberrylib.api.module.SLibRegistries.registerComponentType;
 
 public class ModComponentTypes {
+	public static final ComponentType<Boolean> SHOW_CAPE = registerComponentType("show_cape", new ComponentType.Builder<Boolean>().codec(Codec.BOOL).packetCodec(PacketCodecs.BOOLEAN));
+
 	public static final ComponentType<Integer> BLOOD_CHARGE = registerComponentType("blood_charge", new ComponentType.Builder<Integer>().codec(Codecs.POSITIVE_INT).packetCodec(PacketCodecs.VAR_INT));
 	public static final ComponentType<Boolean> POISONED = registerComponentType("poisoned", new ComponentType.Builder<Boolean>().codec(Codec.BOOL).packetCodec(PacketCodecs.BOOLEAN));
 

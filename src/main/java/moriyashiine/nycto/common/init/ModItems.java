@@ -85,7 +85,7 @@ public class ModItems {
 			settings));
 
 	public static final Item VAMPIRE_HELMET = registerItem("vampire_helmet", new Item.Settings().armor(ModArmorMaterials.VAMPIRE, EquipmentType.HELMET));
-	public static final Item VAMPIRE_CHESTPLATE = registerItem("vampire_chestplate", new Item.Settings().armor(ModArmorMaterials.VAMPIRE, EquipmentType.CHESTPLATE));
+	public static final Item VAMPIRE_CHESTPLATE = registerItem("vampire_chestplate", CapeItem::new, new Item.Settings().armor(ModArmorMaterials.VAMPIRE, EquipmentType.CHESTPLATE).component(ModComponentTypes.SHOW_CAPE, true));
 	public static final Item VAMPIRE_LEGGINGS = registerItem("vampire_leggings", new Item.Settings().armor(ModArmorMaterials.VAMPIRE, EquipmentType.LEGGINGS));
 	public static final Item VAMPIRE_BOOTS = registerItem("vampire_boots", new Item.Settings().armor(ModArmorMaterials.VAMPIRE, EquipmentType.BOOTS));
 
