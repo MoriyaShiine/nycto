@@ -67,7 +67,7 @@ public class HunterArmorModel<S extends BipedEntityRenderState> extends BipedEnt
 		super.setAngles(state);
 		coatFlap.pitch = Math.max(leftLeg.pitch, rightLeg.pitch);
 		if (state.sneaking) {
-			coatFlap.pitch /= 3;
+			coatFlap.pitch /= 2;
 		}
 
 		head.visible = NyctoClientUtil.isArmorRenderer(state, EquipmentSlot.HEAD, r -> r instanceof HunterArmorRenderer);
