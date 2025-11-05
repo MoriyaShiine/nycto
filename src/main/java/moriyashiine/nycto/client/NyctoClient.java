@@ -71,8 +71,11 @@ import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.render.entity.model.BatEntityModel;
 import net.minecraft.client.render.entity.model.ModelTransformer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
+
+import java.util.stream.Stream;
 
 public class NyctoClient implements ClientModInitializer {
 	private static final KeyBinding.Category KEY_CATEGORY = KeyBinding.Category.create(Nycto.id(Nycto.MOD_ID));
@@ -104,9 +107,9 @@ public class NyctoClient implements ClientModInitializer {
 	}
 
 	private void initItems() {
-		ArmorRenderer.register(new VampireArmorRenderer(), ModItems.VAMPIRE_HELMET, ModItems.VAMPIRE_CHESTPLATE, ModItems.VAMPIRE_LEGGINGS, ModItems.VAMPIRE_BOOTS);
-		ArmorRenderer.register(new HunterArmorRenderer(Nycto.id("textures/entity/equipment/vampire_hunter_armor.png")), ModItems.VAMPIRE_HUNTER_HELMET, ModItems.VAMPIRE_HUNTER_CHESTPLATE, ModItems.VAMPIRE_HUNTER_LEGGINGS, ModItems.VAMPIRE_HUNTER_BOOTS);
-		ArmorRenderer.register(new HunterArmorRenderer(Nycto.id("textures/entity/equipment/werewolf_hunter_armor.png")), ModItems.WEREWOLF_HUNTER_HELMET, ModItems.WEREWOLF_HUNTER_CHESTPLATE, ModItems.WEREWOLF_HUNTER_LEGGINGS, ModItems.WEREWOLF_HUNTER_BOOTS);
+		Stream.of(ModItems.VAMPIRE_HELMET, ModItems.VAMPIRE_CHESTPLATE, ModItems.VAMPIRE_LEGGINGS, ModItems.VAMPIRE_BOOTS).forEach(item -> ArmorRenderer.register(context -> new VampireArmorRenderer(context, item.getComponents().get(DataComponentTypes.EQUIPPABLE).slot()), item));
+		Stream.of(ModItems.VAMPIRE_HUNTER_HELMET, ModItems.VAMPIRE_HUNTER_CHESTPLATE, ModItems.VAMPIRE_HUNTER_LEGGINGS, ModItems.VAMPIRE_HUNTER_BOOTS).forEach(item -> ArmorRenderer.register(context -> new HunterArmorRenderer(context, item.getComponents().get(DataComponentTypes.EQUIPPABLE).slot(), Nycto.id("textures/entity/equipment/vampire_hunter_armor.png")), item));
+		Stream.of(ModItems.WEREWOLF_HUNTER_HELMET, ModItems.WEREWOLF_HUNTER_CHESTPLATE, ModItems.WEREWOLF_HUNTER_LEGGINGS, ModItems.WEREWOLF_HUNTER_BOOTS).forEach(item -> ArmorRenderer.register(context -> new HunterArmorRenderer(context, item.getComponents().get(DataComponentTypes.EQUIPPABLE).slot(), Nycto.id("textures/entity/equipment/werewolf_hunter_armor.png")), item));
 	}
 
 	private void initEntities() {
@@ -130,8 +133,8 @@ public class NyctoClient implements ClientModInitializer {
 		EntityModelLayerRegistry.registerModelLayer(DarkFormEntityModel.LAYER, DarkFormEntityModel::getTexturedModelData);
 		EntityRendererFactories.register(ModEntityTypes.DARK_FORM, DarkFormEntityRenderer::new);
 
-		EntityModelLayerRegistry.registerModelLayer(VampireArmorModel.MODEL_LAYER, VampireArmorModel::getTexturedModelData);
-		EntityModelLayerRegistry.registerModelLayer(HunterArmorModel.MODEL_LAYER, HunterArmorModel::getTexturedModelData);
+		EntityModelLayerRegistry.registerEquipmentModelLayers(VampireArmorModel.MODEL_LAYERS, VampireArmorModel::getTexturedModelData);
+		EntityModelLayerRegistry.registerEquipmentModelLayers(HunterArmorModel.MODEL_LAYERS, HunterArmorModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(ThralledHorseHornsModel.MODEL_LAYER, () -> ThralledHorseHornsModel.getTexturedModelData().transform(ModelTransformer.scaling(1.1F)));
 	}
 

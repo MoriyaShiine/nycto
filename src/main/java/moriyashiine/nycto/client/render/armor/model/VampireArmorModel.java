@@ -3,42 +3,47 @@
  */
 package moriyashiine.nycto.client.render.armor.model;
 
-import moriyashiine.nycto.client.render.armor.VampireArmorRenderer;
-import moriyashiine.nycto.client.util.NyctoClientUtil;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.init.ModComponentTypes;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
+import net.minecraft.client.render.entity.model.EquipmentModelData;
 import net.minecraft.client.render.entity.state.BipedEntityRenderState;
 import net.minecraft.client.render.entity.state.PlayerEntityRenderState;
-import net.minecraft.entity.EquipmentSlot;
 import org.joml.Quaternionf;
 
+import java.util.Set;
+
 public class VampireArmorModel<S extends BipedEntityRenderState> extends BipedEntityModel<S> {
-	public static final EntityModelLayer MODEL_LAYER = new EntityModelLayer(Nycto.id("vampire_armor"), "main");
+	public static final EquipmentModelData<EntityModelLayer> MODEL_LAYERS = new EquipmentModelData<>("helmet", "chestplate", "leggings", "boots").map(s -> new EntityModelLayer(Nycto.id("vampire_armor"), s));
 
 	public final ModelPart coatFlap;
 	public final ModelPart cape;
 	public final ModelPart capeMain;
-	public final ModelPart leftLegReal;
-	public final ModelPart rightLegReal;
-	public final ModelPart leftFoot;
-	public final ModelPart rightFoot;
 
 	public VampireArmorModel(ModelPart root) {
 		super(root);
 		coatFlap = body.getChild("coat_flap");
 		cape = body.getChild("cape");
 		capeMain = cape.getChild("cape_main");
-		leftLegReal = leftLeg.getChild("left_leg_real");
-		rightLegReal = rightLeg.getChild("right_leg_real");
-		leftFoot = leftLeg.getChild(EntityModelPartNames.LEFT_FOOT);
-		rightFoot = rightLeg.getChild(EntityModelPartNames.RIGHT_FOOT);
 	}
 
-	public static TexturedModelData getTexturedModelData() {
+	public static EquipmentModelData<TexturedModelData> getTexturedModelData() {
+		ModelData head = getModelData();
+		head.getRoot().resetChildrenExcept(Set.of(EntityModelPartNames.HEAD));
+		ModelData body = getModelData();
+		body.getRoot().resetChildrenExcept(Set.of(EntityModelPartNames.BODY, EntityModelPartNames.LEFT_ARM, EntityModelPartNames.RIGHT_ARM));
+		ModelData legs = getModelData();
+		legs.getRoot().resetChildrenExcept(Set.of("left_leg_real", "right_leg_real"));
+		ModelData feet = getModelData();
+		feet.getRoot().resetChildrenExcept(Set.of(EntityModelPartNames.LEFT_FOOT, EntityModelPartNames.RIGHT_FOOT));
+		EquipmentModelData<ModelData> data = new EquipmentModelData<>(head, body, legs, feet);
+		return data.map(d -> TexturedModelData.of(d, 128, 128));
+	}
+
+	private static ModelData getModelData() {
 		ModelData data = new ModelData();
 		ModelPartData root = data.getRoot();
 
@@ -51,7 +56,7 @@ public class VampireArmorModel<S extends BipedEntityRenderState> extends BipedEn
 		body.addChild("scarf_1", ModelPartBuilder.create().uv(92, 1).cuboid(-1.5F, 0.5F, -2.4F, 3, 4, 2, Dilation.NONE), ModelTransform.of(0, 0, 0, -0.3491F, 0, 0));
 		body.addChild("scarf_2", ModelPartBuilder.create().uv(102, 1).cuboid(-1, 1.5F, -2.4F, 2, 4, 2, Dilation.NONE), ModelTransform.of(0, 0, 0, -0.1745F, 0, 0));
 		ModelPartData cape = body.addChild("cape", ModelPartBuilder.create().uv(63, 82).cuboid(-5.5F, -1, -5, 11, 3, 6, new Dilation(-0.1F)), ModelTransform.origin(0, 0, 2));
-		ModelPartData cape_main = cape.addChild("cape_main", ModelPartBuilder.create().uv(66, 93).cuboid(-7.5F, -1, -1, 15, 14, 2, Dilation.NONE), ModelTransform.of(0, 0, 0, 0873F, 0, 0));
+		ModelPartData cape_main = cape.addChild("cape_main", ModelPartBuilder.create().uv(66, 93).cuboid(-7.5F, -1, -1, 15, 14, 2, Dilation.NONE), ModelTransform.of(0, 0, 0, 0.0873F, 0, 0));
 		ModelPartData cape_lower = cape_main.addChild("cape_lower", ModelPartBuilder.create(), ModelTransform.origin(0, 12.5F, 0));
 		cape_lower.addChild("cape_cube", ModelPartBuilder.create().uv(66, 111).cuboid(-8, 0, -1, 16, 9, 2, Dilation.NONE), ModelTransform.of(0, 0, 0, 0.1309F, 0, 0));
 
@@ -68,12 +73,11 @@ public class VampireArmorModel<S extends BipedEntityRenderState> extends BipedEn
 		rightLeg.addChild("right_leg_real", ModelPartBuilder.create().uv(58, 16).cuboid(-1.9F, 0, -2, 4, 12, 4, new Dilation(0.35F)), ModelTransform.NONE);
 		rightLeg.addChild(EntityModelPartNames.RIGHT_FOOT, ModelPartBuilder.create().uv(79, 65).cuboid(-1.9F, 0, -2, 4, 12, 4, new Dilation(0.355F)).uv(107, 103).mirrored().cuboid(-2.4F, 6, -2.5F, 5, 2, 5, new Dilation(0.2F)).mirrored(false), ModelTransform.NONE);
 
-		return TexturedModelData.of(data, 128, 128);
+		return data;
 	}
 
 	@Override
 	public void setAngles(S state) {
-		super.setAngles(state);
 		coatFlap.pitch = Math.max(leftLeg.pitch, rightLeg.pitch);
 		if (state.sneaking) {
 			coatFlap.pitch /= 2;
@@ -88,10 +92,6 @@ public class VampireArmorModel<S extends BipedEntityRenderState> extends BipedEn
 			);
 		}
 
-		head.visible = NyctoClientUtil.isArmorRenderer(state, EquipmentSlot.HEAD, r -> r instanceof VampireArmorRenderer);
-		body.visible = leftArm.visible = rightArm.visible = NyctoClientUtil.isArmorRenderer(state, EquipmentSlot.CHEST, r -> r instanceof VampireArmorRenderer);
-		cape.visible = body.visible && state.equippedChestStack.getOrDefault(ModComponentTypes.SHOW_CAPE, false);
-		leftLegReal.visible = rightLegReal.visible = NyctoClientUtil.isArmorRenderer(state, EquipmentSlot.LEGS, r -> r instanceof VampireArmorRenderer);
-		leftFoot.visible = rightFoot.visible = NyctoClientUtil.isArmorRenderer(state, EquipmentSlot.FEET, r -> r instanceof VampireArmorRenderer);
+		cape.visible = state.equippedChestStack.getOrDefault(ModComponentTypes.SHOW_CAPE, false);
 	}
 }

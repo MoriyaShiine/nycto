@@ -3,35 +3,40 @@
  */
 package moriyashiine.nycto.client.render.armor.model;
 
-import moriyashiine.nycto.client.render.armor.HunterArmorRenderer;
-import moriyashiine.nycto.client.util.NyctoClientUtil;
 import moriyashiine.nycto.common.Nycto;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
+import net.minecraft.client.render.entity.model.EquipmentModelData;
 import net.minecraft.client.render.entity.state.BipedEntityRenderState;
-import net.minecraft.entity.EquipmentSlot;
+
+import java.util.Set;
 
 public class HunterArmorModel<S extends BipedEntityRenderState> extends BipedEntityModel<S> {
-	public static final EntityModelLayer MODEL_LAYER = new EntityModelLayer(Nycto.id("hunter_armor"), "main");
+	public static final EquipmentModelData<EntityModelLayer> MODEL_LAYERS = new EquipmentModelData<>("helmet", "chestplate", "leggings", "boots").map(s -> new EntityModelLayer(Nycto.id("hunter_armor"), s));
 
 	public final ModelPart coatFlap;
-	public final ModelPart leftLegReal;
-	public final ModelPart rightLegReal;
-	public final ModelPart leftFoot;
-	public final ModelPart rightFoot;
 
 	public HunterArmorModel(ModelPart root) {
 		super(root);
 		coatFlap = root.getChild(EntityModelPartNames.BODY).getChild("coat_flap");
-		leftLegReal = root.getChild(EntityModelPartNames.LEFT_LEG).getChild("left_leg_real");
-		rightLegReal = root.getChild(EntityModelPartNames.RIGHT_LEG).getChild("right_leg_real");
-		leftFoot = root.getChild(EntityModelPartNames.LEFT_LEG).getChild("left_foot");
-		rightFoot = root.getChild(EntityModelPartNames.RIGHT_LEG).getChild("right_foot");
 	}
 
-	public static TexturedModelData getTexturedModelData() {
+	public static EquipmentModelData<TexturedModelData> getTexturedModelData() {
+		ModelData head = getModelData();
+		head.getRoot().resetChildrenExcept(Set.of(EntityModelPartNames.HEAD));
+		ModelData body = getModelData();
+		body.getRoot().resetChildrenExcept(Set.of(EntityModelPartNames.BODY, EntityModelPartNames.LEFT_ARM, EntityModelPartNames.RIGHT_ARM));
+		ModelData legs = getModelData();
+		legs.getRoot().resetChildrenExcept(Set.of("left_leg_real", "right_leg_real"));
+		ModelData feet = getModelData();
+		feet.getRoot().resetChildrenExcept(Set.of(EntityModelPartNames.LEFT_FOOT, EntityModelPartNames.RIGHT_FOOT));
+		EquipmentModelData<ModelData> data = new EquipmentModelData<>(head, body, legs, feet);
+		return data.map(d -> TexturedModelData.of(d, 128, 128));
+	}
+
+	private static ModelData getModelData() {
 		ModelData data = new ModelData();
 		ModelPartData root = data.getRoot();
 
@@ -59,20 +64,14 @@ public class HunterArmorModel<S extends BipedEntityRenderState> extends BipedEnt
 		rightLeg.addChild("right_leg_real", ModelPartBuilder.create().uv(58, 16).cuboid(-1.9F, 0, -2, 4, 12, 4, new Dilation(0.35F)), ModelTransform.NONE);
 		rightLeg.addChild("right_foot", ModelPartBuilder.create().uv(79, 65).cuboid(-1.9F, 0, -2, 4, 12, 4, new Dilation(0.36F)), ModelTransform.NONE);
 
-		return TexturedModelData.of(data, 128, 128);
+		return data;
 	}
 
 	@Override
 	public void setAngles(S state) {
-		super.setAngles(state);
 		coatFlap.pitch = Math.max(leftLeg.pitch, rightLeg.pitch);
 		if (state.sneaking) {
 			coatFlap.pitch /= 2;
 		}
-
-		head.visible = NyctoClientUtil.isArmorRenderer(state, EquipmentSlot.HEAD, r -> r instanceof HunterArmorRenderer);
-		body.visible = leftArm.visible = rightArm.visible = NyctoClientUtil.isArmorRenderer(state, EquipmentSlot.CHEST, r -> r instanceof HunterArmorRenderer);
-		leftLegReal.visible = rightLegReal.visible = NyctoClientUtil.isArmorRenderer(state, EquipmentSlot.LEGS, r -> r instanceof HunterArmorRenderer);
-		leftFoot.visible = rightFoot.visible = NyctoClientUtil.isArmorRenderer(state, EquipmentSlot.FEET, r -> r instanceof HunterArmorRenderer);
 	}
 }
