@@ -1,0 +1,33 @@
+{
+  "parent": "nycto:nycto/obtain_vampiric_dagger",
+  "criteria": {
+	"extract_blood_bottle_crafting": {
+	  "conditions": {
+		"recipe_id": "nycto:blood_extraction"
+	  },
+	  "trigger": "minecraft:recipe_crafted"
+	},
+	"extract_blood_bottle_inventory": {
+	  "trigger": "nycto:extract_blood"
+	}
+  },
+  "display": {
+	"description": {
+	  "translate": "advancements.nycto.nycto.extract_blood_bottle.description"
+	},
+	"icon": {
+	  "count": 1,
+	  "id": "nycto:blood_bottle"
+	},
+	"title": {
+	  "translate": "advancements.nycto.nycto.extract_blood_bottle.title"
+	}
+  },
+  "requirements": [
+	[
+	  "extract_blood_bottle_crafting",
+	  "extract_blood_bottle_inventory"
+	]
+  ],
+  "sends_telemetry_event": true
+}

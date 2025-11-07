@@ -1,0 +1,48 @@
+{
+  "parent": "nycto:nycto/obtain_garlic",
+  "criteria": {
+	"brew_garlic_brew": {
+	  "conditions": {
+		"potion": "nycto:garlic"
+	  },
+	  "trigger": "minecraft:brewed_potion"
+	},
+	"brew_garlic_brew_long": {
+	  "conditions": {
+		"potion": "nycto:long_garlic"
+	  },
+	  "trigger": "minecraft:brewed_potion"
+	},
+	"brew_garlic_brew_strong": {
+	  "conditions": {
+		"potion": "nycto:strong_garlic"
+	  },
+	  "trigger": "minecraft:brewed_potion"
+	}
+  },
+  "display": {
+	"description": {
+	  "translate": "advancements.nycto.nycto.brew_garlic_brew.description"
+	},
+	"icon": {
+	  "components": {
+		"minecraft:potion_contents": {
+		  "potion": "nycto:garlic"
+		}
+	  },
+	  "count": 1,
+	  "id": "minecraft:potion"
+	},
+	"title": {
+	  "translate": "advancements.nycto.nycto.brew_garlic_brew.title"
+	}
+  },
+  "requirements": [
+	[
+	  "brew_garlic_brew",
+	  "brew_garlic_brew_long",
+	  "brew_garlic_brew_strong"
+	]
+  ],
+  "sends_telemetry_event": true
+}

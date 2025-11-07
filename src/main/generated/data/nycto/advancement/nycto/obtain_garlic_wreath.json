@@ -1,0 +1,33 @@
+{
+  "parent": "nycto:nycto/obtain_garlic",
+  "criteria": {
+	"obtain_garlic_wreath": {
+	  "conditions": {
+		"items": [
+		  {
+			"items": "nycto:garlic_wreath"
+		  }
+		]
+	  },
+	  "trigger": "minecraft:inventory_changed"
+	}
+  },
+  "display": {
+	"description": {
+	  "translate": "advancements.nycto.nycto.obtain_garlic_wreath.description"
+	},
+	"icon": {
+	  "count": 1,
+	  "id": "nycto:garlic_wreath"
+	},
+	"title": {
+	  "translate": "advancements.nycto.nycto.obtain_garlic_wreath.title"
+	}
+  },
+  "requirements": [
+	[
+	  "obtain_garlic_wreath"
+	]
+  ],
+  "sends_telemetry_event": true
+}

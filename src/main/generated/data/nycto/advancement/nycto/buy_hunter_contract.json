@@ -1,0 +1,31 @@
+{
+  "parent": "nycto:nycto/root",
+  "criteria": {
+	"buy_hunter_contract": {
+	  "conditions": {
+		"item": {
+		  "items": "nycto:hunter_contract"
+		}
+	  },
+	  "trigger": "minecraft:villager_trade"
+	}
+  },
+  "display": {
+	"description": {
+	  "translate": "advancements.nycto.nycto.buy_hunter_contract.description"
+	},
+	"icon": {
+	  "count": 1,
+	  "id": "nycto:hunter_contract"
+	},
+	"title": {
+	  "translate": "advancements.nycto.nycto.buy_hunter_contract.title"
+	}
+  },
+  "requirements": [
+	[
+	  "buy_hunter_contract"
+	]
+  ],
+  "sends_telemetry_event": true
+}

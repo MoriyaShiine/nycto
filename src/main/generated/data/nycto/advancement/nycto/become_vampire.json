@@ -1,0 +1,40 @@
+{
+  "parent": "nycto:nycto/kill_vampire",
+  "criteria": {
+	"become_vampire": {
+	  "conditions": {
+		"player": [
+		  {
+			"condition": "minecraft:entity_properties",
+			"entity": "this",
+			"predicate": {
+			  "type_specific": {
+				"type": "nycto:vampire",
+				"vampire": true
+			  }
+			}
+		  }
+		]
+	  },
+	  "trigger": "nycto:change_transformation"
+	}
+  },
+  "display": {
+	"description": {
+	  "translate": "advancements.nycto.nycto.become_vampire.description"
+	},
+	"icon": {
+	  "count": 1,
+	  "id": "nycto:vampire_blood_bottle"
+	},
+	"title": {
+	  "translate": "advancements.nycto.nycto.become_vampire.title"
+	}
+  },
+  "requirements": [
+	[
+	  "become_vampire"
+	]
+  ],
+  "sends_telemetry_event": true
+}

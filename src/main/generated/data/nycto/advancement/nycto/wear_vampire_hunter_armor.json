@@ -1,0 +1,51 @@
+{
+  "parent": "nycto:nycto/obtain_garlic_wreath",
+  "criteria": {
+	"wear_vampire_hunter_armor": {
+	  "conditions": {
+		"player": [
+		  {
+			"condition": "minecraft:entity_properties",
+			"entity": "this",
+			"predicate": {
+			  "equipment": {
+				"chest": {
+				  "items": "nycto:vampire_hunter_chestplate"
+				},
+				"feet": {
+				  "items": "nycto:vampire_hunter_boots"
+				},
+				"head": {
+				  "items": "nycto:vampire_hunter_helmet"
+				},
+				"legs": {
+				  "items": "nycto:vampire_hunter_leggings"
+				}
+			  }
+			}
+		  }
+		]
+	  },
+	  "trigger": "minecraft:inventory_changed"
+	}
+  },
+  "display": {
+	"description": {
+	  "translate": "advancements.nycto.nycto.wear_vampire_hunter_armor.description"
+	},
+	"frame": "goal",
+	"icon": {
+	  "count": 1,
+	  "id": "nycto:vampire_hunter_upgrade_smithing_template"
+	},
+	"title": {
+	  "translate": "advancements.nycto.nycto.wear_vampire_hunter_armor.title"
+	}
+  },
+  "requirements": [
+	[
+	  "wear_vampire_hunter_armor"
+	]
+  ],
+  "sends_telemetry_event": true
+}

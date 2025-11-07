@@ -5,27 +5,27 @@ package moriyashiine.nycto.data.provider;
 
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.init.ModItems;
+import moriyashiine.nycto.common.recipe.BloodExtractionRecipe;
+import moriyashiine.nycto.common.recipe.FoodPoisoningRecipe;
 import moriyashiine.nycto.common.tag.ModItemTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
-import net.minecraft.data.recipe.CookingRecipeJsonBuilder;
-import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.data.recipe.SmithingTransformRecipeJsonBuilder;
+import net.minecraft.data.recipe.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.recipe.CampfireCookingRecipe;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.SmokingRecipe;
+import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.RecipeCategory;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
 
 import java.util.concurrent.CompletableFuture;
 
 public class ModRecipeProvider extends FabricRecipeProvider {
+	public static final RegistryKey<Recipe<?>> BLOOD_EXTRACTION = RegistryKey.of(RegistryKeys.RECIPE, Nycto.id("blood_extraction"));
+
 	public ModRecipeProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
 		super(output, registriesFuture);
 	}
@@ -80,6 +80,9 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 				createShapeless(RecipeCategory.FOOD, ModItems.GARLIC_BREAD).input(Items.BREAD).input(ModItems.GRILLED_GARLIC).criterion("has_grilled_garlic", conditionsFromItem(ModItems.GRILLED_GARLIC)).offerTo(exporter);
 				createShapeless(RecipeCategory.COMBAT, ModItems.VAMPIRE_HUNTER_CONTRACT).input(ModItems.HUNTER_CONTRACT).input(ModItems.GARLIC).criterion("has_contract", conditionsFromItem(ModItems.HUNTER_CONTRACT)).offerTo(exporter);
 				createShapeless(RecipeCategory.COMBAT, ModItems.WEREWOLF_HUNTER_CONTRACT).input(ModItems.HUNTER_CONTRACT).input(ModItems.ACONITE).criterion("has_contract", conditionsFromItem(ModItems.HUNTER_CONTRACT)).offerTo(exporter);
+
+				ComplexRecipeJsonBuilder.create(BloodExtractionRecipe::new).offerTo(exporter, BLOOD_EXTRACTION);
+				ComplexRecipeJsonBuilder.create(FoodPoisoningRecipe::new).offerTo(exporter, Nycto.id("food_poisoning").toString());
 			}
 
 			private void offerVampireUpgradeRecipe(Item input, Item result) {

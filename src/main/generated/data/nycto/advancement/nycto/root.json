@@ -1,0 +1,40 @@
+{
+  "criteria": {
+	"night": {
+	  "conditions": {
+		"player": [
+		  {
+			"condition": "minecraft:time_check",
+			"period": 24000,
+			"value": {
+			  "max": 23500.0,
+			  "min": 12500.0
+			}
+		  }
+		]
+	  },
+	  "trigger": "minecraft:tick"
+	}
+  },
+  "display": {
+	"announce_to_chat": false,
+	"background": "nycto:gui/advancements/backgrounds/nycto",
+	"description": {
+	  "translate": "advancements.nycto.nycto.root.description"
+	},
+	"icon": {
+	  "count": 1,
+	  "id": "nycto:vampire_blood_bottle"
+	},
+	"show_toast": false,
+	"title": {
+	  "translate": "advancements.nycto.nycto.root.title"
+	}
+  },
+  "requirements": [
+	[
+	  "night"
+	]
+  ],
+  "sends_telemetry_event": true
+}

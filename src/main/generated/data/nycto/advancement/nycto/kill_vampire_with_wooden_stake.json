@@ -1,0 +1,76 @@
+{
+  "parent": "nycto:nycto/kill_vampire",
+  "criteria": {
+	"kill_vampire_with_wooden_stake_melee": {
+	  "conditions": {
+		"entity": [
+		  {
+			"condition": "minecraft:entity_properties",
+			"entity": "this",
+			"predicate": {
+			  "type_specific": {
+				"type": "nycto:vampire",
+				"vampire": true
+			  }
+			}
+		  }
+		],
+		"player": [
+		  {
+			"condition": "minecraft:entity_properties",
+			"entity": "this",
+			"predicate": {
+			  "equipment": {
+				"mainhand": {
+				  "items": "nycto:wooden_stake"
+				}
+			  }
+			}
+		  }
+		]
+	  },
+	  "trigger": "minecraft:player_killed_entity"
+	},
+	"kill_vampire_with_wooden_stake_ranged": {
+	  "conditions": {
+		"entity": [
+		  {
+			"condition": "minecraft:entity_properties",
+			"entity": "this",
+			"predicate": {
+			  "type_specific": {
+				"type": "nycto:vampire",
+				"vampire": true
+			  }
+			}
+		  }
+		],
+		"killing_blow": {
+		  "direct_entity": {
+			"type": "nycto:wooden_stake"
+		  }
+		}
+	  },
+	  "trigger": "minecraft:player_killed_entity"
+	}
+  },
+  "display": {
+	"description": {
+	  "translate": "advancements.nycto.nycto.kill_vampire_with_wooden_stake.description"
+	},
+	"icon": {
+	  "count": 1,
+	  "id": "nycto:wooden_stake"
+	},
+	"title": {
+	  "translate": "advancements.nycto.nycto.kill_vampire_with_wooden_stake.title"
+	}
+  },
+  "requirements": [
+	[
+	  "kill_vampire_with_wooden_stake_melee",
+	  "kill_vampire_with_wooden_stake_ranged"
+	]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,76 @@
+{
+  "parent": "nycto:nycto/brew_garlic_brew",
+  "criteria": {
+	"drink_garlic_brew_as_vampire": {
+	  "conditions": {
+		"item": {
+		  "items": "minecraft:potion",
+		  "predicates": {
+			"minecraft:potion_contents": [
+			  "nycto:garlic",
+			  "nycto:long_garlic",
+			  "nycto:strong_garlic"
+			]
+		  }
+		},
+		"player": [
+		  {
+			"condition": "minecraft:entity_properties",
+			"entity": "this",
+			"predicate": {
+			  "type_specific": {
+				"type": "nycto:vampire",
+				"vampire": true
+			  }
+			}
+		  }
+		]
+	  },
+	  "trigger": "minecraft:consume_item"
+	},
+	"use_garlic_brew_on_vampire": {
+	  "conditions": {
+		"effects": {
+		  "nycto:vampire_ward": {}
+		},
+		"entity": [
+		  {
+			"condition": "minecraft:entity_properties",
+			"entity": "this",
+			"predicate": {
+			  "type_specific": {
+				"type": "nycto:vampire",
+				"vampire": true
+			  }
+			}
+		  }
+		]
+	  },
+	  "trigger": "nycto:player_applies_effects"
+	}
+  },
+  "display": {
+	"description": {
+	  "translate": "advancements.nycto.nycto.use_garlic_brew_on_vampire.description"
+	},
+	"icon": {
+	  "components": {
+		"minecraft:potion_contents": {
+		  "potion": "nycto:garlic"
+		}
+	  },
+	  "count": 1,
+	  "id": "minecraft:splash_potion"
+	},
+	"title": {
+	  "translate": "advancements.nycto.nycto.use_garlic_brew_on_vampire.title"
+	}
+  },
+  "requirements": [
+	[
+	  "use_garlic_brew_on_vampire",
+	  "drink_garlic_brew_as_vampire"
+	]
+  ],
+  "sends_telemetry_event": true
+}

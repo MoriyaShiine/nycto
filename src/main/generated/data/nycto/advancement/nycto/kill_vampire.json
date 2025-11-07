@@ -1,0 +1,37 @@
+{
+  "parent": "nycto:nycto/root",
+  "criteria": {
+	"kill_vampire": {
+	  "conditions": {
+		"entity": [
+		  {
+			"condition": "minecraft:entity_properties",
+			"entity": "this",
+			"predicate": {
+			  "type": "nycto:vampire"
+			}
+		  }
+		]
+	  },
+	  "trigger": "minecraft:player_killed_entity"
+	}
+  },
+  "display": {
+	"description": {
+	  "translate": "advancements.nycto.nycto.kill_vampire.description"
+	},
+	"icon": {
+	  "count": 1,
+	  "id": "nycto:vampire_chestplate"
+	},
+	"title": {
+	  "translate": "advancements.nycto.nycto.kill_vampire.title"
+	}
+  },
+  "requirements": [
+	[
+	  "kill_vampire"
+	]
+  ],
+  "sends_telemetry_event": true
+}

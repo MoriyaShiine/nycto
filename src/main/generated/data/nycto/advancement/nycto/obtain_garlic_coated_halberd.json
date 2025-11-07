@@ -1,0 +1,33 @@
+{
+  "parent": "nycto:nycto/obtain_garlic_wreath",
+  "criteria": {
+	"obtain_garlic_coated_halberd": {
+	  "conditions": {
+		"items": [
+		  {
+			"items": "nycto:garlic_coated_halberd"
+		  }
+		]
+	  },
+	  "trigger": "minecraft:inventory_changed"
+	}
+  },
+  "display": {
+	"description": {
+	  "translate": "advancements.nycto.nycto.obtain_garlic_coated_halberd.description"
+	},
+	"icon": {
+	  "count": 1,
+	  "id": "nycto:garlic_coated_halberd"
+	},
+	"title": {
+	  "translate": "advancements.nycto.nycto.obtain_garlic_coated_halberd.title"
+	}
+  },
+  "requirements": [
+	[
+	  "obtain_garlic_coated_halberd"
+	]
+  ],
+  "sends_telemetry_event": true
+}

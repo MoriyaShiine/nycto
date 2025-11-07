@@ -1,0 +1,33 @@
+{
+  "parent": "nycto:nycto/root",
+  "criteria": {
+	"obtain_garlic": {
+	  "conditions": {
+		"items": [
+		  {
+			"items": "nycto:garlic"
+		  }
+		]
+	  },
+	  "trigger": "minecraft:inventory_changed"
+	}
+  },
+  "display": {
+	"description": {
+	  "translate": "advancements.nycto.nycto.obtain_garlic.description"
+	},
+	"icon": {
+	  "count": 1,
+	  "id": "nycto:garlic"
+	},
+	"title": {
+	  "translate": "advancements.nycto.nycto.obtain_garlic.title"
+	}
+  },
+  "requirements": [
+	[
+	  "obtain_garlic"
+	]
+  ],
+  "sends_telemetry_event": true
+}

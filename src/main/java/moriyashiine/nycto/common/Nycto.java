@@ -59,7 +59,9 @@ public class Nycto implements ModInitializer {
 		ModBlocks.init();
 		ModBlockEntityTypes.init();
 		ModComponentTypes.init();
+		ModCriteria.init();
 		ModEntityAttributes.init();
+		ModEntitySubPredicates.init();
 		ModEntityTypes.init();
 		ModGameRules.init();
 		ModItems.init();

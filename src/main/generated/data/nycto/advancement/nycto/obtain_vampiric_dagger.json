@@ -1,0 +1,33 @@
+{
+  "parent": "nycto:nycto/root",
+  "criteria": {
+	"obtain_vampiric_dagger": {
+	  "conditions": {
+		"items": [
+		  {
+			"items": "nycto:vampiric_dagger"
+		  }
+		]
+	  },
+	  "trigger": "minecraft:inventory_changed"
+	}
+  },
+  "display": {
+	"description": {
+	  "translate": "advancements.nycto.nycto.obtain_vampiric_dagger.description"
+	},
+	"icon": {
+	  "count": 1,
+	  "id": "nycto:vampiric_dagger"
+	},
+	"title": {
+	  "translate": "advancements.nycto.nycto.obtain_vampiric_dagger.title"
+	}
+  },
+  "requirements": [
+	[
+	  "obtain_vampiric_dagger"
+	]
+  ],
+  "sends_telemetry_event": true
+}

@@ -5,6 +5,7 @@ package moriyashiine.nycto.common.item;
 
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.init.ModComponentTypes;
+import moriyashiine.nycto.common.init.ModCriteria;
 import moriyashiine.nycto.common.init.ModSoundEvents;
 import moriyashiine.nycto.common.recipe.BloodExtractionRecipe;
 import moriyashiine.strawberrylib.api.objects.records.ModifierTrio;
@@ -21,6 +22,7 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ClickType;
@@ -77,6 +79,9 @@ public class VampiricDaggerItem extends Item {
 			ScreenHandler screenHandler = player.currentScreenHandler;
 			if (screenHandler != null) {
 				screenHandler.onContentChanged(player.getInventory());
+				if (player instanceof ServerPlayerEntity serverPlayer) {
+					ModCriteria.EXTRACT_BLOOD.trigger(serverPlayer, bloodBottle);
+				}
 			}
 			return true;
 		}

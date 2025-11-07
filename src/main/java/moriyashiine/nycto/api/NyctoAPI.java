@@ -14,6 +14,7 @@ import moriyashiine.nycto.common.component.entity.HealBlockComponent;
 import moriyashiine.nycto.common.component.entity.RespawnLeniencyComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.HaemogenesisComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
+import moriyashiine.nycto.common.init.ModCriteria;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModSoundEvents;
 import moriyashiine.nycto.common.init.ModTransformations;
@@ -47,6 +48,7 @@ public class NyctoAPI {
 		transformation.onAdded(player);
 		SetTransformationPayload.send(player, player, transformation);
 		PlayerLookup.tracking(player).forEach(receiver -> SetTransformationPayload.send(receiver, player, transformation));
+		ModCriteria.CHANGE_TRANSFORMATION.trigger(player);
 	}
 
 	public static void addPower(ServerPlayerEntity player, Power power) {
@@ -56,6 +58,7 @@ public class NyctoAPI {
 		transformation.applyModifiers(player, true);
 		ModifyPowerPayload.send(player, player, power, true);
 		PlayerLookup.tracking(player).forEach(receiver -> ModifyPowerPayload.send(receiver, player, power, true));
+		ModCriteria.CHANGE_POWERS.trigger(player);
 	}
 
 	public static void removePower(ServerPlayerEntity player, Power power) {
@@ -65,6 +68,7 @@ public class NyctoAPI {
 		transformation.applyModifiers(player, true);
 		ModifyPowerPayload.send(player, player, power, false);
 		PlayerLookup.tracking(player).forEach(receiver -> ModifyPowerPayload.send(receiver, player, power, false));
+		ModCriteria.CHANGE_POWERS.trigger(player);
 	}
 
 	public static List<PowerInstance> getPowers(PlayerEntity player) {
