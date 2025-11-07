@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class CrossbowItemMixin {
 	@Inject(method = "shootAll", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerPlayerEntity;incrementStat(Lnet/minecraft/stat/Stat;)V", shift = At.Shift.AFTER))
 	private void nycto$woodenStake(World world, LivingEntity shooter, Hand hand, ItemStack stack, float speed, float divergence, LivingEntity target, CallbackInfo ci, @Local ChargedProjectilesComponent chargedProjectilesComponent, @Local ServerPlayerEntity serverPlayerEntity) {
-		if (chargedProjectilesComponent.contains(ModItems.WOODEN_STAKE)) {
+		if (!shooter.isInCreativeMode() && chargedProjectilesComponent.contains(ModItems.WOODEN_STAKE)) {
 			serverPlayerEntity.getItemCooldownManager().set(stack, WoodenStakeItem.getCrossbowCooldown(shooter));
 			serverPlayerEntity.getItemCooldownManager().set(ModItems.WOODEN_STAKE.getDefaultStack(), WoodenStakeItem.getCooldown(shooter));
 		}
