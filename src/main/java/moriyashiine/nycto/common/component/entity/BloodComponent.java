@@ -148,7 +148,7 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 	}
 
 	public boolean drainAttack(int amount) {
-		if (amount == 0 || blood == 0 || !obj.canTakeDamage()) {
+		if (amount == 0 || blood == 0 || obj.isInvulnerable()) {
 			return false;
 		}
 		if (obj.getRandom().nextFloat() <= 2 / 3F && NyctoUtil.hasBloodDrainResistance(obj)) {
