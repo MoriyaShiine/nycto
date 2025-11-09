@@ -1,4 +1,21 @@
 ------------------------------------------------------
+Version 1.21.10-b5
+------------------------------------------------------
+- add advancements
+- vampire armor is now fully remodeled and retextured
+- add defend mode for vampiric thralls
+- mod boots can now walk on powder snow
+- mod armor is now repaired with iron instead of leather
+- crossbow stakes no longer have a cooldown in creative mode
+- remove power hotbar toggle from accessibility screen for vanilla consistency
+- remove descriptions from vampiric dagger and garlic brew (they are in the advancement descriptions instead)
+- update hunter boots item textures
+- fix blood not draining if drained on the same attack that killed an entity
+- fix clipping on hunter armor when sneaking
+- fix enchantment glints not appearing on mod armor
+- fix use power payload being sent by all clients instead of only the player that used the power
+
+------------------------------------------------------
 Version 1.21.10-b4
 ------------------------------------------------------
 - mannequins now have quality blood
