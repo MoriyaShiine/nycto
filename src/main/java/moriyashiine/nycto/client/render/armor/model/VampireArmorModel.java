@@ -62,8 +62,8 @@ public class VampireArmorModel<S extends BipedEntityRenderState> extends BipedEn
 
 		body.addChild("coat_flap", ModelPartBuilder.create().uv(72, 50).cuboid(-4.5F, -0.8F, 0, 9, 9, 5, new Dilation(0.35F)), ModelTransform.origin(0, 12.5F, -2.5F));
 
-		root.addChild(EntityModelPartNames.LEFT_ARM, ModelPartBuilder.create().uv(98, 16).mirrored().cuboid(0, -2, -2, 4, 12, 4, new Dilation(0.32F)).mirrored(false).uv(102, 37).mirrored().cuboid(-0.5F, 6.5F, -2.5F, 5, 2, 5, new Dilation(0.1F)).mirrored(false), ModelTransform.origin(5, 2, 0));
-		root.addChild(EntityModelPartNames.RIGHT_ARM, ModelPartBuilder.create().uv(98, 16).cuboid(-4, -2, -2, 4, 12, 4, new Dilation(0.32F)).uv(102, 37).cuboid(-4.5F, 6.5F, -2.5F, 5, 2, 5, new Dilation(0.1F)), ModelTransform.origin(-5, 2, 0));
+		root.addChild(EntityModelPartNames.LEFT_ARM, ModelPartBuilder.create().uv(98, 16).mirrored().cuboid(-1, -2, -2, 4, 12, 4, new Dilation(0.32F)).mirrored(false).uv(102, 37).mirrored().cuboid(-1.5F, 6.5F, -2.5F, 5, 2, 5, new Dilation(0.1F)).mirrored(false), ModelTransform.origin(5, 2, 0));
+		root.addChild(EntityModelPartNames.RIGHT_ARM, ModelPartBuilder.create().uv(98, 16).cuboid(-3, -2, -2, 4, 12, 4, new Dilation(0.32F)).uv(102, 37).cuboid(-3.5F, 6.5F, -2.5F, 5, 2, 5, new Dilation(0.1F)), ModelTransform.origin(-5, 2, 0));
 
 		ModelPartData leftLeg = root.addChild(EntityModelPartNames.LEFT_LEG, ModelPartBuilder.create(), ModelTransform.origin(1.9F, 12, 0));
 		leftLeg.addChild("left_leg_real", ModelPartBuilder.create().uv(58, 16).mirrored().cuboid(-2.1F, 0, -2, 4, 12, 4, new Dilation(0.35F)).mirrored(false), ModelTransform.NONE);
