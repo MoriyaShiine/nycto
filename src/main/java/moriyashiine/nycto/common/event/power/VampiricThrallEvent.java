@@ -123,8 +123,10 @@ public class VampiricThrallEvent {
 								return ActionResult.SUCCESS;
 							}
 						} else if (vampiricThrallComponent.isOwner(player) && vampiricThrallComponent.hasFollowModes()) {
-							vampiricThrallComponent.cycleFollowMode();
-							player.sendMessage(Text.translatable("message.nycto.cycle_follow_mode." + vampiricThrallComponent.getFollowMode().name().toLowerCase(Locale.ROOT), entity.getName()), true);
+							if (!world.isClient()) {
+								vampiricThrallComponent.cycleFollowMode();
+								player.sendMessage(Text.translatable("message.nycto.cycle_follow_mode." + vampiricThrallComponent.getFollowMode().name().toLowerCase(Locale.ROOT), entity.getName()), true);
+							}
 							return ActionResult.SUCCESS;
 						}
 					}
