@@ -14,6 +14,7 @@ import moriyashiine.strawberrylib.api.module.SLibUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.TrackTargetGoal;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.passive.VillagerEntity;
@@ -104,11 +105,15 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 		return hasOwner() && !(obj instanceof TameableEntity);
 	}
 
+	private boolean hasDefendMode() {
+		return obj.targetSelector.getGoals().stream().anyMatch(goal -> goal.getGoal() instanceof TrackTargetGoal);
+	}
+
 	public void cycleFollowMode() {
 		followMode = switch (followMode) {
 			case FOLLOW -> FollowMode.STAY;
 			case STAY -> FollowMode.WANDER;
-			case WANDER -> FollowMode.DEFEND;
+			case WANDER -> hasDefendMode() ? FollowMode.DEFEND : FollowMode.FOLLOW;
 			default -> FollowMode.FOLLOW;
 		};
 	}
