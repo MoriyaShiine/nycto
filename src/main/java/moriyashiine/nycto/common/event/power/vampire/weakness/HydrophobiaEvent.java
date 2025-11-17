@@ -1,11 +1,11 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
-package moriyashiine.nycto.common.event.power.weakness;
+package moriyashiine.nycto.common.event.power.vampire.weakness;
 
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.init.ModPowers;
-import moriyashiine.nycto.common.power.vampire.HydrophobiaPower;
+import moriyashiine.nycto.common.power.vampire.weakness.HydrophobiaPower;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.strawberrylib.api.event.ModifyMovementEvents;
 import net.minecraft.entity.LivingEntity;

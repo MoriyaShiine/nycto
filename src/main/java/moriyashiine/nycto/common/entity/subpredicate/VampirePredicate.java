@@ -25,7 +25,7 @@ import java.util.Optional;
 
 public record VampirePredicate(Optional<Boolean> vampire,
 							   Optional<PowerCountPredicate> count) implements EntitySubPredicate {
-	public static MapCodec<VampirePredicate> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+	public static final MapCodec<VampirePredicate> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
 			Codec.BOOL.optionalFieldOf("vampire").forGetter(VampirePredicate::vampire),
 			PowerCountPredicate.CODEC.optionalFieldOf("count").forGetter(VampirePredicate::count)
 	).apply(instance, VampirePredicate::new));
@@ -44,7 +44,7 @@ public record VampirePredicate(Optional<Boolean> vampire,
 	}
 
 	public record PowerCountPredicate(RegistryEntryList<Power> powers, NumberRange.IntRange range) {
-		public static Codec<PowerCountPredicate> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+		public static final Codec<PowerCountPredicate> CODEC = RecordCodecBuilder.create(instance -> instance.group(
 				RegistryCodecs.entryList(NyctoRegistries.POWER_KEY).fieldOf("powers").forGetter(PowerCountPredicate::powers),
 				NumberRange.IntRange.CODEC.optionalFieldOf("range", NumberRange.IntRange.ANY).forGetter(PowerCountPredicate::range)
 		).apply(instance, PowerCountPredicate::new));

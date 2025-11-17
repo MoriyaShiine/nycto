@@ -9,6 +9,8 @@ import moriyashiine.nycto.api.power.Power;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.power.NightVisionPower;
 import moriyashiine.nycto.common.power.vampire.*;
+import moriyashiine.nycto.common.power.vampire.weakness.HydrophobiaPower;
+import moriyashiine.nycto.common.power.vampire.weakness.VilePresencePower;
 import net.minecraft.registry.Registry;
 
 public class ModPowers {

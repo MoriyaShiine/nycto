@@ -1,10 +1,11 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
-package moriyashiine.nycto.common.event.power;
+package moriyashiine.nycto.common.event.power.vampire;
 
 import moriyashiine.nycto.common.component.entity.BloodComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
+import moriyashiine.nycto.common.event.power.util.HasOwnerEvent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModSoundEvents;
 import moriyashiine.nycto.common.item.consume.FillBloodConsumeEffect;

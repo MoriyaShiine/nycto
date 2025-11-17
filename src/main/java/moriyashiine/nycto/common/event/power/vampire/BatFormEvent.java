@@ -1,7 +1,7 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
-package moriyashiine.nycto.common.event.power;
+package moriyashiine.nycto.common.event.power.vampire;
 
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.strawberrylib.api.event.ModifyDamageTakenEvent;

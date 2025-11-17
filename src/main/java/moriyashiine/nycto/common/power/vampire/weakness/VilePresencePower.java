@@ -1,7 +1,7 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
-package moriyashiine.nycto.common.power.vampire;
+package moriyashiine.nycto.common.power.vampire.weakness;
 
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.api.power.NegativePower;

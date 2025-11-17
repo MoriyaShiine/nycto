@@ -4,7 +4,7 @@
 package moriyashiine.nycto.mixin.power.vampire.vilepresence;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import moriyashiine.nycto.common.power.vampire.VilePresencePower;
+import moriyashiine.nycto.common.power.vampire.weakness.VilePresencePower;
 import net.minecraft.entity.ai.goal.EscapeDangerGoal;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.Angerable;

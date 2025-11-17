@@ -1,4 +1,11 @@
 ------------------------------------------------------
+Version 1.21.10-b6
+------------------------------------------------------
+- fix typo in holy water advancement description
+- fix horse thralls having a defend mode
+- fix thrall mode cycles being set on client
+
+------------------------------------------------------
 Version 1.21.10-b5
 ------------------------------------------------------
 - add advancements

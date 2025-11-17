@@ -3,7 +3,7 @@
  */
 package moriyashiine.nycto.mixin.power.vampire.vilepresence;
 
-import moriyashiine.nycto.common.power.vampire.VilePresencePower;
+import moriyashiine.nycto.common.power.vampire.weakness.VilePresencePower;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.server.world.ServerWorld;

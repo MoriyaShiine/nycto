@@ -6,7 +6,7 @@ package moriyashiine.nycto.mixin.vampire;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import moriyashiine.nycto.api.NyctoAPI;
-import moriyashiine.nycto.common.power.vampire.VilePresencePower;
+import moriyashiine.nycto.common.power.vampire.weakness.VilePresencePower;
 import moriyashiine.nycto.common.tag.ModStatusEffectTags;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalEntityTypeTags;
 import net.minecraft.entity.Entity;
