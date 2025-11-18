@@ -88,6 +88,8 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
 				.add(ModItems.GRILLED_GARLIC)
 				.add(ModItems.GARLIC_BREAD);
 
+		valueLookupBuilder(ItemTags.BEDS)
+				.addTag(ModItemTags.COFFINS);
 		valueLookupBuilder(ItemTags.HEAD_ARMOR)
 				.add(ModItems.VAMPIRE_HELMET)
 				.add(ModItems.VAMPIRE_HUNTER_HELMET)
