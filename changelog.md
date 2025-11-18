@@ -1,9 +1,12 @@
 ------------------------------------------------------
 Version 1.21.10-b6
 ------------------------------------------------------
+- thralls now sleep in coffins
+- clean up stake coffin logic
 - fix typo in holy water advancement description
 - fix horse thralls having a defend mode
 - fix thrall mode cycles being set on client
+- fix coffin and mist form rendering inconsistencies
 
 ------------------------------------------------------
 Version 1.21.10-b5
