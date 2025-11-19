@@ -99,6 +99,7 @@
 	"brew.client.ItemModelManagerMixin",
 	"coffin.client.LivingEntityRendererMixin",
 	"misc.client.ItemStackMixin",
+	"misc.client.LivingEntityRendererMixin",
 	"power.vampire.batform.client.ClientPlayerEntityMixin",
 	"power.vampire.batform.client.ClientPlayerInteractionManagerMixin",
 	"power.vampire.batform.client.PlayerEntityRendererMixin",
