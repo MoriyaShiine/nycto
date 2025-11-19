@@ -1,4 +1,10 @@
 ------------------------------------------------------
+Version 1.21.10-b7
+------------------------------------------------------
+- infection status effects (currently only Vampirism) now cause the entity that has it to shake
+- fix piglin thralls not having a defend mode
+
+------------------------------------------------------
 Version 1.21.10-b6
 ------------------------------------------------------
 - thralls now sleep in coffins
