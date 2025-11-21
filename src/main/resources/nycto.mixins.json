@@ -78,6 +78,7 @@
 	"power.vampire.vilepresence.VillagerEntityMixin",
 	"stunned.EntityNavigationMixin",
 	"sunexposure.EntityMixin",
+	"vampire.EntityMixin",
 	"vampire.HungerManagerMixin",
 	"vampire.HungerStatusEffectMixin",
 	"vampire.LivingEntityMixin",
