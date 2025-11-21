@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 1.21.10-b8
+------------------------------------------------------
+- vampires can no longer be fire immune
+
+------------------------------------------------------
 Version 1.21.10-b7
 ------------------------------------------------------
 - infection status effects (currently only Vampirism) now cause the entity that has it to shake
