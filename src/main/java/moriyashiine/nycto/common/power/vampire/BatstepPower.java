@@ -65,7 +65,7 @@ public class BatstepPower extends VampireActivePower {
 			}, entity.getX(), entity.getY() + entity.getHeight() / 2, entity.getZ(), 8, entity.getWidth() / 4, entity.getHeight() / 4, entity.getWidth() / 4, 0);
 		}
 		entity.setVelocity(Vec3d.ZERO);
-		entity.velocityDirty = entity.velocityModified = true;
+		entity.velocityDirty = entity.knockedBack = true;
 		entity.onLanding();
 		ModEntityComponents.BLOOD.get(entity).drain(ModPowers.BATSTEP.getCost(entity));
 	}

@@ -8,7 +8,7 @@ import moriyashiine.nycto.client.render.entity.DarkFormEntityRenderer;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderLayers;
 import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
@@ -36,7 +36,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 			darkFormArm.resetTransform();
 			darkFormArm.visible = true;
 			darkFormArm.originY += 1;
-			queue.submitModelPart(darkFormArm, matrices, RenderLayer.getEntityTranslucent(DarkFormEntityRenderer.TEXTURE), light, OverlayTexture.DEFAULT_UV, null);
+			queue.submitModelPart(darkFormArm, matrices, RenderLayers.entityTranslucent(DarkFormEntityRenderer.TEXTURE), light, OverlayTexture.DEFAULT_UV, null);
 			ci.cancel();
 		}
 	}

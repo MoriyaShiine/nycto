@@ -271,13 +271,13 @@ public class HunterEntity extends PillagerEntity {
 		setStackInHand(Hand.OFF_HAND, stack);
 	}
 
-	public static void mountHorse(LivingEntity entity) {
-		HorseEntity horse = EntityType.HORSE.create(entity.getEntityWorld(), SpawnReason.TRIGGERED);
+	public static void mountHorse(ServerWorld world, LivingEntity entity) {
+		HorseEntity horse = EntityType.HORSE.create(world, SpawnReason.TRIGGERED);
 		if (horse.teleport(entity.getX(), entity.getY(), entity.getZ(), false)) {
-			horse.initialize((ServerWorldAccess) entity.getEntityWorld(), entity.getEntityWorld().getLocalDifficulty(entity.getBlockPos()), SpawnReason.TRIGGERED, null);
+			horse.initialize(world, world.getLocalDifficulty(entity.getBlockPos()), SpawnReason.TRIGGERED, null);
 			horse.setOwner(entity);
 			horse.setTame(true);
-			entity.getEntityWorld().spawnEntity(horse);
+			world.spawnEntity(horse);
 			entity.startRiding(horse);
 			if (Nycto.superbSteedsLoaded) {
 				HorseAttributesComponent horseAttributesComponent = ModEntityComponents.HORSE_ATTRIBUTES.get(horse);

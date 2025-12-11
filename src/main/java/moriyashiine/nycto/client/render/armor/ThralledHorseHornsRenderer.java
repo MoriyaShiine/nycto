@@ -8,7 +8,7 @@ import moriyashiine.nycto.client.render.entity.state.VampiricThrallRenderState;
 import moriyashiine.nycto.common.Nycto;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderLayers;
 import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
@@ -42,14 +42,14 @@ public class ThralledHorseHornsRenderer extends FeatureRenderer<HorseEntityRende
 	@Override
 	public void render(MatrixStack matrices, OrderedRenderCommandQueue queue, int light, HorseEntityRenderState state, float limbAngle, float limbDistance) {
 		@Nullable VampiricThrallRenderState vampiricThrallRenderState = state.getData(VampiricThrallRenderState.KEY);
-		if (vampiricThrallRenderState != null && vampiricThrallRenderState.thrallTexture != null && TEXTURE_MAP.containsKey(state.armor.getItem())) {
+		if (vampiricThrallRenderState != null && vampiricThrallRenderState.thrallTexture != null && TEXTURE_MAP.containsKey(state.armorStack.getItem())) {
 			int color = 0xFFFFFFFF;
-			if (state.armor.contains(DataComponentTypes.DYED_COLOR)) {
-				color = state.armor.get(DataComponentTypes.DYED_COLOR).rgb();
-			} else if (state.armor.isOf(Items.LEATHER_HORSE_ARMOR)) {
+			if (state.armorStack.contains(DataComponentTypes.DYED_COLOR)) {
+				color = state.armorStack.get(DataComponentTypes.DYED_COLOR).rgb();
+			} else if (state.armorStack.isOf(Items.LEATHER_HORSE_ARMOR)) {
 				color = 0xA06540;
 			}
-			queue.submitModel(hornsModel, state, matrices, RenderLayer.getEntityCutoutNoCull(TEXTURE_MAP.get(state.armor.getItem())), light, OverlayTexture.DEFAULT_UV, color, null, state.outlineColor, null);
+			queue.submitModel(hornsModel, state, matrices, RenderLayers.entityCutoutNoCull(TEXTURE_MAP.get(state.armorStack.getItem())), light, OverlayTexture.DEFAULT_UV, color, null, state.outlineColor, null);
 		}
 	}
 }

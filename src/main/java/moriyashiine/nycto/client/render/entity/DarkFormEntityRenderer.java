@@ -40,7 +40,7 @@ public class DarkFormEntityRenderer extends MobEntityRenderer<DarkFormEntity, Da
 	@Override
 	public void updateRenderState(DarkFormEntity entity, DarkFormEntityRenderState state, float tickDelta) {
 		super.updateRenderState(entity, state, tickDelta);
-		ArmedEntityRenderState.updateRenderState(entity, state, itemModelResolver);
+		ArmedEntityRenderState.updateRenderState(entity, state, itemModelResolver, tickDelta);
 		BloodBarrierRenderState.updateRenderState(entity, state);
 		CarnageRenderState.updateRenderState(entity, state);
 		state.idleAnimationState.copyFrom(entity.idleAnimationState);

@@ -59,7 +59,7 @@ public class HunterHeatComponent implements ServerTickingComponent {
 	}
 
 	public void maybeIncreaseHeat(LivingEntity target, boolean maximize) {
-		if (!obj.isCreative() && obj.getEntityWorld() instanceof ServerWorld world && world.getGameRules().getBoolean(ModGameRules.DO_HUNTER_SPAWNING) && canIncreaseHeat(target)) {
+		if (!obj.isCreative() && obj.getEntityWorld() instanceof ServerWorld world && world.getGameRules().getValue(ModGameRules.SPAWN_HUNTERS) && canIncreaseHeat(target)) {
 			if (target instanceof Monster && target.getRandom().nextBoolean()) {
 				return;
 			}

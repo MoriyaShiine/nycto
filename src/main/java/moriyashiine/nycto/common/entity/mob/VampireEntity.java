@@ -37,8 +37,10 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.MoonPhase;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -74,7 +76,8 @@ public class VampireEntity extends HostileEntity {
 	}
 
 	public static boolean canSpawn(EntityType<VampireEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-		return HostileEntity.canSpawnInDark(type, world, spawnReason, pos, random) && world.getMoonPhase() == 4 && world.toServerWorld().getGameRules().getBoolean(ModGameRules.DO_VAMPIRE_SPAWNING);
+		MoonPhase moonPhase = world.toServerWorld().getEnvironmentAttributes().getAttributeValue(EnvironmentAttributes.MOON_PHASE_VISUAL, pos);
+		return HostileEntity.canSpawnInDark(type, world, spawnReason, pos, random) && moonPhase == MoonPhase.NEW_MOON && world.toServerWorld().getGameRules().getValue(ModGameRules.SPAWN_VAMPIRES);
 	}
 
 	@Override

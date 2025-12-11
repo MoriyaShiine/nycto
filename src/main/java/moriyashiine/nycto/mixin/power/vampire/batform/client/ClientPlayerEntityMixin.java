@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(ClientPlayerEntity.class)
 public class ClientPlayerEntityMixin {
-	@ModifyReturnValue(method = "canSprint()Z", at = @At("RETURN"))
+	@ModifyReturnValue(method = "canSprint", at = @At("RETURN"))
 	private boolean nycto$batForm(boolean original) {
 		return original && !ModEntityComponents.BAT_FORM.get(this).isEnabled();
 	}

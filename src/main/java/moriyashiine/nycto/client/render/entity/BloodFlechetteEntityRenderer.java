@@ -6,7 +6,7 @@ package moriyashiine.nycto.client.render.entity;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.entity.projectile.BloodFlechetteEntity;
 import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderLayers;
 import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -38,7 +38,7 @@ public class BloodFlechetteEntityRenderer extends EntityRenderer<BloodFlechetteE
 		matrices.push();
 		matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(state.yaw - 90));
 		matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(state.pitch));
-		queue.submitModel(model, state, matrices, RenderLayer.getEntityCutout(TEXTURE), state.light, OverlayTexture.DEFAULT_UV, state.outlineColor, null);
+		queue.submitModel(model, state, matrices, RenderLayers.entityCutout(TEXTURE), state.light, OverlayTexture.DEFAULT_UV, state.outlineColor, null);
 		matrices.pop();
 		super.render(state, matrices, queue, cameraState);
 	}

@@ -10,7 +10,7 @@ import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.transformation.VampireTransformation;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.world.GameRules;
+import net.minecraft.world.rule.GameRules;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -53,7 +53,7 @@ public abstract class HungerManagerMixin {
 					exhaustion = 0;
 					bloodComponent.drain(1);
 				}
-				if (player.getEntityWorld().getTime() % 15 == 0 && player.canFoodHeal() && player.getEntityWorld().getGameRules().getBoolean(GameRules.NATURAL_REGENERATION)) {
+				if (player.getEntityWorld().getTime() % 15 == 0 && player.canFoodHeal() && player.getEntityWorld().getGameRules().getValue(GameRules.NATURAL_HEALTH_REGENERATION)) {
 					player.heal(1);
 					addExhaustion(2 / VampireTransformation.VAMPIRE_EXHAUSTION_MULTIPLIER);
 				}

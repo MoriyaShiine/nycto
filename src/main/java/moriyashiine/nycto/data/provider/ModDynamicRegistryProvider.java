@@ -22,6 +22,7 @@ public class ModDynamicRegistryProvider extends FabricDynamicRegistryProvider {
 	protected void configure(RegistryWrapper.WrapperLookup wrapperLookup, Entries entries) {
 		add(entries, RegistryKeys.CONFIGURED_FEATURE);
 		add(entries, RegistryKeys.PLACED_FEATURE);
+		add(entries, RegistryKeys.TIMELINE);
 	}
 
 	@Override

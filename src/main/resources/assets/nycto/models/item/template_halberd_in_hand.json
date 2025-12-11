@@ -2,7 +2,7 @@
   "credit": "Made with Blockbench",
   "textures": {
 	"base": "nycto:item/halberd_in_hand",
-	"extra": "minecraft:block/redstone_dust_overlay",
+	"extra": "nycto:item/empty",
 	"particle": "#base"
   },
   "elements": [

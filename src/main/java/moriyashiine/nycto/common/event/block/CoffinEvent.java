@@ -27,16 +27,9 @@ public class CoffinEvent {
 		public PlayerEntity.@Nullable SleepFailureReason allowSleep(PlayerEntity player, BlockPos sleepingPos) {
 			if (player.getEntityWorld().isNight() && player.getEntityWorld().getBlockState(sleepingPos).isIn(ModBlockTags.COFFINS)) {
 				player.sendMessage(Text.translatable("block." + Nycto.MOD_ID + ".coffin.no_sleep"), true);
-				return PlayerEntity.SleepFailureReason.OTHER_PROBLEM;
+				return PlayerEntity.SleepFailureReason.OTHER;
 			}
 			return null;
-		}
-	}
-
-	public static class AllowSleepTime implements EntitySleepEvents.AllowSleepTime {
-		@Override
-		public ActionResult allowSleepTime(PlayerEntity player, BlockPos sleepingPos, boolean vanillaResult) {
-			return player.getEntityWorld().isDay() && player.getEntityWorld().getBlockState(sleepingPos).isIn(ModBlockTags.COFFINS) ? ActionResult.SUCCESS : ActionResult.PASS;
 		}
 	}
 }

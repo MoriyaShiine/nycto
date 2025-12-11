@@ -3,6 +3,7 @@
  */
 package moriyashiine.nycto.data;
 
+import moriyashiine.nycto.common.init.ModTimelines;
 import moriyashiine.nycto.common.init.ModWorldGeneration;
 import moriyashiine.nycto.data.provider.*;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
@@ -31,11 +32,13 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(ModSoundEventTagProvider::new);
 		pack.addProvider(ModSoundsProvider::new);
 		pack.addProvider(ModStatusEffectTagProvider::new);
+		pack.addProvider(ModTimelineTagProvider::new);
 	}
 
 	@Override
 	public void buildRegistry(RegistryBuilder registryBuilder) {
 		registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, ModWorldGeneration::bootstrapConfigured);
 		registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, ModWorldGeneration::bootstrapPlaced);
+		registryBuilder.addRegistry(RegistryKeys.TIMELINE, ModTimelines::bootstrap);
 	}
 }

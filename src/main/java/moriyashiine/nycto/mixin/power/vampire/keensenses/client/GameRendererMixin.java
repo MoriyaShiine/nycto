@@ -3,7 +3,6 @@
  */
 package moriyashiine.nycto.mixin.power.vampire.keensenses.client;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import moriyashiine.nycto.client.event.power.KeenSensesClientEvent;
 import moriyashiine.nycto.common.Nycto;
 import net.minecraft.client.MinecraftClient;
@@ -32,7 +31,6 @@ public abstract class GameRendererMixin {
 	@Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/WorldRenderer;drawEntityOutlinesFramebuffer()V"))
 	private void nycto$keenSenses(RenderTickCounter tickCounter, boolean tick, CallbackInfo ci) {
 		if (KeenSensesClientEvent.shouldRenderShader()) {
-			RenderSystem.resetTextureMatrix();
 			PostEffectProcessor postEffectProcessor = client.getShaderLoader().loadPostEffect(Nycto.id("keen_senses"), DefaultFramebufferSet.MAIN_ONLY);
 			if (postEffectProcessor != null) {
 				postEffectProcessor.render(client.getFramebuffer(), pool);

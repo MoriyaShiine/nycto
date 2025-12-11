@@ -6,7 +6,7 @@ package moriyashiine.nycto.client.render.armor;
 import moriyashiine.nycto.client.render.armor.model.HunterArmorModel;
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
 import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderLayers;
 import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.command.RenderCommandQueue;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -26,9 +26,9 @@ public record HunterArmorRenderer(HunterArmorModel<BipedEntityRenderState> armor
 	@Override
 	public void render(MatrixStack matrices, OrderedRenderCommandQueue orderedRenderCommandQueue, ItemStack stack, BipedEntityRenderState state, EquipmentSlot slot, int light, BipedEntityModel<BipedEntityRenderState> model) {
 		RenderCommandQueue queue = orderedRenderCommandQueue.getBatchingQueue(0);
-		ArmorRenderer.submitTransformCopyingModel(model, state, armorModel, state, true, queue, matrices, RenderLayer.getArmorCutoutNoCull(texture), light, OverlayTexture.DEFAULT_UV, state.outlineColor, null);
+		ArmorRenderer.submitTransformCopyingModel(model, state, armorModel, state, true, queue, matrices, RenderLayers.armorCutoutNoCull(texture), light, OverlayTexture.DEFAULT_UV, state.outlineColor, null);
 		if (stack.hasGlint()) {
-			ArmorRenderer.submitTransformCopyingModel(model, state, armorModel, state, true, queue, matrices, RenderLayer.getArmorEntityGlint(), light, OverlayTexture.DEFAULT_UV, state.outlineColor, null);
+			ArmorRenderer.submitTransformCopyingModel(model, state, armorModel, state, true, queue, matrices, RenderLayers.armorEntityGlint(), light, OverlayTexture.DEFAULT_UV, state.outlineColor, null);
 		}
 	}
 }

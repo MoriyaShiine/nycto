@@ -10,11 +10,11 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 
 public class HunterContractItem extends Item {
@@ -61,8 +61,8 @@ public class HunterContractItem extends Item {
 			for (int j = 0; j < amount; j++) {
 				HunterEntity hunter = ModEntityTypes.HUNTER.create(world, SpawnReason.TRIGGERED);
 				if (hunter.teleport(user.getX() + dX, user.getY() + dY, user.getZ() + dZ, false)) {
-					if (!world.isClient()) {
-						hunter.initialize((ServerWorldAccess) world, world.getLocalDifficulty(hunter.getBlockPos()), SpawnReason.TRIGGERED, null);
+					if (world instanceof ServerWorld serverWorld) {
+						hunter.initialize(serverWorld, serverWorld.getLocalDifficulty(hunter.getBlockPos()), SpawnReason.TRIGGERED, null);
 						if (type.shouldTarget(user) && NyctoUtil.isSurvival(user)) {
 							hunter.setUltimateTarget(user);
 						} else {
@@ -70,9 +70,9 @@ public class HunterContractItem extends Item {
 						}
 						boolean horse = hunter.getRandom().nextInt(8) == 0;
 						hunter.equipGear(type, horse);
-						world.spawnEntity(hunter);
+						serverWorld.spawnEntity(hunter);
 						if (horse) {
-							HunterEntity.mountHorse(hunter);
+							HunterEntity.mountHorse(serverWorld, hunter);
 						}
 					}
 					spawnedAny = true;

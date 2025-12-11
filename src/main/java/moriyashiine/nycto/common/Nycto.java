@@ -64,6 +64,7 @@ public class Nycto implements ModInitializer {
 		ModEntityAttributes.init();
 		ModEntitySubPredicates.init();
 		ModEntityTypes.init();
+		ModEnvironmentAttributes.init();
 		ModGameRules.init();
 		ModItems.init();
 		ModPotions.init();
@@ -88,7 +89,6 @@ public class Nycto implements ModInitializer {
 		// BLOCK
 		EntitySleepEvents.ALLOW_BED.register(new CoffinEvent.AllowBed());
 		EntitySleepEvents.ALLOW_SLEEPING.register(new CoffinEvent.AllowSleeping());
-		EntitySleepEvents.ALLOW_SLEEP_TIME.register(new CoffinEvent.AllowSleepTime());
 		ModifyBlockBreakingSpeedEvent.MULTIPLY_BASE.register(new ShearsEvent());
 		// ENTITY
 		ModifyDamageTakenEvent.MULTIPLY_TOTAL.register(new AttributeEvent());

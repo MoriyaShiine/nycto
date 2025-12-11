@@ -3,13 +3,15 @@
  */
 package moriyashiine.nycto.common.init;
 
-import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
-import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
-import net.minecraft.world.GameRules;
+
+import moriyashiine.nycto.common.Nycto;
+import net.fabricmc.fabric.api.gamerule.v1.GameRuleBuilder;
+import net.minecraft.world.rule.GameRule;
+import net.minecraft.world.rule.GameRuleCategory;
 
 public class ModGameRules {
-	public static final GameRules.Key<GameRules.BooleanRule> DO_HUNTER_SPAWNING = GameRuleRegistry.register("doHunterSpawning", GameRules.Category.SPAWNING, GameRuleFactory.createBooleanRule(true));
-	public static final GameRules.Key<GameRules.BooleanRule> DO_VAMPIRE_SPAWNING = GameRuleRegistry.register("doVampireSpawning", GameRules.Category.SPAWNING, GameRuleFactory.createBooleanRule(true));
+	public static final GameRule<Boolean> SPAWN_HUNTERS = GameRuleBuilder.forBoolean(true).category(GameRuleCategory.SPAWNING).buildAndRegister(Nycto.id("spawn_hunters"));
+	public static final GameRule<Boolean> SPAWN_VAMPIRES = GameRuleBuilder.forBoolean(true).category(GameRuleCategory.SPAWNING).buildAndRegister(Nycto.id("spawn_vampires"));
 
 	public static void init() {
 	}

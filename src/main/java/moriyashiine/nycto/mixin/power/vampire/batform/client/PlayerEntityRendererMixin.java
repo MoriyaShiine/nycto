@@ -7,7 +7,7 @@ import moriyashiine.nycto.client.event.FormChangeClientEvent;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderLayers;
 import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
@@ -41,7 +41,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 			batFormArm.resetTransform();
 			batFormArm.visible = true;
 			batFormArm.originY += 5.5F;
-			queue.submitModelPart(batFormArm, matrices, RenderLayer.getEntityTranslucent(BAT_TEXTURE), light, OverlayTexture.DEFAULT_UV, null);
+			queue.submitModelPart(batFormArm, matrices, RenderLayers.entityTranslucent(BAT_TEXTURE), light, OverlayTexture.DEFAULT_UV, null);
 			ci.cancel();
 		}
 	}

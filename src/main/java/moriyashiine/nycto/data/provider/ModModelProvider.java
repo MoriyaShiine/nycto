@@ -131,7 +131,7 @@ public class ModModelProvider extends FabricModelProvider {
 			baseId = Nycto.id("item/halberd_in_hand");
 		}
 		if (extraId == null) {
-			extraId = Identifier.ofVanilla("block/redstone_dust_overlay");
+			extraId = Nycto.id("item/empty");
 		}
 		ItemModel.Unbaked normal = ItemModels.basic(generator.upload(item, Models.HANDHELD));
 		ItemModel.Unbaked inHand = ItemModels.basic(HALBERD_IN_HAND.upload(ModelIds.getItemSubModelId(item, "_in_hand"), new TextureMap().put(BASE, baseId).put(EXTRA, extraId), generator.modelCollector));

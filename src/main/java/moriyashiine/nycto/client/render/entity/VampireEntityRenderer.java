@@ -12,6 +12,7 @@ import moriyashiine.nycto.client.render.entity.state.VampireEntityRenderState;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.entity.mob.VampireEntity;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderLayers;
 import net.minecraft.client.render.entity.BipedEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.feature.EyesFeatureRenderer;
@@ -26,7 +27,7 @@ public class VampireEntityRenderer extends BipedEntityRenderer<VampireEntity, Va
 		addFeature(new EyesFeatureRenderer<>(this) {
 			@Override
 			public RenderLayer getEyesTexture() {
-				return RenderLayer.getEyes(EYES_TEXTURE);
+				return RenderLayers.eyes(EYES_TEXTURE);
 			}
 		});
 		addFeature(new BloodBarrierFeatureRenderer<>(this, context.getEntityModels()));
