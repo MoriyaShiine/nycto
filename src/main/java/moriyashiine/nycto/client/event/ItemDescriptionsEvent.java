@@ -4,6 +4,7 @@
 package moriyashiine.nycto.client.event;
 
 import moriyashiine.nycto.api.NyctoAPI;
+import moriyashiine.nycto.common.init.ModItems;
 import moriyashiine.nycto.common.tag.ModItemTags;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
@@ -48,6 +49,11 @@ public class ItemDescriptionsEvent implements ItemTooltipCallback {
 	@Override
 	public void getTooltip(ItemStack stack, Item.TooltipContext tooltipContext, TooltipType tooltipType, List<Text> lines) {
 		addTooltip(lines, getWeaknessText(stack));
+
+		// todo remove when werewolves are real
+		if (stack.isOf(ModItems.WEREWOLF_ALTAR)) {
+			addTooltip(lines, Optional.of(List.of(Text.literal("[WIP] Werewolves are not implemented! This block is just decoration for now.").formatted(Formatting.GRAY))));
+		}
 	}
 
 	@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
