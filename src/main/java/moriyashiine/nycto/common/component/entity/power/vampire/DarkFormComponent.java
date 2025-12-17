@@ -99,11 +99,11 @@ public class DarkFormComponent extends VampireFormChangeComponent implements Com
 	public void toggle() {
 		SLibUtils.addParticles(obj, ParticleTypes.SMOKE, 48, ParticleAnchor.BODY);
 		if (enabled) {
-			SLibUtils.setModelReplacement(obj, null);
+			SLibUtils.removeModelReplacementType(obj, ModEntityTypes.DARK_FORM);
 			drainTicks = 0;
 		} else {
 			ModEntityComponents.BLOOD.get(obj).drain(ModPowers.DARK_FORM.getCost(obj));
-			SLibUtils.setModelReplacement(obj, ModEntityTypes.DARK_FORM);
+			SLibUtils.addModelReplacementType(obj, ModEntityTypes.DARK_FORM, 500);
 			drainTicks = FORM_DRAIN_TICKS;
 		}
 		enabled = !enabled;

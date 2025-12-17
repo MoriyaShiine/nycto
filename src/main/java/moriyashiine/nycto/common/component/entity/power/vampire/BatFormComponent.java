@@ -42,14 +42,14 @@ public class BatFormComponent extends VampireFormChangeComponent {
 			SOURCE.revokeFrom(obj, VanillaAbilities.FLYING);
 			maxHealthAttribute.removeModifier(MAX_HEALTH_MODIFIER);
 			obj.setHealth(obj.getMaxHealth() * percentage);
-			SLibUtils.setModelReplacement(obj, null);
+			SLibUtils.removeModelReplacementType(obj, EntityType.BAT);
 			drainTicks = 0;
 		} else {
 			SOURCE.grantTo(obj, VanillaAbilities.ALLOW_FLYING);
 			SOURCE.grantTo(obj, VanillaAbilities.FLYING);
 			maxHealthAttribute.addPersistentModifier(MAX_HEALTH_MODIFIER);
 			obj.setHealth(obj.getMaxHealth() * percentage);
-			SLibUtils.setModelReplacement(obj, EntityType.BAT);
+			SLibUtils.addModelReplacementType(obj, EntityType.BAT, 500);
 			ModEntityComponents.BLOOD.get(obj).drain(ModPowers.BAT_FORM.getCost(obj));
 			drainTicks = FORM_DRAIN_TICKS;
 		}
