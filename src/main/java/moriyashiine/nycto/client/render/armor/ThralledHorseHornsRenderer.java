@@ -29,7 +29,8 @@ public class ThralledHorseHornsRenderer extends FeatureRenderer<HorseEntityRende
 			Items.COPPER_HORSE_ARMOR, Nycto.id("textures/entity/vampiric_thrall/minecraft/horse_horns/copper.png"),
 			Items.IRON_HORSE_ARMOR, Nycto.id("textures/entity/vampiric_thrall/minecraft/horse_horns/iron.png"),
 			Items.GOLDEN_HORSE_ARMOR, Nycto.id("textures/entity/vampiric_thrall/minecraft/horse_horns/golden.png"),
-			Items.DIAMOND_HORSE_ARMOR, Nycto.id("textures/entity/vampiric_thrall/minecraft/horse_horns/diamond.png")
+			Items.DIAMOND_HORSE_ARMOR, Nycto.id("textures/entity/vampiric_thrall/minecraft/horse_horns/diamond.png"),
+			Items.NETHERITE_HORSE_ARMOR, Nycto.id("textures/entity/vampiric_thrall/minecraft/horse_horns/netherite.png")
 	);
 
 	private final ThralledHorseHornsModel hornsModel;
