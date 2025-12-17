@@ -1,4 +1,11 @@
 ------------------------------------------------------
+Version 1.21.11-b2
+------------------------------------------------------
+- update to latest strawberrylib
+  - if you were currently in bat form or dark form, your model will reset but otherwise will fix itself when you reactivate the power
+- add clarification that werewolves do not exist yet to werewolf altar tooltip
+
+------------------------------------------------------
 Version 1.21.11-b1
 ------------------------------------------------------
 - update to 1.21.11
