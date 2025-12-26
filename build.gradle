@@ -11,8 +11,7 @@ base {
 }
 
 chenille {
-    // todo uncomment this when chenille updates
-//    customLicense = rootProject.file("LICENSE")
+    customLicense = rootProject.file("LICENSE")
     github = new URL("https://github.com/MoriyaShiine/nycto")
     javaVersion = 21
     configurePublishing {
