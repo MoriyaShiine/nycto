@@ -76,6 +76,9 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 					obj.serverDamage(obj.getDamageSources().create(ModDamageTypes.BLEED), 2);
 				}
 			}
+			if (criticalBlood()) {
+				obj.removeStatusEffect(StatusEffects.REGENERATION);
+			}
 			if (regenerationBlockTicks <= 0 && obj.getEntityWorld().getTime() % REGEN_TIME == 0) {
 				fill(obj.isSleeping() ? 5 : 1);
 			}

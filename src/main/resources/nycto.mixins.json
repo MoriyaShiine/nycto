@@ -9,8 +9,6 @@
 	"api.statuseffect.LivingEntityMixin",
 	"beastform.LivingEntityMixin",
 	"beastform.PlayerEntityMixin",
-	"blood.LivingEntityMixin",
-	"blood.RegenerationStatusEffectMixin",
 	"brew.PotionContentsComponentMixin",
 	"coffin.FindPointOfInterestTaskMixin",
 	"coffin.NearestBedSensorMixin",

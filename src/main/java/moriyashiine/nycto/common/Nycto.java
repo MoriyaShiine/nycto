@@ -27,6 +27,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
+import net.fabricmc.fabric.api.entity.event.v1.effect.ServerMobEffectEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
@@ -96,6 +97,7 @@ public class Nycto implements ModInitializer {
 		ServerEntityEvents.ENTITY_LOAD.register(new BloodEvent.Load());
 		ServerEntityEvents.ENTITY_UNLOAD.register(new BloodEvent.Unload());
 		ServerPlayerEvents.COPY_FROM.register(new BloodEvent.Copy());
+		ServerMobEffectEvents.ALLOW_ADD.register(new BloodEvent.EffectImmunity());
 		PreventEquipmentUsageEvent.EVENT.register(new CannotUseEquipmentEvent());
 		AfterDamageIncludingDeathEvent.EVENT.register(new HunterEvent.Heat());
 		TickEntityEvent.EVENT.register(new HunterEvent.Aura());
@@ -110,6 +112,7 @@ public class Nycto implements ModInitializer {
 		ModifyMovementEvents.JUMP_VELOCITY.register(new VampireEvent.ChargeJump());
 		UseEntityCallback.EVENT.register(new VampireEvent.DrinkBlood());
 		EatFoodEvent.EVENT.register(new VampireEvent.EatFood());
+		ServerMobEffectEvents.ALLOW_ADD.register(new VampireEvent.EffectImmunity());
 		ServerLivingEntityEvents.ALLOW_DAMAGE.register(new VampireEvent.FreezeImmunity());
 		ServerLivingEntityEvents.AFTER_DAMAGE.register(new VampireEvent.HealBlock());
 		AfterDamageIncludingDeathEvent.EVENT.register(new VampireEvent.WeaknessItem());

@@ -7,14 +7,12 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.power.vampire.weakness.VilePresencePower;
-import moriyashiine.nycto.common.tag.ModStatusEffectTags;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalEntityTypeTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.EntityTypeTags;
@@ -45,11 +43,6 @@ public abstract class LivingEntityMixin extends Entity {
 	@ModifyExpressionValue(method = "canHaveStatusEffect", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityType;isIn(Lnet/minecraft/registry/tag/TagKey;)Z", ordinal = 2))
 	private boolean nycto$vampire$ignorePoisonAndRegen(boolean original) {
 		return original || NyctoAPI.isVampire(this);
-	}
-
-	@ModifyReturnValue(method = "canHaveStatusEffect", at = @At("RETURN"))
-	private boolean nycto$vampire$infectionImmunity(boolean original, StatusEffectInstance effect) {
-		return original && !(effect.getEffectType().isIn(ModStatusEffectTags.INFECTION) && NyctoAPI.isVampire(this));
 	}
 
 	@ModifyReturnValue(method = "hasInvertedHealingAndHarm", at = @At("RETURN"))

@@ -10,6 +10,7 @@ import moriyashiine.nycto.common.init.*;
 import moriyashiine.nycto.common.tag.ModBlockTags;
 import moriyashiine.nycto.common.tag.ModEntityTypeTags;
 import moriyashiine.nycto.common.tag.ModItemTags;
+import moriyashiine.nycto.common.tag.ModStatusEffectTags;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.strawberrylib.api.event.AfterDamageIncludingDeathEvent;
 import moriyashiine.strawberrylib.api.event.EatFoodEvent;
@@ -17,6 +18,8 @@ import moriyashiine.strawberrylib.api.event.ModifyMovementEvents;
 import moriyashiine.strawberrylib.api.event.TickEntityEvent;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.fabricmc.fabric.api.entity.event.v1.effect.EffectEventContext;
+import net.fabricmc.fabric.api.entity.event.v1.effect.ServerMobEffectEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
@@ -168,6 +171,13 @@ public class VampireEvent {
 					entity.damage(serverWorld, world.getDamageSources().create(ModDamageTypes.TOXIC_TOUCH), Float.MAX_VALUE);
 				}
 			}
+		}
+	}
+
+	public static class EffectImmunity implements ServerMobEffectEvents.AllowAdd {
+		@Override
+		public boolean allowAdd(StatusEffectInstance effect, LivingEntity entity, EffectEventContext ctx) {
+			return !(effect.getEffectType().isIn(ModStatusEffectTags.INFECTION) && NyctoAPI.isVampire(entity));
 		}
 	}
 

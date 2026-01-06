@@ -7,8 +7,13 @@ import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.component.entity.BloodComponent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
+import net.fabricmc.fabric.api.entity.event.v1.effect.EffectEventContext;
+import net.fabricmc.fabric.api.entity.event.v1.effect.ServerMobEffectEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 
@@ -46,6 +51,13 @@ public class BloodEvent {
 			newBloodComponent.setShouldRegenerateNaturally(oldBloodComponent.shouldRegenerateNaturally());
 			newBloodComponent.setBlood(BloodComponent.MAX_BLOOD);
 			newBloodComponent.sync();
+		}
+	}
+
+	public static class EffectImmunity implements ServerMobEffectEvents.AllowAdd {
+		@Override
+		public boolean allowAdd(StatusEffectInstance effect, LivingEntity entity, EffectEventContext ctx) {
+			return !(effect.getEffectType() == StatusEffects.REGENERATION && ModEntityComponents.BLOOD.get(entity).criticalBlood());
 		}
 	}
 }
