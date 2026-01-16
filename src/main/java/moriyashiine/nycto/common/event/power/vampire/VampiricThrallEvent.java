@@ -3,6 +3,7 @@
  */
 package moriyashiine.nycto.common.event.power.vampire;
 
+import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.component.entity.BloodComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
 import moriyashiine.nycto.common.event.power.util.HasOwnerEvent;
@@ -68,10 +69,9 @@ public class VampiricThrallEvent {
 			if ((entity.age + entity.getId()) % 20 == 0 && entity instanceof MobEntity mob && !NyctoUtil.isSurvival(mob.getTarget())) {
 				VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.get(mob);
 				if (vampiricThrallComponent.hasOwner() && vampiricThrallComponent.getFollowMode() == VampiricThrallComponent.FollowMode.DEFEND) {
-					List<MobEntity> targets = mob.getEntityWorld().getEntitiesByClass(MobEntity.class, mob.getBoundingBox().expand(16), foundEntity ->
-							foundEntity instanceof Monster && SLibUtils.shouldHurt(mob, foundEntity) && !ModEntityComponents.VAMPIRIC_THRALL.get(foundEntity).hasOwner());
-					MobEntity closest = null;
-					for (MobEntity target : targets) {
+					List<LivingEntity> targets = world.getEntitiesByClass(LivingEntity.class, mob.getBoundingBox().expand(16), foundEntity -> shouldTarget(mob, foundEntity));
+					LivingEntity closest = null;
+					for (LivingEntity target : targets) {
 						if (closest == null || target.distanceTo(mob) < closest.distanceTo(mob)) {
 							closest = target;
 						}
@@ -81,6 +81,13 @@ public class VampiricThrallEvent {
 					}
 				}
 			}
+		}
+
+		private static boolean shouldTarget(MobEntity mob, LivingEntity target) {
+			if (NyctoUtil.isSurvival(target) && SLibUtils.shouldHurt(mob, target) && !NyctoAPI.isVampire(target)) {
+				return target.isPlayer() || target instanceof Monster;
+			}
+			return false;
 		}
 	}
 

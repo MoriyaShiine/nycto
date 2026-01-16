@@ -6,6 +6,7 @@ package moriyashiine.nycto.common.component.entity.power.vampire;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.component.entity.BloodComponent;
 import moriyashiine.nycto.common.component.entity.power.util.HasOwnerComponent;
+import moriyashiine.nycto.common.event.power.util.HasOwnerEvent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModPowers;
 import moriyashiine.nycto.common.init.ModSoundEvents;
@@ -112,6 +113,7 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 	}
 
 	public void cycleFollowMode() {
+		HasOwnerEvent.setTarget(obj, null);
 		followMode = switch (followMode) {
 			case FOLLOW -> FollowMode.STAY;
 			case STAY -> FollowMode.WANDER;

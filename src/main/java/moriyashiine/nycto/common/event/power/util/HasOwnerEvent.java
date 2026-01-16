@@ -52,8 +52,13 @@ public class HasOwnerEvent implements ServerLivingEntityEvents.AfterDamage {
 
 	public static void setTarget(MobEntity attacker, LivingEntity target) {
 		attacker.setTarget(target);
-		attacker.getBrain().remember(MemoryModuleType.ANGRY_AT, target.getUuid());
-		attacker.getBrain().remember(MemoryModuleType.ATTACK_TARGET, target);
+		if (target == null) {
+			attacker.getBrain().forget(MemoryModuleType.ANGRY_AT);
+			attacker.getBrain().forget(MemoryModuleType.ATTACK_TARGET);
+		} else {
+			attacker.getBrain().remember(MemoryModuleType.ANGRY_AT, target.getUuid());
+			attacker.getBrain().remember(MemoryModuleType.ATTACK_TARGET, target);
+		}
 	}
 
 	public interface RevengeFunction {
