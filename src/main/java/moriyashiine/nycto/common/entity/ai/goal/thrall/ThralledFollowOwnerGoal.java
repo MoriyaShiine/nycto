@@ -15,7 +15,7 @@ import net.minecraft.entity.mob.PathAwareEntity;
 public class ThralledFollowOwnerGoal extends TemptGoal {
 	public ThralledFollowOwnerGoal(PathAwareEntity entity, double speed) {
 		super(entity, speed, stack -> false, false);
-		predicate = TemptGoal.TEMPTING_ENTITY_PREDICATE.copy().setPredicate((target, world) -> !NyctoUtil.isSurvival(entity.getTarget()) && HasOwnerComponent.isOwner(entity, target));
+		predicate = TemptGoal.TEMPTING_ENTITY_PREDICATE.copy().setPredicate((target, world) -> !NyctoUtil.isTargetable(entity.getTarget()) && HasOwnerComponent.isOwner(entity, target));
 	}
 
 	@Override

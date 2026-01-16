@@ -138,7 +138,7 @@ public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComp
 				boolean moveTo = false;
 				for (int i = targetIds.size() - 1; i >= 0; i--) {
 					Entity target = world.getEntityById(targetIds.get(i));
-					if (!NyctoUtil.isSurvival(target)) {
+					if (!NyctoUtil.isTargetable(target)) {
 						targetIds.remove(i);
 					} else if (canSee(target)) {
 						LivingEntity living = (LivingEntity) target;

@@ -12,7 +12,6 @@ import moriyashiine.nycto.common.init.ModEntityTypes;
 import moriyashiine.nycto.common.init.ModPowers;
 import moriyashiine.nycto.common.init.ModSoundEvents;
 import moriyashiine.nycto.common.payload.DarkFormJumpPayload;
-import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.strawberrylib.api.event.PreventEquipmentUsageEvent;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
@@ -86,7 +85,7 @@ public class DarkFormComponent extends VampireFormChangeComponent implements Com
 	public void serverTick() {
 		super.serverTick();
 		tick();
-		if (enabled && NyctoUtil.isSurvival(obj) && obj.age % 20 == 0) {
+		if (enabled && obj.getGameMode().isSurvivalLike() && obj.age % 20 == 0) {
 			obj.getEntityWorld().getEntitiesByClass(VillagerEntity.class, obj.getBoundingBox().expand(16), LivingEntity::isAlive).forEach(villager -> villager.getBrain().doExclusively(Activity.PANIC));
 		}
 	}

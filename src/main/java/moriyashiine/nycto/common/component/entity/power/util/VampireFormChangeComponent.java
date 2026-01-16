@@ -4,7 +4,6 @@
 package moriyashiine.nycto.common.component.entity.power.util;
 
 import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.util.NyctoUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
@@ -36,7 +35,7 @@ public abstract class VampireFormChangeComponent implements AutoSyncedComponent,
 
 	@Override
 	public void serverTick() {
-		if (enabled && NyctoUtil.isSurvival(obj) && --drainTicks == 0) {
+		if (enabled && obj.getGameMode().isSurvivalLike() && --drainTicks == 0) {
 			if (ModEntityComponents.BLOOD.get(obj).drain(1)) {
 				drainTicks = FORM_DRAIN_TICKS;
 			} else {

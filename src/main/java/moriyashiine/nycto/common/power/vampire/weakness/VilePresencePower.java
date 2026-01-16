@@ -10,7 +10,6 @@ import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModPowers;
 import moriyashiine.nycto.common.init.ModStatusEffects;
 import moriyashiine.nycto.common.tag.ModEntityTypeTags;
-import moriyashiine.nycto.common.util.NyctoUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -52,7 +51,7 @@ public class VilePresencePower extends NegativePower {
 	}
 
 	public static boolean shouldApply(PlayerEntity player) {
-		return NyctoUtil.isSurvival(player) && NyctoAPI.hasPower(player, ModPowers.VILE_PRESENCE);
+		return player.getGameMode().isSurvivalLike() && NyctoAPI.hasPower(player, ModPowers.VILE_PRESENCE);
 	}
 
 	private static boolean canBeAffected(Entity entity) {

@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class UpdateAttackTargetTaskMixin {
 	@ModifyExpressionValue(method = "method_47123", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/MobEntity;canTarget(Lnet/minecraft/entity/LivingEntity;)Z"))
 	private static boolean nycto$vampiricThrall(boolean original, @Local(argsOnly = true) MobEntity mob) {
-		if (original && !NyctoUtil.isSurvival(mob.getAttacker()) && ModEntityComponents.VAMPIRIC_THRALL.get(mob).hasOwner()) {
+		if (original && !NyctoUtil.isTargetable(mob.getAttacker()) && ModEntityComponents.VAMPIRIC_THRALL.get(mob).hasOwner()) {
 			return false;
 		}
 		return original;

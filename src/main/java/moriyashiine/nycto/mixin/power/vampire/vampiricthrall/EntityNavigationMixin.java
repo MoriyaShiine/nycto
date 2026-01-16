@@ -23,7 +23,7 @@ public class EntityNavigationMixin {
 	@ModifyReturnValue(method = "isIdle", at = @At("RETURN"))
 	private boolean nycto$vampiricThrall(boolean original) {
 		if (!original && ModEntityComponents.VAMPIRIC_THRALL.get(entity).getFollowMode() == VampiricThrallComponent.FollowMode.STAY) {
-			return !NyctoUtil.isSurvival(entity.getTarget());
+			return !NyctoUtil.isTargetable(entity.getTarget());
 		}
 		return original;
 	}

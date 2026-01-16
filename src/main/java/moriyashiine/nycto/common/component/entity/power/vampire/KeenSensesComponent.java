@@ -8,7 +8,6 @@ import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModPowers;
 import moriyashiine.nycto.common.init.ModSoundEvents;
 import moriyashiine.nycto.common.tag.ModEntityTypeTags;
-import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -65,7 +64,7 @@ public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingCo
 	@Override
 	public void serverTick() {
 		tick();
-		if (enabled && NyctoUtil.isSurvival(obj) && (obj.getId() + obj.age) % 200 == 0 && !ModEntityComponents.BLOOD.get(obj).drain(1)) {
+		if (enabled && obj.getGameMode().isSurvivalLike() && (obj.getId() + obj.age) % 200 == 0 && !ModEntityComponents.BLOOD.get(obj).drain(1)) {
 			toggle();
 		}
 	}

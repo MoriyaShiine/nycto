@@ -18,7 +18,7 @@ public class PathToContractPosGoal extends Goal {
 
 	@Override
 	public boolean canStart() {
-		return mob.getContractPos() != null && !NyctoUtil.isSurvival(mob.getAttacker());
+		return mob.getContractPos() != null && !NyctoUtil.isTargetable(mob.getAttacker());
 	}
 
 	@Override

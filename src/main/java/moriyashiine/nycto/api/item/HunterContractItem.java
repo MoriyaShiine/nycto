@@ -63,7 +63,7 @@ public class HunterContractItem extends Item {
 				if (hunter.teleport(user.getX() + dX, user.getY() + dY, user.getZ() + dZ, false)) {
 					if (world instanceof ServerWorld serverWorld) {
 						hunter.initialize(serverWorld, serverWorld.getLocalDifficulty(hunter.getBlockPos()), SpawnReason.TRIGGERED, null);
-						if (type.shouldTarget(user) && NyctoUtil.isSurvival(user)) {
+						if (type.shouldTarget(user) && NyctoUtil.isTargetable(user)) {
 							hunter.setUltimateTarget(user);
 						} else {
 							hunter.setContractPos(user.getBlockPos());

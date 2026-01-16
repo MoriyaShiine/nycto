@@ -100,8 +100,8 @@ public class NyctoUtil {
 		return getEquippedArmorPieces(entity, ModItemTags.VAMPIRE_HUNTER_ARMOR) >= 4;
 	}
 
-	public static boolean isSurvival(Entity entity) {
-		return entity instanceof LivingEntity living && living.isPartOfGame() && !living.isInCreativeMode();
+	public static boolean isTargetable(@Nullable Entity entity) {
+		return entity instanceof LivingEntity living && living.canTakeDamage();
 	}
 
 	public static boolean isVillager(Entity entity) {

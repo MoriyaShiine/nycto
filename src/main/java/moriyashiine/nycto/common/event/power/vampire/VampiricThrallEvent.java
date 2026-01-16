@@ -44,7 +44,7 @@ public class VampiricThrallEvent {
 		private static final HasOwnerEvent.RevengeFunction REVENGE = new HasOwnerEvent.RevengeFunction() {
 			@Override
 			public boolean shouldHelp(MobEntity mob, LivingEntity attacker, LivingEntity victim) {
-				if (SLibUtils.shouldHurt(attacker, victim) && !NyctoUtil.isSurvival(mob.getTarget())) {
+				if (SLibUtils.shouldHurt(attacker, victim) && !NyctoUtil.isTargetable(mob.getTarget())) {
 					VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.get(mob);
 					return vampiricThrallComponent.isOwner(attacker) && vampiricThrallComponent.hasFollowModes() && vampiricThrallComponent.getFollowMode() != VampiricThrallComponent.FollowMode.STAY;
 				}
@@ -66,7 +66,7 @@ public class VampiricThrallEvent {
 	public static class Defend implements TickEntityEvent {
 		@Override
 		public void tick(ServerWorld world, Entity entity) {
-			if ((entity.age + entity.getId()) % 20 == 0 && entity instanceof MobEntity mob && !NyctoUtil.isSurvival(mob.getTarget())) {
+			if ((entity.age + entity.getId()) % 20 == 0 && entity instanceof MobEntity mob && !NyctoUtil.isTargetable(mob.getTarget())) {
 				VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.get(mob);
 				if (vampiricThrallComponent.hasOwner() && vampiricThrallComponent.getFollowMode() == VampiricThrallComponent.FollowMode.DEFEND) {
 					List<LivingEntity> targets = world.getEntitiesByClass(LivingEntity.class, mob.getBoundingBox().expand(16), foundEntity -> shouldTarget(mob, foundEntity));
@@ -84,7 +84,7 @@ public class VampiricThrallEvent {
 		}
 
 		private static boolean shouldTarget(MobEntity mob, LivingEntity target) {
-			if (NyctoUtil.isSurvival(target) && SLibUtils.shouldHurt(mob, target) && !NyctoAPI.isVampire(target)) {
+			if (NyctoUtil.isTargetable(target) && SLibUtils.shouldHurt(mob, target) && !NyctoAPI.isVampire(target)) {
 				return target.isPlayer() || target instanceof Monster;
 			}
 			return false;

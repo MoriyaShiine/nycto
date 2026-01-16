@@ -17,10 +17,10 @@ public class UltimateTargetGoal extends Goal {
 
 	@Override
 	public boolean canStart() {
-		if (!NyctoUtil.isSurvival(mob.getUltimateTarget()) || NyctoAPI.hasRespawnLeniency(mob.getUltimateTarget())) {
+		if (!NyctoUtil.isTargetable(mob.getUltimateTarget()) || NyctoAPI.hasRespawnLeniency(mob.getUltimateTarget())) {
 			return false;
 		}
-		return !NyctoUtil.isSurvival(mob.getAttacker());
+		return !NyctoUtil.isTargetable(mob.getAttacker());
 	}
 
 	@Override

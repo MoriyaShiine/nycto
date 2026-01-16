@@ -19,7 +19,7 @@ public class HasOwnerEvent implements ServerLivingEntityEvents.AfterDamage {
 	private static final RevengeFunction REVENGE = new RevengeFunction() {
 		@Override
 		public boolean shouldHelp(MobEntity mob, LivingEntity attacker, LivingEntity victim) {
-			if (SLibUtils.shouldHurt(attacker, victim) && !NyctoUtil.isSurvival(mob.getTarget())) {
+			if (SLibUtils.shouldHurt(attacker, victim) && !NyctoUtil.isTargetable(mob.getTarget())) {
 				if (ModEntityComponents.VAMPIRIC_THRALL.get(mob).getFollowMode() == VampiricThrallComponent.FollowMode.STAY) {
 					return false;
 				}
