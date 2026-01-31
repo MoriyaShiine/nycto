@@ -38,6 +38,9 @@ import net.minecraft.village.VillagerGossipType;
 import org.jetbrains.annotations.Nullable;
 
 public class NyctoUtil {
+	// todo move to slib in 26.1
+	public static boolean bypassPvp = false;
+
 	public static int truncatedWorldSeed = 0;
 
 	@SuppressWarnings("BooleanMethodIsAlwaysInverted")

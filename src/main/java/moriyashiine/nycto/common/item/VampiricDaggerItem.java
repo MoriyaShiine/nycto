@@ -8,6 +8,7 @@ import moriyashiine.nycto.common.init.ModComponentTypes;
 import moriyashiine.nycto.common.init.ModCriteria;
 import moriyashiine.nycto.common.init.ModSoundEvents;
 import moriyashiine.nycto.common.recipe.BloodExtractionRecipe;
+import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.strawberrylib.api.objects.records.ModifierTrio;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.TooltipDisplayComponent;
@@ -51,7 +52,9 @@ public class VampiricDaggerItem extends Item {
 	@Override
 	public ActionResult use(World world, PlayerEntity user, Hand hand) {
 		if (user.hurtTime == 0 && user.isSneaking()) {
+			NyctoUtil.bypassPvp = true;
 			user.attack(user);
+			NyctoUtil.bypassPvp = false;
 			return ActionResult.SUCCESS;
 		}
 		return super.use(world, user, hand);
