@@ -8,7 +8,9 @@ import moriyashiine.nycto.api.power.ActivePower;
 import moriyashiine.nycto.api.power.FormChanger;
 import moriyashiine.nycto.api.power.PowerInstance;
 import moriyashiine.nycto.common.init.ModDamageTypes;
+import moriyashiine.nycto.common.init.ModGameRules;
 import moriyashiine.nycto.common.init.ModParticleTypes;
+import moriyashiine.nycto.client.ModConfig;
 import moriyashiine.nycto.common.init.ModStatusEffects;
 import moriyashiine.nycto.common.power.vampire.DarkFormPower;
 import moriyashiine.nycto.common.tag.ModDamageTypeTags;
@@ -28,6 +30,7 @@ import net.minecraft.entity.passive.WanderingTraderEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.Item;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -35,6 +38,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.village.VillagerGossipType;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class NyctoUtil {
@@ -50,10 +54,16 @@ public class NyctoUtil {
 				return true;
 			}
 		}
+		if (source.isIn(DamageTypeTags.IS_FIRE) && !ModConfig.fireBypassesBloodVeil) return false;
+		if (source.isOf(ModDamageTypes.SUN) && !ModConfig.sunBypassesBloodVeil) return false;
+		if (isVampireWeaknessItem(source) && !ModConfig.weaponsBypassBloodVeil) return false;
 		return source.isIn(ModDamageTypeTags.BYPASSES_BLOOD_VEIL) || isVampireWeaknessItem(source) || NyctoAPI.isBeastForm(source);
 	}
 
 	public static boolean haltsVampireRegeneration(DamageSource source) {
+		if (source.isIn(DamageTypeTags.IS_FIRE) && !ModConfig.fireHaltsRegeneration) return false;
+		if (source.isOf(ModDamageTypes.SUN) && !ModConfig.sunHaltsRegeneration) return false;
+		if (isVampireWeaknessItem(source) && !ModConfig.weaponsHaltRegeneration) return false;
 		return source.isIn(ModDamageTypeTags.HALTS_VAMPIRE_REGENERATION) || isVampireWeaknessItem(source);
 	}
 
