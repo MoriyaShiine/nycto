@@ -74,8 +74,10 @@ public class HunterHeatComponent implements ServerTickingComponent {
 	}
 
 	public void increaseHeat() {
-		if (heatLevel + 1 >= MAXIMUM_HEAT) {
-			if (timesSpawned < MAXIMUM_SPAWNS) {
+		int maxHeat = moriyashiine.nycto.client.ModConfig.hunterMaxHeat;
+		int maxSpawns = moriyashiine.nycto.client.ModConfig.hunterMaxSpawns;
+		if (heatLevel + 1 >= maxHeat) {
+			if (timesSpawned < maxSpawns) {
 				if (HunterContractItem.spawnHunter(obj.getEntityWorld(), obj, NyctoAPI.isVampire(obj) ? HunterEntity.HunterType.VAMPIRE : HunterEntity.HunterType.WEREWOLF, obj.getRandom().nextBetween(1, 3)).isAccepted()) {
 					heatLevel = decayTicks = 0;
 					timesSpawned++;
