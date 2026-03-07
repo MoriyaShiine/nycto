@@ -53,7 +53,7 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 			if (exposed) {
 				if (exposureTime < MAX_EXPOSURE_TIME) {
 					exposureTime = Math.min(MAX_EXPOSURE_TIME, exposureTime + getExposureTicks());
-				} else {
+				} else if (moriyashiine.nycto.client.ModConfig.sunDamageEnabled) {
 					obj.setOnFireFor(4);
 				}
 			} else if (exposureTime > 0) {
