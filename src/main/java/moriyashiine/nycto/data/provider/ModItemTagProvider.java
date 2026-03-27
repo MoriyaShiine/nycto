@@ -11,8 +11,11 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.item.Items;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.Identifier;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -114,5 +117,8 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
 				.add(ModItems.ACONITE_COATED_HALBERD);
 		valueLookupBuilder(ItemTags.ARROWS)
 				.add(ModItems.ACONITE_ARROW);
+
+		valueLookupBuilder(TagKey.of(RegistryKeys.ITEM, Identifier.of("enchancement", "cannot_automatically_consume")))
+				.add(ModItems.AMBROSIA_BOTTLE);
 	}
 }
