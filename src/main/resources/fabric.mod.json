@@ -46,8 +46,6 @@
   },
   "custom": {
 	"cardinal-components": [
-	  "nycto:aura",
-	  "nycto:bat_swarm",
 	  "nycto:synced_config_values",
 	  "nycto:blood",
 	  "nycto:heal_block",
@@ -67,7 +65,9 @@
 	  "nycto:keen_senses",
 	  "nycto:mist_form",
 	  "nycto:vampiric_thrall",
-	  "nycto:vampiric_vex"
+	  "nycto:vampiric_vex",
+	  "nycto:aura",
+	  "nycto:bat_swarm"
 	]
   }
 }
