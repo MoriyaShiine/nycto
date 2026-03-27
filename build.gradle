@@ -23,7 +23,7 @@ chenille {
 }
 
 loom {
-    accessWidenerPath = file("src/main/resources/nycto.accesswidener")
+    accessWidenerPath = file("src/main/resources/nycto.classtweaker")
 }
 
 fabricApi {

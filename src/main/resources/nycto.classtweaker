@@ -1,4 +1,4 @@
-accessWidener v2 named
+classTweaker v1 named
 accessible class net/minecraft/entity/effect/HungerStatusEffect
 accessible class net/minecraft/entity/effect/RegenerationStatusEffect
 accessible class net/minecraft/entity/effect/SaturationStatusEffect

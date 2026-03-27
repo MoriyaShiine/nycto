@@ -36,7 +36,7 @@
   "mixins": [
 	"nycto.mixins.json"
   ],
-  "accessWidener": "nycto.accesswidener",
+  "accessWidener": "nycto.classtweaker",
   "depends": {
 	"fabricloader": "*",
 	"minecraft": "~1.21.11",
