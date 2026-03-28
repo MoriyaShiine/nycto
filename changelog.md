@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 1.21.11-b7
+------------------------------------------------------
+- ambrosia bottles can no longer be automatically consumed with enchancement's assimilation enchantment
+
+------------------------------------------------------
 Version 1.21.11-b6
 ------------------------------------------------------
 - fix https://github.com/MoriyaShiine/nycto/issues/11
