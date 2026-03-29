@@ -1,12 +1,13 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.client.event;
 
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.strawberrylib.api.event.client.ReplaceHeartTexturesEvent;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 
 public class HealBlockClientEvent implements ReplaceHeartTexturesEvent {
 	private static final ReplaceHeartTexturesEvent.TextureSet TEXTURES = new TextureSet(
@@ -17,7 +18,7 @@ public class HealBlockClientEvent implements ReplaceHeartTexturesEvent {
 	);
 
 	@Override
-	public TextureSet getTextureSet(PlayerEntity player) {
+	public TextureSet getTextureSet(Player player) {
 		if (ModEntityComponents.HEAL_BLOCK.get(player).isHealingBlocked()) {
 			return TEXTURES;
 		}

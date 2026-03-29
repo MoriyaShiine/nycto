@@ -1,20 +1,21 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.component.entity;
 
 import moriyashiine.nycto.api.init.NyctoRegistries;
-import moriyashiine.nycto.api.power.ActivePower;
-import moriyashiine.nycto.api.power.Power;
-import moriyashiine.nycto.api.power.PowerInstance;
-import moriyashiine.nycto.api.transformation.Transformation;
+import moriyashiine.nycto.api.world.power.ActivePower;
+import moriyashiine.nycto.api.world.power.Power;
+import moriyashiine.nycto.api.world.power.PowerInstance;
+import moriyashiine.nycto.api.world.transformation.Transformation;
 import moriyashiine.nycto.common.init.ModTransformations;
 import moriyashiine.nycto.common.util.NyctoUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
 
@@ -22,41 +23,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransformationComponent implements AutoSyncedComponent, CommonTickingComponent {
-	private final PlayerEntity obj;
+	private final Player obj;
 	private Transformation transformation = ModTransformations.HUMAN;
 	private final List<PowerInstance> powers = new ArrayList<>();
 	private int powerIndex = 0;
 	private int upgradeCostSeed = 0;
 
-	public TransformationComponent(PlayerEntity obj) {
+	public TransformationComponent(Player obj) {
 		this.obj = obj;
 	}
 
 	@Override
-	public void readData(ReadView readView) {
-		transformation = readView.read("Transformation", NyctoRegistries.TRANSFORMATION.getCodec()).orElse(ModTransformations.HUMAN);
+	public void readData(ValueInput input) {
+		transformation = input.read("Transformation", NyctoRegistries.TRANSFORMATION.byNameCodec()).orElse(ModTransformations.HUMAN);
 		powers.clear();
-		powers.addAll(readView.read("Powers", PowerInstance.CODEC.listOf()).orElse(List.of()));
-		powerIndex = readView.getInt("PowerIndex", 0);
-		upgradeCostSeed = readView.getInt("UpgradeCostSeed", 0);
+		powers.addAll(input.read("Powers", PowerInstance.CODEC.listOf()).orElse(List.of()));
+		powerIndex = input.getIntOr("PowerIndex", 0);
+		upgradeCostSeed = input.getIntOr("UpgradeCostSeed", 0);
 	}
 
 	@Override
-	public void writeData(WriteView writeView) {
-		writeView.put("Transformation", NyctoRegistries.TRANSFORMATION.getCodec(), transformation);
-		writeView.put("Powers", PowerInstance.CODEC.listOf(), powers);
-		writeView.putInt("PowerIndex", powerIndex);
-		writeView.putInt("UpgradeCostSeed", upgradeCostSeed);
+	public void writeData(ValueOutput output) {
+		output.store("Transformation", NyctoRegistries.TRANSFORMATION.byNameCodec(), transformation);
+		output.store("Powers", PowerInstance.CODEC.listOf(), powers);
+		output.putInt("PowerIndex", powerIndex);
+		output.putInt("UpgradeCostSeed", upgradeCostSeed);
 	}
 
 	@Override
 	public void tick() {
-		if (obj.isPartOfGame()) {
-			if (obj instanceof ServerPlayerEntity player) {
+		if (obj.slib$exists()) {
+			if (obj instanceof ServerPlayer player) {
 				transformation.tick(player);
 			}
 			powers.forEach(instance -> {
-				if (obj instanceof ServerPlayerEntity player) {
+				if (obj instanceof ServerPlayer player) {
 					instance.getPower().tick(player);
 				}
 				if (instance.getCooldown() > 0) {
@@ -80,7 +81,7 @@ public class TransformationComponent implements AutoSyncedComponent, CommonTicki
 
 	public void addPower(PowerInstance instance) {
 		powers.add(instance);
-		if (obj instanceof ServerPlayerEntity player) {
+		if (obj instanceof ServerPlayer player) {
 			instance.getPower().onAdded(player);
 		}
 	}
@@ -88,7 +89,7 @@ public class TransformationComponent implements AutoSyncedComponent, CommonTicki
 	public void removePower(Power power) {
 		for (int i = getPowers().size() - 1; i >= 0; i--) {
 			if (powers.get(i).getPower() == power) {
-				if (obj instanceof ServerPlayerEntity player) {
+				if (obj instanceof ServerPlayer player) {
 					power.onRemoved(player);
 				}
 				powers.remove(i);
@@ -120,7 +121,7 @@ public class TransformationComponent implements AutoSyncedComponent, CommonTicki
 
 	public int getRandomUpgradeCostIndex(List<?> list) {
 		if (upgradeCostSeed == 0) {
-			upgradeCostSeed = obj.getUuid().hashCode() + NyctoUtil.truncatedWorldSeed;
+			upgradeCostSeed = obj.getUUID().hashCode() + NyctoUtil.truncatedWorldSeed;
 		}
 		int index = upgradeCostSeed % list.size();
 		if (index < 0) {
@@ -130,6 +131,6 @@ public class TransformationComponent implements AutoSyncedComponent, CommonTicki
 	}
 
 	public void updateUpgradeCostSeed() {
-		upgradeCostSeed = Random.create(upgradeCostSeed).nextInt();
+		upgradeCostSeed = RandomSource.create(upgradeCostSeed).nextInt();
 	}
 }

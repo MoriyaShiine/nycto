@@ -1,15 +1,16 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.init;
 
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.component.entity.*;
 import moriyashiine.nycto.common.component.entity.power.NightVisionComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.*;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.VexEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.monster.Vex;
 import org.ladysnake.cca.api.v3.component.ComponentKey;
 import org.ladysnake.cca.api.v3.component.ComponentRegistry;
 import org.ladysnake.cca.api.v3.entity.EntityComponentFactoryRegistry;
@@ -61,10 +62,10 @@ public class ModEntityComponents implements EntityComponentInitializer {
 		registry.registerFor(LivingEntity.class, CARNAGE, CarnageComponent::new);
 		registry.registerForPlayers(DARK_FORM, DarkFormComponent::new, RespawnCopyStrategy.LOSSLESS_ONLY);
 		registry.registerFor(LivingEntity.class, HAEMOGENESIS, HaemogenesisComponent::new);
-		registry.registerFor(MobEntity.class, HYPNOTIZED, HypnotizedComponent::new);
+		registry.registerFor(Mob.class, HYPNOTIZED, HypnotizedComponent::new);
 		registry.registerForPlayers(KEEN_SENSES, KeenSensesComponent::new, RespawnCopyStrategy.LOSSLESS_ONLY);
 		registry.registerForPlayers(MIST_FORM, MistFormComponent::new, RespawnCopyStrategy.LOSSLESS_ONLY);
-		registry.registerFor(MobEntity.class, VAMPIRIC_THRALL, VampiricThrallComponent::new);
-		registry.registerFor(VexEntity.class, VAMPIRIC_VEX, VampiricVexComponent::new);
+		registry.registerFor(Mob.class, VAMPIRIC_THRALL, VampiricThrallComponent::new);
+		registry.registerFor(Vex.class, VAMPIRIC_VEX, VampiricVexComponent::new);
 	}
 }

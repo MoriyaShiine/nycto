@@ -1,6 +1,7 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.event.power.vampire;
 
 import moriyashiine.nycto.api.NyctoAPI;
@@ -9,30 +10,29 @@ import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallCo
 import moriyashiine.nycto.common.event.power.util.HasOwnerEvent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModSoundEvents;
-import moriyashiine.nycto.common.item.consume.FillBloodConsumeEffect;
 import moriyashiine.nycto.common.util.NyctoUtil;
+import moriyashiine.nycto.common.world.item.consumeeffects.FillBloodConsumeEffect;
 import moriyashiine.strawberrylib.api.event.TickEntityEvent;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.Monster;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.consume.ApplyEffectsConsumeEffect;
-import net.minecraft.item.consume.ConsumeEffect;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect;
+import net.minecraft.world.item.consume_effects.ConsumeEffect;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.EntityHitResult;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.List;
@@ -43,8 +43,8 @@ public class VampiricThrallEvent {
 	public static class Revenge implements ServerLivingEntityEvents.AfterDamage {
 		private static final HasOwnerEvent.RevengeFunction REVENGE = new HasOwnerEvent.RevengeFunction() {
 			@Override
-			public boolean shouldHelp(MobEntity mob, LivingEntity attacker, LivingEntity victim) {
-				if (SLibUtils.shouldHurt(attacker, victim) && !NyctoUtil.isTargetable(mob.getTarget())) {
+			public boolean shouldHelp(Mob mob, LivingEntity attacker, LivingEntity victim) {
+				if (SLibUtils.shouldHurt(attacker, victim) && !NyctoUtil.isSurvivalNullable(mob.getTarget())) {
 					VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.get(mob);
 					return vampiricThrallComponent.isOwner(attacker) && vampiricThrallComponent.hasFollowModes() && vampiricThrallComponent.getFollowMode() != VampiricThrallComponent.FollowMode.STAY;
 				}
@@ -65,11 +65,11 @@ public class VampiricThrallEvent {
 
 	public static class Defend implements TickEntityEvent {
 		@Override
-		public void tick(ServerWorld world, Entity entity) {
-			if ((entity.age + entity.getId()) % 20 == 0 && entity instanceof MobEntity mob && !NyctoUtil.isTargetable(mob.getTarget())) {
+		public void tick(Level level, Entity entity) {
+			if (!level.isClientSide() && (entity.tickCount + entity.getId()) % 20 == 0 && entity instanceof Mob mob && !NyctoUtil.isSurvivalNullable(mob.getTarget())) {
 				VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.get(mob);
 				if (vampiricThrallComponent.hasOwner() && vampiricThrallComponent.getFollowMode() == VampiricThrallComponent.FollowMode.DEFEND) {
-					List<LivingEntity> targets = world.getEntitiesByClass(LivingEntity.class, mob.getBoundingBox().expand(16), foundEntity -> shouldTarget(mob, foundEntity));
+					List<LivingEntity> targets = level.getEntitiesOfClass(LivingEntity.class, mob.getBoundingBox().inflate(16), foundEntity -> shouldTarget(mob, foundEntity));
 					LivingEntity closest = null;
 					for (LivingEntity target : targets) {
 						if (closest == null || target.distanceTo(mob) < closest.distanceTo(mob)) {
@@ -83,9 +83,9 @@ public class VampiricThrallEvent {
 			}
 		}
 
-		private static boolean shouldTarget(MobEntity mob, LivingEntity target) {
-			if (NyctoUtil.isTargetable(target) && SLibUtils.shouldHurt(mob, target) && !NyctoAPI.isVampire(target)) {
-				return target.isPlayer() || target instanceof Monster;
+		private static boolean shouldTarget(Mob mob, LivingEntity target) {
+			if (target.slib$isSurvival() && SLibUtils.shouldHurt(mob, target) && !NyctoAPI.isVampire(target)) {
+				return target.slib$isPlayer() || target instanceof Enemy;
 			}
 			return false;
 		}
@@ -93,17 +93,17 @@ public class VampiricThrallEvent {
 
 	public static class RightClickOverride implements UseEntityCallback {
 		@Override
-		public ActionResult interact(PlayerEntity player, World world, Hand hand, Entity entity, @Nullable EntityHitResult hitResult) {
-			if (player.isPartOfGame() && player.isSneaking()) {
+		public InteractionResult interact(Player player, Level level, InteractionHand hand, Entity entity, @Nullable EntityHitResult hitResult) {
+			if (player.isShiftKeyDown() && player.slib$exists()) {
 				@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
 				if (vampiricThrallComponent != null) {
 					if (vampiricThrallComponent.hasOwner()) {
-						Set<ApplyEffectsConsumeEffect> effects = new HashSet<>();
+						Set<ApplyStatusEffectsConsumeEffect> effects = new HashSet<>();
 						int fillAmount = 0;
-						ItemStack stack = player.getStackInHand(hand);
-						if (stack.contains(DataComponentTypes.CONSUMABLE)) {
-							for (ConsumeEffect effect : stack.get(DataComponentTypes.CONSUMABLE).onConsumeEffects()) {
-								if (effect instanceof ApplyEffectsConsumeEffect applyEffectsConsumeEffect) {
+						ItemStack stack = player.getItemInHand(hand);
+						if (stack.has(DataComponents.CONSUMABLE)) {
+							for (ConsumeEffect effect : stack.get(DataComponents.CONSUMABLE).onConsumeEffects()) {
+								if (effect instanceof ApplyStatusEffectsConsumeEffect applyEffectsConsumeEffect) {
 									effects.add(applyEffectsConsumeEffect);
 								}
 								if (effect instanceof FillBloodConsumeEffect fillBloodConsumeEffect) {
@@ -114,33 +114,33 @@ public class VampiricThrallEvent {
 						if (fillAmount > 0) {
 							BloodComponent bloodComponent = ModEntityComponents.BLOOD.get(entity);
 							if (bloodComponent.canFill()) {
-								if (!world.isClient()) {
+								if (!level.isClientSide()) {
 									bloodComponent.fill(fillAmount);
 									NyctoUtil.spawnBloodParticles(entity);
 									SLibUtils.playSound(entity, ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK.value());
-									entity.emitGameEvent(GameEvent.DRINK);
+									entity.gameEvent(GameEvent.DRINK);
 									if (entity instanceof LivingEntity living) {
-										effects.forEach(effect -> effect.onConsume(world, stack, living));
+										effects.forEach(effect -> effect.apply(level, stack, living));
 									}
 									ItemStack copy = stack.copy();
-									stack.decrementUnlessCreative(1, player);
-									if (!player.isCreative() && copy.contains(DataComponentTypes.USE_REMAINDER)) {
-										player.giveOrDropStack(copy.get(DataComponentTypes.USE_REMAINDER).convertInto().copy());
+									stack.consume(1, player);
+									if (!player.isCreative() && copy.has(DataComponents.USE_REMAINDER)) {
+										player.handleExtraItemsCreatedOnUse(copy.get(DataComponents.USE_REMAINDER).convertInto().create());
 									}
 								}
-								return ActionResult.SUCCESS;
+								return InteractionResult.SUCCESS;
 							}
 						} else if (vampiricThrallComponent.isOwner(player) && vampiricThrallComponent.hasFollowModes()) {
-							if (!world.isClient()) {
+							if (!level.isClientSide()) {
 								vampiricThrallComponent.cycleFollowMode();
-								player.sendMessage(Text.translatable("message.nycto.cycle_follow_mode." + vampiricThrallComponent.getFollowMode().name().toLowerCase(Locale.ROOT), entity.getName()), true);
+								player.sendOverlayMessage(Component.translatable("message.nycto.cycle_follow_mode." + vampiricThrallComponent.getFollowMode().name().toLowerCase(Locale.ROOT), entity.getName()));
 							}
-							return ActionResult.SUCCESS;
+							return InteractionResult.SUCCESS;
 						}
 					}
 				}
 			}
-			return ActionResult.PASS;
+			return InteractionResult.PASS;
 		}
 	}
 }

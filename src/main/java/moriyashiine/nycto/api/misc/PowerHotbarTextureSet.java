@@ -1,10 +1,11 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.api.misc;
 
-import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.resources.Identifier;
+import org.jspecify.annotations.Nullable;
 
 public record PowerHotbarTextureSet(@Nullable Identifier powerHotbarTexture,
 									@Nullable Identifier powerHotbarSelectionTexture,

@@ -1,22 +1,21 @@
-classTweaker v1 named
-accessible class net/minecraft/entity/effect/HungerStatusEffect
-accessible class net/minecraft/entity/effect/RegenerationStatusEffect
-accessible class net/minecraft/entity/effect/SaturationStatusEffect
-accessible class net/minecraft/entity/mob/EvokerEntity$SummonVexGoal
+classTweaker v1 official
+accessible class net/minecraft/world/effect/HungerMobEffect
+accessible class net/minecraft/world/effect/RegenerationMobEffect
+accessible class net/minecraft/world/effect/SaturationMobEffect
+accessible class net/minecraft/world/entity/monster/illager/Evoker$EvokerSummonSpellGoal
 
-accessible method net/minecraft/entity/Entity isBeingRainedOn ()Z
-accessible method net/minecraft/entity/passive/WolfEntity getVariant ()Lnet/minecraft/registry/entry/RegistryEntry;
-accessible method net/minecraft/item/ToolMaterial createToolAttributeModifiers (FF)Lnet/minecraft/component/type/AttributeModifiersComponent;
-accessible method net/minecraft/world/gen/feature/ConfiguredFeatures createBlockPredicate (Ljava/util/List;)Lnet/minecraft/world/gen/blockpredicate/BlockPredicate;
+accessible method net/minecraft/world/entity/Entity isInRain ()Z
+accessible method net/minecraft/world/entity/animal/wolf/Wolf getVariant ()Lnet/minecraft/core/Holder;
+accessible method net/minecraft/world/item/ToolMaterial createToolAttributes (FF)Lnet/minecraft/world/item/component/ItemAttributeModifiers;
 
-accessible field net/minecraft/entity/LivingEntity jumping Z
-accessible field net/minecraft/entity/ai/goal/TemptGoal TEMPTING_ENTITY_PREDICATE Lnet/minecraft/entity/ai/TargetPredicate;
-accessible field net/minecraft/entity/ai/goal/TemptGoal cooldown I
-accessible field net/minecraft/entity/ai/goal/TemptGoal predicate Lnet/minecraft/entity/ai/TargetPredicate;
-mutable field net/minecraft/entity/ai/goal/TemptGoal predicate Lnet/minecraft/entity/ai/TargetPredicate;
-accessible field net/minecraft/entity/mob/MobEntity targetSelector Lnet/minecraft/entity/ai/goal/GoalSelector;
+accessible field net/minecraft/world/entity/LivingEntity jumping Z
+accessible field net/minecraft/world/entity/ai/goal/TemptGoal TEMPT_TARGETING Lnet/minecraft/world/entity/ai/targeting/TargetingConditions;
+accessible field net/minecraft/world/entity/ai/goal/TemptGoal calmDown I
+accessible field net/minecraft/world/entity/ai/goal/TemptGoal targetingConditions Lnet/minecraft/world/entity/ai/targeting/TargetingConditions;
+mutable field net/minecraft/world/entity/ai/goal/TemptGoal targetingConditions Lnet/minecraft/world/entity/ai/targeting/TargetingConditions;
+accessible field net/minecraft/world/entity/Mob targetSelector Lnet/minecraft/world/entity/ai/goal/GoalSelector;
 
-accessible method net/minecraft/client/gui/hud/InGameHud renderOverlay (Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/util/Identifier;F)V
-accessible method net/minecraft/client/particle/SpellParticle <init> (Lnet/minecraft/client/world/ClientWorld;DDDDDDLnet/minecraft/client/particle/SpriteProvider;)V
+accessible method net/minecraft/client/gui/Gui extractTextureOverlay (Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/resources/Identifier;F)V
+accessible method net/minecraft/client/particle/SpellParticle <init> (Lnet/minecraft/client/multiplayer/ClientLevel;DDDDDDLnet/minecraft/client/particle/SpriteSet;)V
 
-accessible field net/minecraft/client/data/BlockStateModelGenerator SOUTH_DEFAULT_HORIZONTAL_ROTATION_OPERATIONS Lnet/minecraft/client/data/BlockStateVariantMap;
+accessible field net/minecraft/client/data/models/BlockModelGenerators ROTATION_HORIZONTAL_FACING_ALT Lnet/minecraft/client/data/models/blockstates/PropertyDispatch;

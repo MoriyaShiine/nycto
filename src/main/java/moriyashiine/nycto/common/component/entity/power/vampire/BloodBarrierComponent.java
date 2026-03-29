@@ -1,6 +1,7 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.component.entity.power.vampire;
 
 import moriyashiine.nycto.client.payload.AddBloodBarrierParticlesPayload;
@@ -8,11 +9,11 @@ import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModSoundEvents;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
 
@@ -27,21 +28,21 @@ public class BloodBarrierComponent implements AutoSyncedComponent, CommonTicking
 	}
 
 	@Override
-	public void readData(ReadView readView) {
-		barriers = readView.getInt("Barriers", 0);
-		ticks = readView.getInt("Ticks", 0);
+	public void readData(ValueInput input) {
+		barriers = input.getIntOr("Barriers", 0);
+		ticks = input.getIntOr("Ticks", 0);
 	}
 
 	@Override
-	public void writeData(WriteView writeView) {
-		writeView.putInt("Barriers", barriers);
-		writeView.putInt("Ticks", ticks);
+	public void writeData(ValueOutput output) {
+		output.putInt("Barriers", barriers);
+		output.putInt("Ticks", ticks);
 	}
 
 	@Override
 	public void tick() {
 		if (ticks > 0 && --ticks == 0) {
-			if (!obj.getEntityWorld().isClient()) {
+			if (!obj.level().isClientSide()) {
 				for (int i = 0; i < barriers; i++) {
 					addParticles(i);
 				}
@@ -59,7 +60,7 @@ public class BloodBarrierComponent implements AutoSyncedComponent, CommonTicking
 	}
 
 	public void breakBarrier() {
-		SLibUtils.playSound(obj, ModSoundEvents.POWER_BLOOD_BARRIER_BREAK, 1, MathHelper.nextFloat(obj.getRandom(), 0.8F, 1.2F));
+		SLibUtils.playSound(obj, ModSoundEvents.POWER_BLOOD_BARRIER_BREAK, 1, Mth.nextFloat(obj.getRandom(), 0.8F, 1.2F));
 		barriers--;
 		addParticles(barriers);
 		if (barriers == 0) {
@@ -79,7 +80,7 @@ public class BloodBarrierComponent implements AutoSyncedComponent, CommonTicking
 
 	private void addParticles(int barrier) {
 		PlayerLookup.tracking(obj).forEach(receiver -> AddBloodBarrierParticlesPayload.send(receiver, obj, barrier));
-		if (obj instanceof ServerPlayerEntity player) {
+		if (obj instanceof ServerPlayer player) {
 			AddBloodBarrierParticlesPayload.send(player, obj, barrier);
 		}
 	}

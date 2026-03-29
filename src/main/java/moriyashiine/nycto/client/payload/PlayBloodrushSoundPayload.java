@@ -1,6 +1,7 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.client.payload;
 
 import moriyashiine.nycto.common.Nycto;
@@ -9,27 +10,27 @@ import moriyashiine.nycto.common.init.ModPowers;
 import moriyashiine.strawberrylib.impl.client.sound.AnchoredSoundInstance;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 
-public record PlayBloodrushSoundPayload(int entityId) implements CustomPayload {
-	public static final Id<PlayBloodrushSoundPayload> ID = new Id<>(Nycto.id("play_bloodrush_sound"));
-	public static final PacketCodec<PacketByteBuf, PlayBloodrushSoundPayload> CODEC = PacketCodec.tuple(
-			PacketCodecs.VAR_INT, PlayBloodrushSoundPayload::entityId,
+public record PlayBloodrushSoundPayload(int entityId) implements CustomPacketPayload {
+	public static final Type<PlayBloodrushSoundPayload> TYPE = new Type<>(Nycto.id("play_bloodrush_sound"));
+	public static final StreamCodec<FriendlyByteBuf, PlayBloodrushSoundPayload> CODEC = StreamCodec.composite(
+			ByteBufCodecs.VAR_INT, PlayBloodrushSoundPayload::entityId,
 			PlayBloodrushSoundPayload::new);
 
 	@Override
-	public Id<? extends CustomPayload> getId() {
-		return ID;
+	public Type<PlayBloodrushSoundPayload> type() {
+		return TYPE;
 	}
 
-	public static void send(ServerPlayerEntity player, Entity entity) {
+	public static void send(ServerPlayer player, Entity entity) {
 		ServerPlayNetworking.send(player, new PlayBloodrushSoundPayload(entity.getId()));
 	}
 
@@ -37,8 +38,9 @@ public record PlayBloodrushSoundPayload(int entityId) implements CustomPayload {
 		@SuppressWarnings("DataFlowIssue")
 		@Override
 		public void receive(PlayBloodrushSoundPayload payload, ClientPlayNetworking.Context context) {
-			if (context.player().getEntityWorld().getEntityById(payload.entityId()) instanceof PlayerEntity player) {
-				MinecraftClient.getInstance().getSoundManager().play(new AnchoredSoundInstance(player, ModPowers.BLOODRUSH.getUseSound(player), currentEntity -> !ModEntityComponents.BLOODRUSH.get(currentEntity).isActive(false)));
+			Entity entity = context.player().level().getEntity(payload.entityId());
+			if (entity instanceof Player player) {
+				Minecraft.getInstance().getSoundManager().play(new AnchoredSoundInstance(player, ModPowers.BLOODRUSH.getUseSound(player), currentEntity -> !ModEntityComponents.BLOODRUSH.get(currentEntity).isActive(false)));
 			}
 		}
 	}

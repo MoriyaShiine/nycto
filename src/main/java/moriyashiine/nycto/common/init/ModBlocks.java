@@ -1,24 +1,25 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.init;
 
-import moriyashiine.nycto.api.block.WildCropBlock;
-import moriyashiine.nycto.common.block.*;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FireBlock;
-import net.minecraft.sound.BlockSoundGroup;
+import moriyashiine.nycto.api.world.level.block.WildVegetationBlock;
+import moriyashiine.nycto.common.world.level.block.*;
+import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import static moriyashiine.strawberrylib.api.module.SLibRegistries.registerBlock;
 import static moriyashiine.strawberrylib.api.module.SLibRegistries.registerBlockType;
-import static net.minecraft.block.AbstractBlock.Settings.copy;
-import static net.minecraft.block.AbstractBlock.Settings.create;
+import static net.minecraft.world.level.block.state.BlockBehaviour.Properties.of;
+import static net.minecraft.world.level.block.state.BlockBehaviour.Properties.ofFullCopy;
 
 public class ModBlocks {
-	public static final Block VAMPIRE_ALTAR = registerBlock("vampire_altar", VampireAltarBlock::new, copy(Blocks.OAK_PLANKS).nonOpaque());
-	public static final Block WEREWOLF_ALTAR = registerBlock("werewolf_altar", WerewolfAltarBlock::new, copy(Blocks.BONE_BLOCK).nonOpaque());
+	public static final Block VAMPIRE_ALTAR = registerBlock("vampire_altar", VampireAltarBlock::new, ofFullCopy(Blocks.OAK_PLANKS).noOcclusion());
+	public static final Block WEREWOLF_ALTAR = registerBlock("werewolf_altar", WerewolfAltarBlock::new, ofFullCopy(Blocks.BONE_BLOCK).noOcclusion());
 
 	public static final Block OAK_COFFIN = registerCoffin("oak_coffin", Blocks.OAK_PLANKS);
 	public static final Block SPRUCE_COFFIN = registerCoffin("spruce_coffin", Blocks.SPRUCE_PLANKS);
@@ -33,28 +34,27 @@ public class ModBlocks {
 	public static final Block CRIMSON_COFFIN = registerCoffin("crimson_coffin", Blocks.CRIMSON_PLANKS);
 	public static final Block WARPED_COFFIN = registerCoffin("warped_coffin", Blocks.WARPED_PLANKS);
 
-	public static final Block GARLIC_WREATH = registerBlock("garlic_wreath", GarlicWreathBlock::new, create().noCollision().strength(0.5F).sounds(BlockSoundGroup.GRASS));
-	public static final Block ACONITE_GARLAND = registerBlock("aconite_garland", AconiteGarlandBlock::new, create().noCollision().strength(0.5F).sounds(BlockSoundGroup.GRASS));
+	public static final Block GARLIC_WREATH = registerBlock("garlic_wreath", GarlicWreathBlock::new, of().noCollision().strength(0.5F).sound(SoundType.GRASS));
+	public static final Block ACONITE_GARLAND = registerBlock("aconite_garland", AconiteGarlandBlock::new, of().noCollision().strength(0.5F).sound(SoundType.GRASS));
 
-	public static final Block WILD_GARLIC = registerBlock("wild_garlic", WildGarlicBlock::new, create().noCollision().breakInstantly().sounds(BlockSoundGroup.CROP).offset(AbstractBlock.OffsetType.XYZ));
-	public static final Block WILD_ACONITE = registerBlock("wild_aconite", WildCropBlock::new, create().noCollision().breakInstantly().sounds(BlockSoundGroup.CROP).offset(AbstractBlock.OffsetType.XYZ));
+	public static final Block WILD_GARLIC = registerBlock("wild_garlic", WildGarlicBlock::new, of().noCollision().instabreak().sound(SoundType.CROP).offsetType(BlockBehaviour.OffsetType.XYZ));
+	public static final Block WILD_ACONITE = registerBlock("wild_aconite", WildVegetationBlock::new, of().noCollision().instabreak().sound(SoundType.CROP).offsetType(BlockBehaviour.OffsetType.XYZ));
 
-	public static final Block GARLIC = registerBlock("garlic", GarlicBlock::new, copy(Blocks.CARROTS));
-	public static final Block ACONITE = registerBlock("aconite", AconiteBlock::new, copy(Blocks.CARROTS));
+	public static final Block GARLIC = registerBlock("garlic", GarlicBlock::new, ofFullCopy(Blocks.CARROTS));
+	public static final Block ACONITE = registerBlock("aconite", AconiteBlock::new, ofFullCopy(Blocks.CARROTS));
 
-	public static final Block FIREBOMB = registerBlock("firebomb", FirebombBlock::new, copy(Blocks.FIRE));
+	public static final Block FIREBOMB = registerBlock("firebomb", FirebombBlock::new, ofFullCopy(Blocks.FIRE));
 
 	public static Block registerCoffin(String name, Block base) {
-		return registerBlock(name, CoffinBlock::new, copy(base).nonOpaque());
+		return registerBlock(name, CoffinBlock::new, ofFullCopy(base).noOcclusion());
 	}
 
 	public static void init() {
 		registerBlockType("vampire_altar", VampireAltarBlock.CODEC);
 		registerBlockType("firebomb", FirebombBlock.CODEC);
-		FireBlock fire = (FireBlock) Blocks.FIRE;
-		fire.registerFlammableBlock(WILD_GARLIC, 60, 100);
-		fire.registerFlammableBlock(WILD_ACONITE, 60, 100);
-		fire.registerFlammableBlock(GARLIC_WREATH, 60, 100);
-		fire.registerFlammableBlock(ACONITE_GARLAND, 60, 100);
+		FlammableBlockRegistry.getDefaultInstance().add(WILD_GARLIC, 60, 100);
+		FlammableBlockRegistry.getDefaultInstance().add(WILD_ACONITE, 60, 100);
+		FlammableBlockRegistry.getDefaultInstance().add(GARLIC_WREATH, 60, 100);
+		FlammableBlockRegistry.getDefaultInstance().add(ACONITE_GARLAND, 60, 100);
 	}
 }

@@ -29,8 +29,8 @@
 	"cardinal-components-entity": [
 	  "moriyashiine.nycto.common.init.ModEntityComponents"
 	],
-	"cardinal-components-world": [
-	  "moriyashiine.nycto.common.init.ModWorldComponents"
+	"cardinal-components-level": [
+	  "moriyashiine.nycto.common.init.ModLevelComponents"
 	]
   },
   "mixins": [
@@ -39,8 +39,8 @@
   "accessWidener": "nycto.classtweaker",
   "depends": {
 	"fabricloader": "*",
-	"minecraft": "~1.21.11",
-	"java": ">=21",
+	"minecraft": "~26.1",
+	"java": ">=25",
 	"fabric-api": "*",
 	"strawberrylib": "*"
   },

@@ -1,68 +1,66 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.util;
 
 import moriyashiine.nycto.api.NyctoAPI;
-import moriyashiine.nycto.api.power.ActivePower;
-import moriyashiine.nycto.api.power.FormChanger;
-import moriyashiine.nycto.api.power.PowerInstance;
+import moriyashiine.nycto.api.world.power.ActivePower;
+import moriyashiine.nycto.api.world.power.FormChanger;
+import moriyashiine.nycto.api.world.power.PowerInstance;
 import moriyashiine.nycto.common.init.ModDamageTypes;
+import moriyashiine.nycto.common.init.ModMobEffects;
 import moriyashiine.nycto.common.init.ModParticleTypes;
-import moriyashiine.nycto.common.init.ModStatusEffects;
-import moriyashiine.nycto.common.power.vampire.DarkFormPower;
 import moriyashiine.nycto.common.tag.ModDamageTypeTags;
 import moriyashiine.nycto.common.tag.ModEnchantmentTags;
 import moriyashiine.nycto.common.tag.ModEntityTypeTags;
 import moriyashiine.nycto.common.tag.ModItemTags;
+import moriyashiine.nycto.common.world.power.vampire.DarkFormPower;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.passive.VillagerEntity;
-import net.minecraft.entity.passive.WanderingTraderEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.PersistentProjectileEntity;
-import net.minecraft.item.Item;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.village.VillagerGossipType;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.gossip.GossipType;
+import net.minecraft.world.entity.npc.villager.Villager;
+import net.minecraft.world.entity.npc.wanderingtrader.WanderingTrader;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.phys.AABB;
+import org.jspecify.annotations.Nullable;
 
 public class NyctoUtil {
-	// todo move to slib in 26.1
-	public static boolean bypassPvp = false;
-
 	public static int truncatedWorldSeed = 0;
 
 	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	public static boolean bypassesBloodVeil(DamageSource source) {
-		if (source.getSource() instanceof LivingEntity attacker) {
-			if (attacker.getType().isIn(ModEntityTypeTags.BYPASSES_BLOOD_VEIL) || EnchantmentHelper.hasAnyEnchantmentsIn(attacker.getMainHandStack(), ModEnchantmentTags.BYPASSES_BLOOD_VEIL)) {
+		if (source.getDirectEntity() instanceof LivingEntity attacker) {
+			if (attacker.is(ModEntityTypeTags.BYPASSES_BLOOD_VEIL) || EnchantmentHelper.hasTag(attacker.getMainHandItem(), ModEnchantmentTags.BYPASSES_BLOOD_VEIL)) {
 				return true;
 			}
 		}
-		return source.isIn(ModDamageTypeTags.BYPASSES_BLOOD_VEIL) || isVampireWeaknessItem(source) || NyctoAPI.isBeastForm(source);
+		return source.is(ModDamageTypeTags.BYPASSES_BLOOD_VEIL) || isVampireWeaknessItem(source) || NyctoAPI.isBeastForm(source);
 	}
 
 	public static boolean haltsVampireRegeneration(DamageSource source) {
-		return source.isIn(ModDamageTypeTags.HALTS_VAMPIRE_REGENERATION) || isVampireWeaknessItem(source);
+		return source.is(ModDamageTypeTags.HALTS_VAMPIRE_REGENERATION) || isVampireWeaknessItem(source);
 	}
 
 	public static boolean isVampireWeaknessItem(DamageSource source) {
 		if (SLibUtils.isAttackingPlayerCooldownWithinThreshold(0.7F)) {
-			if (source.getSource() instanceof LivingEntity attacker && attacker.getMainHandStack().isIn(ModItemTags.VAMPIRE_WEAKNESSES)) {
+			if (source.getDirectEntity() instanceof LivingEntity attacker && attacker.getMainHandItem().is(ModItemTags.VAMPIRE_WEAKNESSES)) {
 				return true;
 			}
-			return source.getSource() instanceof PersistentProjectileEntity projectile && projectile.getItemStack().isIn(ModItemTags.VAMPIRE_WEAKNESSES);
+			return source.getDirectEntity() instanceof AbstractArrow arrow && arrow.getPickupItemStackOrigin().is(ModItemTags.VAMPIRE_WEAKNESSES);
 		}
 		return false;
 	}
@@ -103,19 +101,19 @@ public class NyctoUtil {
 		return getEquippedArmorPieces(entity, ModItemTags.VAMPIRE_HUNTER_ARMOR) >= 4;
 	}
 
-	public static boolean isTargetable(@Nullable Entity entity) {
-		return entity instanceof LivingEntity living && living.canTakeDamage();
+	public static boolean isSurvivalNullable(@Nullable Entity entity) {
+		return entity instanceof LivingEntity living && living.slib$isSurvival();
 	}
 
 	public static boolean isVillager(Entity entity) {
-		return entity instanceof VillagerEntity || entity instanceof WanderingTraderEntity;
+		return entity instanceof Villager || entity instanceof WanderingTrader;
 	}
 
 	public static int getEquippedArmorPieces(LivingEntity entity, TagKey<Item> tagKey) {
 		int count = 0;
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
-			if (slot.isArmorSlot()) {
-				if (entity.getEquippedStack(slot).isIn(tagKey)) {
+			if (slot.isArmor()) {
+				if (entity.getItemBySlot(slot).is(tagKey)) {
 					count++;
 				}
 			}
@@ -123,44 +121,44 @@ public class NyctoUtil {
 		return count;
 	}
 
-	public static void notifyNearbyVillagers(LivingEntity living, PlayerEntity player, VillagerGossipType gossipType, int value) {
-		living.getEntityWorld().getEntitiesByClass(VillagerEntity.class, new Box(living.getBlockPos()).expand(16), foundVillager -> living != foundVillager && !foundVillager.isSleeping() && !foundVillager.hasStatusEffect(ModStatusEffects.HYPNOTIZED) && foundVillager.canSee(player)).forEach(foundVillager -> foundVillager.getGossip().startGossip(player.getUuid(), gossipType, value));
+	public static void notifyNearbyVillagers(LivingEntity living, Player player, GossipType type, int value) {
+		living.level().getEntitiesOfClass(Villager.class, new AABB(living.blockPosition()).inflate(16), foundVillager -> living != foundVillager && !foundVillager.isSleeping() && !foundVillager.hasEffect(ModMobEffects.HYPNOTIZED) && foundVillager.hasLineOfSight(player)).forEach(foundVillager -> foundVillager.getGossips().add(player.getUUID(), type, value));
 	}
 
 	public static void spawnBloodParticles(Entity entity) {
-		((ServerWorld) entity.getEntityWorld()).spawnParticles(ModParticleTypes.BLOOD, entity.getX(), entity.getEyeY(), entity.getZ(), ModParticleTypes.BLOOD_PARTICLE_COUNT, entity.getWidth() / 2F, MathHelper.nextFloat(entity.getEntityWorld().getRandom(), -0.1F, 0.1F), entity.getWidth() / 2F, 0);
+		((ServerLevel) entity.level()).sendParticles(ModParticleTypes.BLOOD, entity.getX(), entity.getEyeY(), entity.getZ(), ModParticleTypes.BLOOD_PARTICLE_COUNT, entity.getBbWidth() / 2F, Mth.nextFloat(entity.level().getRandom(), -0.1F, 0.1F), entity.getBbWidth() / 2F, 0);
 	}
 
-	public static void damageWithToxicTouch(LivingEntity living, float amount) {
-		if (living.getEntityWorld() instanceof ServerWorld world && living.damage(world, world.getDamageSources().create(ModDamageTypes.TOXIC_TOUCH), amount)) {
-			living.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 110, 1));
+	public static void hurtWithToxicTouch(LivingEntity living, float amount) {
+		if (living.level() instanceof ServerLevel level && living.hurtServer(level, level.damageSources().source(ModDamageTypes.TOXIC_TOUCH), amount)) {
+			living.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 110, 1));
 		}
 	}
 
-	public static void disableFormChangePowers(ServerWorld world, ServerPlayerEntity player, @Nullable PowerInstance currentPower) {
+	public static void disableFormChangePowers(ServerLevel level, ServerPlayer player, @Nullable PowerInstance currentPower) {
 		for (PowerInstance instance : NyctoAPI.getPowers(player)) {
 			if (currentPower != instance && instance.getPower() instanceof FormChanger formChanger && formChanger.isFormActive(player)) {
-				formChanger.disable(world, player);
+				formChanger.disable(level, player);
 			}
 		}
 	}
 
-	public static void usePower(ServerWorld world, ServerPlayerEntity player, PowerInstance powerInstance) {
+	public static void usePower(ServerLevel level, ServerPlayer player, PowerInstance powerInstance) {
 		if (canUsePower(player, powerInstance)) {
 			ActivePower activePower = (ActivePower) powerInstance.getPower();
 			if (activePower instanceof FormChanger formChanger && !formChanger.isFormActive(player)) {
-				disableFormChangePowers(world, player, powerInstance);
+				disableFormChangePowers(level, player, powerInstance);
 			}
 			activePower.playUseSound(player);
 			if (activePower.shouldApplyCooldown(player)) {
 				NyctoAPI.setPowerCooldown(player, activePower, activePower.getCooldown());
 			}
-			activePower.use(world, player);
-			player.swingHand(Hand.MAIN_HAND, true);
+			activePower.use(level, player);
+			player.swing(InteractionHand.MAIN_HAND, true);
 		}
 	}
 
-	public static boolean canUsePower(PlayerEntity player, PowerInstance powerInstance) {
+	public static boolean canUsePower(Player player, PowerInstance powerInstance) {
 		return powerInstance.getCooldown() == 0 && powerInstance.getPower() instanceof ActivePower activePower && activePower.canUse(player);
 	}
 }

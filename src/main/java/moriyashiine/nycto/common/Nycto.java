@@ -1,6 +1,7 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common;
 
 import moriyashiine.nycto.api.init.NyctoRegistries;
@@ -35,7 +36,7 @@ import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 
 public class Nycto implements ModInitializer {
 	public static final String MOD_ID = "nycto";
@@ -46,54 +47,75 @@ public class Nycto implements ModInitializer {
 	public void onInitialize() {
 		SLib.init(MOD_ID);
 		initRegistries();
-		initCommands();
-		initEvents();
 		initPayloads();
+		initEvents();
 		superbSteedsLoaded = FabricLoader.getInstance().isModLoaded("superbsteeds");
 	}
 
 	public static Identifier id(String value) {
-		return Identifier.of(MOD_ID, value);
+		return Identifier.fromNamespaceAndPath(MOD_ID, value);
 	}
 
 	private void initRegistries() {
 		NyctoRegistries.init();
+		ModAttributes.init();
 		ModBlocks.init();
 		ModBlockEntityTypes.init();
 		ModComponentTypes.init();
-		ModCriteria.init();
-		ModEntityAttributes.init();
-		ModEntitySubPredicates.init();
+		ModEntitySubPredicateTypes.init();
 		ModEntityTypes.init();
 		ModEnvironmentAttributes.init();
 		ModGameRules.init();
 		ModItems.init();
+		ModMenuTypes.init();
+		ModMobEffects.init();
 		ModPotions.init();
 		ModParticleTypes.init();
 		ModPowers.init();
 		ModRecipeSerializers.init();
-		ModScreenHandlerTypes.init();
 		ModSoundEvents.init();
-		ModStatusEffects.init();
 		ModTransformations.init();
+		ModTriggers.init();
 		ModWorldGeneration.init();
 	}
 
-	private void initCommands() {
-		CommandRegistrationCallback.EVENT.register(new TransformationCommand());
+	private void initPayloads() {
+		// client payloads
+		PayloadTypeRegistry.clientboundPlay().register(SyncTruncatedWorldSeedPayload.TYPE, SyncTruncatedWorldSeedPayload.CODEC);
+		PayloadTypeRegistry.clientboundPlay().register(ModifyPowerPayload.TYPE, ModifyPowerPayload.CODEC);
+		PayloadTypeRegistry.clientboundPlay().register(SetTransformationPayload.TYPE, SetTransformationPayload.CODEC);
+		PayloadTypeRegistry.clientboundPlay().register(SetPowerCooldownPayload.TYPE, SetPowerCooldownPayload.CODEC);
+		PayloadTypeRegistry.clientboundPlay().register(AddBloodBarrierParticlesPayload.TYPE, AddBloodBarrierParticlesPayload.CODEC);
+		PayloadTypeRegistry.clientboundPlay().register(PlayBloodrushSoundPayload.TYPE, PlayBloodrushSoundPayload.CODEC);
+		// common payloads
+		PayloadTypeRegistry.serverboundPlay().register(ApplyPowerFromAltarPayload.TYPE, ApplyPowerFromAltarPayload.CODEC);
+		PayloadTypeRegistry.serverboundPlay().register(DarkFormJumpPayload.TYPE, DarkFormJumpPayload.CODEC);
+		PayloadTypeRegistry.serverboundPlay().register(SyncPowerIndexPayload.TYPE, SyncPowerIndexPayload.CODEC);
+		PayloadTypeRegistry.serverboundPlay().register(SyncVampireChargeJumpStatusPayload.TYPE, SyncVampireChargeJumpStatusPayload.CODEC);
+		PayloadTypeRegistry.serverboundPlay().register(SyncVampireStepHeightStatusPayload.TYPE, SyncVampireStepHeightStatusPayload.CODEC);
+		PayloadTypeRegistry.serverboundPlay().register(UsePowerPayload.TYPE, UsePowerPayload.CODEC);
+		// common receivers
+		ServerPlayNetworking.registerGlobalReceiver(ApplyPowerFromAltarPayload.TYPE, new ApplyPowerFromAltarPayload.Receiver());
+		ServerPlayNetworking.registerGlobalReceiver(DarkFormJumpPayload.TYPE, new DarkFormJumpPayload.Receiver());
+		ServerPlayNetworking.registerGlobalReceiver(SyncPowerIndexPayload.TYPE, new SyncPowerIndexPayload.Receiver());
+		ServerPlayNetworking.registerGlobalReceiver(SyncVampireChargeJumpStatusPayload.TYPE, new SyncVampireChargeJumpStatusPayload.Receiver());
+		ServerPlayNetworking.registerGlobalReceiver(SyncVampireStepHeightStatusPayload.TYPE, new SyncVampireStepHeightStatusPayload.Receiver());
+		ServerPlayNetworking.registerGlobalReceiver(UsePowerPayload.TYPE, new UsePowerPayload.Receiver());
 	}
 
 	private void initEvents() {
 		// INTERNAL
 		LootTableEvents.MODIFY.register(new GenerateLootEvent());
 		ServerPlayerEvents.JOIN.register(new SyncTruncatedWorldSeedEvent());
+		// COMMAND
+		CommandRegistrationCallback.EVENT.register(new TransformationCommand());
 		// BLOCK
 		EntitySleepEvents.ALLOW_BED.register(new CoffinEvent.AllowBed());
 		EntitySleepEvents.ALLOW_SLEEPING.register(new CoffinEvent.AllowSleeping());
-		ModifyBlockBreakingSpeedEvent.MULTIPLY_BASE.register(new ShearsEvent());
+		ModifyDestroyProgressEvent.MULTIPLY_BASE.register(new ShearsEvent());
 		// ENTITY
 		ModifyDamageTakenEvent.MULTIPLY_TOTAL.register(new AttributeEvent());
-		ModifyBlockBreakingSpeedEvent.MULTIPLY_BASE.register(new BeastFormEvent());
+		ModifyDestroyProgressEvent.MULTIPLY_BASE.register(new BeastFormEvent());
 		ServerEntityEvents.ENTITY_LOAD.register(new BloodEvent.Load());
 		ServerEntityEvents.ENTITY_UNLOAD.register(new BloodEvent.Unload());
 		ServerPlayerEvents.COPY_FROM.register(new BloodEvent.Copy());
@@ -109,7 +131,7 @@ public class Nycto implements ModInitializer {
 		AfterDamageIncludingDeathEvent.EVENT.register(new StatusEffectEvent.Stunned());
 		// vampire
 		ServerLivingEntityEvents.ALLOW_DEATH.register(new VampireEvent.BloodVeil());
-		ModifyMovementEvents.JUMP_VELOCITY.register(new VampireEvent.ChargeJump());
+		ModifyMovementEvents.JUMP_DELTA.register(new VampireEvent.ChargeJump());
 		UseEntityCallback.EVENT.register(new VampireEvent.DrinkBlood());
 		EatFoodEvent.EVENT.register(new VampireEvent.EatFood());
 		ServerMobEffectEvents.ALLOW_ADD.register(new VampireEvent.EffectImmunity());
@@ -124,7 +146,7 @@ public class Nycto implements ModInitializer {
 		ModifyStackDamageEvent.ADD.register(new WoodenStakeEvent());
 		// POWER
 		ModifyDamageTakenEvent.MULTIPLY_TOTAL.register(new BatFormEvent.ReduceDamage());
-		ModifyMovementEvents.MOVEMENT_VELOCITY.register(new BatFormEvent.ReduceFlightSpeed());
+		ModifyMovementEvents.MOVEMENT_DELTA.register(new BatFormEvent.ReduceFlightSpeed());
 		ServerLivingEntityEvents.AFTER_DAMAGE.register(new BatSwarmEvent());
 		ServerLivingEntityEvents.ALLOW_DAMAGE.register(new BloodBarrierEvent());
 		AfterDamageIncludingDeathEvent.EVENT.register(new BloodFlechettesEvent());
@@ -138,31 +160,7 @@ public class Nycto implements ModInitializer {
 		TickEntityEvent.EVENT.register(new VampiricThrallEvent.Defend());
 		UseEntityCallback.EVENT.register(new VampiricThrallEvent.RightClickOverride());
 		// weakness
-		ModifyMovementEvents.MOVEMENT_VELOCITY.register(new HydrophobiaEvent());
+		ModifyMovementEvents.MOVEMENT_DELTA.register(new HydrophobiaEvent());
 		ModifyDamageTakenEvent.MULTIPLY_BASE.register(new PyrophobiaEvent());
-	}
-
-	private void initPayloads() {
-		// client payloads
-		PayloadTypeRegistry.playS2C().register(SyncTruncatedWorldSeedPayload.ID, SyncTruncatedWorldSeedPayload.CODEC);
-		PayloadTypeRegistry.playS2C().register(ModifyPowerPayload.ID, ModifyPowerPayload.CODEC);
-		PayloadTypeRegistry.playS2C().register(SetTransformationPayload.ID, SetTransformationPayload.CODEC);
-		PayloadTypeRegistry.playS2C().register(SetPowerCooldownPayload.ID, SetPowerCooldownPayload.CODEC);
-		PayloadTypeRegistry.playS2C().register(AddBloodBarrierParticlesPayload.ID, AddBloodBarrierParticlesPayload.CODEC);
-		PayloadTypeRegistry.playS2C().register(PlayBloodrushSoundPayload.ID, PlayBloodrushSoundPayload.CODEC);
-		// common payloads
-		PayloadTypeRegistry.playC2S().register(ApplyPowerFromAltarPayload.ID, ApplyPowerFromAltarPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(DarkFormJumpPayload.ID, DarkFormJumpPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(SyncPowerIndexPayload.ID, SyncPowerIndexPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(SyncVampireChargeJumpStatusPayload.ID, SyncVampireChargeJumpStatusPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(SyncVampireStepHeightStatusPayload.ID, SyncVampireStepHeightStatusPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(UsePowerPayload.ID, UsePowerPayload.CODEC);
-		// common receivers
-		ServerPlayNetworking.registerGlobalReceiver(ApplyPowerFromAltarPayload.ID, new ApplyPowerFromAltarPayload.Receiver());
-		ServerPlayNetworking.registerGlobalReceiver(DarkFormJumpPayload.ID, new DarkFormJumpPayload.Receiver());
-		ServerPlayNetworking.registerGlobalReceiver(SyncPowerIndexPayload.ID, new SyncPowerIndexPayload.Receiver());
-		ServerPlayNetworking.registerGlobalReceiver(SyncVampireChargeJumpStatusPayload.ID, new SyncVampireChargeJumpStatusPayload.Receiver());
-		ServerPlayNetworking.registerGlobalReceiver(SyncVampireStepHeightStatusPayload.ID, new SyncVampireStepHeightStatusPayload.Receiver());
-		ServerPlayNetworking.registerGlobalReceiver(UsePowerPayload.ID, new UsePowerPayload.Receiver());
 	}
 }

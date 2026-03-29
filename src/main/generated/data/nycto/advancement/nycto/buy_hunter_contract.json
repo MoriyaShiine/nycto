@@ -15,7 +15,6 @@
 	  "translate": "advancements.nycto.nycto.buy_hunter_contract.description"
 	},
 	"icon": {
-	  "count": 1,
 	  "id": "nycto:hunter_contract"
 	},
 	"title": {

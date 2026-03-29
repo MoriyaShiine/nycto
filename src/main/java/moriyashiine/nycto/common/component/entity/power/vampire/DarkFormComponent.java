@@ -1,66 +1,67 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.component.entity.power.vampire;
 
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.component.entity.power.util.VampireFormChangeComponent;
-import moriyashiine.nycto.common.entity.mob.DarkFormEntity;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModEntityTypes;
 import moriyashiine.nycto.common.init.ModPowers;
 import moriyashiine.nycto.common.init.ModSoundEvents;
 import moriyashiine.nycto.common.payload.DarkFormJumpPayload;
+import moriyashiine.nycto.common.world.entity.monster.DarkForm;
 import moriyashiine.strawberrylib.api.event.PreventEquipmentUsageEvent;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.brain.Activity;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.passive.VillagerEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.npc.villager.Villager;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.schedule.Activity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
 
 import java.util.stream.Collectors;
 
 public class DarkFormComponent extends VampireFormChangeComponent implements CommonTickingComponent {
-	private static final EntityAttributeModifier ARMOR_MODIFIER = new EntityAttributeModifier(Nycto.id("dark_form_armor"), 20, EntityAttributeModifier.Operation.ADD_VALUE);
-	private static final EntityAttributeModifier ARMOR_TOUGHNESS_MODIFIER = new EntityAttributeModifier(Nycto.id("dark_form_armor_toughness"), 12, EntityAttributeModifier.Operation.ADD_VALUE);
-	private static final EntityAttributeModifier ATTACK_DAMAGE_MODIFIER = new EntityAttributeModifier(Nycto.id("dark_form_attack_damage"), 12, EntityAttributeModifier.Operation.ADD_VALUE);
-	private static final EntityAttributeModifier ATTACK_SPEED_MODIFIER = new EntityAttributeModifier(Nycto.id("dark_form_attack_speed"), -0.5, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
-	private static final EntityAttributeModifier BLOCK_INTERACTION_RANGE_MODIFIER = new EntityAttributeModifier(Nycto.id("dark_form_block_interaction_range"), 1, EntityAttributeModifier.Operation.ADD_VALUE);
-	private static final EntityAttributeModifier ENTITY_INTERACTION_RANGE_MODIFIER = new EntityAttributeModifier(Nycto.id("dark_form_entity_interaction_range"), 1, EntityAttributeModifier.Operation.ADD_VALUE);
-	private static final EntityAttributeModifier KNOCKBACK_RESISTANCE_MODIFIER = new EntityAttributeModifier(Nycto.id("dark_form_knockback_resistance"), 0.7, EntityAttributeModifier.Operation.ADD_VALUE);
+	private static final AttributeModifier ARMOR_MODIFIER = new AttributeModifier(Nycto.id("dark_form_armor"), 20, AttributeModifier.Operation.ADD_VALUE);
+	private static final AttributeModifier ARMOR_TOUGHNESS_MODIFIER = new AttributeModifier(Nycto.id("dark_form_armor_toughness"), 12, AttributeModifier.Operation.ADD_VALUE);
+	private static final AttributeModifier ATTACK_DAMAGE_MODIFIER = new AttributeModifier(Nycto.id("dark_form_attack_damage"), 12, AttributeModifier.Operation.ADD_VALUE);
+	private static final AttributeModifier ATTACK_SPEED_MODIFIER = new AttributeModifier(Nycto.id("dark_form_attack_speed"), -0.5, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+	private static final AttributeModifier BLOCK_INTERACTION_RANGE_MODIFIER = new AttributeModifier(Nycto.id("dark_form_block_interaction_range"), 1, AttributeModifier.Operation.ADD_VALUE);
+	private static final AttributeModifier ENTITY_INTERACTION_RANGE_MODIFIER = new AttributeModifier(Nycto.id("dark_form_entity_interaction_range"), 1, AttributeModifier.Operation.ADD_VALUE);
+	private static final AttributeModifier KNOCKBACK_RESISTANCE_MODIFIER = new AttributeModifier(Nycto.id("dark_form_knockback_resistance"), 0.7, AttributeModifier.Operation.ADD_VALUE);
 
 	private int jumpCooldown = 0;
 
-	public DarkFormComponent(PlayerEntity obj) {
+	public DarkFormComponent(Player obj) {
 		super(obj);
 	}
 
 	@Override
-	public void readData(ReadView readView) {
-		super.readData(readView);
-		jumpCooldown = readView.getInt("JumpCooldown", 0);
+	public void readData(ValueInput input) {
+		super.readData(input);
+		jumpCooldown = input.getIntOr("JumpCooldown", 0);
 	}
 
 	@Override
-	public void writeData(WriteView writeView) {
-		super.writeData(writeView);
-		writeView.putInt("JumpCooldown", jumpCooldown);
+	public void writeData(ValueOutput output) {
+		super.writeData(output);
+		output.putInt("JumpCooldown", jumpCooldown);
 	}
 
 	@Override
 	public void tick() {
-		if (enabled && obj.isPartOfGame()) {
-			if (obj.isOnGround()) {
+		if (enabled && obj.slib$exists()) {
+			if (obj.onGround()) {
 				jumpCooldown = 0;
 			} else {
 				if (jumpCooldown > 0) {
@@ -70,9 +71,9 @@ public class DarkFormComponent extends VampireFormChangeComponent implements Com
 					jump();
 					DarkFormJumpPayload.send();
 				}
-				if (obj.getVelocity().getY() < 0 && !obj.isSneaking()) {
-					obj.setVelocity(obj.getVelocity().multiply(1, 0.8, 1));
-					obj.onLanding();
+				if (obj.getDeltaMovement().y() < 0 && !obj.isShiftKeyDown()) {
+					obj.setDeltaMovement(obj.getDeltaMovement().multiply(1, 0.8, 1));
+					obj.resetFallDistance();
 					obj.fallDistance = 1;
 				}
 			}
@@ -85,8 +86,8 @@ public class DarkFormComponent extends VampireFormChangeComponent implements Com
 	public void serverTick() {
 		super.serverTick();
 		tick();
-		if (enabled && obj.getGameMode().isSurvivalLike() && obj.age % 20 == 0) {
-			obj.getEntityWorld().getEntitiesByClass(VillagerEntity.class, obj.getBoundingBox().expand(16), LivingEntity::isAlive).forEach(villager -> villager.getBrain().doExclusively(Activity.PANIC));
+		if (enabled && obj.slib$isSurvival() && obj.tickCount % 20 == 0) {
+			obj.level().getEntitiesOfClass(Villager.class, obj.getBoundingBox().inflate(16), LivingEntity::isAlive).forEach(villager -> villager.getBrain().setActiveActivityIfPossible(Activity.PANIC));
 		}
 	}
 
@@ -106,19 +107,19 @@ public class DarkFormComponent extends VampireFormChangeComponent implements Com
 			drainTicks = FORM_DRAIN_TICKS;
 		}
 		enabled = !enabled;
-		SLibUtils.conditionallyApplyAttributeModifier(obj, EntityAttributes.ARMOR, getAdjustedModifier(ARMOR_MODIFIER), enabled);
-		SLibUtils.conditionallyApplyAttributeModifier(obj, EntityAttributes.ARMOR_TOUGHNESS, getAdjustedModifier(ARMOR_TOUGHNESS_MODIFIER), enabled);
-		SLibUtils.conditionallyApplyAttributeModifier(obj, EntityAttributes.ATTACK_DAMAGE, getAdjustedModifier(ATTACK_DAMAGE_MODIFIER), enabled);
-		SLibUtils.conditionallyApplyAttributeModifier(obj, EntityAttributes.ATTACK_SPEED, ATTACK_SPEED_MODIFIER, enabled);
-		SLibUtils.conditionallyApplyAttributeModifier(obj, EntityAttributes.BLOCK_INTERACTION_RANGE, BLOCK_INTERACTION_RANGE_MODIFIER, enabled);
-		SLibUtils.conditionallyApplyAttributeModifier(obj, EntityAttributes.ENTITY_INTERACTION_RANGE, ENTITY_INTERACTION_RANGE_MODIFIER, enabled);
-		SLibUtils.conditionallyApplyAttributeModifier(obj, EntityAttributes.KNOCKBACK_RESISTANCE, KNOCKBACK_RESISTANCE_MODIFIER, enabled);
+		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.ARMOR, getAdjustedModifier(ARMOR_MODIFIER), enabled);
+		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.ARMOR_TOUGHNESS, getAdjustedModifier(ARMOR_TOUGHNESS_MODIFIER), enabled);
+		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.ATTACK_DAMAGE, getAdjustedModifier(ATTACK_DAMAGE_MODIFIER), enabled);
+		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.ATTACK_SPEED, ATTACK_SPEED_MODIFIER, enabled);
+		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.BLOCK_INTERACTION_RANGE, BLOCK_INTERACTION_RANGE_MODIFIER, enabled);
+		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.ENTITY_INTERACTION_RANGE, ENTITY_INTERACTION_RANGE_MODIFIER, enabled);
+		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.KNOCKBACK_RESISTANCE, KNOCKBACK_RESISTANCE_MODIFIER, enabled);
 		PreventEquipmentUsageEvent.triggerEquipmentCheck(obj);
 		if (!enabled) {
-			for (ItemStack stack : obj.getInventory().getMainStacks()) {
-				EquipmentSlot slot = obj.getPreferredEquipmentSlot(stack);
-				if (slot.isArmorSlot() && obj.getEquippedStack(slot).isEmpty() && obj.canEquip(stack, slot)) {
-					obj.equipStack(slot, stack.copyAndEmpty());
+			for (ItemStack stack : obj.getInventory().getNonEquipmentItems()) {
+				EquipmentSlot slot = obj.getEquipmentSlotForItem(stack);
+				if (slot.isArmor() && obj.getItemBySlot(slot).isEmpty() && obj.isEquippableInSlot(stack, slot)) {
+					obj.setItemSlot(slot, stack.copyAndClear());
 				}
 			}
 		}
@@ -126,27 +127,27 @@ public class DarkFormComponent extends VampireFormChangeComponent implements Com
 	}
 
 	public void jump() {
-		jumpCooldown = DarkFormEntity.JUMP_COOLDOWN;
-		obj.jump();
-		obj.setVelocity(obj.getVelocity().multiply(1.3, 1.1, 1.3));
+		jumpCooldown = DarkForm.JUMP_COOLDOWN;
+		obj.jumpFromGround();
+		obj.setDeltaMovement(obj.getDeltaMovement().multiply(1.3, 1.1, 1.3));
 		SLibUtils.playSound(obj, ModSoundEvents.ENTITY_DARK_FORM_FLAP);
 	}
 
 	public boolean canJump() {
-		if (obj.getAbilities().flying || obj.isTouchingWater() || obj.isSwimming()) {
+		if (obj.getAbilities().flying || obj.isInWater() || obj.isSwimming()) {
 			return false;
 		}
-		return jumpCooldown == 0 && !obj.isGliding() && obj.getVehicle() == null && !obj.isClimbing();
+		return jumpCooldown == 0 && !obj.isFallFlying() && obj.getVehicle() == null && !obj.onClimbable();
 	}
 
-	private EntityAttributeModifier getAdjustedModifier(EntityAttributeModifier modifier) {
-		int negativePowers = NyctoAPI.getPowers(obj).stream().filter(instance -> instance.getPower().isNegative()).collect(Collectors.toSet()).size();
-		float multiplier = switch (negativePowers) {
+	private AttributeModifier getAdjustedModifier(AttributeModifier modifier) {
+		int weaknesses = NyctoAPI.getPowers(obj).stream().filter(instance -> instance.getPower().isWeakness()).collect(Collectors.toSet()).size();
+		float multiplier = switch (weaknesses) {
 			case 0 -> 0.5F;
 			case 1 -> 0.7F;
 			case 2 -> 0.85F;
 			default -> 1;
 		};
-		return new EntityAttributeModifier(modifier.id(), modifier.value() * multiplier, modifier.operation());
+		return new AttributeModifier(modifier.id(), modifier.amount() * multiplier, modifier.operation());
 	}
 }

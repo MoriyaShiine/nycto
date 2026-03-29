@@ -24,7 +24,6 @@
 	  "translate": "advancements.nycto.nycto.become_vampire.description"
 	},
 	"icon": {
-	  "count": 1,
 	  "id": "nycto:vampire_blood_bottle"
 	},
 	"title": {

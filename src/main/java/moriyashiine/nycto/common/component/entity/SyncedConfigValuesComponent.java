@@ -1,42 +1,43 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.component.entity;
 
 import moriyashiine.nycto.api.NyctoAPI;
-import moriyashiine.nycto.common.init.ModStatusEffects;
-import moriyashiine.nycto.common.transformation.VampireTransformation;
+import moriyashiine.nycto.common.init.ModMobEffects;
+import moriyashiine.nycto.common.world.transformation.VampireTransformation;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
 public class SyncedConfigValuesComponent implements AutoSyncedComponent, ServerTickingComponent {
-	private final PlayerEntity obj;
+	private final Player obj;
 	private boolean vampireChargeJump = true, vampireStepHeight = true;
 
-	public SyncedConfigValuesComponent(PlayerEntity obj) {
+	public SyncedConfigValuesComponent(Player obj) {
 		this.obj = obj;
 	}
 
 	@Override
-	public void readData(ReadView readView) {
-		vampireChargeJump = readView.getBoolean("VampireChargeJump", true);
-		vampireStepHeight = readView.getBoolean("VampireStepHeight", true);
+	public void readData(ValueInput input) {
+		vampireChargeJump = input.getBooleanOr("VampireChargeJump", true);
+		vampireStepHeight = input.getBooleanOr("VampireStepHeight", true);
 	}
 
 	@Override
-	public void writeData(WriteView writeView) {
-		writeView.putBoolean("VampireChargeJump", vampireChargeJump);
-		writeView.putBoolean("VampireStepHeight", vampireStepHeight);
+	public void writeData(ValueOutput output) {
+		output.putBoolean("VampireChargeJump", vampireChargeJump);
+		output.putBoolean("VampireStepHeight", vampireStepHeight);
 	}
 
 	@Override
 	public void serverTick() {
-		SLibUtils.conditionallyApplyAttributeModifier(obj, EntityAttributes.STEP_HEIGHT, VampireTransformation.STEP_HEIGHT_MODIFIER, hasVampireStepHeight() && !obj.hasStatusEffect(ModStatusEffects.VAMPIRE_WARD) && NyctoAPI.isVampire(obj));
+		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.STEP_HEIGHT, VampireTransformation.STEP_HEIGHT_MODIFIER, hasVampireStepHeight() && !obj.hasEffect(ModMobEffects.VAMPIRE_WARD) && NyctoAPI.isVampire(obj));
 	}
 
 	public boolean hasVampireChargeJump() {

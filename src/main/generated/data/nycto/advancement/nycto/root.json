@@ -4,6 +4,7 @@
 	  "conditions": {
 		"player": [
 		  {
+			"clock": "minecraft:overworld",
 			"condition": "minecraft:time_check",
 			"period": 24000,
 			"value": {
@@ -23,7 +24,6 @@
 	  "translate": "advancements.nycto.nycto.root.description"
 	},
 	"icon": {
-	  "count": 1,
 	  "id": "nycto:vampire_blood_bottle"
 	},
 	"show_toast": false,

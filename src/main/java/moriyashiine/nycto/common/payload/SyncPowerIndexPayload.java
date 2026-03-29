@@ -1,26 +1,27 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.payload;
 
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.network.packet.CustomPayload;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
-public record SyncPowerIndexPayload(int index) implements CustomPayload {
-	public static final Id<SyncPowerIndexPayload> ID = new Id<>(Nycto.id("sync_power_index"));
-	public static final PacketCodec<PacketByteBuf, SyncPowerIndexPayload> CODEC = PacketCodec.tuple(
-			PacketCodecs.VAR_INT, SyncPowerIndexPayload::index,
+public record SyncPowerIndexPayload(int index) implements CustomPacketPayload {
+	public static final Type<SyncPowerIndexPayload> TYPE = new Type<>(Nycto.id("sync_power_index"));
+	public static final StreamCodec<FriendlyByteBuf, SyncPowerIndexPayload> CODEC = StreamCodec.composite(
+			ByteBufCodecs.VAR_INT, SyncPowerIndexPayload::index,
 			SyncPowerIndexPayload::new);
 
 	@Override
-	public Id<? extends CustomPayload> getId() {
-		return ID;
+	public Type<SyncPowerIndexPayload> type() {
+		return TYPE;
 	}
 
 	public static void send(int index) {

@@ -1,36 +1,37 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.data.provider;
 
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.init.ModSoundEvents;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricSoundsProvider;
-import net.minecraft.data.DataOutput;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.sound.SoundEvents;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
+import net.minecraft.sounds.SoundEvents;
 
 import java.util.concurrent.CompletableFuture;
 
 import static moriyashiine.nycto.common.Nycto.id;
-import static net.fabricmc.fabric.api.client.datagen.v1.builder.SoundTypeBuilder.EntryBuilder.ofEvent;
-import static net.fabricmc.fabric.api.client.datagen.v1.builder.SoundTypeBuilder.EntryBuilder.ofFile;
+import static net.fabricmc.fabric.api.client.datagen.v1.builder.SoundTypeBuilder.RegistrationBuilder.ofEvent;
+import static net.fabricmc.fabric.api.client.datagen.v1.builder.SoundTypeBuilder.RegistrationBuilder.ofFile;
 import static net.fabricmc.fabric.api.client.datagen.v1.builder.SoundTypeBuilder.of;
 
 public class ModSoundsProvider extends FabricSoundsProvider {
-	public ModSoundsProvider(DataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+	public ModSoundsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
 		super(output, registriesFuture);
 	}
 
 	@Override
-	protected void configure(RegistryWrapper.WrapperLookup registryLookup, SoundExporter exporter) {
+	protected void configure(HolderLookup.Provider registries, SoundExporter exporter) {
 		exporter.add(ModSoundEvents.BLOCK_ALTAR_USE, of().subtitle("subtitles.nycto.block.altar.use")
 				.sound(ofFile(id("block/altar/use"))));
 
 		exporter.add(ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK, of().subtitle("subtitles.item.honey_bottle.drink")
-				.sound(ofEvent(SoundEvents.ITEM_HONEY_BOTTLE_DRINK)));
+				.sound(ofEvent(SoundEvents.HONEY_DRINK)));
 		exporter.add(ModSoundEvents.ITEM_VAMPIRIC_DAGGER_EXTRACT_FAIL, of().subtitle("subtitles.nycto.item.vampiric_dagger.extract_fail")
-				.sound(ofEvent(SoundEvents.ITEM_BUNDLE_INSERT_FAIL)));
+				.sound(ofEvent(SoundEvents.BUNDLE_INSERT_FAIL)));
 
 		exporter.add(ModSoundEvents.ENTITY_GENERIC_REMOVE_POWER, of().subtitle("subtitles.nycto.entity.generic.remove_power")
 				.sound(ofFile(id("entity/remove_power"))));
@@ -41,24 +42,24 @@ public class ModSoundsProvider extends FabricSoundsProvider {
 		exporter.add(ModSoundEvents.ENTITY_GENERIC_BLOOD_DRAIN_BLOCKED, of().subtitle("subtitles.nycto.entity.generic.blood_drain_blocked")
 				.sound(ofFile(id("entity/blood_drain_blocked"))));
 		exporter.add(ModSoundEvents.ENTITY_GENERIC_SIZZLE, of().subtitle("subtitles.nycto.entity.generic.sizzle")
-				.sound(ofEvent(SoundEvents.BLOCK_CANDLE_EXTINGUISH)));
+				.sound(ofEvent(SoundEvents.CANDLE_EXTINGUISH)));
 
 		exporter.add(ModSoundEvents.ENTITY_VAMPIRE_AMBIENT, of().subtitle("subtitles.nycto.entity.vampire.ambient")
-				.sound(ofEvent(SoundEvents.ENTITY_VINDICATOR_AMBIENT)));
+				.sound(ofEvent(SoundEvents.VINDICATOR_AMBIENT)));
 		exporter.add(ModSoundEvents.ENTITY_VAMPIRE_HURT, of().subtitle("subtitles.nycto.entity.vampire.hurt")
-				.sound(ofEvent(SoundEvents.ENTITY_VINDICATOR_HURT)));
+				.sound(ofEvent(SoundEvents.VINDICATOR_HURT)));
 		exporter.add(ModSoundEvents.ENTITY_VAMPIRE_DEATH, of().subtitle("subtitles.nycto.entity.vampire.death")
-				.sound(ofEvent(SoundEvents.ENTITY_VINDICATOR_DEATH)));
+				.sound(ofEvent(SoundEvents.VINDICATOR_DEATH)));
 
 		exporter.add(ModSoundEvents.ENTITY_HUNTER_AMBIENT, of().subtitle("subtitles.nycto.entity.hunter.ambient")
-				.sound(ofEvent(SoundEvents.ENTITY_VILLAGER_AMBIENT)));
+				.sound(ofEvent(SoundEvents.VILLAGER_AMBIENT)));
 		exporter.add(ModSoundEvents.ENTITY_HUNTER_HURT, of().subtitle("subtitles.nycto.entity.hunter.hurt")
-				.sound(ofEvent(SoundEvents.ENTITY_VILLAGER_HURT)));
+				.sound(ofEvent(SoundEvents.VILLAGER_HURT)));
 		exporter.add(ModSoundEvents.ENTITY_HUNTER_DEATH, of().subtitle("subtitles.nycto.entity.hunter.death")
-				.sound(ofEvent(SoundEvents.ENTITY_VILLAGER_DEATH)));
+				.sound(ofEvent(SoundEvents.VILLAGER_DEATH)));
 
 		exporter.add(ModSoundEvents.ENTITY_DARK_FORM_FLAP, of().subtitle("subtitles.nycto.entity.dark_form.flap")
-				.sound(ofEvent(SoundEvents.ENTITY_PHANTOM_FLAP)));
+				.sound(ofEvent(SoundEvents.PHANTOM_FLAP)));
 
 		exporter.add(ModSoundEvents.ENTITY_BLOOD_FLECHETTE_HIT_BLOCK, of().subtitle("subtitles.nycto.entity.blood_flechette.impact")
 				.sound(ofFile(id("entity/blood_flechette/hit_block")).volume(0.5F)));
@@ -66,7 +67,7 @@ public class ModSoundsProvider extends FabricSoundsProvider {
 				.sound(ofFile(id("entity/blood_flechette/hit_block")).volume(0.15F)));
 
 		exporter.add(ModSoundEvents.ENTITY_FIREBOMB_IMPACT, of().subtitle("subtitles.nycto.entity.firebomb.impact")
-				.sound(ofEvent(SoundEvents.BLOCK_FIRE_EXTINGUISH)));
+				.sound(ofEvent(SoundEvents.FIRE_EXTINGUISH)));
 
 		exporter.add(ModSoundEvents.POWER_NIGHT_VISION_ON, of()
 				.sound(ofFile(id("power/night_vision/on"))));
@@ -122,7 +123,7 @@ public class ModSoundsProvider extends FabricSoundsProvider {
 		exporter.add(ModSoundEvents.POWER_KEEN_SENSES_OFF, of()
 				.sound(ofFile(id("power/night_vision/off"))));
 		exporter.add(ModSoundEvents.POWER_KEEN_SENSES_HEARTBEAT, of()
-				.sound(ofEvent(SoundEvents.ENTITY_WARDEN_HEARTBEAT)));
+				.sound(ofEvent(SoundEvents.WARDEN_HEARTBEAT)));
 
 		exporter.add(ModSoundEvents.POWER_MIST_FORM_ON, of()
 				.sound(ofFile(id("power/mist_form/on"))));

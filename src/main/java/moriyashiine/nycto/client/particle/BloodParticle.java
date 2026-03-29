@@ -1,58 +1,59 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.client.particle;
 
-import net.minecraft.client.particle.BillboardParticle;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleFactory;
-import net.minecraft.client.particle.SpriteProvider;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.SimpleParticleType;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SingleQuadParticle;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
 
-public class BloodParticle extends BillboardParticle {
-	private final SpriteProvider spriteProvider;
+public class BloodParticle extends SingleQuadParticle {
+	private final SpriteSet sprites;
 
-	public BloodParticle(ClientWorld world, double x, double y, double z, SpriteProvider spriteProvider) {
-		super(world, x, y, z, spriteProvider.getFirst());
-		this.spriteProvider = spriteProvider;
-		updateSprite(spriteProvider);
-		setBoundingBoxSpacing(0.01F, 0.01F);
-		gravityStrength = 0.06F;
-		maxAge = 8;
+	public BloodParticle(ClientLevel level, double x, double y, double z, SpriteSet sprites) {
+		super(level, x, y, z, sprites.first());
+		this.sprites = sprites;
+		setSpriteFromAge(sprites);
+		setSize(0.01F, 0.01F);
+		gravity = 0.06F;
+		lifetime = 8;
 	}
 
 	@Override
-	protected RenderType getRenderType() {
-		return RenderType.PARTICLE_ATLAS_OPAQUE;
+	protected Layer getLayer() {
+		return Layer.OPAQUE;
 	}
 
 	@Override
 	public void tick() {
-		lastX = x;
-		lastY = y;
-		lastZ = z;
-		if (++age >= maxAge) {
-			markDead();
+		xo = x;
+		yo = y;
+		zo = z;
+		if (++age >= lifetime) {
+			remove();
 		} else {
-			updateSprite(spriteProvider);
-			velocityY = velocityY - gravityStrength;
-			move(velocityX, velocityY, velocityZ);
+			setSpriteFromAge(sprites);
+			yd = yd - gravity;
+			move(xd, yd, zd);
 			if (onGround) {
-				markDead();
+				remove();
 			} else {
-				velocityX *= 0.98F;
-				velocityY *= 0.98F;
-				velocityZ *= 0.98F;
+				xd *= 0.98F;
+				yd *= 0.98F;
+				zd *= 0.98F;
 			}
 		}
 	}
 
-	public record Factory(SpriteProvider spriteProvider) implements ParticleFactory<SimpleParticleType> {
+	public record Provider(SpriteSet sprites) implements ParticleProvider<SimpleParticleType> {
 		@Override
-		public Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ, Random random) {
-			return new BloodParticle(world, x, y, z, spriteProvider());
+		public Particle createParticle(SimpleParticleType options, ClientLevel level, double x, double y, double z, double xAux, double yAux, double zAux, RandomSource random) {
+			return new BloodParticle(level, x, y, z, sprites());
 		}
 	}
 }

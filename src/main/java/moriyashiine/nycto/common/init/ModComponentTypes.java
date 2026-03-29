@@ -1,23 +1,24 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.init;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.component.ComponentType;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.util.dynamic.Codecs;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.util.ExtraCodecs;
 
 import static moriyashiine.strawberrylib.api.module.SLibRegistries.registerComponentType;
 
 public class ModComponentTypes {
-	public static final ComponentType<Boolean> SHOW_CAPE = registerComponentType("show_cape", new ComponentType.Builder<Boolean>().codec(Codec.BOOL).packetCodec(PacketCodecs.BOOLEAN));
+	public static final DataComponentType<Boolean> SHOW_CAPE = registerComponentType("show_cape", new DataComponentType.Builder<Boolean>().persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
 
-	public static final ComponentType<Integer> BLOOD_CHARGE = registerComponentType("blood_charge", new ComponentType.Builder<Integer>().codec(Codecs.POSITIVE_INT).packetCodec(PacketCodecs.VAR_INT));
-	public static final ComponentType<Boolean> POISONED = registerComponentType("poisoned", new ComponentType.Builder<Boolean>().codec(Codec.BOOL).packetCodec(PacketCodecs.BOOLEAN));
+	public static final DataComponentType<Integer> BLOOD_CHARGE = registerComponentType("blood_charge", new DataComponentType.Builder<Integer>().persistent(ExtraCodecs.POSITIVE_INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+	public static final DataComponentType<Boolean> POISONED = registerComponentType("poisoned", new DataComponentType.Builder<Boolean>().persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
 
-	public static final ComponentType<Boolean> PLAYER_BLOOD = registerComponentType("player_blood", new ComponentType.Builder<Boolean>().codec(Codec.BOOL).packetCodec(PacketCodecs.BOOLEAN));
-	public static final ComponentType<Boolean> VAMPIRE_BLOOD = registerComponentType("vampire_blood", new ComponentType.Builder<Boolean>().codec(Codec.BOOL).packetCodec(PacketCodecs.BOOLEAN));
+	public static final DataComponentType<Boolean> PLAYER_BLOOD = registerComponentType("player_blood", new DataComponentType.Builder<Boolean>().persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
+	public static final DataComponentType<Boolean> VAMPIRE_BLOOD = registerComponentType("vampire_blood", new DataComponentType.Builder<Boolean>().persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
 
 	public static void init() {
 	}

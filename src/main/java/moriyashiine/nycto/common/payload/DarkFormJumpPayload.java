@@ -1,6 +1,7 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.payload;
 
 import moriyashiine.nycto.common.Nycto;
@@ -8,17 +9,17 @@ import moriyashiine.nycto.common.component.entity.power.vampire.DarkFormComponen
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.packet.CustomPayload;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
-public record DarkFormJumpPayload() implements CustomPayload {
-	public static final Id<DarkFormJumpPayload> ID = new Id<>(Nycto.id("dark_form_jump"));
-	public static final PacketCodec<PacketByteBuf, DarkFormJumpPayload> CODEC = PacketCodec.unit(new DarkFormJumpPayload());
+public record DarkFormJumpPayload() implements CustomPacketPayload {
+	public static final Type<DarkFormJumpPayload> TYPE = new Type<>(Nycto.id("dark_form_jump"));
+	public static final StreamCodec<FriendlyByteBuf, DarkFormJumpPayload> CODEC = StreamCodec.unit(new DarkFormJumpPayload());
 
 	@Override
-	public Id<? extends CustomPayload> getId() {
-		return ID;
+	public Type<DarkFormJumpPayload> type() {
+		return TYPE;
 	}
 
 	public static void send() {

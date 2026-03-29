@@ -1,11 +1,12 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.init;
 
-import moriyashiine.nycto.common.block.entity.CoffinBlockEntity;
+import moriyashiine.nycto.common.world.level.block.entity.CoffinBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
-import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import static moriyashiine.strawberrylib.api.module.SLibRegistries.registerBlockEntityType;
 

@@ -1,33 +1,34 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.component.entity;
 
 import moriyashiine.nycto.common.init.ModEntityComponents;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
 
 public class RespawnLeniencyComponent implements AutoSyncedComponent, CommonTickingComponent {
 	private static final int MAX_TICKS = 600;
 
-	private final PlayerEntity obj;
+	private final Player obj;
 	private int ticks = MAX_TICKS;
 
-	public RespawnLeniencyComponent(PlayerEntity obj) {
+	public RespawnLeniencyComponent(Player obj) {
 		this.obj = obj;
 	}
 
 	@Override
-	public void readData(ReadView readView) {
-		ticks = readView.getInt("Ticks", MAX_TICKS);
+	public void readData(ValueInput input) {
+		ticks = input.getIntOr("Ticks", MAX_TICKS);
 	}
 
 	@Override
-	public void writeData(WriteView writeView) {
-		writeView.putInt("Ticks", ticks);
+	public void writeData(ValueOutput output) {
+		output.putInt("Ticks", ticks);
 	}
 
 	@Override

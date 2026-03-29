@@ -1,6 +1,7 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.component.entity.power.vampire;
 
 import moriyashiine.nycto.common.component.entity.power.util.VampireFormChangeComponent;
@@ -10,20 +11,20 @@ import moriyashiine.strawberrylib.api.module.SLibClientUtils;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
 import moriyashiine.strawberrylib.api.objects.records.ParticleVelocity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.particle.ParticleTypes;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.entity.player.Player;
 import org.ladysnake.cca.api.v3.component.tick.ClientTickingComponent;
 
 public class MistFormComponent extends VampireFormChangeComponent implements ClientTickingComponent {
 	private static final ParticleVelocity PARTICLE_VELOCITY = ParticleVelocity.of(0.2);
 
-	public MistFormComponent(PlayerEntity obj) {
+	public MistFormComponent(Player obj) {
 		super(obj);
 	}
 
 	@Override
 	public void clientTick() {
-		if (enabled && obj.isPartOfGame()) {
+		if (enabled && obj.slib$exists()) {
 			if (obj.getRandom().nextInt(3) == 0) {
 				SLibClientUtils.addParticles(obj, ParticleTypes.SMOKE, 1, ParticleAnchor.BODY);
 			}

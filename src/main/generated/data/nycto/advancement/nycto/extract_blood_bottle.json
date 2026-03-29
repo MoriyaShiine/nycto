@@ -16,7 +16,6 @@
 	  "translate": "advancements.nycto.nycto.extract_blood_bottle.description"
 	},
 	"icon": {
-	  "count": 1,
 	  "id": "nycto:blood_bottle"
 	},
 	"title": {

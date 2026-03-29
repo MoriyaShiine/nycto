@@ -1,44 +1,48 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.data;
 
 import moriyashiine.nycto.common.init.ModTimelines;
+import moriyashiine.nycto.common.init.ModVillagerTrades;
 import moriyashiine.nycto.common.init.ModWorldGeneration;
 import moriyashiine.nycto.data.provider.*;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.registry.RegistryBuilder;
-import net.minecraft.registry.RegistryKeys;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
 
 public class ModDataGenerator implements DataGeneratorEntrypoint {
 	@Override
 	public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
 		FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 		pack.addProvider(ModAdvancementProvider::new);
-		pack.addProvider(ModBiomeTagProvider::new);
-		pack.addProvider(ModBlockLootTableProvider::new);
-		FabricTagProvider.BlockTagProvider blockTagProvider = pack.addProvider(ModBlockTagProvider::new);
-		pack.addProvider(ModDamageTypeTagProvider::new);
+		pack.addProvider(ModBiomeTagsProvider::new);
+		pack.addProvider(ModBlockLootSubProvider::new);
+		FabricTagsProvider.BlockTagsProvider blockTagProvider = pack.addProvider(ModBlockTagsProvider::new);
+		pack.addProvider(ModDamageTypeTagsProvider::new);
 		pack.addProvider(ModDynamicRegistryProvider::new);
-		pack.addProvider(ModEnchantmentTagProvider::new);
-		pack.addProvider(ModEntityLootTableProvider::new);
-		pack.addProvider(ModEntityTypeTagProvider::new);
-		pack.addProvider((output, registriesFuture) -> new ModItemTagProvider(output, registriesFuture, blockTagProvider));
+		pack.addProvider(ModEnchantmentTagsProvider::new);
+		pack.addProvider(ModEntityLootSubProvider::new);
+		pack.addProvider(ModEntityTypeTagsProvider::new);
+		pack.addProvider((output, registriesFuture) -> new ModItemTagsProvider(output, registriesFuture, blockTagProvider));
+		pack.addProvider(ModMobEffectTagsProvider::new);
 		pack.addProvider(ModModelProvider::new);
-		pack.addProvider(ModPowerTagProvider::new);
+		pack.addProvider(ModPowerTagsProvider::new);
 		pack.addProvider(ModRecipeProvider::new);
-		pack.addProvider(ModSoundEventTagProvider::new);
+		pack.addProvider(ModSoundEventTagsProvider::new);
 		pack.addProvider(ModSoundsProvider::new);
-		pack.addProvider(ModStatusEffectTagProvider::new);
-		pack.addProvider(ModTimelineTagProvider::new);
+		pack.addProvider(ModTimelineTagsProvider::new);
+		pack.addProvider(ModVillagerTradesTagsProvider::new);
 	}
 
 	@Override
-	public void buildRegistry(RegistryBuilder registryBuilder) {
-		registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, ModWorldGeneration::bootstrapConfigured);
-		registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, ModWorldGeneration::bootstrapPlaced);
-		registryBuilder.addRegistry(RegistryKeys.TIMELINE, ModTimelines::bootstrap);
+	public void buildRegistry(RegistrySetBuilder registryBuilder) {
+		registryBuilder.add(Registries.CONFIGURED_FEATURE, ModWorldGeneration::bootstrapConfigured);
+		registryBuilder.add(Registries.PLACED_FEATURE, ModWorldGeneration::bootstrapPlaced);
+		registryBuilder.add(Registries.TIMELINE, ModTimelines::bootstrap);
+		registryBuilder.add(Registries.VILLAGER_TRADE, ModVillagerTrades::bootstrap);
 	}
 }

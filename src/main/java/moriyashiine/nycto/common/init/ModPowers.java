@@ -1,17 +1,18 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.init;
 
 import moriyashiine.nycto.api.init.NyctoRegistries;
-import moriyashiine.nycto.api.power.NegativePower;
-import moriyashiine.nycto.api.power.Power;
+import moriyashiine.nycto.api.world.power.Power;
+import moriyashiine.nycto.api.world.power.Weakness;
 import moriyashiine.nycto.common.Nycto;
-import moriyashiine.nycto.common.power.NightVisionPower;
-import moriyashiine.nycto.common.power.vampire.*;
-import moriyashiine.nycto.common.power.vampire.weakness.HydrophobiaPower;
-import moriyashiine.nycto.common.power.vampire.weakness.VilePresencePower;
-import net.minecraft.registry.Registry;
+import moriyashiine.nycto.common.world.power.NightVisionPower;
+import moriyashiine.nycto.common.world.power.vampire.*;
+import moriyashiine.nycto.common.world.power.vampire.weakness.HydrophobiaWeakness;
+import moriyashiine.nycto.common.world.power.vampire.weakness.VilePresenceWeakness;
+import net.minecraft.core.Registry;
 
 public class ModPowers {
 	public static final Power NIGHT_VISION = registerPower("night_vision", new NightVisionPower());
@@ -30,12 +31,12 @@ public class ModPowers {
 	public static final VampireActivePower MIST_FORM = registerPower("mist_form", new MistFormPower());
 	public static final VampireActivePower VAMPIRIC_THRALL = registerPower("vampiric_thrall", new VampiricThrallPower());
 
-	public static final Power HYDROPHOBIA = registerPower("hydrophobia", new HydrophobiaPower());
-	public static final Power PHOTOPHOBIA = registerPower("photophobia", new NegativePower());
-	public static final Power PYROPHOBIA = registerPower("pyrophobia", new NegativePower());
-	public static final Power RICH_TASTES = registerPower("rich_tastes", new NegativePower());
-	public static final Power THIN_BLOOD = registerPower("thin_blood", new NegativePower());
-	public static final Power VILE_PRESENCE = registerPower("vile_presence", new VilePresencePower());
+	public static final Power HYDROPHOBIA = registerPower("hydrophobia", new HydrophobiaWeakness());
+	public static final Power PHOTOPHOBIA = registerPower("photophobia", new Weakness());
+	public static final Power PYROPHOBIA = registerPower("pyrophobia", new Weakness());
+	public static final Power RICH_TASTES = registerPower("rich_tastes", new Weakness());
+	public static final Power THIN_BLOOD = registerPower("thin_blood", new Weakness());
+	public static final Power VILE_PRESENCE = registerPower("vile_presence", new VilePresenceWeakness());
 
 	private static <T extends Power> T registerPower(String name, T power) {
 		return Registry.register(NyctoRegistries.POWER, Nycto.id(name), power);

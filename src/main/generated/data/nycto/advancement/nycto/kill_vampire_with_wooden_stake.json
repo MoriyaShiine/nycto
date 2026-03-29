@@ -59,7 +59,6 @@
 	  "translate": "advancements.nycto.nycto.kill_vampire_with_wooden_stake.description"
 	},
 	"icon": {
-	  "count": 1,
 	  "id": "nycto:wooden_stake"
 	},
 	"title": {

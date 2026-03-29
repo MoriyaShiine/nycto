@@ -1,14 +1,15 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.client.event.power;
 
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.strawberrylib.api.event.client.OutlineEntityEvent;
 import net.fabricmc.fabric.api.util.TriState;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 
 import java.util.OptionalInt;
 
@@ -17,7 +18,7 @@ public class BloodFlechettesClientEvent implements OutlineEntityEvent {
 
 	@Override
 	public OutlineData getOutlineData(Entity entity) {
-		if (entity instanceof LivingEntity living && ModEntityComponents.HEAL_BLOCK.get(living).canStealLife(MinecraftClient.getInstance().player)) {
+		if (entity instanceof LivingEntity living && ModEntityComponents.HEAL_BLOCK.get(living).canStealLife(Minecraft.getInstance().player)) {
 			return DATA;
 		}
 		return null;

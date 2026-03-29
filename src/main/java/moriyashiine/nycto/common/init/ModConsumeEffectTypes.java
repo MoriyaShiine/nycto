@@ -1,11 +1,12 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.init;
 
-import moriyashiine.nycto.common.item.consume.ClearNegativeEffectsConsumeEffect;
-import moriyashiine.nycto.common.item.consume.FillBloodConsumeEffect;
-import net.minecraft.item.consume.ConsumeEffect;
+import moriyashiine.nycto.common.world.item.consumeeffects.ClearNegativeEffectsConsumeEffect;
+import moriyashiine.nycto.common.world.item.consumeeffects.FillBloodConsumeEffect;
+import net.minecraft.world.item.consume_effects.ConsumeEffect;
 
 import static moriyashiine.strawberrylib.api.module.SLibRegistries.registerConsumeEffectType;
 

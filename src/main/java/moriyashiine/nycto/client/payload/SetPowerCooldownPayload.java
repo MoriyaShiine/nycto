@@ -1,34 +1,35 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.client.payload;
 
 import moriyashiine.nycto.api.init.NyctoRegistries;
-import moriyashiine.nycto.api.power.Power;
+import moriyashiine.nycto.api.world.power.Power;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.NyctoAPIImpl;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
 
-public record SetPowerCooldownPayload(Power power, int cooldown) implements CustomPayload {
-	public static final Id<SetPowerCooldownPayload> ID = new Id<>(Nycto.id("set_power_cooldown"));
-	public static final PacketCodec<PacketByteBuf, SetPowerCooldownPayload> CODEC = PacketCodec.tuple(
-			Identifier.PACKET_CODEC, setPowerCooldownPayload -> NyctoRegistries.POWER.getId(setPowerCooldownPayload.power()),
-			PacketCodecs.VAR_INT, SetPowerCooldownPayload::cooldown,
-			(identifier, cooldown) -> new SetPowerCooldownPayload(NyctoRegistries.POWER.get(identifier), cooldown));
+public record SetPowerCooldownPayload(Power power, int cooldown) implements CustomPacketPayload {
+	public static final Type<SetPowerCooldownPayload> TYPE = new Type<>(Nycto.id("set_power_cooldown"));
+	public static final StreamCodec<FriendlyByteBuf, SetPowerCooldownPayload> CODEC = StreamCodec.composite(
+			Identifier.STREAM_CODEC, payload -> NyctoRegistries.POWER.getKey(payload.power()),
+			ByteBufCodecs.VAR_INT, SetPowerCooldownPayload::cooldown,
+			(identifier, cooldown) -> new SetPowerCooldownPayload(NyctoRegistries.POWER.getValue(identifier), cooldown));
 
 	@Override
-	public Id<? extends CustomPayload> getId() {
-		return ID;
+	public Type<SetPowerCooldownPayload> type() {
+		return TYPE;
 	}
 
-	public static void send(ServerPlayerEntity player, Power power, int cooldown) {
+	public static void send(ServerPlayer player, Power power, int cooldown) {
 		ServerPlayNetworking.send(player, new SetPowerCooldownPayload(power, cooldown));
 	}
 

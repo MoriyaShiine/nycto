@@ -1,27 +1,28 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.payload;
 
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.network.packet.CustomPayload;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
-public record SyncVampireChargeJumpStatusPayload(boolean enabled) implements CustomPayload {
-	public static final Id<SyncVampireChargeJumpStatusPayload> ID = new Id<>(Nycto.id("sync_vampire_charge_jump_status"));
-	public static final PacketCodec<PacketByteBuf, SyncVampireChargeJumpStatusPayload> CODEC = PacketCodec.tuple(
-			PacketCodecs.BOOLEAN, SyncVampireChargeJumpStatusPayload::enabled,
+public record SyncVampireChargeJumpStatusPayload(boolean enabled) implements CustomPacketPayload {
+	public static final Type<SyncVampireChargeJumpStatusPayload> TYPE = new Type<>(Nycto.id("sync_vampire_charge_jump_status"));
+	public static final StreamCodec<FriendlyByteBuf, SyncVampireChargeJumpStatusPayload> CODEC = StreamCodec.composite(
+			ByteBufCodecs.BOOL, SyncVampireChargeJumpStatusPayload::enabled,
 			SyncVampireChargeJumpStatusPayload::new
 	);
 
 	@Override
-	public Id<? extends CustomPayload> getId() {
-		return ID;
+	public Type<SyncVampireChargeJumpStatusPayload> type() {
+		return TYPE;
 	}
 
 	public static void send(boolean enabled) {

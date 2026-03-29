@@ -1,10 +1,11 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.client.event;
 
-import moriyashiine.nycto.api.power.ActivePower;
-import moriyashiine.nycto.api.power.PowerInstance;
+import moriyashiine.nycto.api.world.power.ActivePower;
+import moriyashiine.nycto.api.world.power.PowerInstance;
 import moriyashiine.nycto.client.NyctoClient;
 import moriyashiine.nycto.common.component.entity.TransformationComponent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
@@ -16,77 +17,77 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
 public class PowerClientEvent {
 	public static class UseBlock implements UseBlockCallback {
 		@Override
-		public ActionResult interact(PlayerEntity player, World world, Hand hand, BlockHitResult hitResult) {
+		public InteractionResult interact(Player player, Level level, InteractionHand interactionHand, BlockHitResult blockHitResult) {
 			if (use(player)) {
-				return ActionResult.FAIL;
+				return InteractionResult.FAIL;
 			}
-			return ActionResult.PASS;
+			return InteractionResult.PASS;
 		}
 	}
 
 	public static class UseEntity implements UseEntityCallback {
 		@Override
-		public ActionResult interact(PlayerEntity player, World world, Hand hand, Entity entity, @Nullable EntityHitResult hitResult) {
+		public InteractionResult interact(Player player, Level level, InteractionHand interactionHand, Entity entity, @Nullable EntityHitResult entityHitResult) {
 			if (use(player)) {
-				return ActionResult.FAIL;
+				return InteractionResult.FAIL;
 			}
-			return ActionResult.PASS;
+			return InteractionResult.PASS;
 		}
 	}
 
 	public static class UseItem implements UseItemCallback {
 		@Override
-		public ActionResult interact(PlayerEntity player, World world, Hand hand) {
+		public InteractionResult interact(Player player, Level level, InteractionHand interactionHand) {
 			if (use(player)) {
-				return ActionResult.FAIL;
+				return InteractionResult.FAIL;
 			}
-			return ActionResult.PASS;
+			return InteractionResult.PASS;
 		}
 	}
 
-	public static class Tick implements ClientTickEvents.EndWorldTick {
+	public static class Tick implements ClientTickEvents.EndLevelTick {
 		private static int cooldown = 0;
 
 		@Override
-		public void onEndTick(ClientWorld world) {
+		public void onEndTick(ClientLevel level) {
 			if (cooldown > 0) {
 				cooldown--;
 			}
 		}
 	}
 
-	public static boolean scrollPowerIndex(PlayerEntity player, double scrollAmount) {
-		if (scrollAmount != 0) {
+	public static boolean scrollPowerIndex(Player player, double wheel) {
+		if (wheel != 0) {
 			TransformationComponent transformationComponent = ModEntityComponents.TRANSFORMATION.get(player);
 			List<PowerInstance> powers = transformationComponent.getPowers();
 			if (!powers.isEmpty()) {
-				while (scrollAmount != 0) {
-					int nextIndex = transformationComponent.getPowerIndex() + (int) Math.signum(scrollAmount);
+				while (wheel != 0) {
+					int nextIndex = transformationComponent.getPowerIndex() + (int) Math.signum(wheel);
 					if (nextIndex < 0) {
 						nextIndex += powers.size();
 					}
 					transformationComponent.setPowerIndex(nextIndex % powers.size());
 					if (transformationComponent.getPowers().get(transformationComponent.getPowerIndex()).getPower() instanceof ActivePower) {
-						scrollAmount -= Math.signum(scrollAmount);
+						wheel -= Math.signum(wheel);
 					}
 				}
-				player.sendMessage(Text.translatable(transformationComponent.getPowers().get(transformationComponent.getPowerIndex()).getPower().getTranslationKey()), true);
+				player.sendOverlayMessage(Component.translatable(transformationComponent.getPowers().get(transformationComponent.getPowerIndex()).getPower().getOrCreateDescriptionId()));
 				SyncPowerIndexPayload.send(transformationComponent.getPowerIndex());
 				return true;
 			}
@@ -94,8 +95,8 @@ public class PowerClientEvent {
 		return false;
 	}
 
-	public static boolean isActive(PlayerEntity player, TransformationComponent transformationComponent) {
-		return player != null && player.isPartOfGame() && NyctoClient.POWER_HOTBAR_KEYBINDING.isPressed() && transformationComponent.hasActivePower();
+	public static boolean isActive(Player player, TransformationComponent transformationComponent) {
+		return player != null && player.slib$exists() && NyctoClient.POWER_HOTBAR_KEYMAPPING.isDown() && transformationComponent.hasActivePower();
 	}
 
 	public static int getActivePowersIndex(TransformationComponent transformationComponent) {
@@ -111,7 +112,7 @@ public class PowerClientEvent {
 		return index;
 	}
 
-	private static boolean use(PlayerEntity player) {
+	private static boolean use(Player player) {
 		TransformationComponent transformationComponent = ModEntityComponents.TRANSFORMATION.get(player);
 		if (isActive(player, transformationComponent)) {
 			if (Tick.cooldown == 0 && SLibClientUtils.isHost(player) && NyctoUtil.canUsePower(player, transformationComponent.getPowers().get(transformationComponent.getPowerIndex()))) {

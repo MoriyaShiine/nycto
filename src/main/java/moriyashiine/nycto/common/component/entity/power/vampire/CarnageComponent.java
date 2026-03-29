@@ -1,21 +1,22 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.component.entity.power.vampire;
 
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.init.ModEntityComponents;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
 
 public class CarnageComponent implements AutoSyncedComponent, CommonTickingComponent {
-	private static final EntityAttributeModifier ATTACK_DAMAGE_MODIFIER = new EntityAttributeModifier(Nycto.id("carnage_damage"), 2, EntityAttributeModifier.Operation.ADD_VALUE);
+	private static final AttributeModifier ATTACK_DAMAGE_MODIFIER = new AttributeModifier(Nycto.id("carnage_damage"), 2, AttributeModifier.Operation.ADD_VALUE);
 
 	private static final int MAX_TICKS = 300;
 
@@ -27,19 +28,19 @@ public class CarnageComponent implements AutoSyncedComponent, CommonTickingCompo
 	}
 
 	@Override
-	public void readData(ReadView readView) {
-		ticks = readView.getInt("Ticks", 0);
+	public void readData(ValueInput input) {
+		ticks = input.getIntOr("Ticks", 0);
 	}
 
 	@Override
-	public void writeData(WriteView writeView) {
-		writeView.putInt("Ticks", ticks);
+	public void writeData(ValueOutput output) {
+		output.putInt("Ticks", ticks);
 	}
 
 	@Override
 	public void tick() {
-		if (ticks > 0 && --ticks == 0 && !obj.getEntityWorld().isClient()) {
-			obj.getAttributeInstance(EntityAttributes.ATTACK_DAMAGE).removeModifier(ATTACK_DAMAGE_MODIFIER);
+		if (ticks > 0 && --ticks == 0 && !obj.level().isClientSide()) {
+			obj.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(ATTACK_DAMAGE_MODIFIER);
 		}
 	}
 
@@ -54,16 +55,16 @@ public class CarnageComponent implements AutoSyncedComponent, CommonTickingCompo
 	public float getOverlayOpacity(float maxOpacity) {
 		float inverseTicks = MAX_TICKS - ticks;
 		if (ticks < 20) {
-			return MathHelper.lerp(ticks / 20F, 0, maxOpacity);
+			return Mth.lerp(ticks / 20F, 0, maxOpacity);
 		} else if (inverseTicks < 20) {
-			return MathHelper.lerp(inverseTicks / 20, 0, maxOpacity);
+			return Mth.lerp(inverseTicks / 20, 0, maxOpacity);
 		}
 		return maxOpacity;
 	}
 
 	public void use() {
 		ticks = MAX_TICKS;
-		obj.getAttributeInstance(EntityAttributes.ATTACK_DAMAGE).addPersistentModifier(ATTACK_DAMAGE_MODIFIER);
+		obj.getAttribute(Attributes.ATTACK_DAMAGE).addPermanentModifier(ATTACK_DAMAGE_MODIFIER);
 		sync();
 	}
 }

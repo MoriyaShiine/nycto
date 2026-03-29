@@ -1,6 +1,7 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.event.entity;
 
 import moriyashiine.nycto.api.NyctoAPI;
@@ -10,7 +11,7 @@ import moriyashiine.nycto.common.init.*;
 import moriyashiine.nycto.common.tag.ModBlockTags;
 import moriyashiine.nycto.common.tag.ModEntityTypeTags;
 import moriyashiine.nycto.common.tag.ModItemTags;
-import moriyashiine.nycto.common.tag.ModStatusEffectTags;
+import moriyashiine.nycto.common.tag.ModMobEffectTags;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.strawberrylib.api.event.AfterDamageIncludingDeathEvent;
 import moriyashiine.strawberrylib.api.event.EatFoodEvent;
@@ -23,34 +24,34 @@ import net.fabricmc.fabric.api.entity.event.v1.effect.ServerMobEffectEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.component.type.FoodComponent;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.ClampedEntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.tag.DamageTypeTags;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.village.VillagerGossipType;
-import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.RangedAttribute;
+import net.minecraft.world.entity.ai.gossip.GossipType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.Nullable;
 
 public class VampireEvent {
 	public static class BloodVeil implements ServerLivingEntityEvents.AllowDeath {
@@ -58,7 +59,7 @@ public class VampireEvent {
 		public boolean allowDeath(LivingEntity entity, DamageSource damageSource, float damageAmount) {
 			if (entity.getHealth() - damageAmount <= 0 && NyctoAPI.isVampire(entity) && !NyctoUtil.bypassesBloodVeil(damageSource) && !hasThinBlood(entity)) {
 				BloodComponent bloodComponent = ModEntityComponents.BLOOD.get(entity);
-				if (bloodComponent.drain(MathHelper.floor(damageAmount * DrinkBlood.getArmorMultiplier(entity)))) {
+				if (bloodComponent.drain(Mth.floor(damageAmount * DrinkBlood.getArmorMultiplier(entity)))) {
 					NyctoAPI.applyHealBlock(entity, 60);
 					entity.setHealth(1);
 					return false;
@@ -68,57 +69,57 @@ public class VampireEvent {
 		}
 
 		private static boolean hasThinBlood(LivingEntity living) {
-			return living instanceof PlayerEntity player && NyctoAPI.hasPower(player, ModPowers.THIN_BLOOD);
+			return living instanceof Player player && NyctoAPI.hasPower(player, ModPowers.THIN_BLOOD);
 		}
 	}
 
-	public static class ChargeJump implements ModifyMovementEvents.JumpVelocity {
+	public static class ChargeJump implements ModifyMovementEvents.JumpDelta {
 		@Override
-		public Vec3d modify(Vec3d velocity, LivingEntity entity) {
-			if (entity instanceof PlayerEntity player && NyctoAPI.isVampire(player)) {
+		public Vec3 modify(Vec3 delta, LivingEntity entity) {
+			if (entity instanceof Player player && NyctoAPI.isVampire(player)) {
 				float boostProgress = ModEntityComponents.VAMPIRE_CHARGE_JUMP.get(entity).getBoostProgress();
 				if (boostProgress > 0) {
-					if (boostProgress > 0.25F && entity.getEntityWorld() instanceof ServerWorld world) {
-						world.spawnParticles(ModParticleTypes.BLOOD, entity.getX(), entity.getY() + entity.getHeight() * 0.5, entity.getZ(), 8, entity.getWidth() / 2, 0, entity.getWidth() / 2, 0.15);
-						SLibUtils.playSound(entity, SoundEvents.BLOCK_SLIME_BLOCK_FALL, 1, 0.75F);
-						entity.emitGameEvent(GameEvent.ENTITY_ACTION);
+					if (boostProgress > 0.25F && entity.level() instanceof ServerLevel level) {
+						level.sendParticles(ModParticleTypes.BLOOD, entity.getX(), entity.getY() + entity.getBbHeight() * 0.5, entity.getZ(), 8, entity.getBbWidth() / 2, 0, entity.getBbWidth() / 2, 0.15);
+						SLibUtils.playSound(entity, SoundEvents.SLIME_BLOCK_FALL, 1, 0.75F);
+						entity.gameEvent(GameEvent.ENTITY_ACTION);
 					}
-					return velocity.add(0, boostProgress * 0.34F, 0);
+					return delta.add(0, boostProgress * 0.34F, 0);
 				}
 			}
-			return velocity;
+			return delta;
 		}
 	}
 
 	public static class DrinkBlood implements UseEntityCallback {
 		@Override
-		public ActionResult interact(PlayerEntity player, World world, Hand hand, Entity entity, @Nullable EntityHitResult hitResult) {
-			if (hand == Hand.MAIN_HAND && player.isSneaking() && player.isPartOfGame() && player.getStackInHand(hand).isEmpty() && !entity.getType().isIn(ModEntityTypeTags.HAS_NO_BLOOD) && entity instanceof LivingEntity living && living.hurtTime == 0 && living.isAlive() && !living.isInCreativeMode() && NyctoAPI.isVampire(player)) {
-				boolean qualityBlood = entity.getType().isIn(ModEntityTypeTags.HAS_QUALITY_BLOOD);
+		public InteractionResult interact(Player player, Level level, InteractionHand hand, Entity entity, @Nullable EntityHitResult hitResult) {
+			if (hand == InteractionHand.MAIN_HAND && player.isShiftKeyDown() && player.slib$exists() && player.getItemInHand(hand).isEmpty() && !entity.is(ModEntityTypeTags.HAS_NO_BLOOD) && entity instanceof LivingEntity living && living.hurtTime == 0 && living.isAlive() && !living.hasInfiniteMaterials() && NyctoAPI.isVampire(player)) {
+				boolean qualityBlood = entity.is(ModEntityTypeTags.HAS_QUALITY_BLOOD);
 				if (!qualityBlood && NyctoAPI.hasPower(player, ModPowers.RICH_TASTES)) {
-					return ActionResult.PASS;
+					return InteractionResult.PASS;
 				}
 				@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
 				if (vampiricThrallComponent != null && vampiricThrallComponent.isOwner(player)) {
-					return ActionResult.PASS;
+					return InteractionResult.PASS;
 				}
 				BloodComponent playerBloodComponent = ModEntityComponents.BLOOD.get(player);
 				BloodComponent livingBloodComponent = ModEntityComponents.BLOOD.get(living);
 				int fillAmount = (qualityBlood ? 5 : 1) + (NyctoUtil.getsMoreBlood(player) ? 2 : 0);
 				int drainAmount = qualityBlood ? 10 : 25;
 				double armorMultiplier = getArmorMultiplier(living);
-				fillAmount = MathHelper.ceil(fillAmount * armorMultiplier);
-				drainAmount = MathHelper.ceil(drainAmount * armorMultiplier);
+				fillAmount = Mth.ceil(fillAmount * armorMultiplier);
+				drainAmount = Mth.ceil(drainAmount * armorMultiplier);
 				if (fillAmount > 0 && playerBloodComponent.canFill() && livingBloodComponent.getBlood() > 0) {
-					if (world instanceof ServerWorld serverWorld) {
-						player.swingHand(Hand.MAIN_HAND, true);
+					if (level instanceof ServerLevel serverWorld) {
+						player.swing(InteractionHand.MAIN_HAND, true);
 						if (canSafelyDrain(player, living, livingBloodComponent, drainAmount)) {
-							living.hurtTime = living.maxHurtTime = 10;
+							living.hurtTime = living.hurtDuration = 10;
 							if (NyctoUtil.isVillager(living)) {
-								NyctoUtil.notifyNearbyVillagers(living, player, VillagerGossipType.MINOR_NEGATIVE, 10);
+								NyctoUtil.notifyNearbyVillagers(living, player, GossipType.MINOR_NEGATIVE, 10);
 							}
 						} else {
-							living.damage(serverWorld, world.getDamageSources().create(ModDamageTypes.BLEED, player), 2);
+							living.hurtServer(serverWorld, level.damageSources().source(ModDamageTypes.BLEED, player), 2);
 						}
 						if (livingBloodComponent.drainAttack(drainAmount)) {
 							SLibUtils.playSound(entity, ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK.value());
@@ -128,17 +129,17 @@ public class VampireEvent {
 							}
 						}
 					}
-					return ActionResult.CONSUME;
+					return InteractionResult.CONSUME;
 				}
 			}
-			return ActionResult.PASS;
+			return InteractionResult.PASS;
 		}
 
 		public static double getArmorMultiplier(LivingEntity living) {
-			return Math.max(1 / 3F, MathHelper.lerp(living.getArmor() / ((ClampedEntityAttribute) EntityAttributes.ARMOR.value()).getMaxValue(), 1, 0));
+			return Math.max(1 / 3F, Mth.lerp(living.getArmorValue() / ((RangedAttribute) Attributes.ARMOR.value()).getMaxValue(), 1, 0));
 		}
 
-		private static int getModifiedFillAmount(int fillAmount, boolean qualityBlood, Random random) {
+		private static int getModifiedFillAmount(int fillAmount, boolean qualityBlood, RandomSource random) {
 			if (!qualityBlood) {
 				fillAmount /= 2;
 				if (fillAmount == 0 && random.nextBoolean()) {
@@ -148,8 +149,8 @@ public class VampireEvent {
 			return fillAmount;
 		}
 
-		private static boolean canSafelyDrain(PlayerEntity attacker, LivingEntity target, BloodComponent targetBloodComponent, int toDrain) {
-			if (target.hasStatusEffect(ModStatusEffects.HYPNOTIZED)) {
+		private static boolean canSafelyDrain(Player attacker, LivingEntity target, BloodComponent targetBloodComponent, int toDrain) {
+			if (target.hasEffect(ModMobEffects.HYPNOTIZED)) {
 				return targetBloodComponent.getBlood() - toDrain > 0;
 			}
 			if (targetBloodComponent.aboveHalfBlood()) {
@@ -161,14 +162,14 @@ public class VampireEvent {
 
 	public static class EatFood implements EatFoodEvent {
 		@Override
-		public void eat(World world, LivingEntity entity, ItemStack food, FoodComponent foodComponent) {
-			if (world instanceof ServerWorld serverWorld && NyctoAPI.isVampire(entity) && !food.isIn(ModItemTags.SAFE_EDIBLES)) {
-				entity.addStatusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 200, 2));
-				entity.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 200, 1));
-				entity.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 200, 1));
-				entity.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 200, 1));
-				if (food.isIn(ModItemTags.HURTS_VAMPIRES)) {
-					entity.damage(serverWorld, world.getDamageSources().create(ModDamageTypes.TOXIC_TOUCH), Float.MAX_VALUE);
+		public void eat(Level level, LivingEntity user, ItemStack stack, FoodProperties properties) {
+			if (level instanceof ServerLevel serverLevel && NyctoAPI.isVampire(user) && !stack.is(ModItemTags.SAFE_EDIBLES)) {
+				user.addEffect(new MobEffectInstance(MobEffects.HUNGER, 200, 2));
+				user.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 200, 1));
+				user.addEffect(new MobEffectInstance(MobEffects.WITHER, 200, 1));
+				user.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 1));
+				if (stack.is(ModItemTags.HURTS_VAMPIRES)) {
+					user.hurtServer(serverLevel, level.damageSources().source(ModDamageTypes.TOXIC_TOUCH), Float.MAX_VALUE);
 				}
 			}
 		}
@@ -176,15 +177,15 @@ public class VampireEvent {
 
 	public static class EffectImmunity implements ServerMobEffectEvents.AllowAdd {
 		@Override
-		public boolean allowAdd(StatusEffectInstance effect, LivingEntity entity, EffectEventContext ctx) {
-			return !(effect.getEffectType().isIn(ModStatusEffectTags.INFECTION) && NyctoAPI.isVampire(entity));
+		public boolean allowAdd(MobEffectInstance effectInstance, LivingEntity entity, EffectEventContext ctx) {
+			return !(effectInstance.getEffect().is(ModMobEffectTags.INFECTION) && NyctoAPI.isVampire(entity));
 		}
 	}
 
 	public static class FreezeImmunity implements ServerLivingEntityEvents.AllowDamage {
 		@Override
 		public boolean allowDamage(LivingEntity entity, DamageSource source, float amount) {
-			return !source.isIn(DamageTypeTags.IS_FREEZING) || !NyctoAPI.isVampire(entity);
+			return !source.is(DamageTypeTags.IS_FREEZING) || !NyctoAPI.isVampire(entity);
 		}
 	}
 
@@ -199,35 +200,35 @@ public class VampireEvent {
 
 	public static class WeaknessItem implements AfterDamageIncludingDeathEvent {
 		@Override
-		public void afterDamage(LivingEntity entity, DamageSource source, float baseDamageTaken, float damageTaken, boolean blocked) {
-			if (!blocked && NyctoAPI.isVampire(entity) && NyctoUtil.isVampireWeaknessItem(source)) {
-				SLibUtils.playSound(entity, SoundEvents.ENTITY_PLAYER_ATTACK_CRIT);
-				SLibUtils.addEmitterParticle(entity, ParticleTypes.ENCHANTED_HIT);
+		public void afterDamage(LivingEntity victim, DamageSource source, float originalDamage, float modifiedDamage, boolean blocked) {
+			if (!blocked && NyctoAPI.isVampire(victim) && NyctoUtil.isVampireWeaknessItem(source)) {
+				SLibUtils.playSound(victim, SoundEvents.PLAYER_ATTACK_CRIT);
+				SLibUtils.addTrackingEmitter(victim, ParticleTypes.ENCHANTED_HIT);
 			}
 		}
 	}
 
 	public static class BreakHarming implements PlayerBlockBreakEvents.After {
 		@Override
-		public void afterBlockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity) {
-			if (state.isIn(ModBlockTags.HURTS_VAMPIRES) && !player.getMainHandStack().isIn(ConventionalItemTags.SHEAR_TOOLS) && NyctoUtil.affectedByHurtsVampiresTag(player)) {
-				NyctoUtil.damageWithToxicTouch(player, player.getMaxHealth() / 5);
+		public void afterBlockBreak(Level level, Player player, BlockPos pos, BlockState state, @org.jspecify.annotations.Nullable BlockEntity blockEntity) {
+			if (state.is(ModBlockTags.HURTS_VAMPIRES) && !player.getMainHandItem().is(ConventionalItemTags.SHEAR_TOOLS) && NyctoUtil.affectedByHurtsVampiresTag(player)) {
+				NyctoUtil.hurtWithToxicTouch(player, player.getMaxHealth() / 5);
 			}
 		}
 	}
 
 	public static class TickHarming implements TickEntityEvent {
 		@Override
-		public void tick(ServerWorld world, Entity entity) {
-			if (entity.age % 10 == 0 && entity instanceof LivingEntity living && living.hurtTime == 0 && living.canTakeDamage() && !NyctoAPI.hasRespawnLeniency(living)) {
+		public void tick(Level level, Entity entity) {
+			if (!level.isClientSide() && entity.tickCount % 10 == 0 && entity instanceof LivingEntity living && living.hurtTime == 0 && living.slib$isSurvival() && !NyctoAPI.hasRespawnLeniency(living)) {
 				int count = 0;
 				for (EquipmentSlot slot : EquipmentSlot.values()) {
-					if (living.getEquippedStack(slot).isIn(ModItemTags.HURTS_VAMPIRES)) {
+					if (living.getItemBySlot(slot).is(ModItemTags.HURTS_VAMPIRES)) {
 						count++;
 					}
 				}
 				if (count > 0 && NyctoUtil.affectedByHurtsVampiresTag(living)) {
-					NyctoUtil.damageWithToxicTouch(living, count);
+					NyctoUtil.hurtWithToxicTouch(living, count);
 				}
 			}
 		}

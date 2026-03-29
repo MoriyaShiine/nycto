@@ -1,51 +1,52 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.command;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.api.init.NyctoRegistries;
-import moriyashiine.nycto.api.transformation.Transformation;
+import moriyashiine.nycto.api.world.transformation.Transformation;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.minecraft.command.CommandRegistryAccess;
-import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.command.argument.RegistryEntryReferenceArgumentType;
-import net.minecraft.server.command.CommandManager;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
+import net.minecraft.commands.CommandBuildContext;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.commands.arguments.ResourceArgument;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Collection;
 
-import static net.minecraft.server.command.CommandManager.argument;
-import static net.minecraft.server.command.CommandManager.literal;
+import static net.minecraft.commands.Commands.argument;
+import static net.minecraft.commands.Commands.literal;
 
 public class TransformationCommand implements CommandRegistrationCallback {
 	@Override
-	public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-		dispatcher.register(literal("transformation").requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
+	public void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext buildContext, Commands.CommandSelection selection) {
+		dispatcher.register(literal("transformation").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
 				.then(literal("get")
-						.then(argument("player", EntityArgumentType.player())
+						.then(argument("player", EntityArgument.player())
 								.executes(ctx -> {
-									ServerPlayerEntity player = EntityArgumentType.getPlayer(ctx, "player");
-									ctx.getSource().sendFeedback(() -> Text.translatable("command.nycto.transformation.get", player.getName(), Text.translatable(NyctoAPI.getTransformation(player).getTranslationKey())), false);
+									ServerPlayer player = EntityArgument.getPlayer(ctx, "player");
+									ctx.getSource().sendSuccess(() -> Component.translatable("command.nycto.transformation.get", player.getName(), Component.translatable(NyctoAPI.getTransformation(player).getOrCreateDescriptionId())), false);
 									return Command.SINGLE_SUCCESS;
 								})))
 				.then(literal("set")
-						.then(argument("players", EntityArgumentType.players())
-								.then(argument("transformation", RegistryEntryReferenceArgumentType.registryEntry(registryAccess, NyctoRegistries.TRANSFORMATION_KEY))
+						.then(argument("players", EntityArgument.players())
+								.then(argument("transformation", ResourceArgument.resource(buildContext, NyctoRegistries.TRANSFORMATION_KEY))
 										.executes(ctx -> {
-											Collection<ServerPlayerEntity> players = EntityArgumentType.getPlayers(ctx, "players");
-											Transformation transformation = RegistryEntryReferenceArgumentType.getRegistryEntry(ctx, "transformation", NyctoRegistries.TRANSFORMATION_KEY).value();
-											for (ServerPlayerEntity player : players) {
+											Collection<ServerPlayer> players = EntityArgument.getPlayers(ctx, "players");
+											Transformation transformation = ResourceArgument.getResource(ctx, "transformation", NyctoRegistries.TRANSFORMATION_KEY).value();
+											for (ServerPlayer player : players) {
 												NyctoAPI.setTransformation(player, transformation);
 											}
 											if (players.size() == 1) {
-												ctx.getSource().sendFeedback(() -> Text.translatable("command.nycto.transformation.set.single", players.stream().findFirst().get().getName(), Text.translatable(transformation.getTranslationKey())), true);
+												ctx.getSource().sendSuccess(() -> Component.translatable("command.nycto.transformation.set.single", players.stream().findFirst().get().getName(), Component.translatable(transformation.getOrCreateDescriptionId())), true);
 											} else {
-												ctx.getSource().sendFeedback(() -> Text.translatable("command.nycto.transformation.set.multiple", players.size(), Text.translatable(transformation.getTranslationKey())), true);
+												ctx.getSource().sendSuccess(() -> Component.translatable("command.nycto.transformation.set.multiple", players.size(), Component.translatable(transformation.getOrCreateDescriptionId())), true);
 											}
 											return Command.SINGLE_SUCCESS;
 										})))));

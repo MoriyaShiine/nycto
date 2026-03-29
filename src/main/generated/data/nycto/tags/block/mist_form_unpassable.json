@@ -2,11 +2,11 @@
   "values": [
 	"#minecraft:climbable",
 	"#minecraft:doors",
-	"#minecraft:dry_vegetation_may_place_on",
 	"#minecraft:slabs",
 	"#minecraft:snow",
-	"#minecraft:snow_layer_can_survive_on",
 	"#minecraft:stairs",
+	"#minecraft:support_override_snow_layer",
+	"#minecraft:supports_dry_vegetation",
 	"#minecraft:trapdoors",
 	"#minecraft:wither_immune",
 	"minecraft:calibrated_sculk_sensor",

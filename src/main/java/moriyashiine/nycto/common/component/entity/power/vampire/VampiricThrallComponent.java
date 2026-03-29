@@ -1,6 +1,7 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.component.entity.power.vampire;
 
 import moriyashiine.nycto.api.NyctoAPI;
@@ -10,23 +11,23 @@ import moriyashiine.nycto.common.event.power.util.HasOwnerEvent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModPowers;
 import moriyashiine.nycto.common.init.ModSoundEvents;
-import moriyashiine.nycto.common.power.vampire.VampiricThrallPower;
+import moriyashiine.nycto.common.world.power.vampire.VampiricThrallPower;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.brain.MemoryModuleState;
-import net.minecraft.entity.ai.brain.MemoryModuleType;
-import net.minecraft.entity.ai.goal.TrackTargetGoal;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.passive.VillagerEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.ai.goal.target.TargetGoal;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.memory.MemoryStatus;
+import net.minecraft.world.entity.npc.villager.Villager;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import org.jspecify.annotations.Nullable;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
 import java.util.UUID;
@@ -35,31 +36,31 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 	private FollowMode followMode = FollowMode.FOLLOW;
 	private boolean alternateDrain = false;
 
-	public VampiricThrallComponent(MobEntity obj) {
+	public VampiricThrallComponent(Mob obj) {
 		super(obj);
 	}
 
 	@Override
-	public void readData(ReadView readView) {
-		super.readData(readView);
-		followMode = FollowMode.valueOf(readView.getString("FollowMode", FollowMode.FOLLOW.name()));
-		alternateDrain = readView.getBoolean("AlternateDrain", false);
-		if (ownerUuid != null && obj instanceof VillagerEntity villager && villager.getEntityWorld() instanceof ServerWorld world) {
-			villager.reinitializeBrain(world);
+	public void readData(ValueInput input) {
+		super.readData(input);
+		followMode = FollowMode.valueOf(input.getStringOr("FollowMode", FollowMode.FOLLOW.name()));
+		alternateDrain = input.getBooleanOr("AlternateDrain", false);
+		if (ownerUuid != null && obj instanceof Villager villager && villager.level() instanceof ServerLevel level) {
+			villager.refreshBrain(level);
 		}
 	}
 
 	@Override
-	public void writeData(WriteView writeView) {
-		super.writeData(writeView);
-		writeView.putString("FollowMode", followMode.name());
-		writeView.putBoolean("AlternateDrain", alternateDrain);
+	public void writeData(ValueOutput output) {
+		super.writeData(output);
+		output.putString("FollowMode", followMode.name());
+		output.putBoolean("AlternateDrain", alternateDrain);
 	}
 
 	@Override
 	public void serverTick() {
 		if (hasOwner() && obj.isAlive()) {
-			if (obj.getHealth() < obj.getMaxHealth() && obj.age % 15 == 0 && !ModEntityComponents.HEAL_BLOCK.get(obj).isHealingBlocked()) {
+			if (obj.getHealth() < obj.getMaxHealth() && obj.tickCount % 15 == 0 && !ModEntityComponents.HEAL_BLOCK.get(obj).isHealingBlocked()) {
 				BloodComponent bloodComponent = ModEntityComponents.BLOOD.get(obj);
 				if (bloodComponent.getBlood() > 0) {
 					if (!alternateDrain) {
@@ -69,17 +70,17 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 					alternateDrain = !alternateDrain;
 				}
 			}
-			if ((obj.age + obj.getId()) % 20 == 0) {
-				Entity owner = obj.getEntityWorld().getEntity(ownerUuid);
-				if (owner instanceof PlayerEntity player && !NyctoAPI.hasPower(player, ModPowers.VAMPIRIC_THRALL)) {
+			if ((obj.tickCount + obj.getId()) % 20 == 0) {
+				Entity owner = obj.level().getEntity(ownerUuid);
+				if (owner instanceof Player player && !NyctoAPI.hasPower(player, ModPowers.VAMPIRIC_THRALL)) {
 					SLibUtils.addParticles(obj, ParticleTypes.SMOKE, 16, ParticleAnchor.BODY);
 					SLibUtils.playSound(obj, ModSoundEvents.ENTITY_GENERIC_TRANSFORM_HUMAN);
 					VampiricThrallPower.setThrall(obj, null);
 					return;
 				}
-				if (getFollowMode() == FollowMode.FOLLOW && (obj.getTarget() == null || obj.getTarget().isDead())) {
-					if (owner instanceof LivingEntity living && obj.distanceTo(owner) > 24 && living.isPartOfGame()) {
-						obj.teleport(owner.getX() + obj.getRandom().nextBetween(-3, 3), owner.getY(), owner.getZ() + obj.getRandom().nextBetween(-3, 3), false);
+				if (getFollowMode() == FollowMode.FOLLOW && (obj.getTarget() == null || obj.getTarget().isDeadOrDying())) {
+					if (owner instanceof LivingEntity living && obj.distanceTo(owner) > 24 && living.slib$exists()) {
+						obj.randomTeleport(owner.getX() + obj.getRandom().nextIntBetweenInclusive(-3, 3), owner.getY(), owner.getZ() + obj.getRandom().nextIntBetweenInclusive(-3, 3), false);
 					}
 				}
 			}
@@ -105,11 +106,11 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 	}
 
 	public boolean hasFollowModes() {
-		return hasOwner() && !(obj instanceof TameableEntity);
+		return hasOwner() && !(obj instanceof TamableAnimal);
 	}
 
 	private boolean hasDefendMode() {
-		return obj.targetSelector.getGoals().stream().anyMatch(goal -> goal.getGoal() instanceof TrackTargetGoal) || obj.getBrain().isMemoryInState(MemoryModuleType.ATTACK_TARGET, MemoryModuleState.REGISTERED);
+		return obj.targetSelector.getAvailableGoals().stream().anyMatch(goal -> goal.getGoal() instanceof TargetGoal) || obj.getBrain().checkMemory(MemoryModuleType.ATTACK_TARGET, MemoryStatus.REGISTERED);
 	}
 
 	public void cycleFollowMode() {

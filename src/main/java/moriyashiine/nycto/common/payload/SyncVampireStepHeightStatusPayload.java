@@ -1,27 +1,28 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.payload;
 
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.network.packet.CustomPayload;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
-public record SyncVampireStepHeightStatusPayload(boolean enabled) implements CustomPayload {
-	public static final Id<SyncVampireStepHeightStatusPayload> ID = new Id<>(Nycto.id("sync_vampire_step_height_status"));
-	public static final PacketCodec<PacketByteBuf, SyncVampireStepHeightStatusPayload> CODEC = PacketCodec.tuple(
-			PacketCodecs.BOOLEAN, SyncVampireStepHeightStatusPayload::enabled,
+public record SyncVampireStepHeightStatusPayload(boolean enabled) implements CustomPacketPayload {
+	public static final Type<SyncVampireStepHeightStatusPayload> TYPE = new Type<>(Nycto.id("sync_vampire_step_height_status"));
+	public static final StreamCodec<FriendlyByteBuf, SyncVampireStepHeightStatusPayload> CODEC = StreamCodec.composite(
+			ByteBufCodecs.BOOL, SyncVampireStepHeightStatusPayload::enabled,
 			SyncVampireStepHeightStatusPayload::new
 	);
 
 	@Override
-	public Id<? extends CustomPayload> getId() {
-		return ID;
+	public Type<SyncVampireStepHeightStatusPayload> type() {
+		return TYPE;
 	}
 
 	public static void send(boolean enabled) {

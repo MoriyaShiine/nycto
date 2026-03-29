@@ -1,42 +1,43 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.event.entity;
 
 import moriyashiine.nycto.api.NyctoAPI;
-import moriyashiine.nycto.common.component.world.AuraComponent;
-import moriyashiine.nycto.common.entity.mob.HunterEntity;
+import moriyashiine.nycto.common.component.level.AuraComponent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModEntityTypes;
 import moriyashiine.nycto.common.util.NyctoUtil;
+import moriyashiine.nycto.common.world.entity.monster.Hunter;
 import moriyashiine.strawberrylib.api.event.AfterDamageIncludingDeathEvent;
 import moriyashiine.strawberrylib.api.event.ModifyCriticalStatusEvent;
 import moriyashiine.strawberrylib.api.event.PreventHostileTargetingEvent;
 import moriyashiine.strawberrylib.api.event.TickEntityEvent;
 import net.fabricmc.fabric.api.util.TriState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.Monster;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.village.VillagerGossipType;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.gossip.GossipType;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 
 public class HunterEvent {
 	public static class Heat implements AfterDamageIncludingDeathEvent {
 		@Override
-		public void afterDamage(LivingEntity entity, DamageSource source, float baseDamageTaken, float damageTaken, boolean blocked) {
-			if (source.getAttacker() instanceof PlayerEntity player) {
-				if (entity.getType() == ModEntityTypes.HUNTER) {
-					if (entity.isDead()) {
-						NyctoUtil.notifyNearbyVillagers(entity, player, VillagerGossipType.MAJOR_NEGATIVE, 25);
+		public void afterDamage(LivingEntity victim, DamageSource source, float originalDamage, float modifiedDamage, boolean blocked) {
+			if (source.getEntity() instanceof Player player) {
+				if (victim.getType() == ModEntityTypes.HUNTER) {
+					if (victim.isDeadOrDying()) {
+						NyctoUtil.notifyNearbyVillagers(victim, player, GossipType.MAJOR_NEGATIVE, 25);
 					} else {
-						NyctoUtil.notifyNearbyVillagers(entity, player, VillagerGossipType.MINOR_NEGATIVE, 5);
+						NyctoUtil.notifyNearbyVillagers(victim, player, GossipType.MINOR_NEGATIVE, 5);
 					}
 				}
 				if (NyctoAPI.isVampire(player)) {
-					if (baseDamageTaken > 1 || entity.getRandom().nextBoolean() || entity.isDead()) {
-						ModEntityComponents.HUNTER_HEAT.get(player).maybeIncreaseHeat(entity, entity.isDead());
+					if (originalDamage > 1 || victim.getRandom().nextBoolean() || victim.isDeadOrDying()) {
+						ModEntityComponents.HUNTER_HEAT.get(player).maybeIncreaseHeat(victim, victim.isDeadOrDying());
 					}
 				}
 			}
@@ -45,16 +46,16 @@ public class HunterEvent {
 
 	public static class Aura implements TickEntityEvent {
 		@Override
-		public void tick(ServerWorld world, Entity entity) {
-			if (entity.age % 10 == 0 && entity instanceof LivingEntity living && NyctoUtil.hasGarlicAura(living)) {
-				AuraComponent.applyAura(world, living.getBlockPos(), 2, false, NyctoAPI::isVampire);
+		public void tick(Level level, Entity entity) {
+			if (!level.isClientSide() && entity.tickCount % 10 == 0 && entity instanceof LivingEntity living && NyctoUtil.hasGarlicAura(living)) {
+				AuraComponent.applyAura(level, living.blockPosition(), 2, false, NyctoAPI::isVampire);
 			}
 		}
 	}
 
 	public static class CriticalImmunity implements ModifyCriticalStatusEvent {
 		@Override
-		public TriState isCritical(PlayerEntity attacker, Entity target, float attackCooldownProgress) {
+		public TriState isCritical(Player attacker, Entity target, float attackCooldownProgress) {
 			if (target instanceof LivingEntity living && NyctoUtil.hasVampireCriticalHitImmunity(living) && NyctoAPI.isVampire(attacker)) {
 				return TriState.FALSE;
 			}
@@ -70,7 +71,7 @@ public class HunterEvent {
 	public static class PreventTargeting implements PreventHostileTargetingEvent {
 		@Override
 		public TriState preventsTargeting(LivingEntity attacker, LivingEntity target) {
-			if (!(attacker instanceof Monster) && target instanceof HunterEntity) {
+			if (!(attacker instanceof Enemy) && target instanceof Hunter) {
 				return TriState.TRUE;
 			}
 			return TriState.DEFAULT;

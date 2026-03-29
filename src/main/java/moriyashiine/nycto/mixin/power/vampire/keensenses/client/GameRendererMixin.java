@@ -1,16 +1,17 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.mixin.power.vampire.keensenses.client;
 
+import com.mojang.blaze3d.resource.CrossFrameResourcePool;
 import moriyashiine.nycto.client.event.power.KeenSensesClientEvent;
 import moriyashiine.nycto.common.Nycto;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gl.PostEffectProcessor;
-import net.minecraft.client.render.DefaultFramebufferSet;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.RenderTickCounter;
-import net.minecraft.client.util.Pool;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.LevelTargetBundle;
+import net.minecraft.client.renderer.PostChain;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -22,18 +23,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class GameRendererMixin {
 	@Shadow
 	@Final
-	private MinecraftClient client;
+	private Minecraft minecraft;
 
 	@Shadow
 	@Final
-	private Pool pool;
+	private CrossFrameResourcePool resourcePool;
 
-	@Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/WorldRenderer;drawEntityOutlinesFramebuffer()V"))
-	private void nycto$keenSenses(RenderTickCounter tickCounter, boolean tick, CallbackInfo ci) {
+	@Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;doEntityOutline()V"))
+	private void nycto$keenSenses(DeltaTracker deltaTracker, boolean advanceGameTime, CallbackInfo ci) {
 		if (KeenSensesClientEvent.shouldRenderShader()) {
-			PostEffectProcessor postEffectProcessor = client.getShaderLoader().loadPostEffect(Nycto.id("keen_senses"), DefaultFramebufferSet.MAIN_ONLY);
-			if (postEffectProcessor != null) {
-				postEffectProcessor.render(client.getFramebuffer(), pool);
+			PostChain postChain = minecraft.getShaderManager().getPostChain(Nycto.id("keen_senses"), LevelTargetBundle.MAIN_TARGETS);
+			if (postChain != null) {
+				postChain.process(minecraft.getMainRenderTarget(), resourcePool);
 			}
 		}
 	}

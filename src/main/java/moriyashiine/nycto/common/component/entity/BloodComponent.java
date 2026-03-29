@@ -1,6 +1,7 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.component.entity;
 
 import moriyashiine.nycto.common.init.ModDamageTypes;
@@ -10,13 +11,13 @@ import moriyashiine.nycto.common.init.ModSoundEvents;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
@@ -26,7 +27,7 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 	public static final int REGEN_TIME = 100;
 
 	private final LivingEntity obj;
-	private boolean shouldRegenerateNaturally = true;
+	private boolean regeneratesNaturally = true;
 	private int blood = MAX_BLOOD, bleedTicks = 0, regenerationBlockTicks = 0;
 	private long lastLoadTime = -1;
 
@@ -35,51 +36,51 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 	}
 
 	@Override
-	public void readData(ReadView readView) {
-		shouldRegenerateNaturally = readView.getBoolean("ShouldRegenerateNaturally", true);
-		blood = readView.getInt("Blood", MAX_BLOOD);
-		bleedTicks = readView.getInt("BleedTicks", 0);
-		regenerationBlockTicks = readView.getInt("RegenerationBlockTicks", 0);
-		lastLoadTime = readView.getLong("LastLoadTime", -1);
+	public void readData(ValueInput input) {
+		regeneratesNaturally = input.getBooleanOr("RegeneratesNaturally", true);
+		blood = input.getIntOr("Blood", MAX_BLOOD);
+		bleedTicks = input.getIntOr("BleedTicks", 0);
+		regenerationBlockTicks = input.getIntOr("RegenerationBlockTicks", 0);
+		lastLoadTime = input.getLongOr("LastLoadTime", -1);
 	}
 
 	@Override
-	public void writeData(WriteView writeView) {
-		writeView.putBoolean("ShouldRegenerateNaturally", shouldRegenerateNaturally);
-		writeView.putInt("Blood", blood);
-		writeView.putInt("BleedTicks", bleedTicks);
-		writeView.putInt("RegenerationBlockTicks", regenerationBlockTicks);
-		writeView.putLong("LastLoadTime", lastLoadTime);
+	public void writeData(ValueOutput output) {
+		output.putBoolean("RegeneratesNaturally", regeneratesNaturally);
+		output.putInt("Blood", blood);
+		output.putInt("BleedTicks", bleedTicks);
+		output.putInt("RegenerationBlockTicks", regenerationBlockTicks);
+		output.putLong("LastLoadTime", lastLoadTime);
 	}
 
 	@Override
 	public void serverTick() {
-		if (obj.getEntityWorld().getTime() % 20 == 0 && obj.getEntityWorld().getDifficulty() == Difficulty.PEACEFUL) {
+		if (obj.level().getGameTime() % 20 == 0 && obj.level().getDifficulty() == Difficulty.PEACEFUL) {
 			fill(5);
 		}
 		if (bleedTicks > 0 && --bleedTicks % 20 == 0) {
 			NyctoUtil.spawnBloodParticles(obj);
-			obj.serverDamage(obj.getDamageSources().create(ModDamageTypes.BLEED), 1);
+			obj.hurt(obj.damageSources().source(ModDamageTypes.BLEED), 1);
 		}
 		if (regenerationBlockTicks > 0) {
 			regenerationBlockTicks--;
 		}
-		if (!shouldRegenerateNaturally) {
+		if (!regeneratesNaturally) {
 			return;
 		}
-		if (canFill() && obj.getEntityWorld().getTime() % 20 == 0 && obj.isAlive()) {
+		if (canFill() && obj.level().getGameTime() % 20 == 0 && obj.isAlive()) {
 			if (lowBlood()) {
-				obj.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 60, 1, true, false));
-				obj.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 60, 0, true, false));
+				obj.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 60, 1, true, false));
+				obj.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 60, 0, true, false));
 				if (criticalBlood()) {
 					SLibUtils.addParticles(obj, ModParticleTypes.BLOOD, ModParticleTypes.BLOOD_PARTICLE_COUNT, ParticleAnchor.BODY);
-					obj.serverDamage(obj.getDamageSources().create(ModDamageTypes.BLEED), 2);
+					obj.hurt(obj.damageSources().source(ModDamageTypes.BLEED), 2);
 				}
 			}
 			if (criticalBlood()) {
-				obj.removeStatusEffect(StatusEffects.REGENERATION);
+				obj.removeEffect(MobEffects.REGENERATION);
 			}
-			if (regenerationBlockTicks <= 0 && obj.getEntityWorld().getTime() % REGEN_TIME == 0) {
+			if (regenerationBlockTicks <= 0 && obj.level().getGameTime() % REGEN_TIME == 0) {
 				fill(obj.isSleeping() ? 5 : 1);
 			}
 		}
@@ -89,12 +90,12 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 		ModEntityComponents.BLOOD.sync(obj);
 	}
 
-	public boolean shouldRegenerateNaturally() {
-		return shouldRegenerateNaturally;
+	public boolean regeneratesNaturally() {
+		return regeneratesNaturally;
 	}
 
-	public void setShouldRegenerateNaturally(boolean shouldRegenerateNaturally) {
-		this.shouldRegenerateNaturally = shouldRegenerateNaturally;
+	public void setRegeneratesNaturally(boolean regeneratesNaturally) {
+		this.regeneratesNaturally = regeneratesNaturally;
 	}
 
 	public int getBlood() {
@@ -155,7 +156,7 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 			return false;
 		}
 		if (obj.getRandom().nextFloat() <= 2 / 3F && NyctoUtil.hasBloodDrainResistance(obj)) {
-			SLibUtils.playSound(obj, ModSoundEvents.ENTITY_GENERIC_BLOOD_DRAIN_BLOCKED, 1, MathHelper.nextFloat(obj.getRandom(), 0.95F, 1.05F));
+			SLibUtils.playSound(obj, ModSoundEvents.ENTITY_GENERIC_BLOOD_DRAIN_BLOCKED, 1, Mth.nextFloat(obj.getRandom(), 0.95F, 1.05F));
 			return false;
 		}
 		boolean drain = drain(amount, true);
@@ -175,7 +176,7 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 			return true;
 		}
 		if (alwaysAllow || blood - amount >= 0) {
-			if (obj.isInCreativeMode()) {
+			if (obj.hasInfiniteMaterials()) {
 				return true;
 			}
 			blood = Math.max(0, blood - amount);

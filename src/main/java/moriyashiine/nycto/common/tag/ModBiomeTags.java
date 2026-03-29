@@ -1,16 +1,17 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.tag;
 
 import moriyashiine.nycto.common.Nycto;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.biome.Biome;
 
 public class ModBiomeTags {
-	public static final TagKey<Biome> GENERATES_GARLIC = TagKey.of(RegistryKeys.BIOME, Nycto.id("generates_garlic"));
-	public static final TagKey<Biome> GENERATES_ACONITE = TagKey.of(RegistryKeys.BIOME, Nycto.id("generates_aconite"));
+	public static final TagKey<Biome> GENERATES_GARLIC = TagKey.create(Registries.BIOME, Nycto.id("generates_garlic"));
+	public static final TagKey<Biome> GENERATES_ACONITE = TagKey.create(Registries.BIOME, Nycto.id("generates_aconite"));
 
-	public static final TagKey<Biome> SPAWNS_VAMPIRES = TagKey.of(RegistryKeys.BIOME, Nycto.id("spawns_vampires"));
+	public static final TagKey<Biome> SPAWNS_VAMPIRES = TagKey.create(Registries.BIOME, Nycto.id("spawns_vampires"));
 }

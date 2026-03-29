@@ -1,18 +1,19 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.init;
 
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.sound.SoundEvent;
+import net.minecraft.core.Holder;
+import net.minecraft.sounds.SoundEvent;
 
 import static moriyashiine.strawberrylib.api.module.SLibRegistries.registerSoundEvent;
-import static moriyashiine.strawberrylib.api.module.SLibRegistries.registerSoundEventReference;
+import static moriyashiine.strawberrylib.api.module.SLibRegistries.registerSoundEventHolder;
 
 public class ModSoundEvents {
 	public static final SoundEvent BLOCK_ALTAR_USE = registerSoundEvent("block.altar.use");
 
-	public static final RegistryEntry<SoundEvent> ITEM_BLOOD_BOTTLE_DRINK = registerSoundEventReference("item.blood_bottle.drink");
+	public static final Holder<SoundEvent> ITEM_BLOOD_BOTTLE_DRINK = registerSoundEventHolder("item.blood_bottle.drink");
 	public static final SoundEvent ITEM_VAMPIRIC_DAGGER_EXTRACT_FAIL = registerSoundEvent("item.vampiric_dagger.extract_fail");
 
 	public static final SoundEvent ENTITY_GENERIC_REMOVE_POWER = registerSoundEvent("entity.generic.remove_power");

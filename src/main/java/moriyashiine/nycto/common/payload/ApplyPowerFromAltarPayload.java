@@ -1,36 +1,37 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.payload;
 
-import moriyashiine.nycto.api.screenhandler.AltarScreenHandler;
+import moriyashiine.nycto.api.world.inventory.AltarMenu;
 import moriyashiine.nycto.common.Nycto;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.network.packet.CustomPayload;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
-public record ApplyPowerFromAltarPayload(int rawId) implements CustomPayload {
-	public static final Id<ApplyPowerFromAltarPayload> ID = new Id<>(Nycto.id("apply_power_from_altar"));
-	public static final PacketCodec<PacketByteBuf, ApplyPowerFromAltarPayload> CODEC = PacketCodec.tuple(
-			PacketCodecs.VAR_INT, ApplyPowerFromAltarPayload::rawId,
+public record ApplyPowerFromAltarPayload(int id) implements CustomPacketPayload {
+	public static final Type<ApplyPowerFromAltarPayload> TYPE = new Type<>(Nycto.id("apply_power_from_altar"));
+	public static final StreamCodec<FriendlyByteBuf, ApplyPowerFromAltarPayload> CODEC = StreamCodec.composite(
+			ByteBufCodecs.VAR_INT, ApplyPowerFromAltarPayload::id,
 			ApplyPowerFromAltarPayload::new);
 
 	@Override
-	public Id<? extends CustomPayload> getId() {
-		return ID;
+	public Type<ApplyPowerFromAltarPayload> type() {
+		return TYPE;
 	}
 
-	public static void send(int rawId) {
-		ClientPlayNetworking.send(new ApplyPowerFromAltarPayload(rawId));
+	public static void send(int id) {
+		ClientPlayNetworking.send(new ApplyPowerFromAltarPayload(id));
 	}
 
 	public static class Receiver implements ServerPlayNetworking.PlayPayloadHandler<ApplyPowerFromAltarPayload> {
 		@Override
 		public void receive(ApplyPowerFromAltarPayload payload, ServerPlayNetworking.Context context) {
-			AltarScreenHandler.apply(context.player(), payload.rawId());
+			AltarMenu.apply(context.player(), payload.id());
 		}
 	}
 }

@@ -1,38 +1,39 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.component.entity.power.util;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.Uuids;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.core.UUIDUtil;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import org.jspecify.annotations.Nullable;
 import org.ladysnake.cca.api.v3.component.ComponentKey;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 
 import java.util.UUID;
 
 public abstract class HasOwnerComponent implements AutoSyncedComponent {
-	protected final MobEntity obj;
+	protected final Mob obj;
 	@Nullable
 	protected UUID ownerUuid = null;
 
-	public HasOwnerComponent(MobEntity obj) {
+	public HasOwnerComponent(Mob obj) {
 		this.obj = obj;
 	}
 
 	@Override
-	public void readData(ReadView readView) {
-		ownerUuid = readView.read("OwnerUUID", Uuids.CODEC).orElse(null);
+	public void readData(ValueInput input) {
+		ownerUuid = input.read("Owner", UUIDUtil.AUTHLIB_CODEC).orElse(null);
 	}
 
 	@Override
-	public void writeData(WriteView writeView) {
+	public void writeData(ValueOutput output) {
 		if (ownerUuid != null) {
-			writeView.put("OwnerUUID", Uuids.CODEC, ownerUuid);
+			output.store("Owner", UUIDUtil.AUTHLIB_CODEC, ownerUuid);
 		}
 	}
 
@@ -41,14 +42,14 @@ public abstract class HasOwnerComponent implements AutoSyncedComponent {
 	}
 
 	public boolean isOwner(Entity entity) {
-		return entity != null && entity.getUuid().equals(ownerUuid);
+		return entity != null && entity.getUUID().equals(ownerUuid);
 	}
 
-	public void setOwner(PlayerEntity player) {
+	public void setOwner(Player player) {
 		if (player == null) {
 			ownerUuid = null;
 		} else {
-			ownerUuid = player.getUuid();
+			ownerUuid = player.getUUID();
 		}
 		sync();
 	}

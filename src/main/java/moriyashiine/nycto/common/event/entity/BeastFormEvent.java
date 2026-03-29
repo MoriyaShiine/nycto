@@ -1,25 +1,26 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.common.event.entity;
 
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.tag.ModBlockTags;
-import moriyashiine.strawberrylib.api.event.ModifyBlockBreakingSpeedEvent;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
+import moriyashiine.strawberrylib.api.event.ModifyDestroyProgressEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.state.BlockState;
 
-public class BeastFormEvent implements ModifyBlockBreakingSpeedEvent {
+public class BeastFormEvent implements ModifyDestroyProgressEvent {
 	@Override
-	public float modify(float breakSpeed, PlayerEntity player, BlockState state, BlockView world, BlockPos pos) {
+	public float modify(Player player, BlockState state, BlockGetter level, BlockPos pos) {
 		return canHarvestAsBeast(player, state) ? 4 : 1;
 	}
 
-	public static boolean canHarvestAsBeast(PlayerEntity player, BlockState state) {
-		if (state.isIn(ModBlockTags.BEAST_MINEABLE) && !state.isIn(BlockTags.INCORRECT_FOR_WOODEN_TOOL)) {
+	public static boolean canHarvestAsBeast(Player player, BlockState state) {
+		if (state.is(ModBlockTags.BEAST_MINEABLE) && !state.is(BlockTags.INCORRECT_FOR_WOODEN_TOOL)) {
 			return NyctoAPI.isBeastForm(player);
 		}
 		return false;

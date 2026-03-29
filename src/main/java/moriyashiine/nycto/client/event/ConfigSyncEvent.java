@@ -1,6 +1,7 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.client.event;
 
 import moriyashiine.nycto.client.ModConfig;
@@ -9,15 +10,15 @@ import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.payload.SyncVampireChargeJumpStatusPayload;
 import moriyashiine.nycto.common.payload.SyncVampireStepHeightStatusPayload;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.entity.player.Player;
 
-public class ConfigSyncEvent implements ClientTickEvents.EndWorldTick {
+public class ConfigSyncEvent implements ClientTickEvents.EndLevelTick {
 	@Override
-	public void onEndTick(ClientWorld world) {
-		PlayerEntity player = MinecraftClient.getInstance().player;
-		if (player != null && player.isPartOfGame()) {
+	public void onEndTick(ClientLevel level) {
+		Player player = Minecraft.getInstance().player;
+		if (player != null && player.slib$exists()) {
 			SyncedConfigValuesComponent syncedConfigValuesComponent = ModEntityComponents.SYNCED_CONFIG_VALUES.get(player);
 			{
 				boolean current = syncedConfigValuesComponent.hasVampireChargeJump();

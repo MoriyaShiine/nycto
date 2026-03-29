@@ -1,45 +1,46 @@
 /*
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
+
 package moriyashiine.nycto.client.particle;
 
 import moriyashiine.strawberrylib.api.registry.client.particle.AnchoredParticle;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleFactory;
-import net.minecraft.client.particle.SpriteProvider;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.SimpleParticleType;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec2f;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.phys.Vec2;
+import net.minecraft.world.phys.Vec3;
 
 public class HypnotizedParticle extends AnchoredParticle {
-	private final SpriteProvider spriteProvider;
+	private final SpriteSet sprites;
 
-	public HypnotizedParticle(ClientWorld world, double x, double z, int entityId, double yOffset, double speed, double intensity, SpriteProvider spriteProvider) {
-		super(world, x, z, entityId, yOffset, speed, intensity, spriteProvider.getFirst());
-		this.spriteProvider = spriteProvider;
-		setMaxAge(12);
-		updateSprite(spriteProvider);
+	public HypnotizedParticle(ClientLevel level, double x, double z, int entityId, double yOffset, double speed, double intensity, SpriteSet sprites) {
+		super(level, x, z, entityId, yOffset, speed, intensity, sprites.first());
+		this.sprites = sprites;
+		setLifetime(12);
+		setSpriteFromAge(sprites);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
-		updateSprite(spriteProvider);
+		setSpriteFromAge(sprites);
 		if (entity != null) {
-			Vec3d rotation = Vec3d.fromPolar(new Vec2f(entity.getPitch(), entity.getHeadYaw())).multiply(entity.getWidth());
-			x += rotation.getX();
-			y += rotation.getY();
-			z += rotation.getZ();
+			Vec3 rotation = Vec3.directionFromRotation(new Vec2(entity.getXRot(), entity.getYHeadRot())).scale(entity.getBbWidth());
+			x += rotation.x();
+			y += rotation.y();
+			z += rotation.z();
 		}
 	}
 
-	public record Factory(SpriteProvider spriteProvider) implements ParticleFactory<SimpleParticleType> {
+	public record Provider(SpriteSet sprites) implements ParticleProvider<SimpleParticleType> {
 		@Override
-		public Particle createParticle(SimpleParticleType parameters, ClientWorld world, double x, double z, double entityId, double yOffset, double speed, double intensity, Random random) {
-			return new HypnotizedParticle(world, x, z, MathHelper.floor(entityId), yOffset, speed, intensity, spriteProvider());
+		public Particle createParticle(SimpleParticleType options, ClientLevel level, double x, double z, double entityId, double yOffset, double speed, double intensity, RandomSource random) {
+			return new HypnotizedParticle(level, x, z, Mth.floor(entityId), yOffset, speed, intensity, sprites());
 		}
 	}
 }
