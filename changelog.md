@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Version 26.1-b1
+------------------------------------------------------
+- update to 26.1
+
+------------------------------------------------------
 Version 1.21.11-b7
 ------------------------------------------------------
 - ambrosia bottles can no longer be automatically consumed with enchancement's assimilation enchantment
