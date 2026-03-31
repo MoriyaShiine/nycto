@@ -9,11 +9,11 @@ accessible method net/minecraft/world/entity/animal/wolf/Wolf getVariant ()Lnet/
 accessible method net/minecraft/world/item/ToolMaterial createToolAttributes (FF)Lnet/minecraft/world/item/component/ItemAttributeModifiers;
 
 accessible field net/minecraft/world/entity/LivingEntity jumping Z
+accessible field net/minecraft/world/entity/Mob targetSelector Lnet/minecraft/world/entity/ai/goal/GoalSelector;
 accessible field net/minecraft/world/entity/ai/goal/TemptGoal TEMPT_TARGETING Lnet/minecraft/world/entity/ai/targeting/TargetingConditions;
 accessible field net/minecraft/world/entity/ai/goal/TemptGoal calmDown I
 accessible field net/minecraft/world/entity/ai/goal/TemptGoal targetingConditions Lnet/minecraft/world/entity/ai/targeting/TargetingConditions;
 mutable field net/minecraft/world/entity/ai/goal/TemptGoal targetingConditions Lnet/minecraft/world/entity/ai/targeting/TargetingConditions;
-accessible field net/minecraft/world/entity/Mob targetSelector Lnet/minecraft/world/entity/ai/goal/GoalSelector;
 
 accessible method net/minecraft/client/gui/Gui extractTextureOverlay (Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/resources/Identifier;F)V
 accessible method net/minecraft/client/particle/SpellParticle <init> (Lnet/minecraft/client/multiplayer/ClientLevel;DDDDDDLnet/minecraft/client/particle/SpriteSet;)V
