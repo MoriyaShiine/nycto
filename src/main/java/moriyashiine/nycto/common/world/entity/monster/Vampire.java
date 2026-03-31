@@ -78,7 +78,7 @@ public class Vampire extends Monster {
 				.add(Attributes.ATTACK_DAMAGE, 6);
 	}
 
-	public static boolean canSpawn(EntityType<Vampire> type, ServerLevelAccessor level, EntitySpawnReason spawnReason, BlockPos pos, RandomSource random) {
+	public static boolean checkVampireSpawnRules(EntityType<Vampire> type, ServerLevelAccessor level, EntitySpawnReason spawnReason, BlockPos pos, RandomSource random) {
 		MoonPhase moonPhase = level.getLevel().environmentAttributes().getValue(EnvironmentAttributes.MOON_PHASE, pos);
 		return Monster.checkMonsterSpawnRules(type, level, spawnReason, pos, random) && moonPhase == MoonPhase.NEW_MOON && level.getLevel().getGameRules().get(ModGameRules.SPAWN_VAMPIRES);
 	}

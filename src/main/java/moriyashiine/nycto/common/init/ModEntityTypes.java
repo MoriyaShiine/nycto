@@ -34,7 +34,7 @@ public class ModEntityTypes {
 	public static final EntityType<DarkForm> DARK_FORM = registerEntityType("dark_form", EntityType.Builder.of(DarkForm::new, MobCategory.MISC).noSave().noSummon().noLootTable().sized(0.8F, 2.75F), Mob.createMobAttributes());
 
 	public static void init() {
-		SpawnPlacements.register(VAMPIRE, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Vampire::canSpawn);
+		SpawnPlacements.register(VAMPIRE, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Vampire::checkVampireSpawnRules);
 		BiomeModifications.addSpawn(BiomeSelectors.tag(ModBiomeTags.SPAWNS_VAMPIRES).and(ctx -> ctx.getBiomeKey() != Biomes.PALE_GARDEN), VAMPIRE.getCategory(), VAMPIRE, 30, 1, 1);
 
 		FabricEntityDataRegistry.register(Nycto.id("hunter_type"), Hunter.HUNTER_TYPE);
