@@ -19,7 +19,7 @@ import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
 import net.minecraft.resources.Identifier;
 
 public class DarkFormRenderer extends MobRenderer<DarkForm, DarkFormRenderState, DarkFormModel> {
-	public static final Identifier TEXTURE = Nycto.id("textures/entity/darm_form/dark_form.png");
+	public static final Identifier TEXTURE = Nycto.id("textures/entity/dark_form/dark_form.png");
 
 	public DarkFormRenderer(EntityRendererProvider.Context context) {
 		super(context, new DarkFormModel(context.bakeLayer(DarkFormModel.LAYER)), 0.6F);

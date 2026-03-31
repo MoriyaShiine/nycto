@@ -20,7 +20,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 
 public record VampireArmorRenderer(VampireArmorModel<HumanoidRenderState> armorModel) implements ArmorRenderer {
-	private static final Identifier TEXTURE = Nycto.id("textures/entity/equipment/vampire.png");
+	private static final Identifier TEXTURE = Nycto.id("textures/entity/equipment/humanoid/vampire.png");
 
 	public VampireArmorRenderer(EntityRendererProvider.Context context, EquipmentSlot slot) {
 		this(new VampireArmorModel<>(context.bakeLayer(VampireArmorModel.MODEL_LAYERS.get(slot))));

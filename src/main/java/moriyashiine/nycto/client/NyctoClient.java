@@ -104,13 +104,13 @@ public class NyctoClient implements ClientModInitializer {
 		ArmorRenderer.register(context -> new VampireArmorRenderer(context, EquipmentSlot.LEGS), ModItems.VAMPIRE_LEGGINGS);
 		ArmorRenderer.register(context -> new VampireArmorRenderer(context, EquipmentSlot.FEET), ModItems.VAMPIRE_BOOTS);
 
-		Identifier vampireHunterArmorTexture = Nycto.id("textures/entity/equipment/vampire_hunter.png");
+		Identifier vampireHunterArmorTexture = Nycto.id("textures/entity/equipment/humanoid/vampire_hunter.png");
 		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.HEAD, vampireHunterArmorTexture), ModItems.VAMPIRE_HUNTER_HELMET);
 		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.CHEST, vampireHunterArmorTexture), ModItems.VAMPIRE_HUNTER_CHESTPLATE);
 		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.LEGS, vampireHunterArmorTexture), ModItems.VAMPIRE_HUNTER_LEGGINGS);
 		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.FEET, vampireHunterArmorTexture), ModItems.VAMPIRE_HUNTER_BOOTS);
 
-		Identifier werewolfHunterArmorTexture = Nycto.id("textures/entity/equipment/werewolf_hunter.png");
+		Identifier werewolfHunterArmorTexture = Nycto.id("textures/entity/equipment/humanoid/werewolf_hunter.png");
 		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.HEAD, werewolfHunterArmorTexture), ModItems.WEREWOLF_HUNTER_HELMET);
 		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.CHEST, werewolfHunterArmorTexture), ModItems.WEREWOLF_HUNTER_CHESTPLATE);
 		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.LEGS, werewolfHunterArmorTexture), ModItems.WEREWOLF_HUNTER_LEGGINGS);
