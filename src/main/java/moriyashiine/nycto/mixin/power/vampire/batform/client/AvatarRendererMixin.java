@@ -27,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(AvatarRenderer.class)
 public abstract class AvatarRendererMixin extends LivingEntityRenderer<AbstractClientPlayer, AvatarRenderState, PlayerModel> {
 	@Unique
-	private static final Identifier BAT_TEXTURE = Identifier.withDefaultNamespace("textures/entity/bat.png");
+	private static final Identifier BAT_TEXTURE = Identifier.withDefaultNamespace("textures/entity/bat/bat.png");
 
 	public AvatarRendererMixin(EntityRendererProvider.Context context, PlayerModel model, float shadow) {
 		super(context, model, shadow);
