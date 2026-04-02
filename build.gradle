@@ -29,6 +29,7 @@ loom {
 fabricApi {
     configureDataGeneration() {
         client = true
+        modId = project.archives_base_name
     }
 }
 
@@ -53,6 +54,9 @@ dependencies {
     implementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
     implementation "moriyashiine:strawberrylib:${strawberrylib_version}"
 
+    implementation("moriyashiine:anthropophagy:${anthropophagy_version}") {
+        exclude("group": "*")
+    }
     compileOnly("moriyashiine:hearty-meals:${hearty_meals_version}") {
         exclude("group": "*")
     }
