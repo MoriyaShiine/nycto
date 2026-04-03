@@ -19,9 +19,14 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.CampfireCookingRecipe;
+import net.minecraft.world.item.crafting.CookingBookCategory;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.SmokingRecipe;
 
 import java.util.concurrent.CompletableFuture;
+
+import static net.minecraft.world.item.crafting.Ingredient.of;
 
 public class ModRecipeProvider extends FabricRecipeProvider {
 	public static final ResourceKey<Recipe<?>> BLOOD_EXTRACTION = ResourceKey.create(Registries.RECIPE, Nycto.id("blood_extraction"));
@@ -69,12 +74,12 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 				hunterSmithing(ModItems.WEREWOLF_HUNTER_UPGRADE_SMITHING_TEMPLATE, Items.LEATHER_BOOTS, ModItems.WEREWOLF_HUNTER_BOOTS);
 				shaped(RecipeCategory.COMBAT, ModItems.VAMPIRIC_DAGGER).define('I', ConventionalItemTags.IRON_INGOTS).define('F', Items.FLINT).define('B', Items.GLASS_BOTTLE).pattern("  I").pattern(" F ").pattern("B  ").unlockedBy("has_iron_ingot", has(ConventionalItemTags.IRON_INGOTS)).save(output);
 				shaped(RecipeCategory.COMBAT, ModItems.HALBERD).define('G', ConventionalItemTags.GOLD_INGOTS).define('I', ConventionalItemTags.IRON_INGOTS).define('A', Items.IRON_AXE).define('S', Items.STICK).pattern(" GI").pattern(" AI").pattern("S  ").unlockedBy("has_iron_ingot", has(ConventionalItemTags.IRON_INGOTS)).save(output);
-				shapeless(RecipeCategory.COMBAT, ModItems.GARLIC_COATED_HALBERD).requires(ModItems.HALBERD).requires(ModItems.GARLIC_WREATH).unlockedBy("has_halberd", has(ModItems.HALBERD)).save(output);
-				shapeless(RecipeCategory.COMBAT, ModItems.ACONITE_COATED_HALBERD).requires(ModItems.HALBERD).requires(ModItems.ACONITE_GARLAND).unlockedBy("has_halberd", has(ModItems.HALBERD)).save(output);
+				TransmuteRecipeBuilder.transmute(RecipeCategory.COMBAT, of(ModItems.HALBERD), of(ModItems.GARLIC_WREATH), ModItems.GARLIC_COATED_HALBERD).unlockedBy("has_halberd", has(ModItems.HALBERD)).save(output);
+				TransmuteRecipeBuilder.transmute(RecipeCategory.COMBAT, of(ModItems.HALBERD), of(ModItems.ACONITE_GARLAND), ModItems.ACONITE_COATED_HALBERD).unlockedBy("has_halberd", has(ModItems.HALBERD)).save(output);
 				shaped(RecipeCategory.COMBAT, ModItems.WOODEN_STAKE, 4).define('A', Items.ARROW).define('L', ItemTags.LOGS).pattern(" A ").pattern("ALA").pattern(" A ").unlockedBy("has_log", has(ItemTags.LOGS)).save(output);
 				shaped(RecipeCategory.COMBAT, ModItems.ACONITE_ARROW, 4).define('A', Items.ARROW).define('P', ModItems.ACONITE).pattern(" A ").pattern("APA").pattern(" A ").unlockedBy("has_aconite", has(ModItems.ACONITE)).save(output);
 				shapeless(RecipeCategory.COMBAT, ModItems.FIREBOMB).requires(Items.GLASS_BOTTLE).requires(Items.BLAZE_POWDER).requires(ConventionalItemTags.GUNPOWDERS).unlockedBy("has_blaze_powder", has(Items.BLAZE_POWDER)).save(output);
-				SimpleCookingRecipeBuilder.smelting(Ingredient.of(ModItems.GARLIC), RecipeCategory.FOOD, CookingBookCategory.FOOD, ModItems.GRILLED_GARLIC, 0.35F, 200).unlockedBy("has_garlic", has(ModItems.GARLIC)).save(output);
+				SimpleCookingRecipeBuilder.smelting(of(ModItems.GARLIC), RecipeCategory.FOOD, CookingBookCategory.FOOD, ModItems.GRILLED_GARLIC, 0.35F, 200).unlockedBy("has_garlic", has(ModItems.GARLIC)).save(output);
 				simpleCookingRecipe("smoking", SmokingRecipe::new, 100, ModItems.GARLIC, ModItems.GRILLED_GARLIC, 0.35F);
 				simpleCookingRecipe("campfire_cooking", CampfireCookingRecipe::new, 600, ModItems.GARLIC, ModItems.GRILLED_GARLIC, 0.35F);
 				shapeless(RecipeCategory.FOOD, ModItems.GARLIC_BREAD).requires(Items.BREAD).requires(ModItems.GRILLED_GARLIC).unlockedBy("has_grilled_garlic", has(ModItems.GRILLED_GARLIC)).save(output);
@@ -87,8 +92,8 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 
 			private void vampireSmithing(Item base, Item result) {
 				SmithingTransformRecipeBuilder.smithing(
-								Ingredient.of(ModItems.VAMPIRE_UPGRADE_SMITHING_TEMPLATE),
-								Ingredient.of(base),
+								of(ModItems.VAMPIRE_UPGRADE_SMITHING_TEMPLATE),
+								of(base),
 								tag(ModItemTags.USABLE_BLOOD_BOTTLES),
 								RecipeCategory.COMBAT,
 								result
@@ -99,8 +104,8 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 
 			private void hunterSmithing(Item template, Item base, Item result) {
 				SmithingTransformRecipeBuilder.smithing(
-								Ingredient.of(template),
-								Ingredient.of(base),
+								of(template),
+								of(base),
 								tag(ConventionalItemTags.GOLD_INGOTS),
 								RecipeCategory.COMBAT,
 								result

@@ -1,10 +1,8 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "minecraft:crafting_transmute",
   "category": "equipment",
-  "ingredients": [
-	"nycto:halberd",
-	"nycto:garlic_wreath"
-  ],
+  "input": "nycto:halberd",
+  "material": "nycto:garlic_wreath",
   "result": {
 	"id": "nycto:garlic_coated_halberd"
   }

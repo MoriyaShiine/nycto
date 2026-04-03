@@ -1,10 +1,8 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "minecraft:crafting_transmute",
   "category": "equipment",
-  "ingredients": [
-	"nycto:halberd",
-	"nycto:aconite_garland"
-  ],
+  "input": "nycto:halberd",
+  "material": "nycto:aconite_garland",
   "result": {
 	"id": "nycto:aconite_coated_halberd"
   }
