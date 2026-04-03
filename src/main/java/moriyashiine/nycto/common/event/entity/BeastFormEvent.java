@@ -11,13 +11,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jspecify.annotations.Nullable;
 
 public class BeastFormEvent implements ModifyDestroySpeedEvent {
 	@Override
-	public float modify(Player player, ItemStack stack, BlockGetter level, BlockState state, @Nullable BlockPos pos) {
+	public float modify(Player player, ItemStack stack, Level level, BlockState state, @Nullable BlockPos pos) {
 		return canHarvestAsBeast(player, state) ? 4 : 1;
 	}
 
