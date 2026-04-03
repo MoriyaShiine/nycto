@@ -112,10 +112,10 @@ public class Nycto implements ModInitializer {
 		// BLOCK
 		EntitySleepEvents.ALLOW_BED.register(new CoffinEvent.AllowBed());
 		EntitySleepEvents.ALLOW_SLEEPING.register(new CoffinEvent.AllowSleeping());
-		ModifyDestroyProgressEvent.MULTIPLY_BASE.register(new ShearsEvent());
+		ModifyDestroySpeedEvent.MULTIPLY_BASE.register(new ShearsEvent());
 		// ENTITY
 		ModifyDamageTakenEvent.MULTIPLY_TOTAL.register(new AttributeEvent());
-		ModifyDestroyProgressEvent.MULTIPLY_BASE.register(new BeastFormEvent());
+		ModifyDestroySpeedEvent.MULTIPLY_BASE.register(new BeastFormEvent());
 		ServerEntityEvents.ENTITY_LOAD.register(new BloodEvent.Load());
 		ServerEntityEvents.ENTITY_UNLOAD.register(new BloodEvent.Unload());
 		ServerPlayerEvents.COPY_FROM.register(new BloodEvent.Copy());

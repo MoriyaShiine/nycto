@@ -6,16 +6,18 @@ package moriyashiine.nycto.common.event.entity;
 
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.tag.ModBlockTags;
-import moriyashiine.strawberrylib.api.event.ModifyDestroyProgressEvent;
+import moriyashiine.strawberrylib.api.event.ModifyDestroySpeedEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jspecify.annotations.Nullable;
 
-public class BeastFormEvent implements ModifyDestroyProgressEvent {
+public class BeastFormEvent implements ModifyDestroySpeedEvent {
 	@Override
-	public float modify(Player player, BlockState state, BlockGetter level, BlockPos pos) {
+	public float modify(Player player, ItemStack stack, BlockGetter level, BlockState state, @Nullable BlockPos pos) {
 		return canHarvestAsBeast(player, state) ? 4 : 1;
 	}
 
