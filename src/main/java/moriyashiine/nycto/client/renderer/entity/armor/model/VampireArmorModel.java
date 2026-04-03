@@ -22,9 +22,9 @@ import java.util.Set;
 public class VampireArmorModel<S extends HumanoidRenderState> extends HumanoidModel<S> {
 	public static final ArmorModelSet<ModelLayerLocation> MODEL_LAYERS = new ArmorModelSet<>("helmet", "chestplate", "leggings", "boots").map(s -> new ModelLayerLocation(Nycto.id("vampire_armor"), s));
 
-	public final ModelPart coatFlap;
-	public final ModelPart cape;
-	public final ModelPart capeMain;
+	private final ModelPart coatFlap;
+	private final ModelPart cape;
+	private final ModelPart capeMain;
 
 	public VampireArmorModel(ModelPart root) {
 		super(root);
@@ -47,8 +47,8 @@ public class VampireArmorModel<S extends HumanoidRenderState> extends HumanoidMo
 	}
 
 	private static MeshDefinition createBaseArmorMesh() {
-		MeshDefinition data = new MeshDefinition();
-		PartDefinition root = data.getRoot();
+		MeshDefinition mesh = new MeshDefinition();
+		PartDefinition root = mesh.getRoot();
 
 		PartDefinition head = root.addOrReplaceChild(PartNames.HEAD, CubeListBuilder.create().texOffs(66, 0).addBox(-4, -12, -4, 8, 6, 8, new CubeDeformation(0.55F)).texOffs(0, 112).addBox(-7, -5.5F, -7, 14, 1, 14, CubeDeformation.NONE), PartPose.ZERO);
 		head.addOrReplaceChild(PartNames.HAT, CubeListBuilder.create(), PartPose.ZERO);
@@ -76,7 +76,7 @@ public class VampireArmorModel<S extends HumanoidRenderState> extends HumanoidMo
 		rightLeg.addOrReplaceChild("right_leg_real", CubeListBuilder.create().texOffs(58, 16).addBox(-1.9F, 0, -2, 4, 12, 4, new CubeDeformation(0.35F)), PartPose.ZERO);
 		rightLeg.addOrReplaceChild(PartNames.RIGHT_FOOT, CubeListBuilder.create().texOffs(79, 65).addBox(-1.9F, 0, -2, 4, 12, 4, new CubeDeformation(0.355F)).texOffs(107, 103).mirror().addBox(-2.4F, 6, -2.5F, 5, 2, 5, new CubeDeformation(0.2F)).mirror(false), PartPose.ZERO);
 
-		return data;
+		return mesh;
 	}
 
 	@Override

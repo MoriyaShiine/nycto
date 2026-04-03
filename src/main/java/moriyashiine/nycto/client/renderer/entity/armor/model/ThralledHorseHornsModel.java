@@ -21,8 +21,8 @@ public class ThralledHorseHornsModel extends AbstractEquineModel<HorseRenderStat
 	}
 
 	public static LayerDefinition createBodyLayer() {
-		MeshDefinition data = new MeshDefinition();
-		PartDefinition root = data.getRoot();
+		MeshDefinition mesh = new MeshDefinition();
+		PartDefinition root = mesh.getRoot();
 
 		PartDefinition headParts = root.addOrReplaceChild("head_parts", CubeListBuilder.create(), PartPose.offsetAndRotation(0, 4, -12, (float) (Math.PI / 6), 0, 0));
 		PartDefinition head = headParts.addOrReplaceChild(PartNames.HEAD, CubeListBuilder.create(), PartPose.ZERO);
@@ -47,6 +47,6 @@ public class ThralledHorseHornsModel extends AbstractEquineModel<HorseRenderStat
 		middleHorn.addOrReplaceChild("middle_horn_tip_2", CubeListBuilder.create().texOffs(17, 35).addBox(-0.5F, -4, -0.5F, 1, 4, 1, new CubeDeformation(-0.01F)), PartPose.offsetAndRotation(1, -4.634F, -3.75F, -0.0873F, 3.1416F, 0.0873F));
 		middleHorn.addOrReplaceChild("middle_horn_tip_3", CubeListBuilder.create().texOffs(17, 35).addBox(-0.5F, -4, -0.5F, 1, 4, 1, new CubeDeformation(-0.01F)), PartPose.offsetAndRotation(0, -4.634F, -2.25F, 0, 3.1416F, 0));
 
-		return LayerDefinition.create(data, 64, 64);
+		return LayerDefinition.create(mesh, 64, 64);
 	}
 }

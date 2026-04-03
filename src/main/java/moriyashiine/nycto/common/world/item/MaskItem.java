@@ -20,17 +20,17 @@ import net.minecraft.world.item.component.TooltipDisplay;
 
 import java.util.function.Consumer;
 
-public class CapeItem extends Item {
-	public CapeItem(Properties properties) {
+public class MaskItem extends Item {
+	public MaskItem(Properties properties) {
 		super(properties);
 	}
 
 	@Override
 	public boolean overrideOtherStackedOnMe(ItemStack self, ItemStack other, Slot slot, ClickAction clickAction, Player player, SlotAccess carriedItem) {
 		if (clickAction == ClickAction.SECONDARY) {
-			Boolean showCape = self.get(ModComponentTypes.SHOW_CAPE);
-			if (showCape != null) {
-				self.set(ModComponentTypes.SHOW_CAPE, !showCape);
+			MaskVisibility maskVisibility = self.get(ModComponentTypes.MASK_VISIBILITY);
+			if (maskVisibility != null) {
+				self.set(ModComponentTypes.MASK_VISIBILITY, maskVisibility.cycle());
 				if (player.level().isClientSide()) {
 					player.playSound(SoundEvents.UI_BUTTON_CLICK.value(), 1, 1);
 				}
@@ -44,10 +44,21 @@ public class CapeItem extends Item {
 	public void appendHoverText(ItemStack itemStack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag tooltipFlag) {
 		MutableComponent icon = Component.literal("× ");
 		ChatFormatting formatting = ChatFormatting.DARK_RED;
-		if (itemStack.getOrDefault(ModComponentTypes.SHOW_CAPE, false)) {
-			icon = Component.literal("✔ ");
-			formatting = ChatFormatting.DARK_GREEN;
+		MaskVisibility maskVisibility = itemStack.get(ModComponentTypes.MASK_VISIBILITY);
+		if (maskVisibility != null) {
+			switch (maskVisibility) {
+				case VISIBLE -> {
+					icon = Component.literal("✔ ");
+					formatting = ChatFormatting.DARK_GREEN;
+				}
+				case REDUCED -> {
+					icon = Component.literal("- ");
+					formatting = ChatFormatting.GOLD;
+				}
+				case REMOVED -> {
+				}
+			}
+			builder.accept(icon.append(Component.translatable("tooltip.nycto.mask_visibility", Component.translatable(maskVisibility.getTranslationKey()))).withStyle(formatting));
 		}
-		builder.accept(icon.append(Component.translatable("tooltip.nycto.show_cape")).withStyle(formatting));
 	}
 }
