@@ -1,4 +1,11 @@
 ------------------------------------------------------
+Version 26.1-b4
+------------------------------------------------------
+- update to new strawberrylib
+- halberd upgrade recipes now keep their components when crafting
+- hunter masks can now be toggled between visible, reduced, and removed
+
+------------------------------------------------------
 Version 26.1-b3
 ------------------------------------------------------
 - update anthropophagy compat
