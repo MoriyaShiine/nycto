@@ -6,6 +6,7 @@ package moriyashiine.nycto.mixin.power.vampire.vampiricthrall.client;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import moriyashiine.nycto.api.NyctoClientAPI;
+import moriyashiine.nycto.api.renderer.entity.vampiricthrall.VampiricThrallRenderer;
 import moriyashiine.nycto.client.renderer.entity.state.VampiricThrallRenderState;
 import moriyashiine.nycto.common.Nycto;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -49,8 +50,8 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, S extend
 	@Inject(method = "extractRenderState(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;F)V", at = @At("TAIL"))
 	private void nycto$vampiricThrall(T entity, S state, float partialTicks, CallbackInfo ci) {
 		VampiricThrallRenderState vampiricThrallRenderState = new VampiricThrallRenderState();
-		if (NyctoClientAPI.hasThrallTexture(entity)) {
-			vampiricThrallRenderState.thrallTexture = Objects.requireNonNullElseGet(NyctoClientAPI.getSpecialThrallTexture(entity), () -> THRALL_IDENTIFIERS.computeIfAbsent(new Tuple<>(entity.getType(), entity.isBaby()), tuple -> {
+		if (NyctoClientAPI.hasVampiricThrallTexture(entity)) {
+			vampiricThrallRenderState.thrallTexture = Objects.requireNonNullElse(VampiricThrallRenderer.getTexture(entity), THRALL_IDENTIFIERS.computeIfAbsent(new Tuple<>(entity.getType(), entity.isBaby()), tuple -> {
 				Identifier key = BuiltInRegistries.ENTITY_TYPE.getKey(tuple.getA());
 				return Nycto.id("textures/entity/vampiric_thrall/" + key.getNamespace() + "/" + key.getPath() + (tuple.getB() ? "_baby" : "") + ".png");
 			}));

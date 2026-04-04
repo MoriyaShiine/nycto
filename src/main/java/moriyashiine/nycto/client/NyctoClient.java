@@ -6,6 +6,7 @@ package moriyashiine.nycto.client;
 
 import eu.midnightdust.lib.config.MidnightConfig;
 import moriyashiine.heartymeals.api.event.DisableHudRepositioningEvent;
+import moriyashiine.nycto.api.NyctoClientAPI;
 import moriyashiine.nycto.client.event.*;
 import moriyashiine.nycto.client.event.integration.HeartyMealsEvent;
 import moriyashiine.nycto.client.event.power.*;
@@ -36,6 +37,9 @@ import moriyashiine.nycto.client.renderer.entity.model.BloodBarrierModel;
 import moriyashiine.nycto.client.renderer.entity.model.DarkFormModel;
 import moriyashiine.nycto.client.renderer.entity.model.HunterModel;
 import moriyashiine.nycto.client.renderer.entity.model.VampireModel;
+import moriyashiine.nycto.client.renderer.entity.vampiricthrall.HorseVampiricThrallRenderer;
+import moriyashiine.nycto.client.renderer.entity.vampiricthrall.VexVampiricThrallRenderer;
+import moriyashiine.nycto.client.renderer.entity.vampiricthrall.WolfVampiricThrallRenderer;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.init.ModEntityTypes;
 import moriyashiine.nycto.common.init.ModItems;
@@ -76,6 +80,7 @@ import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import org.lwjgl.glfw.GLFW;
 
@@ -141,6 +146,10 @@ public class NyctoClient implements ClientModInitializer {
 		ModelLayerRegistry.registerArmorModelLayers(VampireArmorModel.MODEL_LAYERS, VampireArmorModel::createArmorMeshSet);
 		ModelLayerRegistry.registerArmorModelLayers(HunterArmorModel.MODEL_LAYERS, HunterArmorModel::createArmorMeshSet);
 		ModelLayerRegistry.registerModelLayer(ThralledHorseHornsModel.MODEL_LAYER, () -> ThralledHorseHornsModel.createBodyLayer().apply(MeshTransformer.scaling(1.1F)));
+
+		NyctoClientAPI.registerVampiricThrallRenderer(EntityType.HORSE, new HorseVampiricThrallRenderer());
+		NyctoClientAPI.registerVampiricThrallRenderer(EntityType.VEX, new VexVampiricThrallRenderer());
+		NyctoClientAPI.registerVampiricThrallRenderer(EntityType.WOLF, new WolfVampiricThrallRenderer());
 	}
 
 	private void initParticles() {
