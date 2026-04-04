@@ -17,7 +17,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 public class DarkForm extends Monster {
 	public static final int JUMP_COOLDOWN = 20;
 
-	private static final EntityDimensions CROUCHING_DIMENSIONS = EntityDimensions.scalable(0.8F, 2.2F);
+	private static final EntityDimensions CROUCHING_DIMENSIONS = EntityDimensions.scalable(0.8F, 1.9F).withEyeHeight(1.75F);
 
 	public final AnimationState idleAnimationState = new AnimationState();
 	public final AnimationState idleSneakAnimationState = new AnimationState();
