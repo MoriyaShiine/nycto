@@ -86,7 +86,10 @@ public class VampiricThrallEvent {
 
 		private static boolean shouldTarget(Mob mob, LivingEntity target) {
 			if (target.slib$isSurvival() && SLibUtils.shouldHurt(mob, target) && !NyctoAPI.isVampire(target) && !target.is(ModEntityTypeTags.CANNOT_BE_TARGETED_BY_THRALLS) && mob.hasLineOfSight(target)) {
-				return target.slib$isPlayer() || target instanceof Enemy;
+				if (target.slib$isPlayer() || target instanceof Enemy) {
+					VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.get(mob);
+					return vampiricThrallComponent.getWanderHome() == null || Math.sqrt(vampiricThrallComponent.getWanderHome().distToCenterSqr(target.position())) <= mob.getNavigation().getMaxPathLength();
+				}
 			}
 			return false;
 		}
