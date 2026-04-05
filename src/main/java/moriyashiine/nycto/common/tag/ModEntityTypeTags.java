@@ -19,5 +19,6 @@ public class ModEntityTypeTags {
 
 	public static final TagKey<EntityType<?>> CAN_BE_THRALLED = TagKey.create(Registries.ENTITY_TYPE, Nycto.id("can_be_thralled"));
 	public static final TagKey<EntityType<?>> CANNOT_BE_HYPNOTIZED = TagKey.create(Registries.ENTITY_TYPE, Nycto.id("cannot_be_hypnotized"));
+	public static final TagKey<EntityType<?>> CANNOT_BE_TARGETED_BY_THRALLS = TagKey.create(Registries.ENTITY_TYPE, Nycto.id("cannot_be_targeted_by_thralls"));
 	public static final TagKey<EntityType<?>> VILE_PRESENCE_IMMUNE = TagKey.create(Registries.ENTITY_TYPE, Nycto.id("vile_presence_immune"));
 }

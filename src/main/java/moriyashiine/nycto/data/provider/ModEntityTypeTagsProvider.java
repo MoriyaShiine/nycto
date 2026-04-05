@@ -84,6 +84,9 @@ public class ModEntityTypeTagsProvider extends FabricTagsProvider.EntityTypeTags
 		valueLookupBuilder(ModEntityTypeTags.CANNOT_BE_HYPNOTIZED)
 				.forceAddTag(ConventionalEntityTypeTags.BOSSES)
 				.add(EntityType.WARDEN);
+		valueLookupBuilder(ModEntityTypeTags.CANNOT_BE_TARGETED_BY_THRALLS)
+				.add(EntityType.CREAKING)
+				.add(EntityType.CREEPER);
 		valueLookupBuilder(ModEntityTypeTags.VILE_PRESENCE_IMMUNE)
 				.forceAddTag(EntityTypeTags.UNDEAD);
 

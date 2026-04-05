@@ -10,6 +10,7 @@ import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallCo
 import moriyashiine.nycto.common.event.power.util.HasOwnerEvent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.tag.ModEntityTypeTags;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.nycto.common.world.item.consumeeffects.FillBloodConsumeEffect;
 import moriyashiine.strawberrylib.api.event.TickEntityEvent;
@@ -84,7 +85,7 @@ public class VampiricThrallEvent {
 		}
 
 		private static boolean shouldTarget(Mob mob, LivingEntity target) {
-			if (target.slib$isSurvival() && SLibUtils.shouldHurt(mob, target) && !NyctoAPI.isVampire(target)) {
+			if (target.slib$isSurvival() && SLibUtils.shouldHurt(mob, target) && !NyctoAPI.isVampire(target) && !target.is(ModEntityTypeTags.CANNOT_BE_TARGETED_BY_THRALLS) && mob.hasLineOfSight(target)) {
 				return target.slib$isPlayer() || target instanceof Enemy;
 			}
 			return false;
