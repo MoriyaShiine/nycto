@@ -5,6 +5,7 @@ accessible class net/minecraft/world/effect/SaturationMobEffect
 accessible class net/minecraft/world/entity/monster/illager/Evoker$EvokerSummonSpellGoal
 
 accessible method net/minecraft/world/entity/Entity isInRain ()Z
+accessible method net/minecraft/world/entity/ai/navigation/PathNavigation getMaxPathLength ()F
 accessible method net/minecraft/world/entity/animal/wolf/Wolf getVariant ()Lnet/minecraft/core/Holder;
 accessible method net/minecraft/world/item/ToolMaterial createToolAttributes (FF)Lnet/minecraft/world/item/component/ItemAttributeModifiers;
 

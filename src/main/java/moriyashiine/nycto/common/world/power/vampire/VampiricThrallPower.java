@@ -69,7 +69,7 @@ public class VampiricThrallPower extends VampireActivePower {
 
 	public static void setThrall(Mob mob, @Nullable Player owner) {
 		VampireTransformation.setComponents(mob, owner != null);
-		ModEntityComponents.VAMPIRIC_THRALL.get(mob).setOwner(owner);
+		ModEntityComponents.VAMPIRIC_THRALL.get(mob).reset(owner);
 		HypnotizePower.forget(mob);
 		if (mob instanceof Raider raider) {
 			Raid raid = raider.getCurrentRaid();

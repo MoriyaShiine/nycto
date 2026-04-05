@@ -11,9 +11,11 @@ import moriyashiine.nycto.common.event.power.util.HasOwnerEvent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModPowers;
 import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.nycto.common.world.power.vampire.VampiricThrallPower;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -34,6 +36,7 @@ import java.util.UUID;
 
 public class VampiricThrallComponent extends HasOwnerComponent implements ServerTickingComponent {
 	private FollowMode followMode = FollowMode.FOLLOW;
+	private @Nullable BlockPos wanderHome = null;
 	private boolean alternateDrain = false;
 
 	public VampiricThrallComponent(Mob obj) {
@@ -44,6 +47,7 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 	public void readData(ValueInput input) {
 		super.readData(input);
 		followMode = FollowMode.valueOf(input.getStringOr("FollowMode", FollowMode.FOLLOW.name()));
+		wanderHome = input.read("WanderHome", BlockPos.CODEC).orElse(null);
 		alternateDrain = input.getBooleanOr("AlternateDrain", false);
 		if (ownerUuid != null && obj instanceof Villager villager && villager.level() instanceof ServerLevel level) {
 			villager.refreshBrain(level);
@@ -54,6 +58,9 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 	public void writeData(ValueOutput output) {
 		super.writeData(output);
 		output.putString("FollowMode", followMode.name());
+		if (wanderHome != null) {
+			output.store("WanderHome", BlockPos.CODEC, wanderHome);
+		}
 		output.putBoolean("AlternateDrain", alternateDrain);
 	}
 
@@ -83,6 +90,9 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 						obj.randomTeleport(owner.getX() + obj.getRandom().nextIntBetweenInclusive(-3, 3), owner.getY(), owner.getZ() + obj.getRandom().nextIntBetweenInclusive(-3, 3), false);
 					}
 				}
+				if (wanderHome != null && obj.getNavigation().isDone() && !NyctoUtil.isSurvivalNullable(obj.getTarget()) && !wanderHome.closerToCenterThan(obj.position(), obj.getNavigation().getMaxPathLength())) {
+					obj.getNavigation().moveTo(wanderHome.getX(), wanderHome.getY(), wanderHome.getZ(), 1);
+				}
 			}
 		}
 	}
@@ -92,13 +102,16 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 		ModEntityComponents.VAMPIRIC_THRALL.sync(obj);
 	}
 
-	@Nullable
-	public UUID getOwnerUuid() {
+	public @Nullable UUID getOwnerUuid() {
 		return ownerUuid;
 	}
 
 	public FollowMode getFollowMode() {
 		return hasFollowModes() ? followMode : FollowMode.NONE;
+	}
+
+	public @Nullable BlockPos getWanderHome() {
+		return wanderHome;
 	}
 
 	public boolean cannotWanderIfThralled() {
@@ -121,6 +134,14 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 			case WANDER -> hasDefendMode() ? FollowMode.DEFEND : FollowMode.FOLLOW;
 			default -> FollowMode.FOLLOW;
 		};
+		wanderHome = followMode.canWander ? obj.blockPosition() : null;
+	}
+
+	public void reset(@Nullable Player owner) {
+		setOwner(owner);
+		followMode = FollowMode.FOLLOW;
+		wanderHome = null;
+		alternateDrain = false;
 	}
 
 	public enum FollowMode {
