@@ -49,14 +49,15 @@ public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingCo
 
 	@Override
 	public void tick() {
-		final int actualMax = 24;
-		int maxDistance = enabled ? actualMax : 0;
-		if (distance < maxDistance) {
-			distance += 2;
-		} else if (distance > maxDistance) {
-			distance -= 4;
+		final int maxDistance = 24;
+		if (enabled) {
+			if (distance < maxDistance) {
+				distance += 2;
+			}
+		} else {
+			distance = 0;
 		}
-		distance = Mth.clamp(distance, 0, actualMax);
+		distance = Mth.clamp(distance, 0, maxDistance);
 		if (renderTicks > 0) {
 			renderTicks--;
 		}
