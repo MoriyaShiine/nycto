@@ -1,4 +1,18 @@
 ------------------------------------------------------
+Version 26.1-b5
+------------------------------------------------------
+- add registerVampiricThrallRenderer client api method
+- keen senses now shows the health of entities
+- keen senses now disables instantly
+- add banner patterns for vampire bat, wolf skull, and hunter's mark
+  - hunters on horses now spawn with hunter's mark shields
+- dark form can now crouch under 2 blocks
+- vampiric thralls in wander or defend mode now patrol the position they were at when set to those modes
+- vampiric thralls in defend mode no longer target entities outside the range of their home position
+- vampiric thralls in defend mode no longer target entities they can't see
+- vampiric thralls in defend mode no longer target creakings or creepers
+
+------------------------------------------------------
 Version 26.1-b4
 ------------------------------------------------------
 - update to new strawberrylib
