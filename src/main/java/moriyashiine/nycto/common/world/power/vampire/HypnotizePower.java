@@ -24,7 +24,6 @@ import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
-import org.jspecify.annotations.Nullable;
 
 public class HypnotizePower extends VampireActivePower {
 	public static final int RANGE = 8;
@@ -76,7 +75,7 @@ public class HypnotizePower extends VampireActivePower {
 			return false;
 		}
 		if (target.slib$isPlayer() || ModEntityComponents.HYPNOTIZED.isProvidedBy(target)) {
-			@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(target);
+			VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(target);
 			if (vampiricThrallComponent != null && vampiricThrallComponent.hasOwner()) {
 				return false;
 			}
@@ -84,7 +83,7 @@ public class HypnotizePower extends VampireActivePower {
 				if (target.slib$isPlayer()) {
 					return true;
 				}
-				@Nullable HypnotizedComponent hypnotizedComponent = ModEntityComponents.HYPNOTIZED.getNullable(target);
+				HypnotizedComponent hypnotizedComponent = ModEntityComponents.HYPNOTIZED.getNullable(target);
 				return hypnotizedComponent != null && hypnotizedComponent.hasOwner();
 			}
 			return target.getHealth() <= THRESHOLD && SLibUtils.shouldHurt(player, target);

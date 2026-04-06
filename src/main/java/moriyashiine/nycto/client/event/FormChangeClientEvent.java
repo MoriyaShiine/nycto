@@ -13,7 +13,6 @@ import net.minecraft.client.model.ambient.BatModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ambient.Bat;
-import org.jspecify.annotations.Nullable;
 
 public class FormChangeClientEvent implements ClientTickEvents.EndTick {
 	public static BatModel batModel = null;
@@ -22,7 +21,7 @@ public class FormChangeClientEvent implements ClientTickEvents.EndTick {
 	@Override
 	public void onEndTick(Minecraft client) {
 		if (client.player != null) {
-			@Nullable LivingEntity replacement = SLibUtils.getModelReplacement(client.player);
+			LivingEntity replacement = SLibUtils.getModelReplacement(client.player);
 			if (replacement instanceof DarkForm) {
 				darkFormModel = new DarkFormModel(client.getEntityModels().bakeLayer(DarkFormModel.LAYER));
 			} else {

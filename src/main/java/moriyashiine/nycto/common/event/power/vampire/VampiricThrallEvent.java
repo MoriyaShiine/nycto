@@ -99,7 +99,7 @@ public class VampiricThrallEvent {
 		@Override
 		public InteractionResult interact(Player player, Level level, InteractionHand hand, Entity entity, @Nullable EntityHitResult hitResult) {
 			if (player.isShiftKeyDown() && player.slib$exists()) {
-				@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
+				VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
 				if (vampiricThrallComponent != null) {
 					if (vampiricThrallComponent.hasOwner()) {
 						Set<ApplyStatusEffectsConsumeEffect> effects = new HashSet<>();

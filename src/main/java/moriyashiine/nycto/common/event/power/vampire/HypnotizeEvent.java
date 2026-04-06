@@ -10,7 +10,6 @@ import moriyashiine.nycto.common.init.ModMobEffects;
 import moriyashiine.strawberrylib.api.event.AfterDamageIncludingDeathEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
-import org.jspecify.annotations.Nullable;
 
 public class HypnotizeEvent implements AfterDamageIncludingDeathEvent {
 	@Override
@@ -24,7 +23,7 @@ public class HypnotizeEvent implements AfterDamageIncludingDeathEvent {
 		if (entity.slib$isPlayer()) {
 			return source.getEntity() != null;
 		}
-		@Nullable HypnotizedComponent hypnotizedComponent = ModEntityComponents.HYPNOTIZED.getNullable(entity);
+		HypnotizedComponent hypnotizedComponent = ModEntityComponents.HYPNOTIZED.getNullable(entity);
 		return hypnotizedComponent != null && hypnotizedComponent.isOwner(source.getEntity());
 	}
 }

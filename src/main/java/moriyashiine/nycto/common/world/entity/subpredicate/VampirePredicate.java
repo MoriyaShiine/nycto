@@ -51,7 +51,7 @@ public record VampirePredicate(Optional<Boolean> vampire,
 		).apply(instance, PowerCountPredicate::new));
 
 		public boolean test(Entity entity) {
-			@Nullable TransformationComponent transformationComponent = ModEntityComponents.TRANSFORMATION.getNullable(entity);
+			TransformationComponent transformationComponent = ModEntityComponents.TRANSFORMATION.getNullable(entity);
 			if (transformationComponent != null) {
 				int count = 0;
 				for (PowerInstance instance : transformationComponent.getPowers()) {

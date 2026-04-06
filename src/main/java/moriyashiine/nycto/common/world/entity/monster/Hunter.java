@@ -206,8 +206,7 @@ public class Hunter extends Pillager {
 	protected void dropCustomDeathLoot(ServerLevel level, DamageSource source, boolean killedByPlayer) {
 	}
 
-	@Nullable
-	public Player getUltimateTarget() {
+	public @Nullable Player getUltimateTarget() {
 		return ultimateTarget == null ? null : level().getPlayerByUUID(ultimateTarget);
 	}
 
@@ -221,8 +220,7 @@ public class Hunter extends Pillager {
 		contractPathTicks = 2400;
 	}
 
-	@Nullable
-	public BlockPos getContractPos() {
+	public @Nullable BlockPos getContractPos() {
 		return contractPos;
 	}
 

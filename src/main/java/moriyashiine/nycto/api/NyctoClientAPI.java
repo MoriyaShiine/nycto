@@ -14,7 +14,6 @@ import moriyashiine.nycto.common.init.ModEntityComponents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import org.jspecify.annotations.Nullable;
 
 public class NyctoClientAPI {
 	public static boolean isHighlightingPower(Player player, Power power) {
@@ -23,11 +22,11 @@ public class NyctoClientAPI {
 	}
 
 	public static boolean hasVampiricThrallTexture(LivingEntity entity) {
-		@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
+		VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
 		if (vampiricThrallComponent != null && vampiricThrallComponent.hasOwner()) {
 			return true;
 		}
-		@Nullable VampiricVexComponent vampiricVexComponent = ModEntityComponents.VAMPIRIC_VEX.getNullable(entity);
+		VampiricVexComponent vampiricVexComponent = ModEntityComponents.VAMPIRIC_VEX.getNullable(entity);
 		return vampiricVexComponent != null && vampiricVexComponent.hasOwner();
 	}
 

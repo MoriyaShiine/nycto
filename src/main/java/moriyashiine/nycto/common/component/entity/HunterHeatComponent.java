@@ -19,7 +19,6 @@ import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
-import org.jspecify.annotations.Nullable;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
 public class HunterHeatComponent implements ServerTickingComponent {
@@ -100,7 +99,7 @@ public class HunterHeatComponent implements ServerTickingComponent {
 			if (target instanceof Raider raider && raider.getCurrentRaid() != null) {
 				return false;
 			}
-			@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(target);
+			VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(target);
 			return vampiricThrallComponent == null || !vampiricThrallComponent.hasOwner();
 		}
 		return false;

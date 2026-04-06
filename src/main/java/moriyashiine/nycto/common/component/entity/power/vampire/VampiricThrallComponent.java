@@ -36,7 +36,8 @@ import java.util.UUID;
 
 public class VampiricThrallComponent extends HasOwnerComponent implements ServerTickingComponent {
 	private FollowMode followMode = FollowMode.FOLLOW;
-	private @Nullable BlockPos wanderHome = null;
+	@Nullable
+	private BlockPos wanderHome = null;
 	private boolean alternateDrain = false;
 
 	public VampiricThrallComponent(Mob obj) {

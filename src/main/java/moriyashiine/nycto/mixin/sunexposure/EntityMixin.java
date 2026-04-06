@@ -7,7 +7,6 @@ package moriyashiine.nycto.mixin.sunexposure;
 import moriyashiine.nycto.common.component.entity.SunExposureComponent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import net.minecraft.world.entity.Entity;
-import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class EntityMixin {
 	@Inject(method = "clearFire", at = @At("HEAD"), cancellable = true)
 	private void nycto$sunExposure(CallbackInfo ci) {
-		@Nullable SunExposureComponent sunExposureComponent = ModEntityComponents.SUN_EXPOSURE.getNullable(this);
+		SunExposureComponent sunExposureComponent = ModEntityComponents.SUN_EXPOSURE.getNullable(this);
 		if (sunExposureComponent != null && sunExposureComponent.isExposed()) {
 			ci.cancel();
 		}
@@ -25,7 +24,7 @@ public class EntityMixin {
 
 	@Inject(method = "playEntityOnFireExtinguishedSound", at = @At("HEAD"), cancellable = true)
 	private void nycto$sunExposureSound(CallbackInfo ci) {
-		@Nullable SunExposureComponent sunExposureComponent = ModEntityComponents.SUN_EXPOSURE.getNullable(this);
+		SunExposureComponent sunExposureComponent = ModEntityComponents.SUN_EXPOSURE.getNullable(this);
 		if (sunExposureComponent != null && sunExposureComponent.isExposed()) {
 			ci.cancel();
 		}

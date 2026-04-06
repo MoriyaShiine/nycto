@@ -20,7 +20,6 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import org.jspecify.annotations.Nullable;
 
 import java.util.Map;
 
@@ -43,7 +42,7 @@ public class ThralledHorseHornsLayer extends RenderLayer<HorseRenderState, Horse
 
 	@Override
 	public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int lightCoords, HorseRenderState state, float yRot, float xRot) {
-		@Nullable VampiricThrallRenderState vampiricThrallRenderState = state.getData(VampiricThrallRenderState.KEY);
+		VampiricThrallRenderState vampiricThrallRenderState = state.getData(VampiricThrallRenderState.KEY);
 		if (vampiricThrallRenderState != null && vampiricThrallRenderState.thrallTexture != null && TEXTURE_MAP.containsKey(state.bodyArmorItem.getItem())) {
 			int color = 0xFFFFFFFF;
 			if (state.bodyArmorItem.has(DataComponents.DYED_COLOR)) {

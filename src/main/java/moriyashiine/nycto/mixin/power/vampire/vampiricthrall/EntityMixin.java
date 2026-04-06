@@ -8,7 +8,6 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import net.minecraft.world.entity.Entity;
-import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -17,9 +16,9 @@ public class EntityMixin {
 	@ModifyReturnValue(method = "considersEntityAsAlly", at = @At("RETURN"))
 	private boolean nycto$vampiricThrall(boolean original, Entity other) {
 		if (!original) {
-			@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(this);
+			VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(this);
 			if (vampiricThrallComponent != null && vampiricThrallComponent.getOwnerUuid() != null) {
-				@Nullable VampiricThrallComponent otherVampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(other);
+				VampiricThrallComponent otherVampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(other);
 				if (otherVampiricThrallComponent != null && vampiricThrallComponent.getOwnerUuid().equals(otherVampiricThrallComponent.getOwnerUuid())) {
 					return true;
 				}

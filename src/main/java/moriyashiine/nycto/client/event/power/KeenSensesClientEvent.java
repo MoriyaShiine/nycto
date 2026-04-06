@@ -18,7 +18,6 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import org.jspecify.annotations.Nullable;
 
 import java.util.OptionalInt;
 
@@ -51,7 +50,7 @@ public class KeenSensesClientEvent {
 			if (keenSensesDistance > 0 && entity instanceof LivingEntity living && living.slib$exists()) {
 				if (living.slib$isPlayer() || living instanceof Mob) {
 					int distance = keenSensesDistance;
-					@Nullable MistFormComponent mistFormComponent = ModEntityComponents.MIST_FORM.getNullable(living);
+					MistFormComponent mistFormComponent = ModEntityComponents.MIST_FORM.getNullable(living);
 					if (mistFormComponent != null && mistFormComponent.isEnabled()) {
 						distance /= 4;
 					}

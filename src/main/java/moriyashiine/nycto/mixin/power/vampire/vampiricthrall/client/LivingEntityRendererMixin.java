@@ -18,7 +18,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -40,7 +39,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, S extend
 
 	@ModifyExpressionValue(method = "getRenderType", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/LivingEntityRenderer;getTextureLocation(Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;)Lnet/minecraft/resources/Identifier;"))
 	private Identifier nycto$vampiricThrall(Identifier original, S state) {
-		@Nullable VampiricThrallRenderState vampiricThrallRenderState = state.getData(VampiricThrallRenderState.KEY);
+		VampiricThrallRenderState vampiricThrallRenderState = state.getData(VampiricThrallRenderState.KEY);
 		if (vampiricThrallRenderState != null && vampiricThrallRenderState.thrallTexture != null) {
 			return vampiricThrallRenderState.thrallTexture;
 		}

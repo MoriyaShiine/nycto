@@ -10,7 +10,6 @@ import moriyashiine.nycto.common.Nycto;
 import net.minecraft.client.renderer.entity.layers.SpinAttackEffectLayer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.resources.Identifier;
-import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,7 +22,7 @@ public class SpinAttackEffectLayerMixin {
 
 	@ModifyArg(method = "submit(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;ILnet/minecraft/client/renderer/entity/state/AvatarRenderState;FF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/SubmitNodeCollector;submitModel(Lnet/minecraft/client/model/Model;Ljava/lang/Object;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/resources/Identifier;IIILnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;)V"))
 	private Identifier nycto$bloodrush(Identifier texture, @Local(argsOnly = true) AvatarRenderState state) {
-		@Nullable BloodrushRenderState bloodrushRenderState = state.getData(BloodrushRenderState.KEY);
+		BloodrushRenderState bloodrushRenderState = state.getData(BloodrushRenderState.KEY);
 		if (bloodrushRenderState != null && bloodrushRenderState.usingBloodrushLenient) {
 			texture = BLOODRUSH_RIPTIDE_TEXTURE;
 		}

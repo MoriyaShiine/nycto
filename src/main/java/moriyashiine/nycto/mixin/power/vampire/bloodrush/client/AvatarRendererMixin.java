@@ -15,7 +15,6 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.world.entity.Avatar;
-import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -34,7 +33,7 @@ public abstract class AvatarRendererMixin<AvatarlikeEntity extends Avatar & Clie
 
 	@Inject(method = "extractRenderState(Lnet/minecraft/world/entity/Avatar;Lnet/minecraft/client/renderer/entity/state/AvatarRenderState;F)V", at = @At("TAIL"))
 	private void nycto$bloodrush(AvatarlikeEntity entity, AvatarRenderState state, float partialTicks, CallbackInfo ci) {
-		@Nullable BloodrushComponent bloodrushComponent = ModEntityComponents.BLOODRUSH.getNullable(entity);
+		BloodrushComponent bloodrushComponent = ModEntityComponents.BLOODRUSH.getNullable(entity);
 		if (bloodrushComponent != null) {
 			BloodrushRenderState bloodrushRenderState = new BloodrushRenderState();
 			bloodrushRenderState.usingBloodrush = bloodrushComponent.isActive(false);

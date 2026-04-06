@@ -99,7 +99,7 @@ public class VampireEvent {
 				if (!qualityBlood && NyctoAPI.hasPower(player, ModPowers.RICH_TASTES)) {
 					return InteractionResult.PASS;
 				}
-				@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
+				VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
 				if (vampiricThrallComponent != null && vampiricThrallComponent.isOwner(player)) {
 					return InteractionResult.PASS;
 				}
@@ -210,7 +210,7 @@ public class VampireEvent {
 
 	public static class BreakHarming implements PlayerBlockBreakEvents.After {
 		@Override
-		public void afterBlockBreak(Level level, Player player, BlockPos pos, BlockState state, @org.jspecify.annotations.Nullable BlockEntity blockEntity) {
+		public void afterBlockBreak(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity) {
 			if (state.is(ModBlockTags.HURTS_VAMPIRES) && !player.getMainHandItem().is(ConventionalItemTags.SHEAR_TOOLS) && NyctoUtil.affectedByHurtsVampiresTag(player)) {
 				NyctoUtil.hurtWithToxicTouch(player, player.getMaxHealth() / 5);
 			}

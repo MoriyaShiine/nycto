@@ -8,7 +8,6 @@ import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.nycto.common.world.entity.monster.Hunter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
-import org.jspecify.annotations.Nullable;
 
 public class PathToContractPosGoal extends Goal {
 	private final Hunter mob;
@@ -24,7 +23,7 @@ public class PathToContractPosGoal extends Goal {
 
 	@Override
 	public void tick() {
-		@Nullable BlockPos contractPos = mob.getContractPos();
+		BlockPos contractPos = mob.getContractPos();
 		if (contractPos != null) {
 			if (contractPos.closerToCenterThan(mob.position(), 5)) {
 				mob.getNavigation().stop();

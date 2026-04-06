@@ -39,13 +39,13 @@ public abstract class ActivePower extends Power {
 		PlayAnchoredSoundPayload.send(receiver, origin, sound);
 	}
 
-	@Nullable
-	public abstract SoundEvent getUseSound(Player player);
+	public @Nullable
+	abstract SoundEvent getUseSound(Player player);
 
 	public abstract void use(ServerLevel level, ServerPlayer player);
 
 	public final void playUseSound(ServerPlayer player) {
-		@Nullable SoundEvent useSound = getUseSound(player);
+		SoundEvent useSound = getUseSound(player);
 		if (useSound != null) {
 			sendUseSoundPayload(player, player, useSound);
 			if (shouldBroadcastUseSound()) {

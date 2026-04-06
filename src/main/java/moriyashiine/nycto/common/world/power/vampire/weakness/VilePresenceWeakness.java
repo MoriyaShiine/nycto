@@ -17,7 +17,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.player.Player;
-import org.jspecify.annotations.Nullable;
 
 public class VilePresenceWeakness extends Weakness {
 	@Override
@@ -65,7 +64,7 @@ public class VilePresenceWeakness extends Weakness {
 		if (entity instanceof TamableAnimal tameable && tameable.isTame()) {
 			return false;
 		}
-		@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
+		VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
 		return vampiricThrallComponent == null || !vampiricThrallComponent.hasOwner();
 	}
 }

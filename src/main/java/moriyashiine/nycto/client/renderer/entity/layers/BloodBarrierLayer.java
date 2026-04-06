@@ -18,7 +18,6 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
-import org.jspecify.annotations.Nullable;
 
 public class BloodBarrierLayer<S extends LivingEntityRenderState, M extends EntityModel<S>> extends RenderLayer<S, M> {
 	private static final Identifier TEXTURE = Nycto.id("textures/entity/blood_barrier/blood_barrier.png");
@@ -32,7 +31,7 @@ public class BloodBarrierLayer<S extends LivingEntityRenderState, M extends Enti
 
 	@Override
 	public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int lightCoords, S state, float yRot, float xRot) {
-		@Nullable BloodBarrierRenderState bloodBarrierRenderState = state.getData(BloodBarrierRenderState.KEY);
+		BloodBarrierRenderState bloodBarrierRenderState = state.getData(BloodBarrierRenderState.KEY);
 		if (bloodBarrierRenderState != null) {
 			for (int i = 0; i < bloodBarrierRenderState.bloodBarriers; i++) {
 				poseStack.pushPose();

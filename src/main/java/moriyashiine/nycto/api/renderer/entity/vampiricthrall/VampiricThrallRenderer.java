@@ -17,8 +17,7 @@ public interface VampiricThrallRenderer<T extends LivingEntity> {
 	Map<EntityType<?>, VampiricThrallRenderer<?>> CUSTOM_RENDERERS = new HashMap<>();
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
-	@Nullable
-	static Identifier getTexture(LivingEntity entity) {
+	static @Nullable Identifier getTexture(LivingEntity entity) {
 		VampiricThrallRenderer renderer = CUSTOM_RENDERERS.get(entity.getType());
 		if (renderer != null) {
 			return renderer.getCustomTexture(entity);

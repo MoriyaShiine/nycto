@@ -17,7 +17,6 @@ import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
-import org.jspecify.annotations.Nullable;
 
 public abstract class AbstractCarnageAuraLayer<S extends EntityRenderState, M extends EntityModel<S>> extends EnergySwirlLayer<S, M> {
 	private static final Identifier TEXTURE = Nycto.id("textures/entity/carnage/carnage_aura.png");
@@ -38,7 +37,7 @@ public abstract class AbstractCarnageAuraLayer<S extends EntityRenderState, M ex
 
 	@Override
 	protected boolean isPowered(S state) {
-		@Nullable CarnageRenderState carnageRenderState = state.getData(CarnageRenderState.KEY);
+		CarnageRenderState carnageRenderState = state.getData(CarnageRenderState.KEY);
 		return carnageRenderState != null && carnageRenderState.carnageOpacity > 0;
 	}
 

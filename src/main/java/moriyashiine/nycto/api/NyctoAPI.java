@@ -86,7 +86,7 @@ public class NyctoAPI {
 	}
 
 	public static void applyHealBlock(LivingEntity entity, int ticks, @Nullable Entity lifeStealer) {
-		@Nullable HaemogenesisComponent haemogenesisComponent = ModEntityComponents.HAEMOGENESIS.getNullable(entity);
+		HaemogenesisComponent haemogenesisComponent = ModEntityComponents.HAEMOGENESIS.getNullable(entity);
 		if (haemogenesisComponent == null || !haemogenesisComponent.isHealing()) {
 			if (NyctoUtil.hasHealBlockResistance(entity)) {
 				ticks = (int) (ticks * 2 / 3F);
@@ -110,7 +110,7 @@ public class NyctoAPI {
 		if (entity == null) {
 			return false;
 		}
-		@Nullable VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
+		VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
 		if (vampiricThrallComponent != null && vampiricThrallComponent.hasOwner()) {
 			return true;
 		}
@@ -126,12 +126,12 @@ public class NyctoAPI {
 	}
 
 	public static boolean hasRespawnLeniency(LivingEntity entity) {
-		@Nullable RespawnLeniencyComponent respawnLeniencyComponent = ModEntityComponents.RESPAWN_LENIENCY.getNullable(entity);
+		RespawnLeniencyComponent respawnLeniencyComponent = ModEntityComponents.RESPAWN_LENIENCY.getNullable(entity);
 		return respawnLeniencyComponent != null && respawnLeniencyComponent.hasLeniency();
 	}
 
 	public static void giveRespawnLeniency(LivingEntity entity) {
-		@Nullable RespawnLeniencyComponent respawnLeniencyComponent = ModEntityComponents.RESPAWN_LENIENCY.getNullable(entity);
+		RespawnLeniencyComponent respawnLeniencyComponent = ModEntityComponents.RESPAWN_LENIENCY.getNullable(entity);
 		if (respawnLeniencyComponent != null) {
 			respawnLeniencyComponent.giveLeniency();
 		}

@@ -61,7 +61,7 @@ public class DarkFormPower extends VampireActivePower implements FormChanger {
 		if (entity == null) {
 			return false;
 		}
-		@Nullable DarkFormComponent darkFormComponent = ModEntityComponents.DARK_FORM.getNullable(entity);
+		DarkFormComponent darkFormComponent = ModEntityComponents.DARK_FORM.getNullable(entity);
 		return darkFormComponent != null && darkFormComponent.isEnabled();
 	}
 }

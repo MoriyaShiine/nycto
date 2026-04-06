@@ -14,7 +14,6 @@ import net.minecraft.client.renderer.entity.layers.EnergySwirlLayer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
-import org.jspecify.annotations.Nullable;
 
 public class BloodrushAuraLayer extends EnergySwirlLayer<AvatarRenderState, PlayerModel> {
 	public static final ModelLayerLocation LAYER = new ModelLayerLocation(Nycto.id("player"), "bloodrush_aura");
@@ -30,7 +29,7 @@ public class BloodrushAuraLayer extends EnergySwirlLayer<AvatarRenderState, Play
 
 	@Override
 	protected boolean isPowered(AvatarRenderState state) {
-		@Nullable BloodrushRenderState bloodrushRenderState = state.getData(BloodrushRenderState.KEY);
+		BloodrushRenderState bloodrushRenderState = state.getData(BloodrushRenderState.KEY);
 		return bloodrushRenderState != null && bloodrushRenderState.usingBloodrush;
 	}
 
