@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+	"has_blood_bottle": {
+	  "conditions": {
+		"items": [
+		  {
+			"items": "nycto:blood_bottle"
+		  }
+		]
+	  },
+	  "trigger": "minecraft:inventory_changed"
+	},
+	"has_the_recipe": {
+	  "conditions": {
+		"recipe": "nycto:vampire_bat_banner_pattern"
+	  },
+	  "trigger": "minecraft:recipe_unlocked"
+	}
+  },
+  "requirements": [
+	[
+	  "has_the_recipe",
+	  "has_blood_bottle"
+	]
+  ],
+  "rewards": {
+	"recipes": [
+	  "nycto:vampire_bat_banner_pattern"
+	]
+  }
+}

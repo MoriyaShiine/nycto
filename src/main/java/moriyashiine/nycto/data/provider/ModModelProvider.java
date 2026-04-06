@@ -103,6 +103,9 @@ public class ModModelProvider extends FabricModelProvider {
 		generators.generateFlatItem(ModItems.HUNTER_CONTRACT, ModelTemplates.FLAT_ITEM);
 		generators.generateFlatItem(ModItems.VAMPIRE_HUNTER_CONTRACT, ModelTemplates.FLAT_ITEM);
 		generators.generateFlatItem(ModItems.WEREWOLF_HUNTER_CONTRACT, ModelTemplates.FLAT_ITEM);
+		generators.generateFlatItem(ModItems.VAMPIRE_BAT_BANNER_PATTERN, ModelTemplates.FLAT_ITEM);
+		generators.generateFlatItem(ModItems.WOLF_SKULL_BANNER_PATTERN, ModelTemplates.FLAT_ITEM);
+		generators.generateFlatItem(ModItems.HUNTERS_MARK_BANNER_PATTERN, ModelTemplates.FLAT_ITEM);
 		generators.generateFlatItem(ModItems.VAMPIRE_SPAWN_EGG, ModelTemplates.FLAT_ITEM);
 		generators.generateFlatItem(ModItems.HUNTER_SPAWN_EGG, ModelTemplates.FLAT_ITEM);
 

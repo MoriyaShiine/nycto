@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+	"has_aconite_placeholder": {
+	  "conditions": {
+		"items": [
+		  {
+			"items": "nycto:aconite"
+		  }
+		]
+	  },
+	  "trigger": "minecraft:inventory_changed"
+	},
+	"has_the_recipe": {
+	  "conditions": {
+		"recipe": "nycto:wolf_skull_banner_pattern"
+	  },
+	  "trigger": "minecraft:recipe_unlocked"
+	}
+  },
+  "requirements": [
+	[
+	  "has_the_recipe",
+	  "has_aconite_placeholder"
+	]
+  ],
+  "rewards": {
+	"recipes": [
+	  "nycto:wolf_skull_banner_pattern"
+	]
+  }
+}

@@ -8,6 +8,7 @@ import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.api.world.item.HunterContractItem;
 import moriyashiine.nycto.api.world.item.TransformationCheckerBlockItem;
 import moriyashiine.nycto.common.Nycto;
+import moriyashiine.nycto.common.tag.ModBannerPatternTags;
 import moriyashiine.nycto.common.world.entity.monster.Hunter;
 import moriyashiine.nycto.common.world.item.*;
 import moriyashiine.strawberrylib.api.objects.records.ModifierTrio;
@@ -136,6 +137,10 @@ public class ModItems {
 	public static final Item VAMPIRE_HUNTER_CONTRACT = registerItem("vampire_hunter_contract", settings -> new HunterContractItem(settings, Hunter.HunterType.VAMPIRE));
 	public static final Item WEREWOLF_HUNTER_CONTRACT = registerItem("werewolf_hunter_contract", settings -> new HunterContractItem(settings, Hunter.HunterType.WEREWOLF));
 
+	public static final Item VAMPIRE_BAT_BANNER_PATTERN = registerItem("vampire_bat_banner_pattern", properties().stacksTo(1).delayedComponent(DataComponents.PROVIDES_BANNER_PATTERNS, context -> context.getOrThrow(ModBannerPatternTags.PATTERN_ITEM_VAMPIRE_BAT)));
+	public static final Item WOLF_SKULL_BANNER_PATTERN = registerItem("wolf_skull_banner_pattern", properties().stacksTo(1).delayedComponent(DataComponents.PROVIDES_BANNER_PATTERNS, context -> context.getOrThrow(ModBannerPatternTags.PATTERN_ITEM_WOLF_SKULL)));
+	public static final Item HUNTERS_MARK_BANNER_PATTERN = registerItem("hunters_mark_banner_pattern", properties().stacksTo(1).delayedComponent(DataComponents.PROVIDES_BANNER_PATTERNS, context -> context.getOrThrow(ModBannerPatternTags.PATTERN_ITEM_HUNTERS_MARK)));
+
 	public static final Item VAMPIRE_SPAWN_EGG = registerItem("vampire_spawn_egg", SpawnEggItem::new, properties().spawnEgg(ModEntityTypes.VAMPIRE));
 	public static final Item HUNTER_SPAWN_EGG = registerItem("hunter_spawn_egg", SpawnEggItem::new, properties().spawnEgg(ModEntityTypes.HUNTER));
 
@@ -225,6 +230,10 @@ public class ModItems {
 			output.accept(HUNTER_CONTRACT);
 			output.accept(VAMPIRE_HUNTER_CONTRACT);
 			output.accept(WEREWOLF_HUNTER_CONTRACT);
+
+			output.accept(VAMPIRE_BAT_BANNER_PATTERN);
+			output.accept(WOLF_SKULL_BANNER_PATTERN);
+			output.accept(HUNTERS_MARK_BANNER_PATTERN);
 
 			output.accept(VAMPIRE_SPAWN_EGG);
 			output.accept(HUNTER_SPAWN_EGG);

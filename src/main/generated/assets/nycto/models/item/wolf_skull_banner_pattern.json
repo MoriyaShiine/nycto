@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+	"layer0": "nycto:item/wolf_skull_banner_pattern"
+  }
+}

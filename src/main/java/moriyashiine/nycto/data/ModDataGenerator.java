@@ -4,10 +4,7 @@
 
 package moriyashiine.nycto.data;
 
-import moriyashiine.nycto.common.init.ModDamageTypes;
-import moriyashiine.nycto.common.init.ModTimelines;
-import moriyashiine.nycto.common.init.ModVillagerTrades;
-import moriyashiine.nycto.common.init.ModWorldGeneration;
+import moriyashiine.nycto.common.init.*;
 import moriyashiine.nycto.data.provider.*;
 import moriyashiine.nycto.data.provider.integration.anthropophagy.NyctoFleshDropsProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
@@ -21,6 +18,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
 	public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
 		FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 		pack.addProvider(ModAdvancementProvider::new);
+		pack.addProvider(ModBannerPatternTagsProvider::new);
 		pack.addProvider(ModBiomeTagsProvider::new);
 		pack.addProvider(ModBlockLootSubProvider::new);
 		FabricTagsProvider.BlockTagsProvider blockTagProvider = pack.addProvider(ModBlockTagsProvider::new);
@@ -46,6 +44,7 @@ public class ModDataGenerator implements DataGeneratorEntrypoint {
 	public void buildRegistry(RegistrySetBuilder registryBuilder) {
 		registryBuilder.add(Registries.CONFIGURED_FEATURE, ModWorldGeneration::bootstrapConfigured);
 		registryBuilder.add(Registries.PLACED_FEATURE, ModWorldGeneration::bootstrapPlaced);
+		registryBuilder.add(Registries.BANNER_PATTERN, ModBannerPatterns::bootstrap);
 		registryBuilder.add(Registries.DAMAGE_TYPE, ModDamageTypes::bootstrap);
 		registryBuilder.add(Registries.TIMELINE, ModTimelines::bootstrap);
 		registryBuilder.add(Registries.VILLAGER_TRADE, ModVillagerTrades::bootstrap);

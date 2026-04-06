@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+	"minecraft:paper",
+	"nycto:blood_bottle"
+  ],
+  "result": {
+	"id": "nycto:vampire_bat_banner_pattern"
+  }
+}

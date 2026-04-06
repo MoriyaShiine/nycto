@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+	"minecraft:paper",
+	"nycto:aconite"
+  ],
+  "result": {
+	"id": "nycto:wolf_skull_banner_pattern"
+  }
+}

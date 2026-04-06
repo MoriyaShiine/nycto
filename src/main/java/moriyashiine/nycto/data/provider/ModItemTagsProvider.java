@@ -119,6 +119,10 @@ public class ModItemTagsProvider extends FabricTagsProvider.ItemTagsProvider {
 				.add(ModItems.ACONITE_COATED_HALBERD);
 		valueLookupBuilder(ItemTags.ARROWS)
 				.add(ModItems.ACONITE_ARROW);
+		valueLookupBuilder(ItemTags.LOOM_PATTERNS)
+				.add(ModItems.VAMPIRE_BAT_BANNER_PATTERN)
+				.add(ModItems.WOLF_SKULL_BANNER_PATTERN)
+				.add(ModItems.HUNTERS_MARK_BANNER_PATTERN);
 
 		valueLookupBuilder(TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("enchancement", "cannot_automatically_consume")))
 				.add(ModItems.AMBROSIA_BOTTLE);

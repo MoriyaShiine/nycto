@@ -85,6 +85,9 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 				shapeless(RecipeCategory.FOOD, ModItems.GARLIC_BREAD).requires(Items.BREAD).requires(ModItems.GRILLED_GARLIC).unlockedBy("has_grilled_garlic", has(ModItems.GRILLED_GARLIC)).save(output);
 				shapeless(RecipeCategory.COMBAT, ModItems.VAMPIRE_HUNTER_CONTRACT).requires(ModItems.HUNTER_CONTRACT).requires(ModItems.GARLIC).unlockedBy("has_contract", has(ModItems.HUNTER_CONTRACT)).save(output);
 				shapeless(RecipeCategory.COMBAT, ModItems.WEREWOLF_HUNTER_CONTRACT).requires(ModItems.HUNTER_CONTRACT).requires(ModItems.ACONITE).unlockedBy("has_contract", has(ModItems.HUNTER_CONTRACT)).save(output);
+				shapeless(RecipeCategory.MISC, ModItems.VAMPIRE_BAT_BANNER_PATTERN).requires(Items.PAPER).requires(ModItems.BLOOD_BOTTLE).unlockedBy("has_blood_bottle", has(ModItems.BLOOD_BOTTLE)).save(output);
+				shapeless(RecipeCategory.MISC, ModItems.WOLF_SKULL_BANNER_PATTERN).requires(Items.PAPER).requires(ModItems.ACONITE).unlockedBy("has_aconite_placeholder", has(ModItems.ACONITE)).save(output);
+				shapeless(RecipeCategory.MISC, ModItems.HUNTERS_MARK_BANNER_PATTERN).requires(Items.PAPER).requires(ModItems.HUNTER_CONTRACT).unlockedBy("has_contract", has(ModItems.HUNTER_CONTRACT)).save(output);
 
 				SpecialRecipeBuilder.special(BloodExtractionRecipe::new).save(output, BLOOD_EXTRACTION);
 				SpecialRecipeBuilder.special(FoodPoisoningRecipe::new).save(output, Nycto.id("food_poisoning").toString());
