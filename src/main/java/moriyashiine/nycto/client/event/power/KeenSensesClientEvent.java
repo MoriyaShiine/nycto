@@ -47,7 +47,7 @@ public class KeenSensesClientEvent {
 			return null;
 		}
 
-		private static boolean shouldApply(Entity entity) {
+		public static boolean shouldApply(Entity entity) {
 			if (keenSensesDistance > 0 && entity instanceof LivingEntity living && living.slib$exists()) {
 				if (living.slib$isPlayer() || living instanceof Mob) {
 					int distance = keenSensesDistance;

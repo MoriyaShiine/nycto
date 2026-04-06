@@ -130,7 +130,7 @@
   "power.nycto.hypnotize": "Hypnotize",
   "power.nycto.hypnotize.desc": "Forces all nearby mobs to follow and defend you for some time, or briefly stuns them if they're a player. Hypnotized mobs can have their blood sucked without damaging them. Success is dependent on their current health. Removes hypnosis instead when sneaking.",
   "power.nycto.keen_senses": "Keen Senses",
-  "power.nycto.keen_senses.desc": "Muffles sounds and highlights mobs with a color depending on their blood type, including those that are invisible or behind walls. Grants a speed boost while active. Costs blood to maintain.",
+  "power.nycto.keen_senses.desc": "Highlights mobs with a color depending on their blood type and shows their health, including those that are invisible or behind walls. Muffles sounds and grants a speed boost while active. Costs blood to maintain.",
   "power.nycto.mist_form": "Mist Form",
   "power.nycto.mist_form.desc": "Transforms you into a cloud of mist, becoming invisible, negating fall damage, and phasing through most nonsolid blocks. Attacking a mob always results in a critical hit and reveals you. The first hit of damage you take is negated and reveals you. Costs blood to maintain.",
   "power.nycto.vampiric_thrall": "Vampiric Thrall",
