@@ -8,6 +8,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.Nycto;
+import moriyashiine.nycto.common.init.ModBannerPatterns;
 import moriyashiine.nycto.common.init.ModItems;
 import moriyashiine.nycto.common.init.ModSoundEvents;
 import moriyashiine.nycto.common.world.entity.ai.goal.hunter.PathToContractPosGoal;
@@ -16,6 +17,8 @@ import moriyashiine.superbsteeds.common.component.entity.HorseAttributesComponen
 import moriyashiine.superbsteeds.common.init.ModEntityComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.UUIDUtil;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -39,12 +42,11 @@ import net.minecraft.world.entity.animal.equine.Horse;
 import net.minecraft.world.entity.monster.PatrollingMonster;
 import net.minecraft.world.entity.monster.illager.Pillager;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.ProjectileWeaponItem;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.entity.BannerPatternLayers;
+import net.minecraft.world.level.block.entity.BannerPatterns;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jspecify.annotations.Nullable;
@@ -228,6 +230,14 @@ public class Hunter extends Pillager {
 		entityData.set(HUNTER_TYPE_ID, hunterType);
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
 			setItemSlot(slot, ItemStack.EMPTY);
+		}
+		if (hasHorse) {
+			ItemStack shield = Items.SHIELD.getDefaultInstance();
+			shield.set(DataComponents.BANNER_PATTERNS, new BannerPatternLayers.Builder()
+					.add(registryAccess().lookupOrThrow(Registries.BANNER_PATTERN).getOrThrow(BannerPatterns.BASE), DyeColor.BLACK)
+					.add(registryAccess().lookupOrThrow(Registries.BANNER_PATTERN).getOrThrow(ModBannerPatterns.HUNTERS_MARK), DyeColor.YELLOW)
+					.build());
+			setItemSlot(EquipmentSlot.OFFHAND, shield);
 		}
 		if (hunterType == HunterType.VAMPIRE) {
 			setItemSlot(EquipmentSlot.HEAD, ModItems.VAMPIRE_HUNTER_HELMET.getDefaultInstance());
