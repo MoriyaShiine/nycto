@@ -8,13 +8,20 @@ import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.event.entity.VampireEvent;
 import moriyashiine.nycto.common.init.ModComponentTypes;
 import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.ModSoundEvents;
 import moriyashiine.nycto.common.tag.ModEntityTypeTags;
 import moriyashiine.nycto.common.world.item.VampiricDaggerItem;
+import moriyashiine.nycto.common.world.item.crafting.BloodExtractionRecipe;
 import moriyashiine.strawberrylib.api.event.AfterDamageIncludingDeathEvent;
+import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.Items;
 
 public class VampiricDaggerEvent implements AfterDamageIncludingDeathEvent {
 	private static final int DAMAGE_THRESHOLD = 2;
@@ -45,6 +52,16 @@ public class VampiricDaggerEvent implements AfterDamageIncludingDeathEvent {
 						}
 						VampiricDaggerItem.setBloodTypes(stack, player, vampire);
 						VampiricDaggerItem.setBloodCharge(stack, Math.min(20, bloodCharge + fillAmount));
+						if (attacker instanceof Player playerAttacker && VampiricDaggerItem.isFull(stack)) {
+							ItemStack bottle = playerAttacker.getOffhandItem();
+							if (bottle.is(Items.GLASS_BOTTLE)) {
+								ItemStack bloodBottle = BloodExtractionRecipe.getCraftingResult(stack);
+								ItemStack filled = ItemUtils.createFilledResult(bottle, playerAttacker, bloodBottle);
+								playerAttacker.setItemInHand(InteractionHand.OFF_HAND, filled);
+								VampiricDaggerItem.extractBlood(attacker, stack, bloodBottle);
+								SLibUtils.playSound(playerAttacker, ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK.value(), 0.8F, 1);
+							}
+						}
 					}
 				}
 			}

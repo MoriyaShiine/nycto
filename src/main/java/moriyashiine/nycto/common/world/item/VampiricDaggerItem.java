@@ -18,6 +18,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -68,15 +69,9 @@ public class VampiricDaggerItem extends Item {
 					return true;
 				}
 			}
-			if (!player.isCreative()) {
-				VampiricDaggerItem.setBloodTypes(self, false, false);
-				VampiricDaggerItem.setBloodCharge(self, 0);
-			}
+			extractBlood(player, self, bloodBottle);
 			player.playSound(ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK.value(), 0.8F, 1);
 			player.containerMenu.slotsChanged(player.getInventory());
-			if (player instanceof ServerPlayer serverPlayer) {
-				ModTriggers.EXTRACT_BLOOD.trigger(serverPlayer, bloodBottle);
-			}
 			return true;
 		}
 		return super.overrideOtherStackedOnMe(self, other, slot, clickAction, player, carriedItem);
@@ -126,5 +121,15 @@ public class VampiricDaggerItem extends Item {
 
 	public static void setBloodCharge(ItemStack stack, int charge) {
 		stack.set(ModComponentTypes.BLOOD_CHARGE, charge);
+	}
+
+	public static void extractBlood(LivingEntity living, ItemStack dagger, ItemStack bloodBottle) {
+		if (!living.hasInfiniteMaterials()) {
+			VampiricDaggerItem.setBloodTypes(dagger, false, false);
+			VampiricDaggerItem.setBloodCharge(dagger, 0);
+		}
+		if (living instanceof ServerPlayer player) {
+			ModTriggers.EXTRACT_BLOOD.trigger(player, bloodBottle);
+		}
 	}
 }
