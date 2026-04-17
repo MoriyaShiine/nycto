@@ -23,7 +23,7 @@ import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
 
 public class SunExposureComponent implements AutoSyncedComponent, CommonTickingComponent {
-	public static final int MAX_EXPOSURE_TIME = 320;
+	public static final int MAX_EXPOSURE_TIME = 160;
 
 	private final LivingEntity obj;
 	private boolean shouldTick, exposed = false;
@@ -51,14 +51,19 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 	@Override
 	public void tick() {
 		if (shouldTick) {
+			int max = 0;
 			if (exposed) {
-				if (exposureTime < MAX_EXPOSURE_TIME) {
-					exposureTime = Math.min(MAX_EXPOSURE_TIME, exposureTime + getExposureTicks());
-				} else {
+				boolean sunResistance = NyctoUtil.hasSunResistance(obj);
+				boolean photophobia = obj instanceof Player player && NyctoAPI.hasPower(player, ModPowers.PHOTOPHOBIA);
+				max = sunResistance && !photophobia ? 20 : MAX_EXPOSURE_TIME;
+				if (exposureTime < max) {
+					exposureTime = Math.min(max, exposureTime + getExposureTicks(sunResistance, photophobia));
+				} else if (exposureTime >= MAX_EXPOSURE_TIME) {
 					obj.igniteForSeconds(4);
 				}
-			} else if (exposureTime > 0) {
-				exposureTime = Math.max(0, exposureTime - 8);
+			}
+			if (exposureTime > max) {
+				exposureTime = Math.max(0, exposureTime - 4);
 			}
 		}
 	}
@@ -78,7 +83,7 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 	@Override
 	public void clientTick() {
 		tick();
-		if (exposureTime > 0 && exposureTime % 8 == 0) {
+		if (isExposed() && (obj.getId() + obj.tickCount) % 8 == 0) {
 			SLibClientUtils.addParticles(obj, ParticleTypes.SMOKE, 1, ParticleAnchor.BODY);
 		}
 	}
@@ -108,12 +113,8 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 		return exposureTime;
 	}
 
-	private int getExposureTicks() {
-		int ticks = obj instanceof Player player && NyctoAPI.hasPower(player, ModPowers.PHOTOPHOBIA) ? 16 : 2;
-		if (NyctoUtil.hasSunResistance(obj)) {
-			ticks /= 2;
-		}
-		return ticks;
+	private int getExposureTicks(boolean sunResistance, boolean photophobia) {
+		return !sunResistance && photophobia ? 8 : 1;
 	}
 
 	private boolean updateExposed() {
