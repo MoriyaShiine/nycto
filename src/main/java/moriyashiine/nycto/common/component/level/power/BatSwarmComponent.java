@@ -11,6 +11,7 @@ import moriyashiine.nycto.common.init.*;
 import moriyashiine.nycto.common.tag.ModEntityTypeTags;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -108,7 +109,7 @@ public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComp
 
 		@Nullable
 		private LivingEntity owner = null;
-		private Vec3 velocity = Vec3.ZERO;
+		private Vec3 deltaMovement = Vec3.ZERO;
 		private int deathTicks = 0, nextSoundTimer = 1;
 
 		private BatSwarm(UUID ownerId, List<Integer> targets, Vec3 pos, int age, int blood) {
@@ -128,7 +129,7 @@ public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComp
 					targets.add(owner.getId());
 				}
 			}
-			if (shouldDie()) {
+			if (shouldDie(level)) {
 				deathTicks++;
 				return;
 			}
@@ -147,14 +148,14 @@ public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComp
 							feed(living);
 						}
 						if (!moveTo) {
-							setVelocity(target);
+							setDeltaMovement(target);
 							moveTo = true;
 						}
 					}
 				}
 			}
 
-			pos = pos.add(velocity);
+			pos = pos.add(deltaMovement);
 			if (--nextSoundTimer == 0) {
 				level.playSound(null, pos.x(), pos.y(), pos.z(), SoundEvents.BAT_AMBIENT, SoundSource.PLAYERS, 0.15F, 1);
 				nextSoundTimer = owner.getRandom().nextIntBetweenInclusive(4, 12);
@@ -192,12 +193,16 @@ public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComp
 			return entity != null && getPos().distanceTo(entity.position()) < 64 && canSee(entity.getEyePosition());
 		}
 
-		private boolean shouldDie() {
-			return age >= BatSwarm.MAX_AGE || owner == null || !owner.slib$exists();
+		private boolean shouldDie(Level level) {
+			if (age >= BatSwarm.MAX_AGE || owner == null || !owner.slib$exists()) {
+				return true;
+			}
+			BlockPos blockPos = new BlockPos(Mth.floor(getPos().x()), Mth.floor(getPos().y()), Mth.floor(getPos().z()));
+			return level.isBrightOutside() && !level.isRainingAt(blockPos) && level.canSeeSky(blockPos);
 		}
 
-		private void setVelocity(Entity target) {
-			velocity = new Vec3(
+		private void setDeltaMovement(Entity target) {
+			deltaMovement = new Vec3(
 					target.getX() - getPos().x(),
 					target.getEyeY() - getPos().y(),
 					target.getZ() - getPos().z()

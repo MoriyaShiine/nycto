@@ -4,13 +4,14 @@
 
 package moriyashiine.nycto.common.component.entity.power.vampire;
 
+import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModPowers;
 import moriyashiine.nycto.common.init.ModSoundEvents;
 import moriyashiine.nycto.common.tag.ModEntityTypeTags;
-import moriyashiine.nycto.common.world.power.vampire.VampireActivePower;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
@@ -72,11 +73,16 @@ public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingCo
 	@Override
 	public void serverTick() {
 		tick();
-		if (enabled && obj.slib$isSurvival() && --drainTicks == 0) {
-			if (ModEntityComponents.BLOOD.get(obj).drain(1)) {
-				drainTicks = POWER_DRAIN_TICKS;
-			} else {
+		if (enabled) {
+			if (NyctoAPI.isSunExposed(obj)) {
+				ModPowers.KEEN_SENSES.playUseSound((ServerPlayer) obj);
 				toggle();
+			} else if (obj.slib$isSurvival() && --drainTicks == 0) {
+				if (ModEntityComponents.BLOOD.get(obj).drain(1)) {
+					drainTicks = POWER_DRAIN_TICKS;
+				} else {
+					toggle();
+				}
 			}
 		}
 	}

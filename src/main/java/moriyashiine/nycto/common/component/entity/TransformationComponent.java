@@ -60,8 +60,8 @@ public class TransformationComponent implements AutoSyncedComponent, CommonTicki
 				if (obj instanceof ServerPlayer player) {
 					instance.getPower().tick(player);
 				}
-				if (instance.getCooldown() > 0) {
-					instance.setCooldown(instance.getCooldown() - 1);
+				if (instance.getCooldown() != 0) {
+					instance.setCooldown(instance.getCooldown() - (int) Math.signum(instance.getCooldown()));
 				}
 			});
 		}

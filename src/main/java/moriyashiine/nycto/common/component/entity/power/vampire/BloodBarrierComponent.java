@@ -4,6 +4,7 @@
 
 package moriyashiine.nycto.common.component.entity.power.vampire;
 
+import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.client.payload.AddBloodBarrierParticlesPayload;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModSoundEvents;
@@ -41,13 +42,18 @@ public class BloodBarrierComponent implements AutoSyncedComponent, CommonTicking
 
 	@Override
 	public void tick() {
-		if (ticks > 0 && --ticks == 0) {
-			if (!obj.level().isClientSide()) {
-				for (int i = 0; i < barriers; i++) {
-					addParticles(i);
-				}
+		if (ticks > 0) {
+			if (ticks > 1 && NyctoAPI.isSunExposed(obj)) {
+				ticks = 1;
 			}
-			barriers = 0;
+			if (--ticks == 0) {
+				if (!obj.level().isClientSide()) {
+					for (int i = 0; i < barriers; i++) {
+						addParticles(i);
+					}
+				}
+				barriers = 0;
+			}
 		}
 	}
 

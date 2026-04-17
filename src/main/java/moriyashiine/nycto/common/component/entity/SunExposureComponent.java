@@ -5,14 +5,19 @@
 package moriyashiine.nycto.common.component.entity;
 
 import moriyashiine.nycto.api.NyctoAPI;
+import moriyashiine.nycto.api.world.power.PowerInstance;
+import moriyashiine.nycto.common.NyctoAPIImpl;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModPowers;
 import moriyashiine.nycto.common.tag.ModBlockTags;
+import moriyashiine.nycto.common.tag.ModPowerTags;
 import moriyashiine.nycto.common.util.NyctoUtil;
+import moriyashiine.nycto.common.world.effect.VampireWardMobEffect;
 import moriyashiine.strawberrylib.api.module.SLibClientUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,6 +26,8 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
+
+import static moriyashiine.nycto.api.world.power.ActivePower.BLOCKED_COOLDOWN;
 
 public class SunExposureComponent implements AutoSyncedComponent, CommonTickingComponent {
 	public static final int MAX_EXPOSURE_TIME = 160;
@@ -61,6 +68,13 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 				} else if (exposureTime >= MAX_EXPOSURE_TIME) {
 					obj.igniteForSeconds(4);
 				}
+				if (obj instanceof Player player) {
+					for (PowerInstance power : NyctoAPI.getPowers(player)) {
+						if (power.getCooldown() <= 0 && power.is(ModPowerTags.VAMPIRE_CHOOSABLE)) {
+							NyctoAPIImpl.setPowerCooldown(player, power.getPower(), BLOCKED_COOLDOWN);
+						}
+					}
+				}
 			}
 			if (exposureTime > max) {
 				exposureTime = Math.max(0, exposureTime - 4);
@@ -72,10 +86,23 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 	public void serverTick() {
 		tick();
 		if (shouldTick) {
+			boolean changed = false;
 			boolean isExposed = updateExposed();
 			if (exposed != isExposed) {
 				exposed = isExposed;
+				changed = true;
 				sync();
+			}
+			if (exposed) {
+				if (obj instanceof ServerPlayer player) {
+					NyctoUtil.disableFormChangePowers(player.level(), player, null);
+				}
+				if (ModEntityComponents.HEAL_BLOCK.get(obj).getTicksToBlock() < -BLOCKED_COOLDOWN) {
+					NyctoAPI.applyHealBlock(obj, -BLOCKED_COOLDOWN);
+				}
+				VampireWardMobEffect.applyAttributes(obj, true);
+			} else if (changed) {
+				VampireWardMobEffect.applyAttributes(obj, false);
 			}
 		}
 	}

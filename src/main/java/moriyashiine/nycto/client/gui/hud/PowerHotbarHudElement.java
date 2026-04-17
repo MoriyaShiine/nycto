@@ -43,11 +43,17 @@ public class PowerHotbarHudElement implements HudElement {
 				int y = graphics.guiHeight() - 19;
 
 				graphics.blit(RenderPipelines.GUI_TEXTURED, powerInstance.getPower().getOrCreateTextureLocation(), x, y, 0, 0, 16, 16, 16, 16);
-				float cooldownProgress = powerInstance.getCooldown() / (float) power.getCooldown();
+				float cooldown = power.getCooldown();
+				int color = Integer.MAX_VALUE;
+				if (powerInstance.getCooldown() < 0) {
+					cooldown = ActivePower.BLOCKED_COOLDOWN;
+					color = 0x7FFFFF7F;
+				}
+				float cooldownProgress = powerInstance.getCooldown() / cooldown;
 				if (cooldownProgress > 0) {
 					int y1 = y + Mth.floor(16 * (1 - cooldownProgress));
 					int y2 = y1 + Mth.ceil(16 * cooldownProgress);
-					graphics.fill(RenderPipelines.GUI, x, y1, x + 16, y2, Integer.MAX_VALUE);
+					graphics.fill(RenderPipelines.GUI, x, y1, x + 16, y2, color);
 				}
 
 				xOffset += 20;

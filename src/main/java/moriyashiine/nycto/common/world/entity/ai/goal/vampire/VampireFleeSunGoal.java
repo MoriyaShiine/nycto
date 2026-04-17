@@ -4,8 +4,8 @@
 
 package moriyashiine.nycto.common.world.entity.ai.goal.vampire;
 
+import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.component.entity.SunExposureComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -23,7 +23,7 @@ public class VampireFleeSunGoal extends FleeSunGoal {
 
 	@Override
 	public boolean canUse() {
-		return ModEntityComponents.SUN_EXPOSURE.get(mob).isExposed() && setWantedPos();
+		return NyctoAPI.isSunExposed(mob) && setWantedPos();
 	}
 
 	@Override

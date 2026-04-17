@@ -37,7 +37,7 @@ public class SyncedConfigValuesComponent implements AutoSyncedComponent, ServerT
 
 	@Override
 	public void serverTick() {
-		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.STEP_HEIGHT, VampireTransformation.STEP_HEIGHT_MODIFIER, hasVampireStepHeight() && !obj.hasEffect(ModMobEffects.VAMPIRE_WARD) && NyctoAPI.isVampire(obj));
+		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.STEP_HEIGHT, VampireTransformation.STEP_HEIGHT_MODIFIER, hasVampireStepHeight() && !obj.hasEffect(ModMobEffects.VAMPIRE_WARD) && !NyctoAPI.isSunExposed(obj) && NyctoAPI.isVampire(obj));
 	}
 
 	public boolean hasVampireChargeJump() {

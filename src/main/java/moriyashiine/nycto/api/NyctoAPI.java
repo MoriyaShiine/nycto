@@ -13,6 +13,7 @@ import moriyashiine.nycto.client.payload.SetTransformationPayload;
 import moriyashiine.nycto.common.NyctoAPIImpl;
 import moriyashiine.nycto.common.component.entity.HealBlockComponent;
 import moriyashiine.nycto.common.component.entity.RespawnLeniencyComponent;
+import moriyashiine.nycto.common.component.entity.SunExposureComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.HaemogenesisComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
@@ -135,6 +136,11 @@ public class NyctoAPI {
 		if (respawnLeniencyComponent != null) {
 			respawnLeniencyComponent.giveLeniency();
 		}
+	}
+
+	public static boolean isSunExposed(Entity entity) {
+		SunExposureComponent sunExposureComponent = ModEntityComponents.SUN_EXPOSURE.getNullable(entity);
+		return sunExposureComponent != null && sunExposureComponent.isExposed();
 	}
 
 	public static void partiallyCureTransformation(ServerPlayer player, TagKey<Power> choosablePowers) {

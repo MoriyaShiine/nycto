@@ -4,6 +4,7 @@
 
 package moriyashiine.nycto.common.component.entity.power.vampire;
 
+import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import net.minecraft.util.Mth;
@@ -39,8 +40,13 @@ public class CarnageComponent implements AutoSyncedComponent, CommonTickingCompo
 
 	@Override
 	public void tick() {
-		if (ticks > 0 && --ticks == 0 && !obj.level().isClientSide()) {
-			obj.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(ATTACK_DAMAGE_MODIFIER);
+		if (ticks > 0) {
+			if (ticks > 20 && NyctoAPI.isSunExposed(obj)) {
+				ticks = 20;
+			}
+			if (--ticks == 0 && !obj.level().isClientSide()) {
+				obj.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(ATTACK_DAMAGE_MODIFIER);
+			}
 		}
 	}
 

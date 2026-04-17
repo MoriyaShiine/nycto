@@ -26,7 +26,7 @@ public class VampireWardMobEffect extends EntityRemovableMobEffect {
 
 	@Override
 	public void onEffectRemoved(LivingEntity mob) {
-		applyAttributes(mob, false);
+		applyAttributes(mob, NyctoAPI.isSunExposed(mob));
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class VampireWardMobEffect extends EntityRemovableMobEffect {
 		return true;
 	}
 
-	private static void applyAttributes(LivingEntity entity, boolean shouldRemove) {
+	public static void applyAttributes(LivingEntity entity, boolean shouldRemove) {
 		if (NyctoAPI.isVampire(entity)) {
 			if (entity instanceof ServerPlayer player) {
 				NyctoAPI.getTransformation(player).applyModifiers(player, !shouldRemove);

@@ -48,6 +48,10 @@ public class HealBlockComponent implements AutoSyncedComponent, CommonTickingCom
 		ModEntityComponents.HEAL_BLOCK.sync(obj);
 	}
 
+	public int getTicksToBlock() {
+		return ticksToBlock;
+	}
+
 	public void setTicksToBlock(int ticksToBlock) {
 		this.ticksToBlock = ticksToBlock;
 	}

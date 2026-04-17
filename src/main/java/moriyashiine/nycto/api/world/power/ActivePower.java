@@ -13,6 +13,8 @@ import net.minecraft.world.entity.player.Player;
 import org.jspecify.annotations.Nullable;
 
 public abstract class ActivePower extends Power {
+	public static final int BLOCKED_COOLDOWN = -20;
+
 	private final int cooldown;
 
 	public ActivePower(int cooldown) {

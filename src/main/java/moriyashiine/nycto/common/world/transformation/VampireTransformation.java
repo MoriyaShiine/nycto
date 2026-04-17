@@ -61,13 +61,13 @@ public class VampireTransformation extends Transformation {
 
 	@Override
 	public AttributeModifierSet getAttributeModifiers(ServerPlayer player) {
-		AttributeModifierSet attributeModifierSet = super.getAttributeModifiers(player);
-		int negativePowers = NyctoAPI.getPowers(player).stream().filter(instance -> instance.is(ModPowerTags.VAMPIRE_CHOOSABLE) && instance.getPower().isWeakness()).collect(Collectors.toSet()).size();
-		attributeModifierSet.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(Nycto.id("vampire_bonus"), 1 + (2 / 3D * negativePowers), AttributeModifier.Operation.ADD_VALUE));
-		attributeModifierSet.addModifier(Attributes.MOVEMENT_SPEED, new AttributeModifier(Nycto.id("vampire_bonus"), 0.15 + (0.1 * negativePowers), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
-		attributeModifierSet.addModifier(Attributes.JUMP_STRENGTH, new AttributeModifier(Nycto.id("vampire_bonus"), 0.06 * negativePowers, AttributeModifier.Operation.ADD_VALUE));
-		attributeModifierSet.addModifier(Attributes.SAFE_FALL_DISTANCE, new AttributeModifier(Nycto.id("vampire_bonus"), 1 + negativePowers, AttributeModifier.Operation.ADD_VALUE));
-		return attributeModifierSet;
+		AttributeModifierSet set = super.getAttributeModifiers(player);
+		int weaknesses = NyctoAPI.getPowers(player).stream().filter(instance -> instance.is(ModPowerTags.VAMPIRE_CHOOSABLE) && instance.getPower().isWeakness()).collect(Collectors.toSet()).size();
+		set.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(Nycto.id("vampire_bonus"), 1 + (2 / 3D * weaknesses), AttributeModifier.Operation.ADD_VALUE));
+		set.addModifier(Attributes.MOVEMENT_SPEED, new AttributeModifier(Nycto.id("vampire_bonus"), 0.15 + (0.1 * weaknesses), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+		set.addModifier(Attributes.JUMP_STRENGTH, new AttributeModifier(Nycto.id("vampire_bonus"), 0.06 * weaknesses, AttributeModifier.Operation.ADD_VALUE));
+		set.addModifier(Attributes.SAFE_FALL_DISTANCE, new AttributeModifier(Nycto.id("vampire_bonus"), 1 + weaknesses, AttributeModifier.Operation.ADD_VALUE));
+		return set;
 	}
 
 	@Override
