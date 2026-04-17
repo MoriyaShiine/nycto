@@ -12,7 +12,7 @@ import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
 public abstract class VampireFormChangeComponent implements AutoSyncedComponent, ServerTickingComponent {
-	protected static final int FORM_DRAIN_TICKS = 300;
+	protected static final int POWER_DRAIN_TICKS = 300;
 
 	protected final Player obj;
 	protected boolean enabled = false;
@@ -38,7 +38,7 @@ public abstract class VampireFormChangeComponent implements AutoSyncedComponent,
 	public void serverTick() {
 		if (enabled && obj.slib$isSurvival() && --drainTicks == 0) {
 			if (ModEntityComponents.BLOOD.get(obj).drain(1)) {
-				drainTicks = FORM_DRAIN_TICKS;
+				drainTicks = POWER_DRAIN_TICKS;
 			} else {
 				toggle();
 			}

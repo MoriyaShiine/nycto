@@ -18,8 +18,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 
-public record HunterArmorRenderer(HunterArmorModel<HumanoidRenderState> armorModel,
-								  Identifier texture) implements ArmorRenderer {
+public record HunterArmorRenderer(HunterArmorModel<HumanoidRenderState> armorModel, Identifier texture) implements ArmorRenderer {
 	public HunterArmorRenderer(EntityRendererProvider.Context context, EquipmentSlot slot, Identifier texture) {
 		this(new HunterArmorModel<>(context.bakeLayer(HunterArmorModel.MODEL_LAYERS.get(slot))), texture);
 	}

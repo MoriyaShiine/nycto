@@ -104,7 +104,7 @@ public class DarkFormComponent extends VampireFormChangeComponent implements Com
 		} else {
 			ModEntityComponents.BLOOD.get(obj).drain(ModPowers.DARK_FORM.getCost(obj));
 			SLibUtils.addModelReplacementType(obj, ModEntityTypes.DARK_FORM, 500);
-			drainTicks = FORM_DRAIN_TICKS;
+			drainTicks = POWER_DRAIN_TICKS;
 		}
 		enabled = !enabled;
 		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.ARMOR, getAdjustedModifier(ARMOR_MODIFIER), enabled);

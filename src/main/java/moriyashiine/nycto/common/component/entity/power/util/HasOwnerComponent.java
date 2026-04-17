@@ -32,9 +32,7 @@ public abstract class HasOwnerComponent implements AutoSyncedComponent {
 
 	@Override
 	public void writeData(ValueOutput output) {
-		if (ownerUuid != null) {
-			output.store("Owner", UUIDUtil.AUTHLIB_CODEC, ownerUuid);
-		}
+		output.storeNullable("Owner", UUIDUtil.AUTHLIB_CODEC, ownerUuid);
 	}
 
 	public boolean hasOwner() {

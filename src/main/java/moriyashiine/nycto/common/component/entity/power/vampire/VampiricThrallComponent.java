@@ -59,9 +59,7 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 	public void writeData(ValueOutput output) {
 		super.writeData(output);
 		output.putString("FollowMode", followMode.name());
-		if (wanderHome != null) {
-			output.store("WanderHome", BlockPos.CODEC, wanderHome);
-		}
+		output.storeNullable("WanderHome", BlockPos.CODEC, wanderHome);
 		output.putBoolean("AlternateDrain", alternateDrain);
 	}
 

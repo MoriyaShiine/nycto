@@ -24,8 +24,7 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
 
-public record VampirePredicate(Optional<Boolean> vampire,
-							   Optional<PowerCountPredicate> count) implements EntitySubPredicate {
+public record VampirePredicate(Optional<Boolean> vampire, Optional<PowerCountPredicate> count) implements EntitySubPredicate {
 	public static final MapCodec<VampirePredicate> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
 			Codec.BOOL.optionalFieldOf("vampire").forGetter(VampirePredicate::vampire),
 			PowerCountPredicate.CODEC.optionalFieldOf("count").forGetter(VampirePredicate::count)

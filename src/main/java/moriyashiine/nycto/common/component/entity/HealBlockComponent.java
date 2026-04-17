@@ -33,9 +33,7 @@ public class HealBlockComponent implements AutoSyncedComponent, CommonTickingCom
 
 	@Override
 	public void writeData(ValueOutput output) {
-		if (lifeStealer != null) {
-			output.store("LifeStealer", UUIDUtil.AUTHLIB_CODEC, lifeStealer);
-		}
+		output.storeNullable("LifeStealer", UUIDUtil.AUTHLIB_CODEC, lifeStealer);
 		output.putInt("TicksToBlock", ticksToBlock);
 	}
 

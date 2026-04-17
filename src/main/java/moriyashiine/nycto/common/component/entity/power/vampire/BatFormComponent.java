@@ -52,7 +52,7 @@ public class BatFormComponent extends VampireFormChangeComponent {
 			obj.setHealth(obj.getMaxHealth() * percentage);
 			SLibUtils.addModelReplacementType(obj, EntityType.BAT, 500);
 			ModEntityComponents.BLOOD.get(obj).drain(ModPowers.BAT_FORM.getCost(obj));
-			drainTicks = FORM_DRAIN_TICKS;
+			drainTicks = POWER_DRAIN_TICKS;
 		}
 		enabled = !enabled;
 		sync();

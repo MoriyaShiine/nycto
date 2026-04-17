@@ -28,7 +28,7 @@ public class PlayerAppliesEffectsTrigger extends SimpleCriterionTrigger<PlayerAp
 	}
 
 	public record TriggerInstance(Optional<ContextAwarePredicate> player, Optional<MobEffectsPredicate> effects,
-								  Optional<ContextAwarePredicate> entity) implements SimpleCriterionTrigger.SimpleInstance {
+	                              Optional<ContextAwarePredicate> entity) implements SimpleCriterionTrigger.SimpleInstance {
 		public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(
 				instance -> instance.group(
 								EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),

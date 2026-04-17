@@ -46,7 +46,7 @@ public class MistFormComponent extends VampireFormChangeComponent implements Cli
 			drainTicks = 0;
 		} else {
 			ModEntityComponents.BLOOD.get(obj).drain(ModPowers.MIST_FORM.getCost(obj));
-			drainTicks = FORM_DRAIN_TICKS;
+			drainTicks = POWER_DRAIN_TICKS;
 		}
 		enabled = !enabled;
 		sync();

@@ -24,8 +24,7 @@ import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-public record FillBloodConsumeEffect(int fillAmount,
-									 ApplyStatusEffectsConsumeEffect nonVampireEffects) implements ConsumeEffect {
+public record FillBloodConsumeEffect(int fillAmount, ApplyStatusEffectsConsumeEffect nonVampireEffects) implements ConsumeEffect {
 	public static final MapCodec<FillBloodConsumeEffect> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
 					ExtraCodecs.POSITIVE_INT.fieldOf("fill_amount").forGetter(FillBloodConsumeEffect::fillAmount),
 					ApplyStatusEffectsConsumeEffect.CODEC.fieldOf("non_vampire_effects").forGetter(FillBloodConsumeEffect::nonVampireEffects))

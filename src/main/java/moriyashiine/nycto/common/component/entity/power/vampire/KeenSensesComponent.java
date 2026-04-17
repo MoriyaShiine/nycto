@@ -9,6 +9,7 @@ import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModPowers;
 import moriyashiine.nycto.common.init.ModSoundEvents;
 import moriyashiine.nycto.common.tag.ModEntityTypeTags;
+import moriyashiine.nycto.common.world.power.vampire.VampireActivePower;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -23,10 +24,13 @@ import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
 
 public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingComponent {
+	private static final int POWER_DRAIN_TICKS = 200;
+
 	private static final AttributeModifier SPEED_BONUS = new AttributeModifier(Nycto.id("keen_senses_speed"), 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 
 	private final Player obj;
 	private boolean enabled = false;
+	private int drainTicks = 0;
 	private int distance = 0, renderTicks = 0;
 
 	public KeenSensesComponent(Player obj) {
@@ -36,6 +40,7 @@ public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingCo
 	@Override
 	public void readData(ValueInput input) {
 		enabled = input.getBooleanOr("Enabled", false);
+		drainTicks = input.getIntOr("DrainTicks", drainTicks);
 		distance = input.getIntOr("Distance", 0);
 		renderTicks = input.getIntOr("RenderTicks", 0);
 	}
@@ -43,6 +48,7 @@ public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingCo
 	@Override
 	public void writeData(ValueOutput output) {
 		output.putBoolean("Enabled", enabled);
+		output.putInt("DrainTicks", drainTicks);
 		output.putInt("Distance", distance);
 		output.putInt("RenderTicks", renderTicks);
 	}
@@ -66,8 +72,12 @@ public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingCo
 	@Override
 	public void serverTick() {
 		tick();
-		if (enabled && obj.slib$isSurvival() && (obj.getId() + obj.tickCount) % 200 == 0 && !ModEntityComponents.BLOOD.get(obj).drain(1)) {
-			toggle();
+		if (enabled && obj.slib$isSurvival() && --drainTicks == 0) {
+			if (ModEntityComponents.BLOOD.get(obj).drain(1)) {
+				drainTicks = POWER_DRAIN_TICKS;
+			} else {
+				toggle();
+			}
 		}
 	}
 
@@ -109,8 +119,11 @@ public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingCo
 	}
 
 	public void toggle() {
-		if (!enabled) {
+		if (enabled) {
+			drainTicks = 0;
+		} else {
 			ModEntityComponents.BLOOD.get(obj).drain(ModPowers.KEEN_SENSES.getCost(obj));
+			drainTicks = POWER_DRAIN_TICKS;
 		}
 		enabled = !enabled;
 		renderTicks = 20;
