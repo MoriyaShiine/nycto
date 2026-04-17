@@ -18,6 +18,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.ai.goal.target.TargetGoal;
@@ -72,6 +73,9 @@ public class HypnotizePower extends VampireActivePower {
 
 	public static boolean canUseOn(Player player, LivingEntity target) {
 		if (target.hasInfiniteMaterials() || !target.slib$exists() || target.is(ModEntityTypeTags.CANNOT_BE_HYPNOTIZED)) {
+			return false;
+		}
+		if (target instanceof OwnableEntity ownable && ownable.getOwnerReference() != null) {
 			return false;
 		}
 		if (target.slib$isPlayer() || ModEntityComponents.HYPNOTIZED.isProvidedBy(target)) {
