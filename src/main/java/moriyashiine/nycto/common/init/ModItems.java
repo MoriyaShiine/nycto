@@ -30,6 +30,7 @@ import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.level.block.Block;
 
 import java.util.List;
 
@@ -41,18 +42,18 @@ public class ModItems {
 	public static final Item VAMPIRE_ALTAR = registerBlockItem("vampire_altar", ModBlocks.VAMPIRE_ALTAR);
 	public static final Item WEREWOLF_ALTAR = registerBlockItem("werewolf_altar", ModBlocks.WEREWOLF_ALTAR);
 
-	public static final Item OAK_COFFIN = registerBlockItem("oak_coffin", ModBlocks.OAK_COFFIN);
-	public static final Item SPRUCE_COFFIN = registerBlockItem("spruce_coffin", ModBlocks.SPRUCE_COFFIN);
-	public static final Item BIRCH_COFFIN = registerBlockItem("birch_coffin", ModBlocks.BIRCH_COFFIN);
-	public static final Item JUNGLE_COFFIN = registerBlockItem("jungle_coffin", ModBlocks.JUNGLE_COFFIN);
-	public static final Item ACACIA_COFFIN = registerBlockItem("acacia_coffin", ModBlocks.ACACIA_COFFIN);
-	public static final Item DARK_OAK_COFFIN = registerBlockItem("dark_oak_coffin", ModBlocks.DARK_OAK_COFFIN);
-	public static final Item PALE_OAK_COFFIN = registerBlockItem("pale_oak_coffin", ModBlocks.PALE_OAK_COFFIN);
-	public static final Item MANGROVE_COFFIN = registerBlockItem("mangrove_coffin", ModBlocks.MANGROVE_COFFIN);
-	public static final Item CHERRY_COFFIN = registerBlockItem("cherry_coffin", ModBlocks.CHERRY_COFFIN);
-	public static final Item BAMBOO_COFFIN = registerBlockItem("bamboo_coffin", ModBlocks.BAMBOO_COFFIN);
-	public static final Item CRIMSON_COFFIN = registerBlockItem("crimson_coffin", ModBlocks.CRIMSON_COFFIN);
-	public static final Item WARPED_COFFIN = registerBlockItem("warped_coffin", ModBlocks.WARPED_COFFIN);
+	public static final Item OAK_COFFIN = registerCoffin("oak_coffin", ModBlocks.OAK_COFFIN);
+	public static final Item SPRUCE_COFFIN = registerCoffin("spruce_coffin", ModBlocks.SPRUCE_COFFIN);
+	public static final Item BIRCH_COFFIN = registerCoffin("birch_coffin", ModBlocks.BIRCH_COFFIN);
+	public static final Item JUNGLE_COFFIN = registerCoffin("jungle_coffin", ModBlocks.JUNGLE_COFFIN);
+	public static final Item ACACIA_COFFIN = registerCoffin("acacia_coffin", ModBlocks.ACACIA_COFFIN);
+	public static final Item DARK_OAK_COFFIN = registerCoffin("dark_oak_coffin", ModBlocks.DARK_OAK_COFFIN);
+	public static final Item PALE_OAK_COFFIN = registerCoffin("pale_oak_coffin", ModBlocks.PALE_OAK_COFFIN);
+	public static final Item MANGROVE_COFFIN = registerCoffin("mangrove_coffin", ModBlocks.MANGROVE_COFFIN);
+	public static final Item CHERRY_COFFIN = registerCoffin("cherry_coffin", ModBlocks.CHERRY_COFFIN);
+	public static final Item BAMBOO_COFFIN = registerCoffin("bamboo_coffin", ModBlocks.BAMBOO_COFFIN);
+	public static final Item CRIMSON_COFFIN = registerCoffin("crimson_coffin", ModBlocks.CRIMSON_COFFIN);
+	public static final Item WARPED_COFFIN = registerCoffin("warped_coffin", ModBlocks.WARPED_COFFIN);
 
 	public static final Item GARLIC_WREATH = registerBlockItem("garlic_wreath", ModBlocks.GARLIC_WREATH);
 	public static final Item ACONITE_GARLAND = registerBlockItem("aconite_garland", ModBlocks.ACONITE_GARLAND);
@@ -143,6 +144,10 @@ public class ModItems {
 
 	public static final Item VAMPIRE_SPAWN_EGG = registerItem("vampire_spawn_egg", SpawnEggItem::new, properties().spawnEgg(ModEntityTypes.VAMPIRE));
 	public static final Item HUNTER_SPAWN_EGG = registerItem("hunter_spawn_egg", SpawnEggItem::new, properties().spawnEgg(ModEntityTypes.HUNTER));
+
+	public static Item registerCoffin(String name, Block block) {
+		return registerBlockItem(name, block, properties().stacksTo(1));
+	}
 
 	public static Item registerHunterArmor(String name, ArmorType type, Holder<Attribute> attribute) {
 		AttributeModifier resistanceModifier = new AttributeModifier(Nycto.id("hunter_armor_resistance_" + type.getName()), 1, AttributeModifier.Operation.ADD_VALUE);
