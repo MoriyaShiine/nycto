@@ -4,12 +4,10 @@
 
 package moriyashiine.nycto.common.world.power.vampire;
 
+import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.component.entity.power.vampire.HypnotizedComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModMobEffects;
-import moriyashiine.nycto.common.init.ModParticleTypes;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.*;
 import moriyashiine.nycto.common.tag.ModEntityTypeTags;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.minecraft.server.level.ServerLevel;
@@ -73,6 +71,9 @@ public class HypnotizePower extends VampireActivePower {
 
 	public static boolean canUseOn(Player player, LivingEntity target) {
 		if (target.hasInfiniteMaterials() || !target.slib$exists() || target.is(ModEntityTypeTags.CANNOT_BE_HYPNOTIZED)) {
+			return false;
+		}
+		if (target instanceof Player other && NyctoAPI.hasPower(other, ModPowers.HYPNOTIZE)) {
 			return false;
 		}
 		if (target instanceof OwnableEntity ownable && ownable.getOwnerReference() != null) {
