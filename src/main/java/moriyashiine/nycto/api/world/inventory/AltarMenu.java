@@ -10,6 +10,8 @@ import moriyashiine.nycto.api.world.power.Power;
 import moriyashiine.nycto.api.world.power.PowerInstance;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModSoundEvents;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
@@ -21,7 +23,9 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -54,7 +58,7 @@ public abstract class AltarMenu extends AbstractContainerMenu {
 		addSlot(new Slot(altarSlots, 1, 142, 94) {
 			@Override
 			public boolean mayPlace(ItemStack stack) {
-				return isStackValidForSecondSlot(stack);
+				return isAlternateMaterial(stack);
 			}
 		});
 		addStandardInventorySlots(inventory, 8, 141);
@@ -120,36 +124,66 @@ public abstract class AltarMenu extends AbstractContainerMenu {
 	@Override
 	public boolean clickMenuButton(Player player, int buttonId) {
 		if (canUpgrade(player)) {
-			apply(player, buttonId);
 			access.execute((level, pos) -> {
 				if (!player.isCreative()) {
 					player.giveExperienceLevels(-getExpCost());
-					altarSlots.getItem(0).shrink(getMaterialCost());
-					altarSlots.getItem(1).shrink(getMaterialCost());
+					altarSlots.getItem(0).shrink(getPrimaryMaterialCost());
+					altarSlots.getItem(1).shrink(getAlternateMaterialCost());
 				}
 				clearContainer(player, altarSlots);
 				altarSlots.setChanged();
 				slotsChanged(altarSlots);
 				level.playSound(null, pos, ModSoundEvents.BLOCK_ALTAR_USE, SoundSource.BLOCKS, 1, level.getRandom().nextFloat() * 0.1F + 0.9F);
 			});
+			apply(player, buttonId);
 			return true;
 		}
 		return false;
 	}
 
-	public abstract int getMaterialCost();
+	public int getPrimaryMaterialCost() {
+		return switch (getPlayerPowers() / 2 + 1) {
+			case 1 -> 1;
+			case 2 -> 3;
+			default -> 5;
+		};
+	}
 
-	public abstract int getExpCost();
+	public int getAlternateMaterialCost() {
+		return getPlayerPowers() / 2 + 1;
+	}
 
-	protected abstract ItemStack refreshItemCost(Player player);
+	public int getExpCost() {
+		return (getPlayerPowers() / 2 + 1) * 5;
+	}
 
-	protected abstract boolean isStackValidForSecondSlot(ItemStack stack);
+	protected ItemStack refreshItemCost(Player player) {
+		TagKey<Item> tag = switch (getPlayerPowers() / 2 + 1) {
+			case 1 -> getWeakMaterials();
+			case 2 -> getAverageMaterials();
+			default -> getStrongMaterials();
+		};
+		List<Holder<Item>> ingredient = Ingredient.of(BuiltInRegistries.ITEM.getOrThrow(tag)).items().toList();
+		if (ingredient.isEmpty()) {
+			return ItemStack.EMPTY;
+		} else {
+			return ingredient.get(ModEntityComponents.TRANSFORMATION.get(player).getRandomUpgradeCostIndex(ingredient)).value().getDefaultInstance();
+		}
+	}
+
+	protected abstract TagKey<Item> getWeakMaterials();
+
+	protected abstract TagKey<Item> getAverageMaterials();
+
+	protected abstract TagKey<Item> getStrongMaterials();
+
+	protected abstract boolean isAlternateMaterial(ItemStack stack);
 
 	public boolean canUpgrade(Player player) {
 		if (player.isCreative()) {
 			return true;
 		}
-		return player.experienceLevel >= getExpCost() && altarSlots.getItem(0).getCount() >= getMaterialCost() && altarSlots.getItem(1).getCount() >= getMaterialCost();
+		return player.experienceLevel >= getExpCost() && altarSlots.getItem(0).getCount() >= getPrimaryMaterialCost() && altarSlots.getItem(1).getCount() >= getAlternateMaterialCost();
 	}
 
 	public int getPlayerPowers() {

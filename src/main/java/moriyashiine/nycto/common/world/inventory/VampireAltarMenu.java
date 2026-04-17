@@ -7,21 +7,15 @@ package moriyashiine.nycto.common.world.inventory;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.api.world.inventory.AltarMenu;
 import moriyashiine.nycto.common.init.ModBlocks;
-import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModMenuTypes;
 import moriyashiine.nycto.common.tag.ModItemTags;
 import moriyashiine.nycto.common.tag.ModPowerTags;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-
-import java.util.List;
 
 public class VampireAltarMenu extends AltarMenu {
 	public VampireAltarMenu(int syncId, Inventory playerInventory) {
@@ -38,32 +32,22 @@ public class VampireAltarMenu extends AltarMenu {
 	}
 
 	@Override
-	public int getMaterialCost() {
-		return (getPlayerPowers() / 2 + 1);
+	protected TagKey<Item> getWeakMaterials() {
+		return ModItemTags.WEAK_VAMPIRE_ALTAR_UPGRADES;
 	}
 
 	@Override
-	public int getExpCost() {
-		return (getPlayerPowers() / 2 + 1) * 5;
+	protected TagKey<Item> getAverageMaterials() {
+		return ModItemTags.AVERAGE_VAMPIRE_ALTAR_UPGRADES;
 	}
 
 	@Override
-	protected ItemStack refreshItemCost(Player player) {
-		TagKey<Item> tag = switch (getPlayerPowers()) {
-			case 0, 1 -> ModItemTags.WEAK_VAMPIRE_ALTAR_UPGRADES;
-			case 2, 3 -> ModItemTags.AVERAGE_VAMPIRE_ALTAR_UPGRADES;
-			default -> ModItemTags.STRONG_VAMPIRE_ALTAR_UPGRADES;
-		};
-		List<Holder<Item>> ingredient = Ingredient.of(BuiltInRegistries.ITEM.getOrThrow(tag)).items().toList();
-		if (ingredient.isEmpty()) {
-			return ItemStack.EMPTY;
-		} else {
-			return ingredient.get(ModEntityComponents.TRANSFORMATION.get(player).getRandomUpgradeCostIndex(ingredient)).value().getDefaultInstance();
-		}
+	protected TagKey<Item> getStrongMaterials() {
+		return ModItemTags.STRONG_VAMPIRE_ALTAR_UPGRADES;
 	}
 
 	@Override
-	protected boolean isStackValidForSecondSlot(ItemStack stack) {
+	protected boolean isAlternateMaterial(ItemStack stack) {
 		return stack.is(ModItemTags.USABLE_BLOOD_BOTTLES);
 	}
 }

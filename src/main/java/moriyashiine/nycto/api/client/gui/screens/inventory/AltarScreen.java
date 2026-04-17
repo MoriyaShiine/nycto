@@ -123,17 +123,17 @@ public abstract class AltarScreen<T extends AltarMenu> extends AbstractContainer
 			if (menu.getPlayerPowers() < MAX_PLAYER_POWERS) {
 				if (infoTexts == null) {
 					MutableComponent expCost = Component.translatable("tooltip.nycto.experience_level_cost", menu.getExpCost()).withStyle(ChatFormatting.GREEN);
-					MutableComponent materialCost = Component.translatable("tooltip.nycto.material_cost", menu.getMaterialCost(), Component.translatable(menu.itemCost.getItem().getDescriptionId())).withStyle(ChatFormatting.GREEN);
-					MutableComponent secondCost = Component.translatable("tooltip.nycto.material_cost", menu.getMaterialCost(), getSecondCostText()).withStyle(ChatFormatting.GREEN);
+					MutableComponent materialCost = Component.translatable("tooltip.nycto.material_cost", menu.getPrimaryMaterialCost(), Component.translatable(menu.itemCost.getItem().getDescriptionId())).withStyle(ChatFormatting.GREEN);
+					MutableComponent secondCost = Component.translatable("tooltip.nycto.material_cost", menu.getAlternateMaterialCost(), getSecondCostText()).withStyle(ChatFormatting.GREEN);
 					MutableComponent powerRequired = Component.translatable("tooltip.nycto.power_required").withStyle(ChatFormatting.GREEN);
 					if (!minecraft.player.isCreative()) {
 						if (minecraft.player.experienceLevel < menu.getExpCost()) {
 							expCost.withStyle(ChatFormatting.RED);
 						}
-						if (menu.getSlot(0).getItem().getCount() < menu.getMaterialCost()) {
+						if (menu.getSlot(0).getItem().getCount() < menu.getPrimaryMaterialCost()) {
 							materialCost.withStyle(ChatFormatting.RED);
 						}
-						if (menu.getSlot(1).getItem().getCount() < menu.getMaterialCost()) {
+						if (menu.getSlot(1).getItem().getCount() < menu.getAlternateMaterialCost()) {
 							secondCost.withStyle(ChatFormatting.RED);
 						}
 					}
