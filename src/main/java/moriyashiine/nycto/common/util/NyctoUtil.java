@@ -69,11 +69,11 @@ public class NyctoUtil {
 		return NyctoAPI.isVampire(entity) && !DarkFormPower.isDarkFormActive(entity);
 	}
 
-	public static boolean getsMoreBlood(LivingEntity entity) {
+	public static boolean hasHealBlockResistance(LivingEntity entity) {
 		return getEquippedArmorPieces(entity, ModItemTags.VAMPIRE_ARMOR) >= 1;
 	}
 
-	public static boolean hasSunResistance(LivingEntity entity) {
+	public static boolean getsMoreBlood(LivingEntity entity) {
 		return getEquippedArmorPieces(entity, ModItemTags.VAMPIRE_ARMOR) >= 2;
 	}
 
@@ -81,7 +81,7 @@ public class NyctoUtil {
 		return getEquippedArmorPieces(entity, ModItemTags.VAMPIRE_ARMOR) >= 3;
 	}
 
-	public static boolean hasHealBlockResistance(LivingEntity entity) {
+	public static boolean hasSunResistance(LivingEntity entity) {
 		return getEquippedArmorPieces(entity, ModItemTags.VAMPIRE_ARMOR) >= 4;
 	}
 
