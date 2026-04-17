@@ -10,10 +10,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.HitResult;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
@@ -61,7 +63,7 @@ public class AuraComponent implements AutoSyncedComponent, ServerTickingComponen
 
 	public static void applyAura(Level level, BlockPos pos, int radius, boolean healBlock, Predicate<LivingEntity> predicate) {
 		level.getEntitiesOfClass(LivingEntity.class, new AABB(pos.getCenter().add(-radius, -radius, -radius), pos.getCenter().add(radius, radius, radius))).forEach(foundEntity -> {
-			if (predicate.test(foundEntity)) {
+			if (predicate.test(foundEntity) && level.clip(new ClipContext(pos.getCenter(), foundEntity.getEyePosition(), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, foundEntity)).getType() == HitResult.Type.MISS) {
 				foundEntity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 30, 1, true, false));
 				foundEntity.addEffect(new MobEffectInstance(MobEffects.MINING_FATIGUE, 30, 1, true, false));
 				if (healBlock) {
