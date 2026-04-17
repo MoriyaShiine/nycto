@@ -6,10 +6,6 @@ plugins {
 version = project.mod_version
 group = project.maven_group
 
-base {
-    archivesName = project.archives_base_name
-}
-
 chenille {
     customLicense = rootProject.file("LICENSE")
     github = new URL("https://github.com/MoriyaShiine/nycto")
@@ -47,9 +43,9 @@ dependencies {
 
     api "org.ladysnake.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
     api "org.ladysnake.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
-    includeImplementation "org.ladysnake.cardinal-components-api:cardinal-components-level:${cardinal_components_version}"
-    includeImplementation "maven.modrinth:midnightlib:${midnightlib_version}"
-    includeImplementation "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
+    includeApi "org.ladysnake.cardinal-components-api:cardinal-components-level:${cardinal_components_version}"
+    includeApi "maven.modrinth:midnightlib:${midnightlib_version}"
+    includeApi "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
 
     implementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
     implementation "moriyashiine:strawberrylib:${strawberrylib_version}"
