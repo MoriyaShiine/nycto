@@ -70,7 +70,7 @@ public class NyctoUtil {
 	}
 
 	public static boolean hasHealBlockResistance(LivingEntity entity) {
-		return getEquippedArmorPieces(entity, ModItemTags.VAMPIRE_ARMOR) >= 1;
+		return getEquippedArmorPieces(entity, ModItemTags.VAMPIRE_ARMOR) >= 1 || DarkFormPower.isDarkFormActive(entity);
 	}
 
 	public static boolean getsMoreBlood(LivingEntity entity) {

@@ -14,11 +14,13 @@ import moriyashiine.nycto.common.component.entity.VampireChargeJumpComponent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModPowers;
 import moriyashiine.nycto.common.tag.ModPowerTags;
+import moriyashiine.nycto.common.world.power.vampire.DarkFormPower;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.stream.Collectors;
 
@@ -62,7 +64,7 @@ public class VampireTransformation extends Transformation {
 	@Override
 	public AttributeModifierSet getAttributeModifiers(ServerPlayer player) {
 		AttributeModifierSet set = super.getAttributeModifiers(player);
-		int weaknesses = NyctoAPI.getPowers(player).stream().filter(instance -> instance.is(ModPowerTags.VAMPIRE_CHOOSABLE) && instance.getPower().isWeakness()).collect(Collectors.toSet()).size();
+		int weaknesses = NyctoAPI.getPowers(player).stream().filter(instance -> instance.getPower().isWeakness() && instance.is(ModPowerTags.VAMPIRE_CHOOSABLE)).collect(Collectors.toSet()).size();
 		set.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(Nycto.id("vampire_bonus"), 1 + (2 / 3D * weaknesses), AttributeModifier.Operation.ADD_VALUE));
 		set.addModifier(Attributes.MOVEMENT_SPEED, new AttributeModifier(Nycto.id("vampire_bonus"), 0.15 + (0.1 * weaknesses), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 		set.addModifier(Attributes.JUMP_STRENGTH, new AttributeModifier(Nycto.id("vampire_bonus"), 0.06 * weaknesses, AttributeModifier.Operation.ADD_VALUE));
@@ -82,5 +84,9 @@ public class VampireTransformation extends Transformation {
 		sunExposureComponent.setShouldTick(vampire);
 		sunExposureComponent.reset();
 		sunExposureComponent.sync();
+	}
+
+	public static int getHealTicks(Player player) {
+		return DarkFormPower.isDarkFormActive(player) ? 10 : 15;
 	}
 }

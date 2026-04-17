@@ -51,7 +51,7 @@ public abstract class FoodDataMixin {
 					exhaustionLevel = 0;
 					bloodComponent.drain(1);
 				}
-				if (player.level().getGameTime() % 15 == 0 && player.isHurt() && player.level().getGameRules().get(GameRules.NATURAL_HEALTH_REGENERATION)) {
+				if (player.level().getGameTime() % VampireTransformation.getHealTicks(player) == 0 && player.isHurt() && player.level().getGameRules().get(GameRules.NATURAL_HEALTH_REGENERATION)) {
 					player.heal(1);
 					addExhaustion(2 / VampireTransformation.VAMPIRE_EXHAUSTION_MULTIPLIER);
 				}

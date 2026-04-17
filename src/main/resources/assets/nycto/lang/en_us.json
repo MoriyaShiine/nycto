@@ -124,7 +124,7 @@
   "power.nycto.carnage": "Carnage",
   "power.nycto.carnage.desc": "Enter a berserk state, dealing increased damage to attacked mobs and causing them to rapidly hemorrhage blood.",
   "power.nycto.dark_form": "Dark Form",
-  "power.nycto.dark_form.desc": "Transforms you into a hideous beast, granting increased damage and armor, and allows you to jump in the air. Cannot wear armor or use tools, but can break most blocks by hand. Increases in strength the more weaknesses you have. Costs blood to maintain.",
+  "power.nycto.dark_form.desc": "Transforms you into a hideous beast, granting increased damage, armor, and healing, and allows you to jump in the air. Cannot wear armor or use tools, but can break most blocks by hand. Increases in strength the more weaknesses you have. Costs blood to maintain.",
   "power.nycto.haemogenesis": "Haemogenesis",
   "power.nycto.haemogenesis.desc": "Rapidly regenerates health, removes heal block, and extinguishes you if you're on fire.",
   "power.nycto.hypnotize": "Hypnotize",

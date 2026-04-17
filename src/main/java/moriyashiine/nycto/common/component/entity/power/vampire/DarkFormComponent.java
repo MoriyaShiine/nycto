@@ -12,6 +12,7 @@ import moriyashiine.nycto.common.init.ModEntityTypes;
 import moriyashiine.nycto.common.init.ModPowers;
 import moriyashiine.nycto.common.init.ModSoundEvents;
 import moriyashiine.nycto.common.payload.DarkFormJumpPayload;
+import moriyashiine.nycto.common.tag.ModPowerTags;
 import moriyashiine.nycto.common.world.entity.monster.DarkForm;
 import moriyashiine.strawberrylib.api.event.PreventEquipmentUsageEvent;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
@@ -33,8 +34,8 @@ import java.util.stream.Collectors;
 
 public class DarkFormComponent extends VampireFormChangeComponent implements CommonTickingComponent {
 	private static final AttributeModifier ARMOR_MODIFIER = new AttributeModifier(Nycto.id("dark_form_armor"), 20, AttributeModifier.Operation.ADD_VALUE);
-	private static final AttributeModifier ARMOR_TOUGHNESS_MODIFIER = new AttributeModifier(Nycto.id("dark_form_armor_toughness"), 12, AttributeModifier.Operation.ADD_VALUE);
-	private static final AttributeModifier ATTACK_DAMAGE_MODIFIER = new AttributeModifier(Nycto.id("dark_form_attack_damage"), 12, AttributeModifier.Operation.ADD_VALUE);
+	private static final AttributeModifier ARMOR_TOUGHNESS_MODIFIER = new AttributeModifier(Nycto.id("dark_form_armor_toughness"), 8, AttributeModifier.Operation.ADD_VALUE);
+	private static final AttributeModifier ATTACK_DAMAGE_MODIFIER = new AttributeModifier(Nycto.id("dark_form_attack_damage"), 10, AttributeModifier.Operation.ADD_VALUE);
 	private static final AttributeModifier ATTACK_SPEED_MODIFIER = new AttributeModifier(Nycto.id("dark_form_attack_speed"), -0.5, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 	private static final AttributeModifier BLOCK_INTERACTION_RANGE_MODIFIER = new AttributeModifier(Nycto.id("dark_form_block_interaction_range"), 1, AttributeModifier.Operation.ADD_VALUE);
 	private static final AttributeModifier ENTITY_INTERACTION_RANGE_MODIFIER = new AttributeModifier(Nycto.id("dark_form_entity_interaction_range"), 1, AttributeModifier.Operation.ADD_VALUE);
@@ -141,7 +142,7 @@ public class DarkFormComponent extends VampireFormChangeComponent implements Com
 	}
 
 	private AttributeModifier getAdjustedModifier(AttributeModifier modifier) {
-		int weaknesses = NyctoAPI.getPowers(obj).stream().filter(instance -> instance.getPower().isWeakness()).collect(Collectors.toSet()).size();
+		int weaknesses = NyctoAPI.getPowers(obj).stream().filter(instance -> instance.getPower().isWeakness() && instance.is(ModPowerTags.VAMPIRE_CHOOSABLE)).collect(Collectors.toSet()).size();
 		float multiplier = switch (weaknesses) {
 			case 0 -> 0.5F;
 			case 1 -> 0.7F;
