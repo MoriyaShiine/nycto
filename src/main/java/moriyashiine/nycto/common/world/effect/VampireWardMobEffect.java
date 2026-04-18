@@ -26,7 +26,7 @@ public class VampireWardMobEffect extends EntityRemovableMobEffect {
 
 	@Override
 	public void onEffectRemoved(LivingEntity mob) {
-		applyAttributes(mob, NyctoAPI.isSunExposed(mob));
+		applyAttributes(mob, NyctoAPI.hasSunDebuff(mob));
 	}
 
 	@Override

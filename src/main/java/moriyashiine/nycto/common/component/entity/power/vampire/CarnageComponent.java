@@ -41,7 +41,7 @@ public class CarnageComponent implements AutoSyncedComponent, CommonTickingCompo
 	@Override
 	public void tick() {
 		if (ticks > 0) {
-			if (ticks > 20 && NyctoAPI.isSunExposed(obj)) {
+			if (ticks > 20 && NyctoAPI.hasSunDebuff(obj)) {
 				ticks = 20;
 			}
 			if (--ticks == 0 && !obj.level().isClientSide()) {

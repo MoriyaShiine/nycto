@@ -8,15 +8,18 @@ import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.api.world.power.PowerInstance;
 import moriyashiine.nycto.common.NyctoAPIImpl;
 import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.ModGameRules;
 import moriyashiine.nycto.common.init.ModPowers;
 import moriyashiine.nycto.common.tag.ModBlockTags;
 import moriyashiine.nycto.common.tag.ModPowerTags;
 import moriyashiine.nycto.common.util.NyctoUtil;
+import moriyashiine.nycto.common.util.VampireSunExposureMode;
 import moriyashiine.nycto.common.world.effect.VampireWardMobEffect;
 import moriyashiine.strawberrylib.api.module.SLibClientUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -30,9 +33,11 @@ import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
 import static moriyashiine.nycto.api.world.power.ActivePower.BLOCKED_COOLDOWN;
 
 public class SunExposureComponent implements AutoSyncedComponent, CommonTickingComponent {
-	public static final int MAX_EXPOSURE_TIME = 160;
+	public static final int MAX_EXPOSURE_TIME = 320;
+	private static final int MAX_BURNLESS_TIME = 40;
 
 	private final LivingEntity obj;
+	private VampireSunExposureMode vampireSunExposureMode = VampireSunExposureMode.NORMAL;
 	private boolean shouldTick, exposed = false;
 	private int exposureTime = 0;
 
@@ -43,6 +48,7 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 
 	@Override
 	public void readData(ValueInput input) {
+		vampireSunExposureMode = input.read("VampireSunExposureMode", VampireSunExposureMode.CODEC).orElse(VampireSunExposureMode.NORMAL);
 		shouldTick = input.getBooleanOr("ShouldTick", false);
 		exposed = input.getBooleanOr("Exposed", false);
 		exposureTime = input.getIntOr("ExposureTime", 0);
@@ -50,6 +56,7 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 
 	@Override
 	public void writeData(ValueOutput output) {
+		output.store("VampireSunExposureMode", VampireSunExposureMode.CODEC, vampireSunExposureMode);
 		output.putBoolean("ShouldTick", shouldTick);
 		output.putBoolean("Exposed", exposed);
 		output.putInt("ExposureTime", exposureTime);
@@ -62,13 +69,14 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 			if (exposed) {
 				boolean sunResistance = NyctoUtil.hasSunResistance(obj);
 				boolean photophobia = obj instanceof Player player && NyctoAPI.hasPower(player, ModPowers.PHOTOPHOBIA);
-				max = sunResistance && !photophobia ? 20 : MAX_EXPOSURE_TIME;
+				boolean cappedBurnTime = !vampireSunExposureMode.burn && sunResistance && !photophobia;
+				max = cappedBurnTime ? MAX_BURNLESS_TIME : MAX_EXPOSURE_TIME;
 				if (exposureTime < max) {
-					exposureTime = Math.min(max, exposureTime + getExposureTicks(sunResistance, photophobia));
+					exposureTime = Math.min(max, exposureTime + getExposureTicks(sunResistance, photophobia, cappedBurnTime));
 				} else if (exposureTime >= MAX_EXPOSURE_TIME) {
 					obj.igniteForSeconds(4);
 				}
-				if (obj instanceof Player player) {
+				if (vampireSunExposureMode.debuff && obj instanceof Player player) {
 					for (PowerInstance power : NyctoAPI.getPowers(player)) {
 						if (power.getCooldown() <= 0 && power.is(ModPowerTags.VAMPIRE_CHOOSABLE)) {
 							NyctoAPIImpl.setPowerCooldown(player, power.getPower(), BLOCKED_COOLDOWN);
@@ -77,7 +85,7 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 				}
 			}
 			if (exposureTime > max) {
-				exposureTime = Math.max(0, exposureTime - 4);
+				exposureTime = Math.max(0, exposureTime - 8);
 			}
 		}
 	}
@@ -86,23 +94,8 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 	public void serverTick() {
 		tick();
 		if (shouldTick) {
-			boolean changed = false;
-			boolean isExposed = updateExposed();
-			if (exposed != isExposed) {
-				exposed = isExposed;
-				changed = true;
+			if (tickGameRule() || tickExposed()) {
 				sync();
-			}
-			if (exposed) {
-				if (obj instanceof ServerPlayer player) {
-					NyctoUtil.disableFormChangePowers(player.level(), player, null);
-				}
-				if (ModEntityComponents.HEAL_BLOCK.get(obj).getTicksToBlock() < -BLOCKED_COOLDOWN) {
-					NyctoAPI.applyHealBlock(obj, -BLOCKED_COOLDOWN);
-				}
-				VampireWardMobEffect.applyAttributes(obj, true);
-			} else if (changed) {
-				VampireWardMobEffect.applyAttributes(obj, false);
 			}
 		}
 	}
@@ -124,6 +117,10 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 		exposureTime = 0;
 	}
 
+	public boolean hasVampireSunDebuff() {
+		return vampireSunExposureMode.debuff;
+	}
+
 	public boolean shouldTick() {
 		return shouldTick;
 	}
@@ -140,8 +137,48 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 		return exposureTime;
 	}
 
-	private int getExposureTicks(boolean sunResistance, boolean photophobia) {
-		return !sunResistance && photophobia ? 8 : 1;
+	private int getExposureTicks(boolean sunResistance, boolean photophobia, boolean cappedBurnTime) {
+		if (cappedBurnTime) {
+			return 2;
+		}
+		int ticks = photophobia ? 8 : 2;
+		if (sunResistance) {
+			ticks /= 2;
+		}
+		return ticks;
+	}
+
+	private boolean tickGameRule() {
+		boolean changed = false;
+		VampireSunExposureMode mode = ((ServerLevel) obj.level()).getGameRules().get(ModGameRules.VAMPIRE_SUN_EXPOSURE_MODE);
+		if (vampireSunExposureMode != mode) {
+			vampireSunExposureMode = mode;
+			changed = true;
+		}
+		return changed;
+	}
+
+	private boolean tickExposed() {
+		boolean changed = false;
+		boolean isExposed = updateExposed();
+		if (exposed != isExposed) {
+			exposed = isExposed;
+			changed = true;
+		}
+		if (vampireSunExposureMode.debuff) {
+			if (exposed) {
+				if (obj instanceof ServerPlayer player) {
+					NyctoUtil.disableFormChangePowers(player.level(), player, null);
+				}
+				if (ModEntityComponents.HEAL_BLOCK.get(obj).getTicksToBlock() < -BLOCKED_COOLDOWN) {
+					NyctoAPI.applyHealBlock(obj, -BLOCKED_COOLDOWN);
+				}
+				VampireWardMobEffect.applyAttributes(obj, true);
+			} else if (changed) {
+				VampireWardMobEffect.applyAttributes(obj, false);
+			}
+		}
+		return changed;
 	}
 
 	private boolean updateExposed() {

@@ -43,7 +43,7 @@ public class BloodBarrierComponent implements AutoSyncedComponent, CommonTicking
 	@Override
 	public void tick() {
 		if (ticks > 0) {
-			if (ticks > 1 && NyctoAPI.isSunExposed(obj)) {
+			if (ticks > 1 && NyctoAPI.hasSunDebuff(obj)) {
 				ticks = 1;
 			}
 			if (--ticks == 0) {

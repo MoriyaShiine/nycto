@@ -143,6 +143,11 @@ public class NyctoAPI {
 		return sunExposureComponent != null && sunExposureComponent.isExposed();
 	}
 
+	public static boolean hasSunDebuff(Entity entity) {
+		SunExposureComponent sunExposureComponent = ModEntityComponents.SUN_EXPOSURE.getNullable(entity);
+		return sunExposureComponent != null && sunExposureComponent.isExposed() && sunExposureComponent.hasVampireSunDebuff();
+	}
+
 	public static void partiallyCureTransformation(ServerPlayer player, TagKey<Power> choosablePowers) {
 		List<PowerInstance> powers = getPowers(player);
 		Set<Power> toRemove = new HashSet<>();

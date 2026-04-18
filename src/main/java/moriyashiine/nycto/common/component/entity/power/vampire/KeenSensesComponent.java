@@ -74,7 +74,7 @@ public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingCo
 	public void serverTick() {
 		tick();
 		if (enabled) {
-			if (NyctoAPI.isSunExposed(obj)) {
+			if (NyctoAPI.hasSunDebuff(obj)) {
 				ModPowers.KEEN_SENSES.playUseSound((ServerPlayer) obj);
 				toggle();
 			} else if (obj.slib$isSurvival() && --drainTicks == 0) {
