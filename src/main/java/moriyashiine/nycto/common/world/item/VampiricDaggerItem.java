@@ -48,7 +48,7 @@ public class VampiricDaggerItem extends Item {
 
 	@Override
 	public InteractionResult use(Level level, Player player, InteractionHand hand) {
-		if (player.hurtTime == 0 && player.isShiftKeyDown()) {
+		if (hand == InteractionHand.MAIN_HAND && player.hurtTime == 0 && player.isShiftKeyDown()) {
 			SLibUtils.runWithPvpBypass(() -> player.attack(player));
 			return InteractionResult.SUCCESS;
 		}
