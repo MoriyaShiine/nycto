@@ -80,8 +80,9 @@ public class ModItemTagsProvider extends FabricTagsProvider.ItemTagsProvider {
 				.forceAddTag(ConventionalItemTags.ENDER_PEARLS)
 				.add(Items.GOLDEN_APPLE);
 		valueLookupBuilder(ModItemTags.STRONG_VAMPIRE_ALTAR_UPGRADES)
+				.add(Items.ENDER_EYE)
 				.add(Items.GHAST_TEAR)
-				.add(Items.MAGMA_CREAM);
+				.add(Items.NETHERITE_SCRAP);
 
 		valueLookupBuilder(SLibItemTags.UNTRIMMABLE_ARMOR)
 				.addTag(ModItemTags.VAMPIRE_ARMOR)
