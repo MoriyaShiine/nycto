@@ -14,18 +14,15 @@ import moriyashiine.nycto.common.init.ModSoundEvents;
 import moriyashiine.nycto.common.payload.DarkFormJumpPayload;
 import moriyashiine.nycto.common.tag.ModPowerTags;
 import moriyashiine.nycto.common.world.entity.monster.DarkForm;
-import moriyashiine.strawberrylib.api.event.PreventEquipmentUsageEvent;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.schedule.Activity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
@@ -115,15 +112,6 @@ public class DarkFormComponent extends VampireFormChangeComponent implements Com
 		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.BLOCK_INTERACTION_RANGE, BLOCK_INTERACTION_RANGE_MODIFIER, enabled);
 		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.ENTITY_INTERACTION_RANGE, ENTITY_INTERACTION_RANGE_MODIFIER, enabled);
 		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.KNOCKBACK_RESISTANCE, KNOCKBACK_RESISTANCE_MODIFIER, enabled);
-		PreventEquipmentUsageEvent.triggerEquipmentCheck(obj);
-		if (!enabled) {
-			for (ItemStack stack : obj.getInventory().getNonEquipmentItems()) {
-				EquipmentSlot slot = obj.getEquipmentSlotForItem(stack);
-				if (slot.isArmor() && obj.getItemBySlot(slot).isEmpty() && obj.isEquippableInSlot(stack, slot)) {
-					obj.setItemSlot(slot, stack.copyAndClear());
-				}
-			}
-		}
 		sync();
 	}
 
