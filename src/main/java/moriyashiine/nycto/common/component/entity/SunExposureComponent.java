@@ -33,8 +33,7 @@ import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
 import static moriyashiine.nycto.api.world.power.ActivePower.BLOCKED_COOLDOWN;
 
 public class SunExposureComponent implements AutoSyncedComponent, CommonTickingComponent {
-	public static final int MAX_EXPOSURE_TIME = 320;
-	private static final int MAX_BURNLESS_TIME = 40;
+	public static final int MAX_EXPOSURE_TIME = 320, MIN_DEBUFF_EXPOSURE_TIME = 40;
 
 	private final LivingEntity obj;
 	private VampireSunExposureMode vampireSunExposureMode = VampireSunExposureMode.NORMAL;
@@ -70,7 +69,7 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 				boolean sunResistance = NyctoUtil.hasSunResistance(obj);
 				boolean photophobia = obj instanceof Player player && NyctoAPI.hasPower(player, ModPowers.PHOTOPHOBIA);
 				boolean cappedBurnTime = !vampireSunExposureMode.burn && sunResistance && !photophobia;
-				max = cappedBurnTime ? MAX_BURNLESS_TIME : MAX_EXPOSURE_TIME;
+				max = cappedBurnTime ? MIN_DEBUFF_EXPOSURE_TIME : MAX_EXPOSURE_TIME;
 				if (exposureTime < max) {
 					exposureTime = Math.min(max, exposureTime + getExposureTicks(sunResistance, photophobia, cappedBurnTime));
 				} else if (exposureTime >= MAX_EXPOSURE_TIME) {
@@ -173,10 +172,8 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 				if (ModEntityComponents.HEAL_BLOCK.get(obj).getTicksToBlock() < -BLOCKED_COOLDOWN) {
 					NyctoAPI.applyHealBlock(obj, -BLOCKED_COOLDOWN);
 				}
-				VampireWardMobEffect.applyAttributes(obj, true);
-			} else if (changed) {
-				VampireWardMobEffect.applyAttributes(obj, false);
 			}
+			VampireWardMobEffect.applyAttributes(obj, exposureTime >= MIN_DEBUFF_EXPOSURE_TIME);
 		}
 		return changed;
 	}
