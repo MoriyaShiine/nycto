@@ -1,4 +1,29 @@
 ------------------------------------------------------
+Version 26.1-b6
+------------------------------------------------------
+- power order can now be changed in altars
+- vampires exposed to the sun now get heal blocked, have their stat buffs disabled, and cannot use powers
+- adjust vampire armor bonuses order
+- vampire armor's sun resistance bonus now prevents burning in the sun (excluding if you have photophobia)
+- add vampire_sun_exposure_mode gamerule (defaults to normal)
+    - normal causes full vampire armor to prevent burning in the sun, but vampires get debuffed in the sun
+    - burn_but_no_debuff causes full vampire armor to only halve time to burn in the sun, but vampires don't get debuffed in the sun
+- vampiric daggers now automatically extract blood to glass bottles in offhand
+- vampiric daggers can no longer be used to hurt yourself in offhand
+- adjust vampire altar upgrade costs
+- coffins now stack to 1
+- garlic wreaths no longer affect entities if there are blocks in the way
+- bat form now reduces detection range of mobs
+- bat form can now cling to ceilings
+- fix bat form not being able to swing their arm
+- blood flechettes now deal more damage
+- dark form now has less damage reduction and attack damage but heals faster
+- dark form now properly stores the armor and tools you can't use without scattering your inventory
+- tamed pets can no longer be hypnotized
+- players with hypnotize can no longer be hypnotized
+- update vile presence description
+
+------------------------------------------------------
 Version 26.1-b5
 ------------------------------------------------------
 - add registerVampiricThrallRenderer client api method
