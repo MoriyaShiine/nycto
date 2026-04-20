@@ -100,7 +100,6 @@
 	"misc.client.LivingEntityRendererMixin",
 	"power.vampire.batform.client.AvatarRendererMixin",
 	"power.vampire.batform.client.LocalPlayerMixin",
-	"power.vampire.batform.client.MultiPlayerGameModeMixin",
 	"power.vampire.bloodbarrier.client.AvatarRendererMixin",
 	"power.vampire.bloodbarrier.client.BatRendererMixin",
 	"power.vampire.bloodbarrier.client.GuiMixin",
