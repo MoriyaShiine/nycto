@@ -8,15 +8,23 @@ import moriyashiine.nycto.api.world.power.FormChanger;
 import moriyashiine.nycto.common.component.entity.power.vampire.BatFormComponent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.strawberrylib.api.module.SLibRegistries;
+import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ambient.Bat;
 import net.minecraft.world.entity.player.Player;
 
 public class BatFormPower extends VampireActivePower implements FormChanger {
 	public BatFormPower() {
 		super(200);
+		SLibRegistries.registerModelReplacementCopyFunction((player, replacement) -> {
+			if (replacement instanceof Bat bat && isFormActive(player)) {
+				bat.setResting(!player.swinging && !player.hasMovedHorizontallyRecently() && !SLibUtils.isSufficientlyHigh(player, -(player.getBbHeight() + 0.01)));
+			}
+		});
 	}
 
 	@Override
