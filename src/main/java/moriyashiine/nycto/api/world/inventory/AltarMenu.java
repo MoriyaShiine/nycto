@@ -123,6 +123,9 @@ public abstract class AltarMenu extends AbstractContainerMenu {
 
 	@Override
 	public boolean clickMenuButton(Player player, int buttonId) {
+		if (buttonId == Short.MAX_VALUE) {
+			return true;
+		}
 		if (canUpgrade(player)) {
 			access.execute((level, pos) -> {
 				if (!player.isCreative()) {
@@ -212,6 +215,31 @@ public abstract class AltarMenu extends AbstractContainerMenu {
 					}
 					return;
 				}
+			}
+		}
+	}
+
+	public static void swapPowers(Player player, Power first, Power second) {
+		if (player.containerMenu instanceof AltarMenu menu && menu.playerPowers.contains(first) && menu.playerPowers.contains(second)) {
+			List<PowerInstance> powers = NyctoAPI.getPowers(player);
+			int firstIndex = -1, secondIndex = -1;
+			for (int i = 0; i < powers.size(); i++) {
+				Power power = powers.get(i).getPower();
+				if (power == first) {
+					firstIndex = i;
+				} else if (power == second) {
+					secondIndex = i;
+				}
+			}
+			if (firstIndex >= 0 && secondIndex >= 0) {
+				PowerInstance temp = powers.get(firstIndex);
+				powers.set(firstIndex, powers.get(secondIndex));
+				powers.set(secondIndex, temp);
+
+				int menuTemp = menu.playerPowers.indexOf(first);
+				menu.playerPowers.set(menu.playerPowers.indexOf(second), first);
+				menu.playerPowers.set(menuTemp, second);
+				menu.sort(menu.playerPowers);
 			}
 		}
 	}

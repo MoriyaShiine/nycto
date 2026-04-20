@@ -90,6 +90,7 @@ public class Nycto implements ModInitializer {
 		// common payloads
 		PayloadTypeRegistry.serverboundPlay().register(ApplyPowerFromAltarPayload.TYPE, ApplyPowerFromAltarPayload.CODEC);
 		PayloadTypeRegistry.serverboundPlay().register(DarkFormJumpPayload.TYPE, DarkFormJumpPayload.CODEC);
+		PayloadTypeRegistry.serverboundPlay().register(SwapPowersFromAltarPayload.TYPE, SwapPowersFromAltarPayload.CODEC);
 		PayloadTypeRegistry.serverboundPlay().register(SyncPowerIndexPayload.TYPE, SyncPowerIndexPayload.CODEC);
 		PayloadTypeRegistry.serverboundPlay().register(SyncVampireChargeJumpStatusPayload.TYPE, SyncVampireChargeJumpStatusPayload.CODEC);
 		PayloadTypeRegistry.serverboundPlay().register(SyncVampireStepHeightStatusPayload.TYPE, SyncVampireStepHeightStatusPayload.CODEC);
@@ -97,6 +98,7 @@ public class Nycto implements ModInitializer {
 		// common receivers
 		ServerPlayNetworking.registerGlobalReceiver(ApplyPowerFromAltarPayload.TYPE, new ApplyPowerFromAltarPayload.Receiver());
 		ServerPlayNetworking.registerGlobalReceiver(DarkFormJumpPayload.TYPE, new DarkFormJumpPayload.Receiver());
+		ServerPlayNetworking.registerGlobalReceiver(SwapPowersFromAltarPayload.TYPE, new SwapPowersFromAltarPayload.Receiver());
 		ServerPlayNetworking.registerGlobalReceiver(SyncPowerIndexPayload.TYPE, new SyncPowerIndexPayload.Receiver());
 		ServerPlayNetworking.registerGlobalReceiver(SyncVampireChargeJumpStatusPayload.TYPE, new SyncVampireChargeJumpStatusPayload.Receiver());
 		ServerPlayNetworking.registerGlobalReceiver(SyncVampireStepHeightStatusPayload.TYPE, new SyncVampireStepHeightStatusPayload.Receiver());

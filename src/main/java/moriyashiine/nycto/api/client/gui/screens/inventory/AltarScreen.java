@@ -8,6 +8,7 @@ import moriyashiine.nycto.api.init.NyctoRegistries;
 import moriyashiine.nycto.api.world.inventory.AltarMenu;
 import moriyashiine.nycto.api.world.power.Power;
 import moriyashiine.nycto.common.payload.ApplyPowerFromAltarPayload;
+import moriyashiine.nycto.common.payload.SwapPowersFromAltarPayload;
 import moriyashiine.strawberrylib.api.module.SLibClientUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -26,6 +27,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class AltarScreen<T extends AltarMenu> extends AbstractContainerScreen<T> {
 	private static final int MAX_PLAYER_POWERS = 6;
@@ -34,7 +36,7 @@ public abstract class AltarScreen<T extends AltarMenu> extends AbstractContainer
 
 	private final CyclingSlotBackground itemCostBackground = new CyclingSlotBackground(1);
 
-	private int selectedPowerIndex = -1, selectedWeaknessIndex = -1;
+	private int selectedPowerIndex = -1, selectedWeaknessIndex = -1, selectedPlayerPowerIndex = -1;
 
 	private List<Component> infoTexts = null;
 
@@ -73,6 +75,7 @@ public abstract class AltarScreen<T extends AltarMenu> extends AbstractContainer
 	public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
 		int posX = (width - imageWidth) / 2;
 		int posY = (height - imageHeight) / 2;
+		// selectable powers
 		if (menu.getPlayerPowers() < MAX_PLAYER_POWERS) {
 			boolean needsWeakness = needsWeakness();
 			if (selectedPowerIndex != -1 && (!needsWeakness || selectedWeaknessIndex != -1) && menu.canUpgrade(minecraft.player) && isCheckmarkInBounds(posX, posY, (int) event.x(), (int) event.y())) {
@@ -89,7 +92,7 @@ public abstract class AltarScreen<T extends AltarMenu> extends AbstractContainer
 					return true;
 				}
 			}
-			Tuple<Integer, Boolean> clicked = clickPower(posX + 13, posY + 17, (int) event.x(), (int) event.y());
+			Tuple<Integer, Boolean> clicked = clickPower(posX + 13, posY + 17, (int) event.x(), (int) event.y(), true);
 			int clickedIndex = clicked.getA();
 			if (clickedIndex != -1) {
 				if (clicked.getB()) {
@@ -102,6 +105,31 @@ public abstract class AltarScreen<T extends AltarMenu> extends AbstractContainer
 				if ((selectedPowerIndex != -1 && !clicked.getB()) || (selectedWeaknessIndex != -1 && clicked.getB())) {
 					minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
 					return true;
+				}
+			}
+		}
+		// player powers
+		if (menu.getPlayerPowers() >= 2) {
+			Tuple<Integer, Boolean> clicked = clickPower(posX + 13, posY + 17, (int) event.x(), (int) event.y(), false);
+			int clickedIndex = clicked.getA();
+			if (clickedIndex != -1) {
+				if (!clicked.getB() || menu.playerPowers.stream().filter(Power::isWeakness).collect(Collectors.toSet()).size() >= 2) {
+					minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
+					Power first = null;
+					if (selectedPlayerPowerIndex != -1) {
+						first = menu.playerPowers.get(selectedPlayerPowerIndex);
+					}
+					if (clickedIndex != selectedPlayerPowerIndex) {
+						selectedPlayerPowerIndex = clickedIndex;
+						Power second = menu.playerPowers.get(selectedPlayerPowerIndex);
+						if (first != null && first.isWeakness() == second.isWeakness() && menu.clickMenuButton(minecraft.player, Short.MAX_VALUE)) {
+							minecraft.gameMode.handleInventoryButtonClick(menu.containerId, Short.MAX_VALUE);
+							AltarMenu.swapPowers(minecraft.player, first, second);
+							SwapPowersFromAltarPayload.send(first, second);
+							selectedPlayerPowerIndex = -1;
+							return true;
+						}
+					}
 				}
 			}
 		}
@@ -194,6 +222,9 @@ public abstract class AltarScreen<T extends AltarMenu> extends AbstractContainer
 			int offsetY = 69 + (power.isWeakness() ? 23 : 0);
 			extractPowerInfo(power, graphics, posX + offsetX, posY + offsetY, mouseX, mouseY);
 			graphics.blit(RenderPipelines.GUI_TEXTURED, power.getOrCreateTextureLocation(), posX + offsetX, posY + offsetY, 0, 0, 16, 16, 16, 16);
+			if (selectedPlayerPowerIndex == i) {
+				graphics.fill(posX + offsetX, posY + offsetY, posX + offsetX + 16, posY + offsetY + 16, Integer.MAX_VALUE);
+			}
 		}
 	}
 
@@ -210,21 +241,38 @@ public abstract class AltarScreen<T extends AltarMenu> extends AbstractContainer
 		}
 	}
 
-	private Tuple<Integer, Boolean> clickPower(int posX, int posY, int mouseX, int mouseY) {
+	private Tuple<Integer, Boolean> clickPower(int posX, int posY, int mouseX, int mouseY, boolean selectable) {
 		int powers = 0;
-		for (int i = 0; i < menu.selectablePowers.size(); i++) {
-			Power power = menu.selectablePowers.get(i);
-			int row = i > 8 && !power.isWeakness() ? 1 : 0;
-			if (!power.isWeakness()) {
-				powers++;
+		if (selectable) {
+			for (int i = 0; i < menu.selectablePowers.size(); i++) {
+				Power power = menu.selectablePowers.get(i);
+				int row = i > 8 && !power.isWeakness() ? 1 : 0;
+				if (!power.isWeakness()) {
+					powers++;
+				}
+				int offsetX = i * 17 - (row * 9 * 17);
+				if (power.isWeakness()) {
+					offsetX -= powers * 17;
+				}
+				int offsetY = (row * 17) + (power.isWeakness() ? 42 : 0);
+				if (isInBounds(posX + offsetX, posY + offsetY, mouseX, mouseY, 0, 16, 0, 16)) {
+					return new Tuple<>(i, power.isWeakness());
+				}
 			}
-			int offsetX = i * 17 - (row * 9 * 17);
-			if (power.isWeakness()) {
-				offsetX -= powers * 17;
-			}
-			int offsetY = (row * 17) + (power.isWeakness() ? 42 : 0);
-			if (isInBounds(posX + offsetX, posY + offsetY, mouseX, mouseY, 0, 16, 0, 16)) {
-				return new Tuple<>(i, power.isWeakness());
+		} else {
+			for (int i = 0; i < menu.playerPowers.size(); i++) {
+				Power power = menu.playerPowers.get(i);
+				if (!power.isWeakness()) {
+					powers++;
+				}
+				int offsetX = i * 17;
+				if (power.isWeakness()) {
+					offsetX -= powers * 17;
+				}
+				int offsetY = 69 + (power.isWeakness() ? 23 : 0);
+				if (isInBounds(posX + offsetX, posY + offsetY, mouseX, mouseY, 0, 16, 0, 16)) {
+					return new Tuple<>(i, power.isWeakness());
+				}
 			}
 		}
 		return new Tuple<>(-1, false);
