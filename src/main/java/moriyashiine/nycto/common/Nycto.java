@@ -117,12 +117,12 @@ public class Nycto implements ModInitializer {
 		ModifyDestroySpeedEvent.MULTIPLY_BASE.register(new ShearsEvent());
 		// ENTITY
 		ModifyDamageTakenEvent.MULTIPLY_TOTAL.register(new AttributeEvent());
-		ModifyDestroySpeedEvent.MULTIPLY_BASE.register(new BeastFormEvent());
+		ModifyDestroySpeedEvent.MULTIPLY_BASE.register(new BeastFormEvent.DestroySpeed());
+		PreventEquipmentUsageEvent.EVENT.register(new BeastFormEvent.PreventEquipmentUsage());
 		ServerEntityEvents.ENTITY_LOAD.register(new BloodEvent.Load());
 		ServerEntityEvents.ENTITY_UNLOAD.register(new BloodEvent.Unload());
 		ServerPlayerEvents.COPY_FROM.register(new BloodEvent.Copy());
 		ServerMobEffectEvents.ALLOW_ADD.register(new BloodEvent.EffectImmunity());
-		PreventEquipmentUsageEvent.EVENT.register(new CannotUseEquipmentEvent());
 		AfterDamageIncludingDeathEvent.EVENT.register(new HunterEvent.Heat());
 		TickEntityEvent.EVENT.register(new HunterEvent.Aura());
 		ModifyCriticalStatusEvent.EVENT.register(new HunterEvent.CriticalImmunity());

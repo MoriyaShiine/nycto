@@ -28,6 +28,6 @@ public abstract class PlayerMixin extends LivingEntityMixin {
 	@SuppressWarnings("ConstantValue")
 	@ModifyReturnValue(method = "hasCorrectToolForDrops", at = @At("RETURN"))
 	private boolean nycto$beastForm(boolean original, BlockState state) {
-		return original || BeastFormEvent.canHarvestAsBeast((Player) (Object) this, state);
+		return original || BeastFormEvent.DestroySpeed.canHarvestAsBeast((Player) (Object) this, state);
 	}
 }
