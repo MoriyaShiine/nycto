@@ -1,11 +1,13 @@
 {
   "required": true,
   "package": "moriyashiine.nycto.mixin",
+  "plugin": "moriyashiine.nycto.common.ModMixinPlugin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
 	"api.statuseffect.LivingEntityMixin",
 	"beastform.LivingEntityMixin",
 	"beastform.PlayerMixin",
+	"beastform.integration.anthropophagy.CannibalLevelComponentMixin",
 	"brew.PotionContentsMixin",
 	"coffin.AcquirePoiMixin",
 	"coffin.NearestBedSensorMixin",

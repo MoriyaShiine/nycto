@@ -45,11 +45,11 @@ public class Nycto implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		superbSteedsLoaded = FabricLoader.getInstance().isModLoaded("superbsteeds");
 		SLib.init(MOD_ID);
 		initRegistries();
 		initPayloads();
 		initEvents();
-		superbSteedsLoaded = FabricLoader.getInstance().isModLoaded("superbsteeds");
 	}
 
 	public static Identifier id(String value) {
