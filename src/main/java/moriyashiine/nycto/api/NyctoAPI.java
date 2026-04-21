@@ -145,7 +145,7 @@ public class NyctoAPI {
 
 	public static boolean hasSunDebuff(Entity entity) {
 		SunExposureComponent sunExposureComponent = ModEntityComponents.SUN_EXPOSURE.getNullable(entity);
-		return sunExposureComponent != null && sunExposureComponent.getExposureTime() >= SunExposureComponent.MIN_DEBUFF_EXPOSURE_TIME && sunExposureComponent.hasVampireSunDebuff();
+		return sunExposureComponent != null && sunExposureComponent.hasVampireSunDebuff() && sunExposureComponent.getExposureTime() >= SunExposureComponent.MIN_DEBUFF_EXPOSURE_TIME;
 	}
 
 	public static void partiallyCureTransformation(ServerPlayer player, TagKey<Power> choosablePowers) {
