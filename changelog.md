@@ -1,4 +1,12 @@
 ------------------------------------------------------
+Version 26.1-b7
+------------------------------------------------------
+- beast forms no longer prevent holding armor items, only wearing them
+- beast forms now have an effective cannibal level of 0 when anthropophagy is installed
+- fix vampire charge jump not being disabled in the sun
+- fix cases of fire animation not clearing when it should
+
+------------------------------------------------------
 Version 26.1-b6
 ------------------------------------------------------
 - power order can now be changed in altars
