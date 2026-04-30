@@ -150,8 +150,17 @@ public class ModItems {
 	}
 
 	public static Item registerHunterArmor(String name, ArmorType type, Holder<Attribute> attribute) {
+		boolean mask = type == ArmorType.HELMET;
 		AttributeModifier resistanceModifier = new AttributeModifier(Nycto.id("hunter_armor_resistance_" + type.getName()), 1, AttributeModifier.Operation.ADD_VALUE);
-		return registerItem(name, type == ArmorType.HELMET ? MaskItem::new : Item::new, properties().humanoidArmor(ModArmorMaterials.HUNTER, type).attributes(ModArmorMaterials.HUNTER.createAttributes(type).withModifierAdded(attribute, resistanceModifier, EquipmentSlotGroup.bySlot(type.getSlot()))).component(ModComponentTypes.MASK_VISIBILITY, MaskVisibility.VISIBLE));
+		Item.Properties properties = properties();
+		if (type != ArmorType.BODY) {
+			properties.humanoidArmor(ModArmorMaterials.HUNTER, type);
+		}
+		properties.attributes(ModArmorMaterials.HUNTER.createAttributes(type).withModifierAdded(attribute, resistanceModifier, EquipmentSlotGroup.bySlot(type.getSlot())));
+		if (mask) {
+			properties.component(ModComponentTypes.MASK_VISIBILITY, MaskVisibility.VISIBLE);
+		}
+		return registerItem(name, mask ? MaskItem::new : Item::new, properties);
 	}
 
 	public static Item registerHalberd(String name) {
