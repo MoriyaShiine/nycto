@@ -25,7 +25,7 @@ public class HunterRenderer extends IllagerRenderer<Hunter, HunterRenderState> {
 
 	@Override
 	public Identifier getTextureLocation(HunterRenderState state) {
-		return state.hunterType.texture();
+		return state.hunterType.hunterEntityTexture;
 	}
 
 	@Override

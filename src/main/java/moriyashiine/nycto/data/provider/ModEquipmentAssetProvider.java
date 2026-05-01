@@ -4,8 +4,8 @@
 
 package moriyashiine.nycto.data.provider;
 
+import moriyashiine.nycto.api.init.NyctoRegistries;
 import moriyashiine.nycto.common.Nycto;
-import moriyashiine.nycto.common.world.entity.monster.HunterType;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.data.CachedOutput;
@@ -28,8 +28,8 @@ public class ModEquipmentAssetProvider implements DataProvider {
 	@Override
 	public CompletableFuture<?> run(CachedOutput cache) {
 		Map<ResourceKey<EquipmentAsset>, EquipmentClientInfo> equipmentAssets = new HashMap<>();
-		HunterType.TYPES.forEach(type -> equipmentAssets.put(type.assetKey(), EquipmentClientInfo.builder()
-				.addLayers(EquipmentClientInfo.LayerType.WOLF_BODY, EquipmentClientInfo.Layer.leatherDyeable(type.assetKey().identifier(), false))
+		NyctoRegistries.HUNTER_TYPE.forEach(type -> equipmentAssets.put(type.assetKey, EquipmentClientInfo.builder()
+				.addLayers(EquipmentClientInfo.LayerType.WOLF_BODY, EquipmentClientInfo.Layer.leatherDyeable(type.assetKey.identifier(), false))
 				.build()));
 		return DataProvider.saveAll(cache, EquipmentClientInfo.CODEC, pathProvider::json, equipmentAssets);
 	}

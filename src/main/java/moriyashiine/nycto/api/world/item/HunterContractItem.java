@@ -4,9 +4,9 @@
 
 package moriyashiine.nycto.api.world.item;
 
+import moriyashiine.nycto.api.world.entity.huntertype.HunterType;
 import moriyashiine.nycto.common.init.ModEntityTypes;
 import moriyashiine.nycto.common.world.entity.monster.Hunter;
-import moriyashiine.nycto.common.world.entity.monster.HunterType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Difficulty;

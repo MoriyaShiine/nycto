@@ -9,7 +9,6 @@ import moriyashiine.nycto.api.world.item.HunterContractItem;
 import moriyashiine.nycto.api.world.item.TransformationCheckerBlockItem;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.tag.ModBannerPatternTags;
-import moriyashiine.nycto.common.world.entity.monster.HunterType;
 import moriyashiine.nycto.common.world.item.*;
 import moriyashiine.strawberrylib.api.objects.records.ModifierTrio;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
@@ -133,8 +132,8 @@ public class ModItems {
 	public static final Item ACONITE = registerItem("aconite", settings -> new TransformationCheckerBlockItem(ModBlocks.ACONITE, settings, NyctoAPI::isWerewolf));
 
 	public static final Item HUNTER_CONTRACT = registerItem("hunter_contract");
-	public static final Item VAMPIRE_HUNTER_CONTRACT = registerItem("vampire_hunter_contract", settings -> new HunterContractItem(settings, HunterType.VAMPIRE));
-	public static final Item WEREWOLF_HUNTER_CONTRACT = registerItem("werewolf_hunter_contract", settings -> new HunterContractItem(settings, HunterType.WEREWOLF));
+	public static final Item VAMPIRE_HUNTER_CONTRACT = registerItem("vampire_hunter_contract", settings -> new HunterContractItem(settings, ModHunterTypes.VAMPIRE));
+	public static final Item WEREWOLF_HUNTER_CONTRACT = registerItem("werewolf_hunter_contract", settings -> new HunterContractItem(settings, ModHunterTypes.WEREWOLF));
 
 	public static final Item VAMPIRE_BAT_BANNER_PATTERN = registerItem("vampire_bat_banner_pattern", properties().stacksTo(1).delayedComponent(DataComponents.PROVIDES_BANNER_PATTERNS, context -> context.getOrThrow(ModBannerPatternTags.PATTERN_ITEM_VAMPIRE_BAT)));
 	public static final Item WOLF_SKULL_BANNER_PATTERN = registerItem("wolf_skull_banner_pattern", properties().stacksTo(1).delayedComponent(DataComponents.PROVIDES_BANNER_PATTERNS, context -> context.getOrThrow(ModBannerPatternTags.PATTERN_ITEM_WOLF_SKULL)));

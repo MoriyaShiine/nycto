@@ -9,6 +9,7 @@ import moriyashiine.nycto.api.world.power.ActivePower;
 import moriyashiine.nycto.api.world.power.FormChanger;
 import moriyashiine.nycto.api.world.power.PowerInstance;
 import moriyashiine.nycto.common.init.ModDamageTypes;
+import moriyashiine.nycto.common.init.ModHunterTypes;
 import moriyashiine.nycto.common.init.ModMobEffects;
 import moriyashiine.nycto.common.init.ModParticleTypes;
 import moriyashiine.nycto.common.tag.ModDamageTypeTags;
@@ -86,19 +87,19 @@ public class NyctoUtil {
 	}
 
 	public static boolean hasBloodDrainResistance(LivingEntity entity) {
-		return getEquippedArmorPieces(entity, ModItemTags.VAMPIRE_HUNTER_ARMOR) >= 1;
+		return getEquippedArmorPieces(entity, ModHunterTypes.VAMPIRE.armorTagKey) >= 1;
 	}
 
 	public static boolean hasGarlicAura(LivingEntity entity) {
-		return getEquippedArmorPieces(entity, ModItemTags.VAMPIRE_HUNTER_ARMOR) >= 2;
+		return getEquippedArmorPieces(entity, ModHunterTypes.VAMPIRE.armorTagKey) >= 2;
 	}
 
 	public static boolean hasReducedWoodenStakeCooldown(LivingEntity entity) {
-		return getEquippedArmorPieces(entity, ModItemTags.VAMPIRE_HUNTER_ARMOR) >= 3;
+		return getEquippedArmorPieces(entity, ModHunterTypes.VAMPIRE.armorTagKey) >= 3;
 	}
 
 	public static boolean hasVampireCriticalHitImmunity(LivingEntity entity) {
-		return getEquippedArmorPieces(entity, ModItemTags.VAMPIRE_HUNTER_ARMOR) >= 4;
+		return getEquippedArmorPieces(entity, ModHunterTypes.VAMPIRE.armorTagKey) >= 4;
 	}
 
 	public static boolean isSurvivalNullable(@Nullable Entity entity) {

@@ -5,7 +5,10 @@
 package moriyashiine.nycto.common.world.entity.monster;
 
 import moriyashiine.nycto.api.NyctoAPI;
+import moriyashiine.nycto.api.init.NyctoRegistries;
+import moriyashiine.nycto.api.world.entity.huntertype.HunterType;
 import moriyashiine.nycto.common.Nycto;
+import moriyashiine.nycto.common.init.ModHunterTypes;
 import moriyashiine.nycto.common.init.ModSoundEvents;
 import moriyashiine.nycto.common.world.entity.ai.goal.hunter.PathToContractPosGoal;
 import moriyashiine.nycto.common.world.entity.ai.goal.hunter.UltimateTargetGoal;
@@ -69,7 +72,7 @@ public class Hunter extends Pillager {
 	protected void readAdditionalSaveData(ValueInput input) {
 		super.readAdditionalSaveData(input);
 		setCanPickUpLoot(false);
-		entityData.set(HUNTER_TYPE_ID, input.read("HunterType", HunterType.CODEC).orElse(HunterType.VAMPIRE));
+		entityData.set(HUNTER_TYPE_ID, input.read("HunterType", HunterType.CODEC).orElse(ModHunterTypes.VAMPIRE));
 		ultimateTarget = input.read("UltimateTarget", UUIDUtil.AUTHLIB_CODEC).orElse(null);
 		contractPos = input.read("ContractPos", BlockPos.CODEC).orElse(null);
 		contractPathTicks = input.getIntOr("ContractPathTicks", 0);
@@ -87,7 +90,7 @@ public class Hunter extends Pillager {
 	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder entityData) {
 		super.defineSynchedData(entityData);
-		entityData.define(HUNTER_TYPE_ID, HunterType.VAMPIRE);
+		entityData.define(HUNTER_TYPE_ID, ModHunterTypes.VAMPIRE);
 	}
 
 	@Override
@@ -111,7 +114,7 @@ public class Hunter extends Pillager {
 
 	@Override
 	protected void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
-		equipGear(HunterType.TYPES.get(random.nextInt(HunterType.TYPES.size())), false);
+		equipGear(NyctoRegistries.HUNTER_TYPE.getRandom(random).orElseThrow().value(), false);
 	}
 
 	@Override

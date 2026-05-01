@@ -5,6 +5,7 @@
 package moriyashiine.nycto.client.event;
 
 import moriyashiine.nycto.api.NyctoAPI;
+import moriyashiine.nycto.common.init.ModHunterTypes;
 import moriyashiine.nycto.common.init.ModItems;
 import moriyashiine.nycto.common.tag.ModItemTags;
 import moriyashiine.nycto.common.util.NyctoUtil;
@@ -29,7 +30,7 @@ public class ItemDescriptionsEvent implements ItemTooltipCallback {
 
 	static {
 		ARMOR_SET_BONUSES.add(stack -> getArmorSetText(stack, ModItemTags.VAMPIRE_ARMOR, ItemDescriptionsEvent.VAMPIRE_ARMOR_BONUSES));
-		ARMOR_SET_BONUSES.add(stack -> getArmorSetText(stack, ModItemTags.VAMPIRE_HUNTER_ARMOR, ItemDescriptionsEvent.VAMPIRE_HUNTER_ARMOR_BONUSES));
+		ARMOR_SET_BONUSES.add(stack -> getArmorSetText(stack, ModHunterTypes.VAMPIRE.armorTagKey, ItemDescriptionsEvent.VAMPIRE_HUNTER_ARMOR_BONUSES));
 	}
 
 	private static final Component WEAKNESS_TEXT = Component.translatable("tooltip.nycto.in_weakness_tag").withStyle(ChatFormatting.ITALIC, ChatFormatting.RED);

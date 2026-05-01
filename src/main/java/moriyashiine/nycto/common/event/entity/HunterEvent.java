@@ -5,12 +5,12 @@
 package moriyashiine.nycto.common.event.entity;
 
 import moriyashiine.nycto.api.NyctoAPI;
+import moriyashiine.nycto.api.init.NyctoRegistries;
 import moriyashiine.nycto.common.component.level.AuraComponent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModEntityTypes;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.nycto.common.world.entity.monster.Hunter;
-import moriyashiine.nycto.common.world.entity.monster.HunterType;
 import moriyashiine.strawberrylib.api.event.AfterDamageIncludingDeathEvent;
 import moriyashiine.strawberrylib.api.event.ModifyCriticalStatusEvent;
 import moriyashiine.strawberrylib.api.event.PreventHostileTargetingEvent;
@@ -36,7 +36,7 @@ public class HunterEvent {
 						NyctoUtil.notifyNearbyVillagers(victim, player, GossipType.MINOR_NEGATIVE, 5);
 					}
 				}
-				if (HunterType.TYPES.stream().anyMatch(type -> type.shouldTarget(player))) {
+				if (NyctoRegistries.HUNTER_TYPE.stream().anyMatch(type -> type.shouldTarget(player))) {
 					if (originalDamage > 1 || victim.getRandom().nextBoolean() || victim.isDeadOrDying()) {
 						ModEntityComponents.HUNTER_HEAT.get(player).maybeIncreaseHeat(victim, victim.isDeadOrDying());
 					}

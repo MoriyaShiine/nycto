@@ -5,7 +5,7 @@
 package moriyashiine.nycto.mixin.hunter;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import moriyashiine.nycto.common.world.entity.monster.HunterType;
+import moriyashiine.nycto.api.init.NyctoRegistries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.animal.wolf.Wolf;
@@ -21,6 +21,6 @@ public abstract class WolfMixin extends TamableAnimal {
 
 	@ModifyExpressionValue(method = "canArmorAbsorb", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Ljava/lang/Object;)Z"))
 	private boolean nycto$hunter(boolean original) {
-		return original || HunterType.TYPES.stream().anyMatch(type -> getBodyArmorItem().is(type.armorTagKey()));
+		return original || NyctoRegistries.HUNTER_TYPE.stream().anyMatch(type -> getBodyArmorItem().is(type.armorTagKey));
 	}
 }

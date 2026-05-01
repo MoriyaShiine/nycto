@@ -4,6 +4,7 @@
 
 package moriyashiine.nycto.api.init;
 
+import moriyashiine.nycto.api.world.entity.huntertype.HunterType;
 import moriyashiine.nycto.api.world.power.Power;
 import moriyashiine.nycto.api.world.transformation.Transformation;
 import moriyashiine.nycto.common.Nycto;
@@ -17,6 +18,9 @@ public class NyctoRegistries {
 
 	public static final ResourceKey<Registry<Power>> POWER_KEY = ResourceKey.createRegistryKey(Nycto.id("power"));
 	public static final Registry<Power> POWER = FabricRegistryBuilder.create(POWER_KEY).buildAndRegister();
+
+	public static final ResourceKey<Registry<HunterType>> HUNTER_TYPE_KEY = ResourceKey.createRegistryKey(Nycto.id("hunter_type"));
+	public static final Registry<HunterType> HUNTER_TYPE = FabricRegistryBuilder.create(HUNTER_TYPE_KEY).buildAndRegister();
 
 	public static void init() {
 		// fields initialized during mod init

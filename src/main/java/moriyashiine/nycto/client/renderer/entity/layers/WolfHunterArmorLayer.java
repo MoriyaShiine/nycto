@@ -5,9 +5,10 @@
 package moriyashiine.nycto.client.renderer.entity.layers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import moriyashiine.nycto.api.init.NyctoRegistries;
+import moriyashiine.nycto.api.world.entity.huntertype.HunterType;
 import moriyashiine.nycto.client.renderer.entity.model.WolfHunterArmorModel;
 import moriyashiine.nycto.common.Nycto;
-import moriyashiine.nycto.common.world.entity.monster.HunterType;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.animal.wolf.WolfModel;
 import net.minecraft.client.model.geom.EntityModelSet;
@@ -50,20 +51,20 @@ public class WolfHunterArmorLayer extends RenderLayer<WolfRenderState, WolfModel
 
 	@Override
 	public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int lightCoords, WolfRenderState state, float yRot, float xRot) {
-		HunterType.TYPES.forEach(type -> {
+		NyctoRegistries.HUNTER_TYPE.forEach(type -> {
 			WolfHunterArmorModel model = MODELS.computeIfAbsent(type, _ -> new WolfHunterArmorModel(modelSet.bakeLayer(MODEL_LAYERS.get(type))));
 			ItemStack armorItem = state.bodyArmorItem;
-			if (!state.isBaby && armorItem.is(type.armorTagKey())) {
+			if (!state.isBaby && armorItem.is(type.armorTagKey)) {
 				equipmentRenderer.renderLayers(
-								EquipmentClientInfo.LayerType.WOLF_BODY,
-								type.assetKey(),
-								model,
-								state,
-								armorItem,
-								poseStack,
-								submitNodeCollector,
-								lightCoords,
-								state.outlineColor);
+						EquipmentClientInfo.LayerType.WOLF_BODY,
+						type.assetKey,
+						model,
+						state,
+						armorItem,
+						poseStack,
+						submitNodeCollector,
+						lightCoords,
+						state.outlineColor);
 				maybeRenderCracks(poseStack, submitNodeCollector, lightCoords, armorItem, model, state);
 			}
 		});

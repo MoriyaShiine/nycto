@@ -38,11 +38,7 @@ import moriyashiine.nycto.client.renderer.entity.vampiricthrall.HorseVampiricThr
 import moriyashiine.nycto.client.renderer.entity.vampiricthrall.VexVampiricThrallRenderer;
 import moriyashiine.nycto.client.renderer.entity.vampiricthrall.WolfVampiricThrallRenderer;
 import moriyashiine.nycto.common.Nycto;
-import moriyashiine.nycto.common.init.ModEntityTypes;
-import moriyashiine.nycto.common.init.ModItems;
-import moriyashiine.nycto.common.init.ModMenuTypes;
-import moriyashiine.nycto.common.init.ModParticleTypes;
-import moriyashiine.nycto.common.world.entity.monster.HunterType;
+import moriyashiine.nycto.common.init.*;
 import moriyashiine.strawberrylib.api.event.TickEntityEvent;
 import moriyashiine.strawberrylib.api.event.client.AddNightVisionScaleEvent;
 import moriyashiine.strawberrylib.api.event.client.DisableContextualInfoEvent;
@@ -150,9 +146,9 @@ public class NyctoClient implements ClientModInitializer {
 		NyctoClientAPI.registerVampiricThrallRenderer(EntityType.WOLF, new WolfVampiricThrallRenderer());
 
 		ModelLayerRegistry.registerModelLayer(WolfHunterArmorModel.VAMPIRE_HUNTER_LAYER, WolfHunterArmorModel::createVampireHunterBodyLayer);
-		NyctoClientAPI.registerHunterTypeWolfArmorModelLayer(HunterType.VAMPIRE, WolfHunterArmorModel.VAMPIRE_HUNTER_LAYER);
+		NyctoClientAPI.registerHunterTypeWolfArmorModelLayer(ModHunterTypes.VAMPIRE, WolfHunterArmorModel.VAMPIRE_HUNTER_LAYER);
 		ModelLayerRegistry.registerModelLayer(WolfHunterArmorModel.WEREWOLF_HUNTER_LAYER, WolfHunterArmorModel::createWerewolfHunterBodyLayer);
-		NyctoClientAPI.registerHunterTypeWolfArmorModelLayer(HunterType.WEREWOLF, WolfHunterArmorModel.WEREWOLF_HUNTER_LAYER);
+		NyctoClientAPI.registerHunterTypeWolfArmorModelLayer(ModHunterTypes.WEREWOLF, WolfHunterArmorModel.WEREWOLF_HUNTER_LAYER);
 	}
 
 	private void initParticles() {
