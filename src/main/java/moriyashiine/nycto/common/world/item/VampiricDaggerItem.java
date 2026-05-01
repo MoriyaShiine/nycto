@@ -12,6 +12,7 @@ import moriyashiine.nycto.common.world.item.crafting.BloodExtractionRecipe;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import moriyashiine.strawberrylib.api.objects.records.ModifierTrio;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -43,7 +44,19 @@ public class VampiricDaggerItem extends Item {
 	private static final Component HOLDING_VAMPIRE_BLOOD_TEXT = Component.translatable("tooltip.nycto.holding_vampire_blood").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY);
 
 	public VampiricDaggerItem(Properties properties) {
-		super(editModifiers(() -> properties.sword(ToolMaterial.IRON, 2, -2), MODIFIER));
+		super(applyVampiricDaggerProperties(properties, 2, -2));
+	}
+
+	public static Item.Properties applyVampiricDaggerProperties(Item.Properties properties, float attackDamageBaseline, float attackSpeedBaseline) {
+		return editModifiers(() -> properties.sword(ToolMaterial.IRON, attackDamageBaseline, attackSpeedBaseline)
+						.enchantable(20)
+						.component(DataComponents.DAMAGE, null)
+						.component(DataComponents.MAX_DAMAGE, null)
+						.component(DataComponents.REPAIRABLE, null)
+						.component(ModComponentTypes.PLAYER_BLOOD, false)
+						.component(ModComponentTypes.VAMPIRE_BLOOD, false)
+						.component(ModComponentTypes.BLOOD_CHARGE, 0),
+				MODIFIER);
 	}
 
 	@Override

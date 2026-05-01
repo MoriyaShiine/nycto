@@ -104,12 +104,7 @@ public class ModItems {
 	public static final Item WEREWOLF_HUNTER_BOOTS = registerHunterArmor("werewolf_hunter_boots", ArmorType.BOOTS, ModAttributes.WEREWOLF_RESISTANCE);
 	public static final Item WEREWOLF_HUNTER_WOLF_ARMOR = registerHunterArmor("werewolf_hunter_wolf_armor", ArmorType.BODY, ModAttributes.WEREWOLF_RESISTANCE);
 
-	public static final Item VAMPIRIC_DAGGER = registerItem("vampiric_dagger", VampiricDaggerItem::new, properties()
-			.component(ModComponentTypes.PLAYER_BLOOD, false)
-			.component(ModComponentTypes.VAMPIRE_BLOOD, false)
-			.component(ModComponentTypes.BLOOD_CHARGE, 0)
-			.enchantable(20)
-			.stacksTo(1));
+	public static final Item VAMPIRIC_DAGGER = registerItem("vampiric_dagger", VampiricDaggerItem::new);
 	public static final Item HALBERD = registerHalberd("halberd");
 	public static final Item GARLIC_COATED_HALBERD = registerHalberd("garlic_coated_halberd");
 	public static final Item ACONITE_COATED_HALBERD = registerHalberd("aconite_coated_halberd");
