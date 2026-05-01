@@ -7,10 +7,13 @@ package moriyashiine.nycto.api;
 import moriyashiine.nycto.api.renderer.entity.vampiricthrall.VampiricThrallRenderer;
 import moriyashiine.nycto.api.world.power.Power;
 import moriyashiine.nycto.client.event.PowerClientEvent;
+import moriyashiine.nycto.client.renderer.entity.layers.WolfHunterArmorLayer;
 import moriyashiine.nycto.common.component.entity.TransformationComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricVexComponent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.world.entity.monster.HunterType;
+import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -32,5 +35,9 @@ public class NyctoClientAPI {
 
 	public static <T extends LivingEntity> void registerVampiricThrallRenderer(EntityType<T> type, VampiricThrallRenderer<T> renderer) {
 		VampiricThrallRenderer.CUSTOM_RENDERERS.put(type, renderer);
+	}
+
+	public static void registerHunterTypeWolfArmorModelLayer(HunterType hunterType, ModelLayerLocation wolfArmorModelLayer) {
+		WolfHunterArmorLayer.MODEL_LAYERS.put(hunterType, wolfArmorModelLayer);
 	}
 }

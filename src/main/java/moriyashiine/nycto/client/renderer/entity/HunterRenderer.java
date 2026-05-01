@@ -31,6 +31,6 @@ public class HunterRenderer extends IllagerRenderer<Hunter, HunterRenderState> {
 	@Override
 	public void extractRenderState(Hunter entity, HunterRenderState state, float partialTicks) {
 		super.extractRenderState(entity, state, partialTicks);
-		state.hunterType = entity.getEntityData().get(Hunter.HUNTER_TYPE_ID);
+		state.hunterType = entity.getHunterType();
 	}
 }

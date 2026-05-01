@@ -9,6 +9,7 @@ import moriyashiine.nycto.common.init.ModItems;
 import moriyashiine.nycto.common.tag.ModItemTags;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.CommonComponents;
@@ -34,17 +35,18 @@ public class ItemDescriptionsEvent implements ItemTooltipCallback {
 	private static final Component WEAKNESS_TEXT = Component.translatable("tooltip.nycto.in_weakness_tag").withStyle(ChatFormatting.ITALIC, ChatFormatting.RED);
 
 	private static final Component ARMOR_SET_DESCRIPTION = Component.translatable("tooltip.nycto.armor_set.desc").withStyle(ChatFormatting.GOLD);
+	private static final Component BODY_ARMOR_DESCRIPTION = Component.translatable("item.modifiers.armor").withStyle(ChatFormatting.GOLD);
 	private static final List<Component> VAMPIRE_ARMOR_BONUSES = List.of(
-			Component.translatable("tooltip.nycto.vampire_armor.bonus_1").withStyle(ChatFormatting.GRAY),
-			Component.translatable("tooltip.nycto.vampire_armor.bonus_2").withStyle(ChatFormatting.GRAY),
-			Component.translatable("tooltip.nycto.vampire_armor.bonus_3").withStyle(ChatFormatting.GRAY),
-			Component.translatable("tooltip.nycto.vampire_armor.bonus_4").withStyle(ChatFormatting.GRAY)
+			Component.translatable("tooltip.nycto.vampire_armor.bonus_1"),
+			Component.translatable("tooltip.nycto.vampire_armor.bonus_2"),
+			Component.translatable("tooltip.nycto.vampire_armor.bonus_3"),
+			Component.translatable("tooltip.nycto.vampire_armor.bonus_4")
 	);
 	private static final List<Component> VAMPIRE_HUNTER_ARMOR_BONUSES = List.of(
-			Component.translatable("tooltip.nycto.vampire_hunter_armor.bonus_1").withStyle(ChatFormatting.GRAY),
-			Component.translatable("tooltip.nycto.vampire_hunter_armor.bonus_2").withStyle(ChatFormatting.GRAY),
-			Component.translatable("tooltip.nycto.vampire_hunter_armor.bonus_3").withStyle(ChatFormatting.GRAY),
-			Component.translatable("tooltip.nycto.vampire_hunter_armor.bonus_4").withStyle(ChatFormatting.GRAY)
+			Component.translatable("tooltip.nycto.vampire_hunter_armor.bonus_1"),
+			Component.translatable("tooltip.nycto.vampire_hunter_armor.bonus_2"),
+			Component.translatable("tooltip.nycto.vampire_hunter_armor.bonus_3"),
+			Component.translatable("tooltip.nycto.vampire_hunter_armor.bonus_4")
 	);
 
 	@Override
@@ -64,16 +66,24 @@ public class ItemDescriptionsEvent implements ItemTooltipCallback {
 
 	private static Optional<List<Component>> getArmorSetText(ItemStack stack, TagKey<Item> tagKey, List<Component> bonuses) {
 		if (stack.is(tagKey)) {
+			boolean body = !stack.is(ConventionalItemTags.HUMANOID_ARMORS);
 			List<Component> lines = new ArrayList<>();
 			lines.add(CommonComponents.EMPTY);
-			lines.add(ARMOR_SET_DESCRIPTION);
+			lines.add(body ? BODY_ARMOR_DESCRIPTION : ARMOR_SET_DESCRIPTION);
 			int equipped = NyctoUtil.getEquippedArmorPieces(client.player, tagKey);
+			int max = body ? 1 : bonuses.size();
 			for (int i = 0; i < bonuses.size(); i++) {
-				MutableComponent bonus = bonuses.get(i).copy();
-				if (equipped > i) {
-					bonus.withStyle(ChatFormatting.DARK_GREEN);
+				if (body && i == 2) {
+					continue;
 				}
-				lines.add(bonus);
+				int min = body ? 1 : i + 1;
+				MutableComponent prefix = Component.literal(" " + min + "/" + max + ": ");
+				MutableComponent bonus = bonuses.get(i).copy();
+				ChatFormatting color = ChatFormatting.GRAY;
+				if (equipped > i) {
+					color = ChatFormatting.DARK_GREEN;
+				}
+				lines.add(prefix.append(bonus).withStyle(color));
 			}
 			return Optional.of(lines);
 		}

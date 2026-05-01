@@ -48,17 +48,17 @@ public class NyctoUtil {
 				return true;
 			}
 		}
-		return source.is(ModDamageTypeTags.BYPASSES_BLOOD_VEIL) || isVampireWeaknessItem(source) || NyctoAPI.isBeastForm(source);
+		return source.is(ModDamageTypeTags.BYPASSES_BLOOD_VEIL) || isVampireWeakness(source) || NyctoAPI.isBeastForm(source);
 	}
 
 	public static boolean haltsVampireRegeneration(DamageSource source) {
-		return source.is(ModDamageTypeTags.HALTS_VAMPIRE_REGENERATION) || isVampireWeaknessItem(source);
+		return source.is(ModDamageTypeTags.HALTS_VAMPIRE_REGENERATION) || isVampireWeakness(source);
 	}
 
-	public static boolean isVampireWeaknessItem(DamageSource source) {
+	public static boolean isVampireWeakness(DamageSource source) {
 		if (SLibUtils.isAttackingPlayerCooldownWithinThreshold(0.7F)) {
-			if (source.getDirectEntity() instanceof LivingEntity attacker && attacker.getMainHandItem().is(ModItemTags.VAMPIRE_WEAKNESSES)) {
-				return true;
+			if (source.getDirectEntity() instanceof LivingEntity attacker) {
+				return attacker.getMainHandItem().is(ModItemTags.VAMPIRE_WEAKNESSES) || attacker.getItemBySlot(EquipmentSlot.BODY).is(ModItemTags.VAMPIRE_WEAKNESSES);
 			}
 			return source.getDirectEntity() instanceof AbstractArrow arrow && arrow.getPickupItemStackOrigin().is(ModItemTags.VAMPIRE_WEAKNESSES);
 		}
@@ -114,7 +114,7 @@ public class NyctoUtil {
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
 			if (slot.isArmor()) {
 				if (entity.getItemBySlot(slot).is(tagKey)) {
-					count++;
+					count += (slot == EquipmentSlot.BODY ? 4 : 1);
 				}
 			}
 		}

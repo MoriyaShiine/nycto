@@ -136,7 +136,12 @@ public class VampireEvent {
 		}
 
 		public static double getArmorMultiplier(LivingEntity living) {
-			return Math.max(1 / 3F, Mth.lerp(living.getArmorValue() / ((RangedAttribute) Attributes.ARMOR.value()).getMaxValue(), 1, 0));
+			double maxArmor = ((RangedAttribute) Attributes.ARMOR.value()).getMaxValue();
+			int armor = living.getArmorValue();
+			if (!living.getItemBySlot(EquipmentSlot.BODY).isEmpty()) {
+				armor = Mth.ceil(Math.min(maxArmor, armor * 3));
+			}
+			return Math.max(1 / 3F, Mth.lerp(armor / maxArmor, 1, 0));
 		}
 
 		private static int getModifiedFillAmount(int fillAmount, boolean qualityBlood, RandomSource random) {
@@ -193,15 +198,15 @@ public class VampireEvent {
 		@Override
 		public void afterDamage(LivingEntity entity, DamageSource source, float baseDamageTaken, float damageTaken, boolean blocked) {
 			if (!blocked && NyctoAPI.isVampire(entity) && NyctoUtil.haltsVampireRegeneration(source)) {
-				NyctoAPI.applyHealBlock(entity, NyctoUtil.isVampireWeaknessItem(source) ? 60 : 100);
+				NyctoAPI.applyHealBlock(entity, NyctoUtil.isVampireWeakness(source) ? 60 : 100);
 			}
 		}
 	}
 
-	public static class WeaknessItem implements AfterDamageIncludingDeathEvent {
+	public static class WeaknessCrit implements AfterDamageIncludingDeathEvent {
 		@Override
 		public void afterDamage(LivingEntity victim, DamageSource source, float originalDamage, float modifiedDamage, boolean blocked) {
-			if (!blocked && NyctoAPI.isVampire(victim) && NyctoUtil.isVampireWeaknessItem(source)) {
+			if (!blocked && NyctoAPI.isVampire(victim) && NyctoUtil.isVampireWeakness(source)) {
 				SLibUtils.playSound(victim, SoundEvents.PLAYER_ATTACK_CRIT);
 				SLibUtils.addTrackingEmitter(victim, ParticleTypes.ENCHANTED_HIT);
 			}

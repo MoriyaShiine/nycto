@@ -57,12 +57,14 @@ public class ModItemTagsProvider extends FabricTagsProvider.ItemTagsProvider {
 				.add(ModItems.VAMPIRE_HUNTER_HELMET)
 				.add(ModItems.VAMPIRE_HUNTER_CHESTPLATE)
 				.add(ModItems.VAMPIRE_HUNTER_LEGGINGS)
-				.add(ModItems.VAMPIRE_HUNTER_BOOTS);
+				.add(ModItems.VAMPIRE_HUNTER_BOOTS)
+				.add(ModItems.VAMPIRE_HUNTER_WOLF_ARMOR);
 		valueLookupBuilder(ModItemTags.WEREWOLF_HUNTER_ARMOR)
 				.add(ModItems.WEREWOLF_HUNTER_HELMET)
 				.add(ModItems.WEREWOLF_HUNTER_CHESTPLATE)
 				.add(ModItems.WEREWOLF_HUNTER_LEGGINGS)
-				.add(ModItems.WEREWOLF_HUNTER_BOOTS);
+				.add(ModItems.WEREWOLF_HUNTER_BOOTS)
+				.add(ModItems.WEREWOLF_HUNTER_WOLF_ARMOR);
 		valueLookupBuilder(ModItemTags.REPAIRS_VAMPIRE_ARMOR)
 				.forceAddTag(ItemTags.REPAIRS_IRON_ARMOR);
 		valueLookupBuilder(ModItemTags.REPAIRS_HUNTER_ARMOR)
@@ -93,6 +95,9 @@ public class ModItemTagsProvider extends FabricTagsProvider.ItemTagsProvider {
 				.add(ModItems.GARLIC)
 				.add(ModItems.GRILLED_GARLIC)
 				.add(ModItems.GARLIC_BREAD);
+		valueLookupBuilder(ConventionalItemTags.WOLF_ARMORS)
+				.add(ModItems.VAMPIRE_HUNTER_WOLF_ARMOR)
+				.add(ModItems.WEREWOLF_HUNTER_WOLF_ARMOR);
 
 		valueLookupBuilder(ItemTags.BEDS)
 				.addTag(ModItemTags.COFFINS);

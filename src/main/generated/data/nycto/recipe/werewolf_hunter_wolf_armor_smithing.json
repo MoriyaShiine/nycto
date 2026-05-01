@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "#c:ingots/gold",
+  "base": "minecraft:wolf_armor",
+  "result": {
+	"id": "nycto:werewolf_hunter_wolf_armor"
+  },
+  "template": "nycto:werewolf_hunter_upgrade_smithing_template"
+}

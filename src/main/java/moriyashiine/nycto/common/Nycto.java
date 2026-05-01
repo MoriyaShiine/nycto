@@ -139,7 +139,7 @@ public class Nycto implements ModInitializer {
 		ServerMobEffectEvents.ALLOW_ADD.register(new VampireEvent.EffectImmunity());
 		ServerLivingEntityEvents.ALLOW_DAMAGE.register(new VampireEvent.FreezeImmunity());
 		ServerLivingEntityEvents.AFTER_DAMAGE.register(new VampireEvent.HealBlock());
-		AfterDamageIncludingDeathEvent.EVENT.register(new VampireEvent.WeaknessItem());
+		AfterDamageIncludingDeathEvent.EVENT.register(new VampireEvent.WeaknessCrit());
 		PlayerBlockBreakEvents.AFTER.register(new VampireEvent.BreakHarming());
 		TickEntityEvent.EVENT.register(new VampireEvent.TickHarming());
 		// ITEM

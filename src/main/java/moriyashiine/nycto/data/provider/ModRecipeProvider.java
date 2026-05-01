@@ -68,10 +68,12 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 				hunterSmithing(ModItems.VAMPIRE_HUNTER_UPGRADE_SMITHING_TEMPLATE, Items.LEATHER_CHESTPLATE, ModItems.VAMPIRE_HUNTER_CHESTPLATE);
 				hunterSmithing(ModItems.VAMPIRE_HUNTER_UPGRADE_SMITHING_TEMPLATE, Items.LEATHER_LEGGINGS, ModItems.VAMPIRE_HUNTER_LEGGINGS);
 				hunterSmithing(ModItems.VAMPIRE_HUNTER_UPGRADE_SMITHING_TEMPLATE, Items.LEATHER_BOOTS, ModItems.VAMPIRE_HUNTER_BOOTS);
+				hunterSmithing(ModItems.VAMPIRE_HUNTER_UPGRADE_SMITHING_TEMPLATE, Items.WOLF_ARMOR, ModItems.VAMPIRE_HUNTER_WOLF_ARMOR);
 				hunterSmithing(ModItems.WEREWOLF_HUNTER_UPGRADE_SMITHING_TEMPLATE, Items.LEATHER_HELMET, ModItems.WEREWOLF_HUNTER_HELMET);
 				hunterSmithing(ModItems.WEREWOLF_HUNTER_UPGRADE_SMITHING_TEMPLATE, Items.LEATHER_CHESTPLATE, ModItems.WEREWOLF_HUNTER_CHESTPLATE);
 				hunterSmithing(ModItems.WEREWOLF_HUNTER_UPGRADE_SMITHING_TEMPLATE, Items.LEATHER_LEGGINGS, ModItems.WEREWOLF_HUNTER_LEGGINGS);
 				hunterSmithing(ModItems.WEREWOLF_HUNTER_UPGRADE_SMITHING_TEMPLATE, Items.LEATHER_BOOTS, ModItems.WEREWOLF_HUNTER_BOOTS);
+				hunterSmithing(ModItems.WEREWOLF_HUNTER_UPGRADE_SMITHING_TEMPLATE, Items.WOLF_ARMOR, ModItems.WEREWOLF_HUNTER_WOLF_ARMOR);
 				shaped(RecipeCategory.COMBAT, ModItems.VAMPIRIC_DAGGER).define('I', ConventionalItemTags.IRON_INGOTS).define('F', Items.FLINT).define('B', Items.GLASS_BOTTLE).pattern("  I").pattern(" F ").pattern("B  ").unlockedBy("has_iron_ingot", has(ConventionalItemTags.IRON_INGOTS)).save(output);
 				shaped(RecipeCategory.COMBAT, ModItems.HALBERD).define('G', ConventionalItemTags.GOLD_INGOTS).define('I', ConventionalItemTags.IRON_INGOTS).define('A', Items.IRON_AXE).define('S', Items.STICK).pattern(" GI").pattern(" AI").pattern("S  ").unlockedBy("has_iron_ingot", has(ConventionalItemTags.IRON_INGOTS)).save(output);
 				TransmuteRecipeBuilder.transmute(RecipeCategory.COMBAT, of(ModItems.HALBERD), of(ModItems.GARLIC_WREATH), ModItems.GARLIC_COATED_HALBERD).unlockedBy("has_halberd", has(ModItems.HALBERD)).save(output);

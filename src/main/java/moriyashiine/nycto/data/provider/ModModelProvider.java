@@ -82,10 +82,12 @@ public class ModModelProvider extends FabricModelProvider {
 		generators.generateFlatItem(ModItems.VAMPIRE_HUNTER_CHESTPLATE, ModelTemplates.FLAT_ITEM);
 		generators.generateFlatItem(ModItems.VAMPIRE_HUNTER_LEGGINGS, ModelTemplates.FLAT_ITEM);
 		generators.generateFlatItem(ModItems.VAMPIRE_HUNTER_BOOTS, ModelTemplates.FLAT_ITEM);
+		generators.generateFlatItem(ModItems.VAMPIRE_HUNTER_WOLF_ARMOR, ModelTemplates.FLAT_ITEM);
 		generators.generateFlatItem(ModItems.WEREWOLF_HUNTER_HELMET, ModelTemplates.FLAT_ITEM);
 		generators.generateFlatItem(ModItems.WEREWOLF_HUNTER_CHESTPLATE, ModelTemplates.FLAT_ITEM);
 		generators.generateFlatItem(ModItems.WEREWOLF_HUNTER_LEGGINGS, ModelTemplates.FLAT_ITEM);
 		generators.generateFlatItem(ModItems.WEREWOLF_HUNTER_BOOTS, ModelTemplates.FLAT_ITEM);
+		generators.generateFlatItem(ModItems.WEREWOLF_HUNTER_WOLF_ARMOR, ModelTemplates.FLAT_ITEM);
 		registerWithFullCondition(generators, ModItems.VAMPIRIC_DAGGER);
 		registerHalberd(generators, ModItems.HALBERD, new Material(Nycto.id("item/halberd_in_hand")), new Material(Nycto.id("item/empty")));
 		registerHalberd(generators, ModItems.GARLIC_COATED_HALBERD, new Material(Nycto.id("item/halberd_in_hand_coated")), new Material(Nycto.id("item/halberd_in_hand_extra_garlic")));

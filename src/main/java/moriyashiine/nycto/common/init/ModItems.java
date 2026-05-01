@@ -9,7 +9,7 @@ import moriyashiine.nycto.api.world.item.HunterContractItem;
 import moriyashiine.nycto.api.world.item.TransformationCheckerBlockItem;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.tag.ModBannerPatternTags;
-import moriyashiine.nycto.common.world.entity.monster.Hunter;
+import moriyashiine.nycto.common.world.entity.monster.HunterType;
 import moriyashiine.nycto.common.world.item.*;
 import moriyashiine.strawberrylib.api.objects.records.ModifierTrio;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
@@ -29,6 +29,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.component.Consumable;
+import net.minecraft.world.item.equipment.ArmorMaterials;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.block.Block;
 
@@ -95,11 +96,13 @@ public class ModItems {
 	public static final Item VAMPIRE_HUNTER_CHESTPLATE = registerHunterArmor("vampire_hunter_chestplate", ArmorType.CHESTPLATE, ModAttributes.VAMPIRE_RESISTANCE);
 	public static final Item VAMPIRE_HUNTER_LEGGINGS = registerHunterArmor("vampire_hunter_leggings", ArmorType.LEGGINGS, ModAttributes.VAMPIRE_RESISTANCE);
 	public static final Item VAMPIRE_HUNTER_BOOTS = registerHunterArmor("vampire_hunter_boots", ArmorType.BOOTS, ModAttributes.VAMPIRE_RESISTANCE);
+	public static final Item VAMPIRE_HUNTER_WOLF_ARMOR = registerHunterArmor("vampire_hunter_wolf_armor", ArmorType.BODY, ModAttributes.VAMPIRE_RESISTANCE);
 
 	public static final Item WEREWOLF_HUNTER_HELMET = registerHunterArmor("werewolf_hunter_helmet", ArmorType.HELMET, ModAttributes.WEREWOLF_RESISTANCE);
 	public static final Item WEREWOLF_HUNTER_CHESTPLATE = registerHunterArmor("werewolf_hunter_chestplate", ArmorType.CHESTPLATE, ModAttributes.WEREWOLF_RESISTANCE);
 	public static final Item WEREWOLF_HUNTER_LEGGINGS = registerHunterArmor("werewolf_hunter_leggings", ArmorType.LEGGINGS, ModAttributes.WEREWOLF_RESISTANCE);
 	public static final Item WEREWOLF_HUNTER_BOOTS = registerHunterArmor("werewolf_hunter_boots", ArmorType.BOOTS, ModAttributes.WEREWOLF_RESISTANCE);
+	public static final Item WEREWOLF_HUNTER_WOLF_ARMOR = registerHunterArmor("werewolf_hunter_wolf_armor", ArmorType.BODY, ModAttributes.WEREWOLF_RESISTANCE);
 
 	public static final Item VAMPIRIC_DAGGER = registerItem("vampiric_dagger", VampiricDaggerItem::new, properties()
 			.component(ModComponentTypes.PLAYER_BLOOD, false)
@@ -135,8 +138,8 @@ public class ModItems {
 	public static final Item ACONITE = registerItem("aconite", settings -> new TransformationCheckerBlockItem(ModBlocks.ACONITE, settings, NyctoAPI::isWerewolf));
 
 	public static final Item HUNTER_CONTRACT = registerItem("hunter_contract");
-	public static final Item VAMPIRE_HUNTER_CONTRACT = registerItem("vampire_hunter_contract", settings -> new HunterContractItem(settings, Hunter.HunterType.VAMPIRE));
-	public static final Item WEREWOLF_HUNTER_CONTRACT = registerItem("werewolf_hunter_contract", settings -> new HunterContractItem(settings, Hunter.HunterType.WEREWOLF));
+	public static final Item VAMPIRE_HUNTER_CONTRACT = registerItem("vampire_hunter_contract", settings -> new HunterContractItem(settings, HunterType.VAMPIRE));
+	public static final Item WEREWOLF_HUNTER_CONTRACT = registerItem("werewolf_hunter_contract", settings -> new HunterContractItem(settings, HunterType.WEREWOLF));
 
 	public static final Item VAMPIRE_BAT_BANNER_PATTERN = registerItem("vampire_bat_banner_pattern", properties().stacksTo(1).delayedComponent(DataComponents.PROVIDES_BANNER_PATTERNS, context -> context.getOrThrow(ModBannerPatternTags.PATTERN_ITEM_VAMPIRE_BAT)));
 	public static final Item WOLF_SKULL_BANNER_PATTERN = registerItem("wolf_skull_banner_pattern", properties().stacksTo(1).delayedComponent(DataComponents.PROVIDES_BANNER_PATTERNS, context -> context.getOrThrow(ModBannerPatternTags.PATTERN_ITEM_WOLF_SKULL)));
@@ -150,10 +153,13 @@ public class ModItems {
 	}
 
 	public static Item registerHunterArmor(String name, ArmorType type, Holder<Attribute> attribute) {
+		boolean body = type == ArmorType.BODY;
 		boolean mask = type == ArmorType.HELMET;
-		AttributeModifier resistanceModifier = new AttributeModifier(Nycto.id("hunter_armor_resistance_" + type.getName()), 1, AttributeModifier.Operation.ADD_VALUE);
+		AttributeModifier resistanceModifier = new AttributeModifier(Nycto.id("hunter_armor_resistance_" + type.getName()), body ? 4 : 1, AttributeModifier.Operation.ADD_VALUE);
 		Item.Properties properties = properties();
-		if (type != ArmorType.BODY) {
+		if (body) {
+			properties.wolfArmor(ArmorMaterials.ARMADILLO_SCUTE);
+		} else {
 			properties.humanoidArmor(ModArmorMaterials.HUNTER, type);
 		}
 		properties.attributes(ModArmorMaterials.HUNTER.createAttributes(type).withModifierAdded(attribute, resistanceModifier, EquipmentSlotGroup.bySlot(type.getSlot())));
@@ -217,10 +223,12 @@ public class ModItems {
 			output.accept(VAMPIRE_HUNTER_CHESTPLATE);
 			output.accept(VAMPIRE_HUNTER_LEGGINGS);
 			output.accept(VAMPIRE_HUNTER_BOOTS);
+			output.accept(VAMPIRE_HUNTER_WOLF_ARMOR);
 			output.accept(WEREWOLF_HUNTER_HELMET);
 			output.accept(WEREWOLF_HUNTER_CHESTPLATE);
 			output.accept(WEREWOLF_HUNTER_LEGGINGS);
 			output.accept(WEREWOLF_HUNTER_BOOTS);
+			output.accept(WEREWOLF_HUNTER_WOLF_ARMOR);
 
 			output.accept(VAMPIRIC_DAGGER);
 			output.accept(HALBERD);

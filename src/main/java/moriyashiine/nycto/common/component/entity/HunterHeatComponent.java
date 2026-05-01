@@ -4,13 +4,12 @@
 
 package moriyashiine.nycto.common.component.entity;
 
-import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.api.world.item.HunterContractItem;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModGameRules;
 import moriyashiine.nycto.common.tag.ModEntityTypeTags;
-import moriyashiine.nycto.common.world.entity.monster.Hunter;
+import moriyashiine.nycto.common.world.entity.monster.HunterType;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
@@ -76,7 +75,8 @@ public class HunterHeatComponent implements ServerTickingComponent {
 	public void increaseHeat() {
 		if (heatLevel + 1 >= MAXIMUM_HEAT) {
 			if (timesSpawned < MAXIMUM_SPAWNS) {
-				if (HunterContractItem.spawnHunter(obj.level(), obj, NyctoAPI.isVampire(obj) ? Hunter.HunterType.VAMPIRE : Hunter.HunterType.WEREWOLF, obj.getRandom().nextIntBetweenInclusive(1, 3)).consumesAction()) {
+				HunterType hunterType = HunterType.TYPES.stream().filter(type -> type.shouldTarget(obj)).findFirst().orElse(null);
+				if (hunterType != null && HunterContractItem.spawnHunter(obj.level(), obj, hunterType, obj.getRandom().nextIntBetweenInclusive(1, 3)).consumesAction()) {
 					heatLevel = decayTicks = 0;
 					timesSpawned++;
 					spawnDecayTicks = DECAY_TIMER;

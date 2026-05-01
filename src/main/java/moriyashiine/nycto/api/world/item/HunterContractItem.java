@@ -6,6 +6,7 @@ package moriyashiine.nycto.api.world.item;
 
 import moriyashiine.nycto.common.init.ModEntityTypes;
 import moriyashiine.nycto.common.world.entity.monster.Hunter;
+import moriyashiine.nycto.common.world.entity.monster.HunterType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Difficulty;
@@ -21,9 +22,9 @@ public class HunterContractItem extends Item {
 	private static final Component SUCCEED_TEXT = Component.translatable("message.nycto.hunter_contract.succeed");
 	private static final Component FAIL_TEXT = Component.translatable("message.nycto.hunter_contract.fail");
 
-	private final Hunter.HunterType type;
+	private final HunterType type;
 
-	public HunterContractItem(Properties properties, Hunter.HunterType type) {
+	public HunterContractItem(Properties properties, HunterType type) {
 		super(properties);
 		this.type = type;
 	}
@@ -48,7 +49,7 @@ public class HunterContractItem extends Item {
 		return result;
 	}
 
-	public static InteractionResult spawnHunter(Level level, Player player, Hunter.HunterType type, int amount) {
+	public static InteractionResult spawnHunter(Level level, Player player, HunterType type, int amount) {
 		if (level.getDifficulty() == Difficulty.PEACEFUL) {
 			return InteractionResult.FAIL;
 		}

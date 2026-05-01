@@ -4,12 +4,8 @@
 
 package moriyashiine.nycto.common.world.entity.monster;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.Nycto;
-import moriyashiine.nycto.common.init.ModBannerPatterns;
-import moriyashiine.nycto.common.init.ModItems;
 import moriyashiine.nycto.common.init.ModSoundEvents;
 import moriyashiine.nycto.common.world.entity.ai.goal.hunter.PathToContractPosGoal;
 import moriyashiine.nycto.common.world.entity.ai.goal.hunter.UltimateTargetGoal;
@@ -17,14 +13,9 @@ import moriyashiine.superbsteeds.common.component.entity.HorseAttributesComponen
 import moriyashiine.superbsteeds.common.init.ModEntityComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.UUIDUtil;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -42,11 +33,10 @@ import net.minecraft.world.entity.animal.equine.Horse;
 import net.minecraft.world.entity.monster.PatrollingMonster;
 import net.minecraft.world.entity.monster.illager.Pillager;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.entity.BannerPatternLayers;
-import net.minecraft.world.level.block.entity.BannerPatterns;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jspecify.annotations.Nullable;
@@ -55,8 +45,8 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 public class Hunter extends Pillager {
-	public static final EntityDataSerializer<HunterType> HUNTER_TYPE = EntityDataSerializer.forValueType(Hunter.HunterType.STREAM_CODEC);
-	public static final EntityDataAccessor<HunterType> HUNTER_TYPE_ID = SynchedEntityData.defineId(Hunter.class, HUNTER_TYPE);
+	public static final EntityDataSerializer<HunterType> HUNTER_TYPE = EntityDataSerializer.forValueType(HunterType.STREAM_CODEC);
+	private static final EntityDataAccessor<HunterType> HUNTER_TYPE_ID = SynchedEntityData.defineId(Hunter.class, HUNTER_TYPE);
 
 	private UUID ultimateTarget = null;
 	private BlockPos contractPos = null;
@@ -88,13 +78,9 @@ public class Hunter extends Pillager {
 	@Override
 	protected void addAdditionalSaveData(ValueOutput output) {
 		super.addAdditionalSaveData(output);
-		output.store("HunterType", HunterType.CODEC, entityData.get(HUNTER_TYPE_ID));
-		if (ultimateTarget != null) {
-			output.store("UltimateTarget", UUIDUtil.AUTHLIB_CODEC, ultimateTarget);
-		}
-		if (contractPos != null) {
-			output.store("ContractPos", BlockPos.CODEC, contractPos);
-		}
+		output.store("HunterType", HunterType.CODEC, getHunterType());
+		output.storeNullable("UltimateTarget", UUIDUtil.AUTHLIB_CODEC, ultimateTarget);
+		output.storeNullable("ContractPos", BlockPos.CODEC, contractPos);
 		output.putInt("ContractPathTicks", contractPathTicks);
 	}
 
@@ -115,7 +101,7 @@ public class Hunter extends Pillager {
 	}
 
 	@Override
-	public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason spawnReason, @org.jspecify.annotations.Nullable SpawnGroupData groupData) {
+	public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason spawnReason, @Nullable SpawnGroupData groupData) {
 		SpawnGroupData data = super.finalizeSpawn(level, difficulty, spawnReason, groupData);
 		setCanJoinRaid(false);
 		setPatrolLeader(false);
@@ -125,7 +111,7 @@ public class Hunter extends Pillager {
 
 	@Override
 	protected void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
-		equipGear(random.nextBoolean() ? HunterType.VAMPIRE : HunterType.WEREWOLF, false);
+		equipGear(HunterType.TYPES.get(random.nextInt(HunterType.TYPES.size())), false);
 	}
 
 	@Override
@@ -206,6 +192,10 @@ public class Hunter extends Pillager {
 	protected void dropCustomDeathLoot(ServerLevel level, DamageSource source, boolean killedByPlayer) {
 	}
 
+	public HunterType getHunterType() {
+		return entityData.get(HUNTER_TYPE_ID);
+	}
+
 	public @Nullable Player getUltimateTarget() {
 		return ultimateTarget == null ? null : level().getPlayerByUUID(ultimateTarget);
 	}
@@ -229,50 +219,14 @@ public class Hunter extends Pillager {
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
 			setItemSlot(slot, ItemStack.EMPTY);
 		}
-		if (hasHorse) {
-			ItemStack shield = Items.SHIELD.getDefaultInstance();
-			shield.set(DataComponents.BANNER_PATTERNS, new BannerPatternLayers.Builder()
-					.add(registryAccess().lookupOrThrow(Registries.BANNER_PATTERN).getOrThrow(BannerPatterns.BASE), DyeColor.BLACK)
-					.add(registryAccess().lookupOrThrow(Registries.BANNER_PATTERN).getOrThrow(ModBannerPatterns.HUNTERS_MARK), DyeColor.YELLOW)
-					.build());
-			setItemSlot(EquipmentSlot.OFFHAND, shield);
-		}
-		if (hunterType == HunterType.VAMPIRE) {
-			setItemSlot(EquipmentSlot.HEAD, ModItems.VAMPIRE_HUNTER_HELMET.getDefaultInstance());
-			setItemSlot(EquipmentSlot.CHEST, ModItems.VAMPIRE_HUNTER_CHESTPLATE.getDefaultInstance());
-			setItemSlot(EquipmentSlot.LEGS, ModItems.VAMPIRE_HUNTER_LEGGINGS.getDefaultInstance());
-			setItemSlot(EquipmentSlot.FEET, ModItems.VAMPIRE_HUNTER_BOOTS.getDefaultInstance());
-			if (hasHorse) {
-				setItemSlot(EquipmentSlot.MAINHAND, ModItems.GARLIC_COATED_HALBERD.getDefaultInstance());
-			} else {
-				setItemSlot(EquipmentSlot.MAINHAND, ModItems.WOODEN_STAKE.getDefaultInstance());
-				setItemSlot(EquipmentSlot.OFFHAND, Items.CROSSBOW.getDefaultInstance());
-			}
-		} else if (hunterType == HunterType.WEREWOLF) {
-			setItemSlot(EquipmentSlot.HEAD, ModItems.WEREWOLF_HUNTER_HELMET.getDefaultInstance());
-			setItemSlot(EquipmentSlot.CHEST, ModItems.WEREWOLF_HUNTER_CHESTPLATE.getDefaultInstance());
-			setItemSlot(EquipmentSlot.LEGS, ModItems.WEREWOLF_HUNTER_LEGGINGS.getDefaultInstance());
-			setItemSlot(EquipmentSlot.FEET, ModItems.WEREWOLF_HUNTER_BOOTS.getDefaultInstance());
-			if (hasHorse) {
-				setItemSlot(EquipmentSlot.MAINHAND, ModItems.ACONITE_COATED_HALBERD.getDefaultInstance());
-			} else {
-				setItemSlot(EquipmentSlot.MAINHAND, Items.IRON_SWORD.getDefaultInstance());
-				setItemSlot(EquipmentSlot.OFFHAND, Items.BOW.getDefaultInstance());
-			}
-		}
+		hunterType.equipItems(this, hasHorse);
 	}
 
 	private boolean shouldAttack(LivingEntity target, ServerLevel level) {
 		if (target == getUltimateTarget()) {
 			return !NyctoAPI.hasRespawnLeniency(target);
-		} else if (NyctoAPI.isVampire(target)) {
-			return isHoldingItem(ModItems.WOODEN_STAKE);
 		}
-		return false;
-	}
-
-	private boolean isHoldingItem(Item item) {
-		return getMainHandItem().is(item) || getOffhandItem().is(item);
+		return getHunterType().shouldTarget(target);
 	}
 
 	private void swapHandStacks() {
@@ -298,28 +252,6 @@ public class Hunter extends Pillager {
 			} else {
 				horse.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.3375);
 			}
-		}
-	}
-
-	public record HunterType(Identifier texture) {
-		public static final Codec<HunterType> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-				Identifier.CODEC.fieldOf("texture").forGetter(HunterType::texture)
-		).apply(instance, HunterType::new));
-		public static final StreamCodec<FriendlyByteBuf, HunterType> STREAM_CODEC = StreamCodec.composite(
-				Identifier.STREAM_CODEC, HunterType::texture,
-				HunterType::new
-		);
-
-		public static final HunterType VAMPIRE = new HunterType(Nycto.id("textures/entity/hunter/vampire_hunter.png"));
-		public static final HunterType WEREWOLF = new HunterType(Nycto.id("textures/entity/hunter/werewolf_hunter.png"));
-
-		public boolean shouldTarget(LivingEntity entity) {
-			if (this == VAMPIRE) {
-				return NyctoAPI.isVampire(entity);
-			} else if (this == WEREWOLF) {
-				return NyctoAPI.isWerewolf(entity);
-			}
-			return false;
 		}
 	}
 }
