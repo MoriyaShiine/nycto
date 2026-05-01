@@ -32,6 +32,7 @@ import net.fabricmc.fabric.api.entity.event.v1.effect.ServerMobEffectEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
+import net.fabricmc.fabric.api.item.v1.EnchantmentEvents;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -144,7 +145,8 @@ public class Nycto implements ModInitializer {
 		TickEntityEvent.EVENT.register(new VampireEvent.TickHarming());
 		// ITEM
 		EatFoodEvent.EVENT.register(new PoisonedFoodEvent());
-		AfterDamageIncludingDeathEvent.EVENT.register(new VampiricDaggerEvent());
+		AfterDamageIncludingDeathEvent.EVENT.register(new VampiricDaggerEvent.Damage());
+		EnchantmentEvents.ALLOW_ENCHANTING.register(new VampiricDaggerEvent.Enchant());
 		ModifyStackDamageEvent.ADD.register(new WoodenStakeEvent());
 		// POWER
 		ModifyDamageTakenEvent.MULTIPLY_TOTAL.register(new BatFormEvent.ReduceDamage());
