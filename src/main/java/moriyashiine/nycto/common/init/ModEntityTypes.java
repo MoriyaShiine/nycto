@@ -28,8 +28,8 @@ public class ModEntityTypes {
 	public static final EntityType<Firebomb> FIREBOMB = registerEntityType("firebomb", EntityType.Builder.<Firebomb>of(Firebomb::new, MobCategory.MISC).noLootTable().sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10));
 	public static final EntityType<BloodFlechette> BLOOD_FLECHETTE = registerEntityType("blood_flechette", EntityType.Builder.<BloodFlechette>of(BloodFlechette::new, MobCategory.MISC).sized(EntityType.ARROW.getWidth(), EntityType.ARROW.getHeight()).eyeHeight(0.13F).clientTrackingRange(4).updateInterval(20));
 
-	public static final EntityType<Vampire> VAMPIRE = registerEntityType("vampire", EntityType.Builder.of(Vampire::new, MobCategory.MONSTER).sized(0.6F, 1.95F).passengerAttachments(2.0F).ridingOffset(-0.6F).clientTrackingRange(8), Vampire.createAttributes());
-	public static final EntityType<Hunter> HUNTER = registerEntityType("hunter", EntityType.Builder.of(Hunter::new, MobCategory.MISC).noLootTable().canSpawnFarFromPlayer().sized(0.6F, 1.95F).passengerAttachments(2.0F).ridingOffset(-0.6F).clientTrackingRange(8), Hunter.createAttributes());
+	public static final EntityType<Vampire> VAMPIRE = registerEntityType("vampire", EntityType.Builder.of(Vampire::new, MobCategory.MONSTER).sized(0.6F, 1.95F).passengerAttachments(2.0F).ridingOffset(-0.6F).clientTrackingRange(8).notInPeaceful(), Vampire.createAttributes());
+	public static final EntityType<Hunter> HUNTER = registerEntityType("hunter", EntityType.Builder.of(Hunter::new, MobCategory.MISC).noLootTable().canSpawnFarFromPlayer().sized(0.6F, 1.95F).passengerAttachments(2.0F).ridingOffset(-0.6F).clientTrackingRange(8).notInPeaceful(), Hunter.createAttributes());
 
 	public static final EntityType<DarkForm> DARK_FORM = registerEntityType("dark_form", EntityType.Builder.of(DarkForm::new, MobCategory.MISC).noSave().noSummon().noLootTable().sized(0.8F, 2.75F), Mob.createMobAttributes());
 
