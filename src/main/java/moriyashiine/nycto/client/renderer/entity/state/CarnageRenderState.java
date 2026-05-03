@@ -23,10 +23,11 @@ public class CarnageRenderState {
 	public static <E extends LivingEntity, S extends LivingEntityRenderState> void extractRenderState(E entity, S state) {
 		CarnageRenderState carnageRenderState = new CarnageRenderState();
 		Entity realEntity = entity;
-		if (entity instanceof Player) {
+		if (!entity.slib$isPlayer()) {
 			for (AbstractClientPlayer player : Minecraft.getInstance().level.players()) {
 				if (entity == SLibUtils.getModelReplacement(player)) {
 					realEntity = player;
+					break;
 				}
 			}
 		}

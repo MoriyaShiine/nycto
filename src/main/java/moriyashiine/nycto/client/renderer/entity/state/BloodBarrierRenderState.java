@@ -22,10 +22,11 @@ public class BloodBarrierRenderState {
 	public static <E extends LivingEntity, S extends LivingEntityRenderState> void extractRenderState(E entity, S state) {
 		BloodBarrierRenderState bloodBarrierRenderState = new BloodBarrierRenderState();
 		Entity realEntity = entity;
-		if (entity instanceof Player) {
+		if (!entity.slib$isPlayer()) {
 			for (AbstractClientPlayer player : Minecraft.getInstance().level.players()) {
 				if (entity == SLibUtils.getModelReplacement(player)) {
 					realEntity = player;
+					break;
 				}
 			}
 		}
