@@ -1,4 +1,16 @@
 ------------------------------------------------------
+Version 26.1-b8
+------------------------------------------------------
+- add wolf hunter armor
+- hunter types are now a registry
+- add item death lang entries
+- fix all hunter armors having the mask visibility component instead of just the helmets
+- fix vampires and hunters spawning in peaceful
+- fix vampiric daggers being repairable
+- fix vampiric daggers being able to have unbreaking or mending
+- fix blood barrier and carnage not rendering in form changes
+
+------------------------------------------------------
 Version 26.1-b7
 ------------------------------------------------------
 - beast forms no longer prevent holding armor items, only wearing them
