@@ -41,8 +41,6 @@ dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     implementation "net.fabricmc:fabric-loader:${loader_version}"
 
-    api "org.ladysnake.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
-    api "org.ladysnake.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
     includeApi "org.ladysnake.cardinal-components-api:cardinal-components-level:${cardinal_components_version}"
     includeApi "maven.modrinth:midnightlib:${midnightlib_version}"
     includeApi "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
@@ -50,24 +48,19 @@ dependencies {
     implementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
     implementation "moriyashiine:strawberrylib:${strawberrylib_version}"
 
-    implementation("moriyashiine:anthropophagy:${anthropophagy_version}") {
-        exclude("group": "*")
-    }
-    compileOnly("moriyashiine:hearty-meals:${hearty_meals_version}") {
-        exclude("group": "*")
-    }
-    compileOnly("moriyashiine:superb-steeds:${superb_steeds_version}") {
-        exclude("group": "*")
-    }
+    implementation "moriyashiine:anthropophagy:${anthropophagy_version}"
+    compileOnly "moriyashiine:hearty-meals:${hearty_meals_version}"
+    compileOnly "moriyashiine:superb-steeds:${superb_steeds_version}"
 
     localRuntime "com.terraformersmc:modmenu:${mod_menu_version}"
 }
 
 processResources {
-    inputs.property "version", project.version
+    def version = project.version
+    inputs.property "version", version
 
     filesMatching("fabric.mod.json") {
-        expand "version": project.version
+        expand "version": version
     }
 }
 
@@ -83,9 +76,10 @@ java {
 }
 
 jar {
-    inputs.property "archivesName", project.base.archivesName
+    def projectName = project.name
+    inputs.property "projectName", projectName
 
     from("LICENSE") {
-        rename { "${it}_${inputs.properties.archivesName}"}
+        rename { "${it}_$projectName"}
     }
 }

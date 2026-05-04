@@ -13,7 +13,6 @@ import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 
 public class CarnageRenderState {
 	public static final RenderStateDataKey<CarnageRenderState> KEY = RenderStateDataKey.create(() -> "carnage");

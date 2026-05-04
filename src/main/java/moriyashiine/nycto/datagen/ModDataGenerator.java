@@ -2,11 +2,11 @@
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
 
-package moriyashiine.nycto.data;
+package moriyashiine.nycto.datagen;
 
 import moriyashiine.nycto.common.init.*;
-import moriyashiine.nycto.data.provider.*;
-import moriyashiine.nycto.data.provider.integration.anthropophagy.NyctoFleshDropsProvider;
+import moriyashiine.nycto.datagen.provider.*;
+import moriyashiine.nycto.datagen.provider.integration.anthropophagy.NyctoFleshDropsProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;

@@ -18,7 +18,7 @@
   "environment": "*",
   "entrypoints": {
 	"fabric-datagen": [
-	  "moriyashiine.nycto.data.ModDataGenerator"
+	  "moriyashiine.nycto.datagen.ModDataGenerator"
 	],
 	"main": [
 	  "moriyashiine.nycto.common.Nycto"

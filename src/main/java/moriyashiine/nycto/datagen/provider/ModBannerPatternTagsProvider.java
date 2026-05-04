@@ -2,7 +2,7 @@
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
 
-package moriyashiine.nycto.data.provider;
+package moriyashiine.nycto.datagen.provider;
 
 import moriyashiine.nycto.common.init.ModBannerPatterns;
 import moriyashiine.nycto.common.tag.ModBannerPatternTags;
