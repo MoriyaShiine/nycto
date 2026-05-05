@@ -153,10 +153,11 @@ public class ModItems {
 		Item.Properties properties = properties();
 		if (body) {
 			properties.wolfArmor(ArmorMaterials.ARMADILLO_SCUTE);
+			properties.attributes(ArmorMaterials.ARMADILLO_SCUTE.createAttributes(type).withModifierAdded(attribute, resistanceModifier, EquipmentSlotGroup.bySlot(type.getSlot())));
 		} else {
 			properties.humanoidArmor(ModArmorMaterials.HUNTER, type);
+			properties.attributes(ModArmorMaterials.HUNTER.createAttributes(type).withModifierAdded(attribute, resistanceModifier, EquipmentSlotGroup.bySlot(type.getSlot())));
 		}
-		properties.attributes(ModArmorMaterials.HUNTER.createAttributes(type).withModifierAdded(attribute, resistanceModifier, EquipmentSlotGroup.bySlot(type.getSlot())));
 		if (mask) {
 			properties.component(ModComponentTypes.MASK_VISIBILITY, MaskVisibility.VISIBLE);
 		}
