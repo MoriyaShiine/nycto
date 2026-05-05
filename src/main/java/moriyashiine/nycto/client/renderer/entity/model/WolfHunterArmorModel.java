@@ -6,13 +6,12 @@ package moriyashiine.nycto.client.renderer.entity.model;
 
 import moriyashiine.nycto.common.Nycto;
 import net.minecraft.client.model.animal.wolf.AdultWolfModel;
-import net.minecraft.client.model.animal.wolf.WolfModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 
-public class WolfHunterArmorModel extends WolfModel {
+public class WolfHunterArmorModel extends AdultWolfModel {
 	public static final ModelLayerLocation VAMPIRE_HUNTER_LAYER = new ModelLayerLocation(Nycto.id("wolf_vampire_hunter"), "main");
 	public static final ModelLayerLocation WEREWOLF_HUNTER_LAYER = new ModelLayerLocation(Nycto.id("wolf_werewolf_hunter"), "main");
 

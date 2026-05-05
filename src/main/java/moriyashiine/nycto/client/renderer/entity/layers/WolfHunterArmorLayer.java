@@ -52,9 +52,9 @@ public class WolfHunterArmorLayer extends RenderLayer<WolfRenderState, WolfModel
 	@Override
 	public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int lightCoords, WolfRenderState state, float yRot, float xRot) {
 		NyctoRegistries.HUNTER_TYPE.forEach(type -> {
-			WolfHunterArmorModel model = MODELS.computeIfAbsent(type, _ -> new WolfHunterArmorModel(modelSet.bakeLayer(MODEL_LAYERS.get(type))));
 			ItemStack armorItem = state.bodyArmorItem;
 			if (!state.isBaby && armorItem.is(type.armorTagKey)) {
+				WolfHunterArmorModel model = MODELS.computeIfAbsent(type, _ -> new WolfHunterArmorModel(modelSet.bakeLayer(MODEL_LAYERS.get(type))));
 				equipmentRenderer.renderLayers(
 						EquipmentClientInfo.LayerType.WOLF_BODY,
 						type.assetKey,
