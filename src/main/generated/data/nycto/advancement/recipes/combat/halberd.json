@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-	"has_iron_ingot": {
+	"has_diamond": {
 	  "conditions": {
 		"items": [
 		  {
-			"items": "#c:ingots/iron"
+			"items": "#minecraft:diamond_tool_materials"
 		  }
 		]
 	  },
@@ -21,7 +21,7 @@
   "requirements": [
 	[
 	  "has_the_recipe",
-	  "has_iron_ingot"
+	  "has_diamond"
 	]
   ],
   "rewards": {

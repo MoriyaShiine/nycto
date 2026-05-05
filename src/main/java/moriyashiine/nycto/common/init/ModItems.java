@@ -167,7 +167,7 @@ public class ModItems {
 	public static Item registerHalberd(String name) {
 		AttributeModifier rangeModifier = new AttributeModifier(Nycto.id("halberd_entity_interaction_range"), 0.5, AttributeModifier.Operation.ADD_VALUE);
 		ModifierTrio modifier = new ModifierTrio(Attributes.ENTITY_INTERACTION_RANGE, rangeModifier, EquipmentSlotGroup.MAINHAND);
-		return registerItem(name, settings -> new AxeItem(ModToolMaterials.HALBERD, 7, -3.2F, settings), editModifiers(ModItems::properties, modifier));
+		return registerItem(name, settings -> new AxeItem(ToolMaterial.DIAMOND, 5, -3.2F, settings), editModifiers(ModItems::properties, modifier));
 	}
 
 	private static Item.Properties drink(Consumable consumable) {

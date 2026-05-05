@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-	"A": "minecraft:iron_axe",
+	"A": "minecraft:diamond_axe",
 	"G": "#c:ingots/gold",
 	"I": "#c:ingots/iron",
 	"S": "minecraft:stick"

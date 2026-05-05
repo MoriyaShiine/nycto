@@ -24,8 +24,6 @@ public class ModItemTags {
 	public static final TagKey<Item> REPAIRS_VAMPIRE_ARMOR = TagKey.create(Registries.ITEM, Nycto.id("repairs_vampire_armor"));
 	public static final TagKey<Item> REPAIRS_HUNTER_ARMOR = TagKey.create(Registries.ITEM, Nycto.id("repairs_hunter_armor"));
 
-	public static final TagKey<Item> HALBERD_TOOL_MATERIALS = TagKey.create(Registries.ITEM, Nycto.id("halberd_tool_materials"));
-
 	public static final TagKey<Item> WEAK_VAMPIRE_ALTAR_UPGRADES = TagKey.create(Registries.ITEM, Nycto.id("weak_vampire_altar_upgrades"));
 	public static final TagKey<Item> AVERAGE_VAMPIRE_ALTAR_UPGRADES = TagKey.create(Registries.ITEM, Nycto.id("average_vampire_altar_upgrades"));
 	public static final TagKey<Item> STRONG_VAMPIRE_ALTAR_UPGRADES = TagKey.create(Registries.ITEM, Nycto.id("strong_vampire_altar_upgrades"));

@@ -70,9 +70,6 @@ public class ModItemTagsProvider extends FabricTagsProvider.ItemTagsProvider {
 		valueLookupBuilder(ModItemTags.REPAIRS_HUNTER_ARMOR)
 				.forceAddTag(ItemTags.REPAIRS_IRON_ARMOR);
 
-		valueLookupBuilder(ModItemTags.HALBERD_TOOL_MATERIALS)
-				.forceAddTag(ItemTags.IRON_TOOL_MATERIALS);
-
 		valueLookupBuilder(ModItemTags.WEAK_VAMPIRE_ALTAR_UPGRADES)
 				.forceAddTag(ConventionalItemTags.AMETHYST_GEMS)
 				.forceAddTag(ConventionalItemTags.GOLD_INGOTS)
