@@ -4,11 +4,11 @@
 
 package moriyashiine.nycto.client.event.power;
 
+import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.component.entity.power.vampire.MistFormComponent;
 import moriyashiine.nycto.common.component.level.AuraComponent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModLevelComponents;
-import moriyashiine.nycto.common.tag.ModEntityTypeTags;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.strawberrylib.api.event.client.OutlineEntityEvent;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -61,9 +61,9 @@ public class KeenSensesClientEvent {
 		}
 
 		private static int getKeenSensesColor(Entity entity) {
-			if (entity.is(ModEntityTypeTags.HAS_QUALITY_BLOOD)) {
+			if (NyctoAPI.hasQualityBlood(entity)) {
 				return 0xFF0000;
-			} else if (!entity.is(ModEntityTypeTags.HAS_NO_BLOOD)) {
+			} else if (NyctoAPI.hasBlood(entity)) {
 				return 0xFFFFFF;
 			}
 			return 0x3F3F3F;

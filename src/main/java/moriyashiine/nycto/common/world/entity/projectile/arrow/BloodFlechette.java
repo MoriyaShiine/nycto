@@ -7,7 +7,6 @@ package moriyashiine.nycto.common.world.entity.projectile.arrow;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.init.ModEntityTypes;
 import moriyashiine.nycto.common.init.ModSoundEvents;
-import moriyashiine.nycto.common.tag.ModEntityTypeTags;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
@@ -44,7 +43,7 @@ public class BloodFlechette extends ThrowableProjectile {
 		if (level() instanceof ServerLevel level) {
 			entity.invulnerableTime = 0;
 			boolean wasHurt = entity.hurtServer(level, damageSources().thrown(this, getOwner()), 3);
-			if (wasHurt && !entity.is(ModEntityTypeTags.HAS_NO_BLOOD) && entity instanceof LivingEntity living) {
+			if (wasHurt && NyctoAPI.hasBlood(entity) && entity instanceof LivingEntity living) {
 				NyctoAPI.applyHealBlock(living, 160, getOwner());
 			}
 		}

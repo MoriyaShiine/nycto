@@ -9,7 +9,6 @@ import moriyashiine.nycto.common.component.entity.BloodComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
 import moriyashiine.nycto.common.init.*;
 import moriyashiine.nycto.common.tag.ModBlockTags;
-import moriyashiine.nycto.common.tag.ModEntityTypeTags;
 import moriyashiine.nycto.common.tag.ModItemTags;
 import moriyashiine.nycto.common.tag.ModMobEffectTags;
 import moriyashiine.nycto.common.util.NyctoUtil;
@@ -94,8 +93,8 @@ public class VampireEvent {
 	public static class DrinkBlood implements UseEntityCallback {
 		@Override
 		public InteractionResult interact(Player player, Level level, InteractionHand hand, Entity entity, @Nullable EntityHitResult hitResult) {
-			if (hand == InteractionHand.MAIN_HAND && player.isShiftKeyDown() && player.slib$exists() && player.getItemInHand(hand).isEmpty() && !entity.is(ModEntityTypeTags.HAS_NO_BLOOD) && entity instanceof LivingEntity living && living.hurtTime == 0 && living.isAlive() && !living.hasInfiniteMaterials() && NyctoAPI.isVampire(player)) {
-				boolean qualityBlood = entity.is(ModEntityTypeTags.HAS_QUALITY_BLOOD);
+			if (hand == InteractionHand.MAIN_HAND && player.isShiftKeyDown() && player.slib$exists() && player.getItemInHand(hand).isEmpty() && NyctoAPI.hasBlood(entity) && entity instanceof LivingEntity living && living.hurtTime == 0 && living.isAlive() && !living.hasInfiniteMaterials() && NyctoAPI.isVampire(player)) {
+				boolean qualityBlood = NyctoAPI.hasQualityBlood(entity);
 				if (!qualityBlood && NyctoAPI.hasPower(player, ModPowers.RICH_TASTES)) {
 					return InteractionResult.PASS;
 				}

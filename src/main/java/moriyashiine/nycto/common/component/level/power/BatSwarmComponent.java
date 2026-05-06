@@ -8,7 +8,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.init.*;
-import moriyashiine.nycto.common.tag.ModEntityTypeTags;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.minecraft.core.BlockPos;
@@ -217,8 +216,8 @@ public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComp
 					ModLevelComponents.BAT_SWARM.sync(target.level());
 				}
 			} else {
-				boolean hasBlood = !target.is(ModEntityTypeTags.HAS_NO_BLOOD);
-				boolean qualityBlood = target.is(ModEntityTypeTags.HAS_QUALITY_BLOOD);
+				boolean hasBlood = NyctoAPI.hasBlood(target);
+				boolean qualityBlood = NyctoAPI.hasQualityBlood(target);
 				boolean canDrain = hasBlood && getBlood() < MAX_BLOOD;
 				if (!qualityBlood && owner instanceof Player player && NyctoAPI.hasPower(player, ModPowers.RICH_TASTES)) {
 					canDrain = false;

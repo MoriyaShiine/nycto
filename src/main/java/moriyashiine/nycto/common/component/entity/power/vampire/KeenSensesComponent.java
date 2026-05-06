@@ -9,7 +9,6 @@ import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModPowers;
 import moriyashiine.nycto.common.init.ModSoundEvents;
-import moriyashiine.nycto.common.tag.ModEntityTypeTags;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -92,7 +91,7 @@ public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingCo
 		tick();
 		if (enabled && obj.tickCount % 20 == 0) {
 			int frequency = 60;
-			for (Entity entity : obj.level().getEntities(obj, obj.getBoundingBox().inflate(12), EntitySelector.NO_SPECTATORS.and(entity -> entity instanceof LivingEntity && entity.isAlive() && !entity.is(ModEntityTypeTags.HAS_NO_BLOOD)))) {
+			for (Entity entity : obj.level().getEntities(obj, obj.getBoundingBox().inflate(12), EntitySelector.NO_SPECTATORS.and(entity -> entity instanceof LivingEntity && entity.isAlive() && NyctoAPI.hasBlood(entity)))) {
 				float distance = obj.distanceTo(entity);
 				if (frequency != 40 && distance <= 10) {
 					frequency = 40;

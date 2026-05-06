@@ -10,7 +10,6 @@ import moriyashiine.nycto.common.init.ModComponentTypes;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModItems;
 import moriyashiine.nycto.common.init.ModSoundEvents;
-import moriyashiine.nycto.common.tag.ModEntityTypeTags;
 import moriyashiine.nycto.common.world.item.VampiricDaggerItem;
 import moriyashiine.nycto.common.world.item.crafting.BloodExtractionRecipe;
 import moriyashiine.strawberrylib.api.event.AfterDamageIncludingDeathEvent;
@@ -36,7 +35,7 @@ public class VampiricDaggerEvent {
 
 		@Override
 		public void afterDamage(LivingEntity victim, DamageSource source, float originalDamage, float modifiedDamage, boolean blocked) {
-			if (!blocked && modifiedDamage >= DAMAGE_THRESHOLD && victim.is(ModEntityTypeTags.HAS_QUALITY_BLOOD) && source.getDirectEntity() instanceof LivingEntity attacker) {
+			if (!blocked && modifiedDamage >= DAMAGE_THRESHOLD && NyctoAPI.hasQualityBlood(victim) && source.getDirectEntity() instanceof LivingEntity attacker) {
 				ItemStack stack = attacker.getMainHandItem();
 				if (stack.has(ModComponentTypes.BLOOD_CHARGE)) {
 					int bloodCharge = VampiricDaggerItem.getBloodCharge(stack);

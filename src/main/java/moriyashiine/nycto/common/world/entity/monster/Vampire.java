@@ -16,7 +16,6 @@ import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModGameRules;
 import moriyashiine.nycto.common.init.ModPowers;
 import moriyashiine.nycto.common.init.ModSoundEvents;
-import moriyashiine.nycto.common.tag.ModEntityTypeTags;
 import moriyashiine.nycto.common.world.entity.ai.goal.vampire.*;
 import moriyashiine.nycto.common.world.transformation.VampireTransformation;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
@@ -136,7 +135,7 @@ public class Vampire extends Monster {
 		goalSelector.addGoal(7, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(0, new HurtByTargetGoal(this));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, LivingEntity.class, false, (target, _) -> !target.slib$isPlayer() && target.is(ModEntityTypeTags.HAS_QUALITY_BLOOD) && !NyctoAPI.isVampire(target)));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, LivingEntity.class, false, (target, _) -> !target.slib$isPlayer() && NyctoAPI.hasQualityBlood(target) && !NyctoAPI.isVampire(target)));
 	}
 
 	@Override
@@ -178,7 +177,7 @@ public class Vampire extends Monster {
 		boolean hurtTarget = super.doHurtTarget(level, target);
 		if (hurtTarget) {
 			swing(InteractionHand.MAIN_HAND);
-			if (target.is(ModEntityTypeTags.HAS_QUALITY_BLOOD)) {
+			if (NyctoAPI.hasQualityBlood(target)) {
 				BloodComponent targetBloodComponent = ModEntityComponents.BLOOD.getNullable(target);
 				if (targetBloodComponent != null) {
 					BloodComponent selfBloodComponent = ModEntityComponents.BLOOD.get(this);

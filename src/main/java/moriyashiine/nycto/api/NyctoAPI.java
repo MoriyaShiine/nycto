@@ -86,6 +86,14 @@ public class NyctoAPI {
 		SetPowerCooldownPayload.send(player, power, cooldown);
 	}
 
+	public static boolean hasBlood(Entity entity) {
+		return !entity.is(ModEntityTypeTags.HAS_NO_BLOOD);
+	}
+
+	public static boolean hasQualityBlood(Entity entity) {
+		return hasBlood(entity) && entity.is(ModEntityTypeTags.HAS_QUALITY_BLOOD);
+	}
+
 	public static void applyHealBlock(LivingEntity entity, int ticks, @Nullable Entity lifeStealer) {
 		HaemogenesisComponent haemogenesisComponent = ModEntityComponents.HAEMOGENESIS.getNullable(entity);
 		if (haemogenesisComponent == null || !haemogenesisComponent.isHealing()) {
