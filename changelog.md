@@ -1,3 +1,10 @@
+Version 26.1-b9
+------------------------------------------------------
+- add api calls for hasBlood and hasQualityBlood
+- halberds are now based on diamond axes (recipe and attributes)
+- fix wolf hunter armor not having the proper armor value
+- fix wolf hunter models not rotating certain parts
+
 ------------------------------------------------------
 Version 26.1-b8
 ------------------------------------------------------
