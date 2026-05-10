@@ -20,7 +20,7 @@ public class BloodBarrierGoal extends Goal {
 
 	@Override
 	public boolean canUse() {
-		return mob.canUsePower(ModPowers.BLOOD_BARRIER) && mob.getTarget() != null && mob.getTarget().isAlive();
+		return mob.canUsePower(ModPowers.BLOOD_BARRIER) && mob.getTarget() != null;
 	}
 
 	@Override

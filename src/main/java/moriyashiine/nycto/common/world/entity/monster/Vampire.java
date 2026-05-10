@@ -64,7 +64,7 @@ public class Vampire extends Monster {
 
 	private int abilityCooldown = 0;
 
-	public Vampire(EntityType<? extends Monster> type, Level level) {
+	public Vampire(EntityType<Vampire> type, Level level) {
 		super(type, level);
 	}
 

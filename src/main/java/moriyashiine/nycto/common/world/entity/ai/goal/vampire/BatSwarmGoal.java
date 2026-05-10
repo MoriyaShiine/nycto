@@ -20,7 +20,7 @@ public class BatSwarmGoal extends Goal {
 
 	@Override
 	public boolean canUse() {
-		return mob.canUsePower(ModPowers.BAT_SWARM) && mob.getTarget() != null && mob.getTarget().isAlive() && mob.getHealth() <= mob.getMaxHealth() / 2;
+		return mob.canUsePower(ModPowers.BAT_SWARM) && mob.getTarget() != null && mob.getHealth() <= mob.getMaxHealth() / 2;
 	}
 
 	@Override

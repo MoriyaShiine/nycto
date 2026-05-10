@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
 import org.jspecify.annotations.Nullable;
 
 public class WoodenStake extends AbstractArrow {
-	public WoodenStake(EntityType<? extends AbstractArrow> type, Level level) {
+	public WoodenStake(EntityType<WoodenStake> type, Level level) {
 		super(type, level);
 	}
 

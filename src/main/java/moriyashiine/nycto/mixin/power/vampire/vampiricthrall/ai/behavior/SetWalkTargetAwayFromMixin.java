@@ -2,19 +2,19 @@
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
 
-package moriyashiine.nycto.mixin.power.vampire.vampiricthrall.brain.task;
+package moriyashiine.nycto.mixin.power.vampire.vampiricthrall.ai.behavior;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.entity.ai.behavior.VillageBoundRandomStroll;
+import net.minecraft.world.entity.ai.behavior.SetWalkTargetAwayFrom;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(VillageBoundRandomStroll.class)
-public class VillageBoundRandomStrollMixin {
+@Mixin(SetWalkTargetAwayFrom.class)
+public class SetWalkTargetAwayFromMixin {
 	@Inject(method = "lambda$create$2", at = @At("HEAD"), cancellable = true)
 	private static void nycto$vampiricThrall(CallbackInfoReturnable<Boolean> cir, @Local(argsOnly = true) PathfinderMob body) {
 		if (ModEntityComponents.VAMPIRIC_THRALL.get(body).cannotWanderIfThralled()) {

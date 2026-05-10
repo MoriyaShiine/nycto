@@ -21,7 +21,7 @@ public class BatstepGoal extends Goal {
 
 	@Override
 	public boolean canUse() {
-		return mob.canUsePower(ModPowers.BATSTEP) && mob.getTarget() != null && mob.getTarget().isAlive() && mob.distanceTo(mob.getTarget()) > 6 && mob.hasLineOfSight(mob.getTarget());
+		return mob.canUsePower(ModPowers.BATSTEP) && mob.getTarget() != null && mob.distanceTo(mob.getTarget()) > 6 && mob.hasLineOfSight(mob.getTarget());
 	}
 
 	@Override

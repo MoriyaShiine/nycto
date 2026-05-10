@@ -11,7 +11,6 @@ import moriyashiine.nycto.common.event.power.util.HasOwnerEvent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModPowers;
 import moriyashiine.nycto.common.init.ModSoundEvents;
-import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.nycto.common.world.power.vampire.VampiricThrallPower;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
@@ -84,12 +83,12 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 					VampiricThrallPower.setThrall(obj, null);
 					return;
 				}
-				if (getFollowMode() == FollowMode.FOLLOW && (obj.getTarget() == null || obj.getTarget().isDeadOrDying())) {
+				if (getFollowMode() == FollowMode.FOLLOW && obj.getTarget() == null) {
 					if (owner instanceof LivingEntity living && obj.distanceTo(owner) > 24 && living.slib$exists()) {
 						obj.randomTeleport(owner.getX() + obj.getRandom().nextIntBetweenInclusive(-3, 3), owner.getY(), owner.getZ() + obj.getRandom().nextIntBetweenInclusive(-3, 3), false);
 					}
 				}
-				if (wanderHome != null && obj.getNavigation().isDone() && !NyctoUtil.isSurvivalNullable(obj.getTarget()) && !wanderHome.closerToCenterThan(obj.position(), obj.getNavigation().getMaxPathLength())) {
+				if (wanderHome != null && obj.getNavigation().isDone() && obj.getTarget() == null && !wanderHome.closerToCenterThan(obj.position(), obj.getNavigation().getMaxPathLength())) {
 					obj.getNavigation().moveTo(wanderHome.getX(), wanderHome.getY(), wanderHome.getZ(), 1);
 				}
 			}

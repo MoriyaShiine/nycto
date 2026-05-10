@@ -28,7 +28,7 @@ public class DarkForm extends Monster {
 
 	private int jumpCooldown = JUMP_COOLDOWN;
 
-	public DarkForm(EntityType<? extends Monster> type, Level level) {
+	public DarkForm(EntityType<DarkForm> type, Level level) {
 		super(type, level);
 	}
 

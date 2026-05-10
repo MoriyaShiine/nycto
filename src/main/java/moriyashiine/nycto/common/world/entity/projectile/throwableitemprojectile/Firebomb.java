@@ -33,7 +33,7 @@ import net.minecraft.world.phys.Vec3;
 public class Firebomb extends ThrowableItemProjectile {
 	private static final ParticleVelocity PARTICLE_VELOCITY = ParticleVelocity.of(new Vec3(0, 0.35, 0), 0.3);
 
-	public Firebomb(EntityType<? extends ThrowableItemProjectile> type, Level level) {
+	public Firebomb(EntityType<Firebomb> type, Level level) {
 		super(type, level);
 	}
 
@@ -55,25 +55,19 @@ public class Firebomb extends ThrowableItemProjectile {
 		super.onHit(hitResult);
 		if (level() instanceof ServerLevel level) {
 			AABB box = getBoundingBox().move(hitResult.getLocation().subtract(position())).inflate(3, 2, 3);
-			BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
-			for (double x = box.minX; x <= box.maxX; x++) {
-				for (double y = box.minY; y <= box.maxY; y++) {
-					for (double z = box.minZ; z <= box.maxZ; z++) {
-						mutable.set(x, y, z);
-						if (mutable.equals(blockPosition()) || (getRandom().nextInt(3) == 0 && mutable.closerToCenterThan(position(), 2.5))) {
-							if (!level.isRainingAt(mutable)) {
-								BlockState state = level.getBlockState(mutable);
-								if (state.canBeReplaced() && state.getFluidState().isEmpty() && ModBlocks.FIREBOMB.defaultBlockState().canSurvive(level, mutable)) {
-									level.setBlockAndUpdate(mutable, ModBlocks.FIREBOMB.defaultBlockState());
-								}
-							}
+			BlockPos.betweenClosed(box).forEach(pos -> {
+				if (pos.equals(blockPosition()) || (getRandom().nextInt(3) == 0 && pos.closerToCenterThan(position(), 2.5))) {
+					if (!level.isRainingAt(pos)) {
+						BlockState state = level.getBlockState(pos);
+						if (state.canBeReplaced() && state.getFluidState().isEmpty() && ModBlocks.FIREBOMB.defaultBlockState().canSurvive(level, pos)) {
+							level.setBlockAndUpdate(pos, ModBlocks.FIREBOMB.defaultBlockState());
 						}
 					}
 				}
-			}
-			level().getEntitiesOfClass(LivingEntity.class, box).forEach(foundEntity -> {
-				if (!foundEntity.isInWaterOrRain()) {
-					foundEntity.igniteForSeconds(8);
+			});
+			level.getEntitiesOfClass(LivingEntity.class, box).forEach(entity -> {
+				if (!entity.isInWaterOrRain()) {
+					entity.igniteForSeconds(8);
 				}
 			});
 			SLibUtils.addParticles(this, ParticleTypes.FLAME, 32, ParticleAnchor.BODY, PARTICLE_VELOCITY);

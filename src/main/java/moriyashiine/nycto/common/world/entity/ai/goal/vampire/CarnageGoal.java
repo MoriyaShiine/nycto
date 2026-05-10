@@ -20,7 +20,7 @@ public class CarnageGoal extends Goal {
 
 	@Override
 	public boolean canUse() {
-		return mob.canUsePower(ModPowers.CARNAGE) && mob.getTarget() != null && mob.getTarget().isAlive() && mob.getHealth() <= mob.getMaxHealth() * 0.3F;
+		return mob.canUsePower(ModPowers.CARNAGE) && mob.getTarget() != null && mob.getHealth() <= mob.getMaxHealth() * 0.3F;
 	}
 
 	@Override

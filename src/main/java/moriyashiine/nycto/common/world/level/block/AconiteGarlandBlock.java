@@ -64,12 +64,12 @@ public class AconiteGarlandBlock extends Block {
 
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-		BlockPos offset = pos.above();
 		if (state.getValue(BlockStateProperties.HANGING)) {
+			BlockPos offset = pos.above();
 			return level.getBlockState(offset).isFaceSturdy(level, offset, Direction.DOWN, SupportType.FULL);
 		}
 		Direction direction = state.getValue(BlockStateProperties.HORIZONTAL_FACING).getOpposite();
-		offset = pos.relative(direction);
+		BlockPos offset = pos.relative(direction);
 		return level.getBlockState(offset).isFaceSturdy(level, offset, direction, SupportType.FULL);
 	}
 

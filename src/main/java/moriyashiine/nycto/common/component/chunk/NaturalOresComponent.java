@@ -60,8 +60,8 @@ public class NaturalOresComponent implements ServerTickingComponent {
 		}
 	}
 
-	public static @Nullable Block getNaturalOre(LevelAccessor levelAccessor, BlockPos pos) {
-		return ModChunkComponents.NATURAL_ORES.get(levelAccessor.getChunk(pos)).findNaturalOre(levelAccessor, pos);
+	public static @Nullable Block getNaturalOre(LevelAccessor level, BlockPos pos) {
+		return ModChunkComponents.NATURAL_ORES.get(level.getChunk(pos)).findNaturalOre(level, pos);
 	}
 
 	public @Nullable Block findNaturalOre(LevelAccessor level, BlockPos pos) {

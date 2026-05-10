@@ -39,7 +39,7 @@ public class VampiricVexComponent implements AutoSyncedComponent, ServerTickingC
 	@Override
 	public void serverTick() {
 		if (hasOwner) {
-			if (obj.getOwner() == null || obj.getOwner().isDeadOrDying() || obj.getOwner().getTarget() == null || obj.getOwner().getTarget().isDeadOrDying() || !ModEntityComponents.VAMPIRIC_THRALL.get(obj.getOwner()).hasOwner() || ++despawnTimer == 600) {
+			if (obj.getOwner() == null || obj.getOwner().getTarget() == null || !ModEntityComponents.VAMPIRIC_THRALL.get(obj.getOwner()).hasOwner() || ++despawnTimer == 600) {
 				kill();
 			} else {
 				obj.setTarget(obj.getOwner().getTarget());

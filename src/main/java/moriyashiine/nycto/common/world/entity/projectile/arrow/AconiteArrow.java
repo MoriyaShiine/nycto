@@ -16,7 +16,7 @@ import net.minecraft.world.level.Level;
 import org.jspecify.annotations.Nullable;
 
 public class AconiteArrow extends AbstractArrow {
-	public AconiteArrow(EntityType<? extends AbstractArrow> type, Level level) {
+	public AconiteArrow(EntityType<AconiteArrow> type, Level level) {
 		super(type, level);
 	}
 

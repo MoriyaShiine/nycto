@@ -7,7 +7,6 @@ package moriyashiine.nycto.common.event.power.util;
 import moriyashiine.nycto.common.component.entity.power.util.HasOwnerComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -20,7 +19,7 @@ public class HasOwnerEvent implements ServerLivingEntityEvents.AfterDamage {
 	private static final RevengeFunction REVENGE = new RevengeFunction() {
 		@Override
 		public boolean shouldHelp(Mob mob, LivingEntity attacker, LivingEntity victim) {
-			if (SLibUtils.shouldHurt(attacker, victim) && !NyctoUtil.isSurvivalNullable(mob.getTarget())) {
+			if (SLibUtils.shouldHurt(attacker, victim) && mob.getTarget() == null) {
 				if (ModEntityComponents.VAMPIRIC_THRALL.get(mob).getFollowMode() == VampiricThrallComponent.FollowMode.STAY) {
 					return false;
 				}
@@ -42,8 +41,7 @@ public class HasOwnerEvent implements ServerLivingEntityEvents.AfterDamage {
 
 	public static void revenge(LivingEntity victim, DamageSource source, RevengeFunction revengeFunction) {
 		if (source.getEntity() instanceof LivingEntity attacker) {
-			victim.level().getEntitiesOfClass(Mob.class, victim.getBoundingBox().inflate(16), EntitySelector.NO_CREATIVE_OR_SPECTATOR.and(
-							entity -> entity instanceof Mob mob && revengeFunction.shouldHelp(mob, attacker, victim)))
+			victim.level().getEntitiesOfClass(Mob.class, victim.getBoundingBox().inflate(16), EntitySelector.NO_CREATIVE_OR_SPECTATOR.and(entity -> entity instanceof Mob mob && revengeFunction.shouldHelp(mob, attacker, victim)))
 					.forEach(foundEntity -> {
 						LivingEntity target = revengeFunction.targetAttacker() ? attacker : victim;
 						setTarget(foundEntity, target);

@@ -65,12 +65,12 @@ public class GarlicWreathBlock extends Block {
 
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-		BlockPos offset = pos.below();
 		if (state.getValue(BlockStateProperties.DOWN)) {
+			BlockPos offset = pos.below();
 			return level.getBlockState(offset).isFaceSturdy(level, offset, Direction.UP, SupportType.FULL);
 		}
 		Direction direction = state.getValue(BlockStateProperties.HORIZONTAL_FACING).getOpposite();
-		offset = pos.relative(direction);
+		BlockPos offset = pos.relative(direction);
 		return level.getBlockState(offset).isFaceSturdy(level, offset, direction, SupportType.FULL);
 	}
 

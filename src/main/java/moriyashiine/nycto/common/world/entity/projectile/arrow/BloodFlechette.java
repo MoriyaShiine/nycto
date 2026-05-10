@@ -20,7 +20,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 
 public class BloodFlechette extends ThrowableProjectile {
-	public BloodFlechette(EntityType<? extends ThrowableProjectile> type, Level level) {
+	public BloodFlechette(EntityType<BloodFlechette> type, Level level) {
 		super(type, level);
 	}
 

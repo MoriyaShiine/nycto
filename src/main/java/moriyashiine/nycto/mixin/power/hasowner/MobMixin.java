@@ -31,7 +31,7 @@ public class MobMixin {
 	@Final
 	public GoalSelector targetSelector;
 
-	@Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Mob;registerGoals()V", shift = At.Shift.AFTER))
+	@Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Mob;registerGoals()V"))
 	private void nycto$hasOwner(EntityType<?> type, Level level, CallbackInfo ci) {
 		if ((Object) this instanceof PathfinderMob mob) {
 			goalSelector.addGoal(0, new ThralledFleeSunGoal(mob, 1));

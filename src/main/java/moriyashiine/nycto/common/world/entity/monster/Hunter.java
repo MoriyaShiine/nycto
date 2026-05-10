@@ -55,7 +55,7 @@ public class Hunter extends Pillager {
 	private BlockPos contractPos = null;
 	private int contractPathTicks = 0;
 
-	public Hunter(EntityType<? extends Pillager> type, Level level) {
+	public Hunter(EntityType<Hunter> type, Level level) {
 		super(type, level);
 		getNavigation().setCanOpenDoors(true);
 	}

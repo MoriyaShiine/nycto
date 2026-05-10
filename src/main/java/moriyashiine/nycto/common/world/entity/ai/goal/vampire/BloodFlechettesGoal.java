@@ -21,7 +21,7 @@ public class BloodFlechettesGoal extends Goal {
 
 	@Override
 	public boolean canUse() {
-		return mob.canUsePower(ModPowers.BLOOD_FLECHETTES) && mob.getTarget() != null && mob.getTarget().isAlive() && mob.hasLineOfSight(mob.getTarget());
+		return mob.canUsePower(ModPowers.BLOOD_FLECHETTES) && mob.getTarget() != null && mob.hasLineOfSight(mob.getTarget());
 	}
 
 	@Override

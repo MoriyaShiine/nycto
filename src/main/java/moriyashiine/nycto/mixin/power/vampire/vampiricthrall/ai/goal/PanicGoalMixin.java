@@ -2,7 +2,7 @@
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
 
-package moriyashiine.nycto.mixin.power.vampire.vampiricthrall.goal;
+package moriyashiine.nycto.mixin.power.vampire.vampiricthrall.ai.goal;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import moriyashiine.nycto.common.init.ModEntityComponents;

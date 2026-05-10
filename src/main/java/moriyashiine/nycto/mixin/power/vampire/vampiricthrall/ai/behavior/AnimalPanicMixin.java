@@ -2,7 +2,7 @@
  * Copyright (c) MoriyaShiine. All Rights Reserved.
  */
 
-package moriyashiine.nycto.mixin.power.vampire.vampiricthrall.brain.task;
+package moriyashiine.nycto.mixin.power.vampire.vampiricthrall.ai.behavior;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
