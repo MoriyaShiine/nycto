@@ -5,15 +5,10 @@
 package moriyashiine.nycto.mixin.power.vampire.vampiricthrall.mobspecific;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Witch;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.Potions;
 import org.spongepowered.asm.mixin.Mixin;
@@ -32,16 +27,6 @@ public class WitchMixin {
 			return Potions.HARMING;
 		}
 		return potion;
-	}
-
-	@WrapOperation(method = "performRangedAttack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/alchemy/PotionContents;createItemStack(Lnet/minecraft/world/item/Item;Lnet/minecraft/core/Holder;)Lnet/minecraft/world/item/ItemStack;"))
-	private ItemStack nycto$vampiricThrall(Item item, Holder<Potion> potion, Operation<ItemStack> original, LivingEntity target) {
-		if (potion == Potions.HARMING || potion == Potions.POISON) {
-			if (NyctoAPI.isVampire(target)) {
-				potion = Potions.HEALING;
-			}
-		}
-		return original.call(item, potion);
 	}
 
 	@WrapWithCondition(method = "performRangedAttack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/monster/Witch;setTarget(Lnet/minecraft/world/entity/LivingEntity;)V"))
