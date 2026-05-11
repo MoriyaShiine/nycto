@@ -29,7 +29,6 @@ import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.entity.event.v1.effect.ServerMobEffectEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.item.v1.EnchantmentEvents;
@@ -121,8 +120,6 @@ public class Nycto implements ModInitializer {
 		ModifyDamageTakenEvent.MULTIPLY_TOTAL.register(new AttributeEvent());
 		ModifyDestroySpeedEvent.MULTIPLY_BASE.register(new BeastFormEvent.DestroySpeed());
 		PreventEquipmentUsageEvent.EVENT.register(new BeastFormEvent.PreventEquipmentUsage());
-		ServerEntityEvents.ENTITY_LOAD.register(new BloodEvent.Load());
-		ServerEntityEvents.ENTITY_UNLOAD.register(new BloodEvent.Unload());
 		ServerPlayerEvents.COPY_FROM.register(new BloodEvent.Copy());
 		ServerMobEffectEvents.ALLOW_ADD.register(new BloodEvent.EffectImmunity());
 		AfterDamageIncludingDeathEvent.EVENT.register(new HunterEvent.Heat());

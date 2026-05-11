@@ -11,6 +11,7 @@ import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.world.power.NightVisionPower;
 import moriyashiine.nycto.common.world.power.vampire.*;
 import moriyashiine.nycto.common.world.power.vampire.weakness.HydrophobiaWeakness;
+import moriyashiine.nycto.common.world.power.vampire.weakness.RichTastesWeakness;
 import moriyashiine.nycto.common.world.power.vampire.weakness.VilePresenceWeakness;
 import net.minecraft.core.Registry;
 
@@ -34,7 +35,7 @@ public class ModPowers {
 	public static final Power HYDROPHOBIA = registerPower("hydrophobia", new HydrophobiaWeakness());
 	public static final Power PHOTOPHOBIA = registerPower("photophobia", new Weakness());
 	public static final Power PYROPHOBIA = registerPower("pyrophobia", new Weakness());
-	public static final Power RICH_TASTES = registerPower("rich_tastes", new Weakness());
+	public static final Power RICH_TASTES = registerPower("rich_tastes", new RichTastesWeakness());
 	public static final Power THIN_BLOOD = registerPower("thin_blood", new Weakness());
 	public static final Power VILE_PRESENCE = registerPower("vile_presence", new VilePresenceWeakness());
 

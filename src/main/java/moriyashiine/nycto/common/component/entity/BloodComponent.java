@@ -29,7 +29,7 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 	private final LivingEntity obj;
 	private boolean regeneratesNaturally = true;
 	private int blood = MAX_BLOOD, bleedTicks = 0, regenerationBlockTicks = 0;
-	private long lastLoadTime = -1;
+	private long lastGameTime = 0, lastFillTime = 0;
 
 	public BloodComponent(LivingEntity obj) {
 		this.obj = obj;
@@ -41,7 +41,8 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 		blood = input.getIntOr("Blood", MAX_BLOOD);
 		bleedTicks = input.getIntOr("BleedTicks", 0);
 		regenerationBlockTicks = input.getIntOr("RegenerationBlockTicks", 0);
-		lastLoadTime = input.getLongOr("LastLoadTime", -1);
+		lastGameTime = input.getLongOr("LastGameTime", 0);
+		lastFillTime = input.getLongOr("LastFillTime", 0);
 	}
 
 	@Override
@@ -50,11 +51,14 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 		output.putInt("Blood", blood);
 		output.putInt("BleedTicks", bleedTicks);
 		output.putInt("RegenerationBlockTicks", regenerationBlockTicks);
-		output.putLong("LastLoadTime", lastLoadTime);
+		output.putLong("LastGameTime", lastGameTime);
+		output.putLong("LastFillTime", lastFillTime);
 	}
 
 	@Override
 	public void serverTick() {
+		tickUnloaded();
+		lastGameTime = obj.level().getGameTime();
 		if (obj.level().getGameTime() % 20 == 0 && obj.level().getDifficulty() == Difficulty.PEACEFUL) {
 			fill(5);
 		}
@@ -90,6 +94,16 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 		ModEntityComponents.BLOOD.sync(obj);
 	}
 
+	private void tickUnloaded() {
+		int ticksSinceLastLoad = (int) (obj.level().getGameTime() - lastGameTime - 1);
+		if (ticksSinceLastLoad > 0) {
+			regenerationBlockTicks = Math.max(0, regenerationBlockTicks - ticksSinceLastLoad);
+			if (regeneratesNaturally) {
+				fill(((ticksSinceLastLoad - regenerationBlockTicks) / REGEN_TIME) * (obj.isSleeping() ? 5 : 1));
+			}
+		}
+	}
+
 	public boolean regeneratesNaturally() {
 		return regeneratesNaturally;
 	}
@@ -102,28 +116,12 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 		return blood;
 	}
 
-	public void setBlood(int blood) {
-		this.blood = blood;
-	}
-
 	public void setBleedTicks(int bleedTicks) {
 		this.bleedTicks = bleedTicks;
 	}
 
-	public int getRegenerationBlockTicks() {
-		return regenerationBlockTicks;
-	}
-
 	public void setRegenerationBlockTicks(int regenerationBlockTicks) {
 		this.regenerationBlockTicks = regenerationBlockTicks;
-	}
-
-	public long getLastLoadTime() {
-		return lastLoadTime;
-	}
-
-	public void setLastLoadTime(long lastLoadTime) {
-		this.lastLoadTime = lastLoadTime;
 	}
 
 	public boolean canFill() {
@@ -142,9 +140,14 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 		return blood < MAX_BLOOD / 10;
 	}
 
+	public long getTicksSinceLastFill() {
+		return obj.level().getGameTime() - lastFillTime;
+	}
+
 	public boolean fill(int amount) {
 		if (canFill()) {
 			blood = Math.min(MAX_BLOOD, blood + amount);
+			lastFillTime = obj.level().getGameTime();
 			sync();
 			return true;
 		}
