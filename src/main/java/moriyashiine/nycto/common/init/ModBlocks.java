@@ -21,8 +21,10 @@ import static net.minecraft.world.level.block.state.BlockBehaviour.Properties.of
 import static net.minecraft.world.level.block.state.BlockBehaviour.Properties.ofFullCopy;
 
 public class ModBlocks {
-	public static final Block VAMPIRE_ALTAR = registerBlock("vampire_altar", VampireAltarBlock::new, ofFullCopy(Blocks.OAK_PLANKS).noOcclusion());
-	public static final Block WEREWOLF_ALTAR = registerBlock("werewolf_altar", WerewolfAltarBlock::new, ofFullCopy(Blocks.BONE_BLOCK).noOcclusion());
+	public static final Block VAMPIRE_ALTAR = registerBlock("vampire_altar", VampireAltarBlock::new, ofFullCopy(Blocks.OAK_PLANKS)
+			.noOcclusion());
+	public static final Block WEREWOLF_ALTAR = registerBlock("werewolf_altar", WerewolfAltarBlock::new, ofFullCopy(Blocks.BONE_BLOCK)
+			.noOcclusion());
 
 	public static final Block OAK_COFFIN = registerCoffin("oak_coffin", Blocks.OAK_PLANKS);
 	public static final Block SPRUCE_COFFIN = registerCoffin("spruce_coffin", Blocks.SPRUCE_PLANKS);
@@ -37,11 +39,25 @@ public class ModBlocks {
 	public static final Block CRIMSON_COFFIN = registerCoffin("crimson_coffin", Blocks.CRIMSON_PLANKS);
 	public static final Block WARPED_COFFIN = registerCoffin("warped_coffin", Blocks.WARPED_PLANKS);
 
-	public static final Block GARLIC_WREATH = registerBlock("garlic_wreath", GarlicWreathBlock::new, of().noCollision().strength(0.5F).sound(SoundType.GRASS));
-	public static final Block ACONITE_GARLAND = registerBlock("aconite_garland", AconiteGarlandBlock::new, of().noCollision().strength(0.5F).sound(SoundType.GRASS));
+	public static final Block GARLIC_WREATH = registerBlock("garlic_wreath", GarlicWreathBlock::new, of()
+			.noCollision()
+			.strength(0.5F)
+			.sound(SoundType.GRASS));
+	public static final Block ACONITE_GARLAND = registerBlock("aconite_garland", AconiteGarlandBlock::new, of()
+			.noCollision()
+			.strength(0.5F)
+			.sound(SoundType.GRASS));
 
-	public static final Block WILD_GARLIC = registerBlock("wild_garlic", WildGarlicBlock::new, of().noCollision().instabreak().sound(SoundType.CROP).offsetType(BlockBehaviour.OffsetType.XYZ));
-	public static final Block WILD_ACONITE = registerBlock("wild_aconite", WildVegetationBlock::new, of().noCollision().instabreak().sound(SoundType.CROP).offsetType(BlockBehaviour.OffsetType.XYZ));
+	public static final Block WILD_GARLIC = registerBlock("wild_garlic", WildGarlicBlock::new, of()
+			.noCollision()
+			.instabreak()
+			.sound(SoundType.CROP)
+			.offsetType(BlockBehaviour.OffsetType.XYZ));
+	public static final Block WILD_ACONITE = registerBlock("wild_aconite", WildVegetationBlock::new, of()
+			.noCollision()
+			.instabreak()
+			.sound(SoundType.CROP)
+			.offsetType(BlockBehaviour.OffsetType.XYZ));
 
 	public static final Block GARLIC = registerBlock("garlic", GarlicBlock::new, ofFullCopy(Blocks.CARROTS));
 	public static final Block ACONITE = registerBlock("aconite", AconiteBlock::new, ofFullCopy(Blocks.CARROTS));
@@ -58,7 +74,8 @@ public class ModBlocks {
 	public static final Block FIREBOMB = registerBlock("firebomb", FirebombBlock::new, ofFullCopy(Blocks.FIRE));
 
 	public static Block registerCoffin(String name, Block base) {
-		return registerBlock(name, CoffinBlock::new, ofFullCopy(base).noOcclusion());
+		return registerBlock(name, CoffinBlock::new, ofFullCopy(base)
+				.noOcclusion());
 	}
 
 	public static void init() {

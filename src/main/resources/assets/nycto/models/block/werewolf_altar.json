@@ -4,7 +4,7 @@
 	"0": "nycto:block/werewolf_altar_details",
 	"1": "nycto:block/werewolf_altar_skull",
 	"2": "minecraft:block/black_candle_lit",
-	"particle": "nycto:block/werewolf_altar_details"
+	"particle": "#0"
   },
   "elements": [
 	{

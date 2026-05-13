@@ -47,6 +47,8 @@ public class ModModelProvider extends FabricModelProvider {
 
 	@Override
 	public void generateBlockStateModels(BlockModelGenerators generators) {
+		createWithExistingModel(generators, ModBlocks.VAMPIRE_ALTAR, BlockModelGenerators.ROTATION_HORIZONTAL_FACING);
+		createWithExistingModel(generators, ModBlocks.WEREWOLF_ALTAR, BlockModelGenerators.ROTATION_HORIZONTAL_FACING);
 		createCoffin(generators, ModBlocks.OAK_COFFIN, new Material(Nycto.id("block/coffin_oak")), Blocks.OAK_PLANKS, Blocks.OAK_SIGN);
 		createCoffin(generators, ModBlocks.SPRUCE_COFFIN, new Material(Nycto.id("block/coffin_spruce")), Blocks.SPRUCE_PLANKS, Blocks.SPRUCE_SIGN);
 		createCoffin(generators, ModBlocks.BIRCH_COFFIN, new Material(Nycto.id("block/coffin_birch")), Blocks.BIRCH_PLANKS, Blocks.BIRCH_SIGN);
@@ -59,11 +61,13 @@ public class ModModelProvider extends FabricModelProvider {
 		createCoffin(generators, ModBlocks.BAMBOO_COFFIN, new Material(Nycto.id("block/coffin_bamboo")), Blocks.BAMBOO_PLANKS, Blocks.BAMBOO_SIGN);
 		createCoffin(generators, ModBlocks.CRIMSON_COFFIN, new Material(Nycto.id("block/coffin_crimson")), Blocks.CRIMSON_PLANKS, Blocks.CRIMSON_SIGN);
 		createCoffin(generators, ModBlocks.WARPED_COFFIN, new Material(Nycto.id("block/coffin_warped")), Blocks.WARPED_PLANKS, Blocks.WARPED_SIGN);
+		createGarlicWreath(generators);
+		createAconiteGarland(generators);
 		generators.createCrossBlockWithDefaultItem(ModBlocks.WILD_GARLIC, BlockModelGenerators.PlantType.NOT_TINTED);
 		generators.createCrossBlockWithDefaultItem(ModBlocks.WILD_ACONITE, BlockModelGenerators.PlantType.NOT_TINTED);
 		generators.createCropBlock(ModBlocks.GARLIC, BlockStateProperties.AGE_3, 0, 1, 2, 3);
 		SLibDataUtils.createCropCrossBlock(generators, ModBlocks.ACONITE, BlockStateProperties.AGE_3, 0, 1, 2, 3);
-		createExistingModel(generators, ModBlocks.WOODEN_STAKE, BlockModelGenerators.ROTATION_HORIZONTAL_FACING_ALT);
+		createWithExistingModel(generators, ModBlocks.WOODEN_STAKE, BlockModelGenerators.ROTATION_HORIZONTAL_FACING_ALT);
 		createFirebomb(generators);
 	}
 
@@ -157,7 +161,7 @@ public class ModModelProvider extends FabricModelProvider {
 	}
 
 	@SafeVarargs
-	public static void createExistingModel(BlockModelGenerators generators, Block block, PropertyDispatch<VariantMutator>... mutators) {
+	public static void createWithExistingModel(BlockModelGenerators generators, Block block, PropertyDispatch<VariantMutator>... mutators) {
 		MultiVariant model = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block));
 		MultiVariantGenerator dispatch = MultiVariantGenerator.dispatch(block, model);
 		for (PropertyDispatch<VariantMutator> mutator : mutators) {
@@ -166,17 +170,31 @@ public class ModModelProvider extends FabricModelProvider {
 		generators.blockStateOutput.accept(dispatch);
 	}
 
+	private static void createGarlicWreath(BlockModelGenerators generators) {
+		MultiVariantGenerator.Empty dispatch = MultiVariantGenerator.dispatch(ModBlocks.GARLIC_WREATH);
+		MultiVariant side = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(ModBlocks.GARLIC_WREATH, "_side"));
+		MultiVariant down = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(ModBlocks.GARLIC_WREATH, "_down"));
+		generators.blockStateOutput.accept(dispatch.with(BlockModelGenerators.createBooleanModelDispatch(BlockStateProperties.DOWN, down, side)).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
+	}
+
+	private static void createAconiteGarland(BlockModelGenerators generators) {
+		MultiVariantGenerator.Empty dispatch = MultiVariantGenerator.dispatch(ModBlocks.ACONITE_GARLAND);
+		MultiVariant side = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(ModBlocks.ACONITE_GARLAND, "_side"));
+		MultiVariant hanging = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(ModBlocks.ACONITE_GARLAND, "_hanging"));
+		generators.blockStateOutput.accept(dispatch.with(BlockModelGenerators.createBooleanModelDispatch(BlockStateProperties.HANGING, hanging, side)).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
+	}
+
 	private static void createFirebomb(BlockModelGenerators generators) {
-		MultiVariant weightedVariant = generators.createFloorFireModels(ModBlocks.FIREBOMB);
-		MultiVariant weightedVariant2 = generators.createSideFireModels(ModBlocks.FIREBOMB);
+		MultiVariant normal = generators.createFloorFireModels(ModBlocks.FIREBOMB);
+		MultiVariant variant = generators.createSideFireModels(ModBlocks.FIREBOMB);
 		generators.blockStateOutput
 				.accept(
 						MultiPartGenerator.multiPart(ModBlocks.FIREBOMB)
-								.with(weightedVariant)
-								.with(weightedVariant2)
-								.with(weightedVariant2.with(BlockModelGenerators.Y_ROT_90))
-								.with(weightedVariant2.with(BlockModelGenerators.Y_ROT_180))
-								.with(weightedVariant2.with(BlockModelGenerators.Y_ROT_270))
+								.with(normal)
+								.with(variant)
+								.with(variant.with(BlockModelGenerators.Y_ROT_90))
+								.with(variant.with(BlockModelGenerators.Y_ROT_180))
+								.with(variant.with(BlockModelGenerators.Y_ROT_270))
 				);
 	}
 }

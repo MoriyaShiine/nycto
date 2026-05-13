@@ -7,7 +7,7 @@
 	"3": "nycto:block/vampire_altar_top",
 	"4": "minecraft:block/dark_oak_planks",
 	"5": "nycto:block/vampire_altar_side",
-	"particle": "nycto:block/vampire_altar_metal"
+	"particle": "#0"
   },
   "elements": [
 	{
