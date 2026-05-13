@@ -57,6 +57,7 @@ public class ModBlockLootSubProvider extends FabricBlockLootSubProvider {
 		)));
 		add(ModBlocks.GARLIC, applyExplosionDecay(ModBlocks.GARLIC, LootTable.lootTable().withPool(LootPool.lootPool().add(LootItem.lootTableItem(ModItems.GARLIC))).withPool(LootPool.lootPool().when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.GARLIC).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(BlockStateProperties.AGE_3, 3))).add(LootItem.lootTableItem(ModItems.GARLIC).apply(ApplyBonusCount.addBonusBinomialDistributionCount(registries.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE), 0.5714286F, 2))))));
 		add(ModBlocks.ACONITE, createCropDrops(ModBlocks.ACONITE, ModItems.ACONITE, ModItems.ACONITE_SEEDS, LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.ACONITE).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(BlockStateProperties.AGE_3, 3))));
+		dropSelf(ModBlocks.WOODEN_STAKE);
 		add(ModBlocks.FIREBOMB, noDrop());
 	}
 }

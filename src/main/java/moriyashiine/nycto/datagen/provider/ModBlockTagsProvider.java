@@ -62,7 +62,8 @@ public class ModBlockTagsProvider extends FabricTagsProvider.BlockTagsProvider {
 				.addTag(ModBlockTags.COFFINS)
 				.add(ModBlocks.VAMPIRE_ALTAR)
 				.add(ModBlocks.GARLIC)
-				.add(ModBlocks.ACONITE);
+				.add(ModBlocks.ACONITE)
+				.add(ModBlocks.WOODEN_STAKE);
 		valueLookupBuilder(BlockTags.MINEABLE_WITH_PICKAXE)
 				.add(ModBlocks.WEREWOLF_ALTAR);
 		valueLookupBuilder(BlockTags.BEDS)
@@ -75,5 +76,7 @@ public class ModBlockTagsProvider extends FabricTagsProvider.BlockTagsProvider {
 				.add(ModBlocks.ACONITE);
 		valueLookupBuilder(BlockTags.FIRE)
 				.add(ModBlocks.FIREBOMB);
+		valueLookupBuilder(BlockTags.HAPPY_GHAST_AVOIDS)
+				.add(ModBlocks.WOODEN_STAKE);
 	}
 }

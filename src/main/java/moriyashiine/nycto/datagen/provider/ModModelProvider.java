@@ -19,6 +19,7 @@ import net.minecraft.client.data.models.blockstates.MultiPartGenerator;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.*;
+import net.minecraft.client.renderer.block.dispatch.VariantMutator;
 import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.resources.Identifier;
@@ -46,23 +47,24 @@ public class ModModelProvider extends FabricModelProvider {
 
 	@Override
 	public void generateBlockStateModels(BlockModelGenerators generators) {
-		registerCoffin(generators, ModBlocks.OAK_COFFIN, new Material(Nycto.id("block/coffin_oak")), Blocks.OAK_PLANKS, Blocks.OAK_SIGN);
-		registerCoffin(generators, ModBlocks.SPRUCE_COFFIN, new Material(Nycto.id("block/coffin_spruce")), Blocks.SPRUCE_PLANKS, Blocks.SPRUCE_SIGN);
-		registerCoffin(generators, ModBlocks.BIRCH_COFFIN, new Material(Nycto.id("block/coffin_birch")), Blocks.BIRCH_PLANKS, Blocks.BIRCH_SIGN);
-		registerCoffin(generators, ModBlocks.JUNGLE_COFFIN, new Material(Nycto.id("block/coffin_jungle")), Blocks.JUNGLE_PLANKS, Blocks.JUNGLE_SIGN);
-		registerCoffin(generators, ModBlocks.ACACIA_COFFIN, new Material(Nycto.id("block/coffin_acacia")), Blocks.ACACIA_PLANKS, Blocks.ACACIA_SIGN);
-		registerCoffin(generators, ModBlocks.DARK_OAK_COFFIN, new Material(Nycto.id("block/coffin_dark_oak")), Blocks.DARK_OAK_PLANKS, Blocks.DARK_OAK_SIGN);
-		registerCoffin(generators, ModBlocks.PALE_OAK_COFFIN, new Material(Nycto.id("block/coffin_pale_oak")), Blocks.PALE_OAK_PLANKS, Blocks.PALE_OAK_SIGN);
-		registerCoffin(generators, ModBlocks.MANGROVE_COFFIN, new Material(Nycto.id("block/coffin_mangrove")), Blocks.MANGROVE_PLANKS, Blocks.MANGROVE_SIGN);
-		registerCoffin(generators, ModBlocks.CHERRY_COFFIN, new Material(Nycto.id("block/coffin_cherry")), Blocks.CHERRY_PLANKS, Blocks.CHERRY_SIGN);
-		registerCoffin(generators, ModBlocks.BAMBOO_COFFIN, new Material(Nycto.id("block/coffin_bamboo")), Blocks.BAMBOO_PLANKS, Blocks.BAMBOO_SIGN);
-		registerCoffin(generators, ModBlocks.CRIMSON_COFFIN, new Material(Nycto.id("block/coffin_crimson")), Blocks.CRIMSON_PLANKS, Blocks.CRIMSON_SIGN);
-		registerCoffin(generators, ModBlocks.WARPED_COFFIN, new Material(Nycto.id("block/coffin_warped")), Blocks.WARPED_PLANKS, Blocks.WARPED_SIGN);
+		createCoffin(generators, ModBlocks.OAK_COFFIN, new Material(Nycto.id("block/coffin_oak")), Blocks.OAK_PLANKS, Blocks.OAK_SIGN);
+		createCoffin(generators, ModBlocks.SPRUCE_COFFIN, new Material(Nycto.id("block/coffin_spruce")), Blocks.SPRUCE_PLANKS, Blocks.SPRUCE_SIGN);
+		createCoffin(generators, ModBlocks.BIRCH_COFFIN, new Material(Nycto.id("block/coffin_birch")), Blocks.BIRCH_PLANKS, Blocks.BIRCH_SIGN);
+		createCoffin(generators, ModBlocks.JUNGLE_COFFIN, new Material(Nycto.id("block/coffin_jungle")), Blocks.JUNGLE_PLANKS, Blocks.JUNGLE_SIGN);
+		createCoffin(generators, ModBlocks.ACACIA_COFFIN, new Material(Nycto.id("block/coffin_acacia")), Blocks.ACACIA_PLANKS, Blocks.ACACIA_SIGN);
+		createCoffin(generators, ModBlocks.DARK_OAK_COFFIN, new Material(Nycto.id("block/coffin_dark_oak")), Blocks.DARK_OAK_PLANKS, Blocks.DARK_OAK_SIGN);
+		createCoffin(generators, ModBlocks.PALE_OAK_COFFIN, new Material(Nycto.id("block/coffin_pale_oak")), Blocks.PALE_OAK_PLANKS, Blocks.PALE_OAK_SIGN);
+		createCoffin(generators, ModBlocks.MANGROVE_COFFIN, new Material(Nycto.id("block/coffin_mangrove")), Blocks.MANGROVE_PLANKS, Blocks.MANGROVE_SIGN);
+		createCoffin(generators, ModBlocks.CHERRY_COFFIN, new Material(Nycto.id("block/coffin_cherry")), Blocks.CHERRY_PLANKS, Blocks.CHERRY_SIGN);
+		createCoffin(generators, ModBlocks.BAMBOO_COFFIN, new Material(Nycto.id("block/coffin_bamboo")), Blocks.BAMBOO_PLANKS, Blocks.BAMBOO_SIGN);
+		createCoffin(generators, ModBlocks.CRIMSON_COFFIN, new Material(Nycto.id("block/coffin_crimson")), Blocks.CRIMSON_PLANKS, Blocks.CRIMSON_SIGN);
+		createCoffin(generators, ModBlocks.WARPED_COFFIN, new Material(Nycto.id("block/coffin_warped")), Blocks.WARPED_PLANKS, Blocks.WARPED_SIGN);
 		generators.createCrossBlockWithDefaultItem(ModBlocks.WILD_GARLIC, BlockModelGenerators.PlantType.NOT_TINTED);
 		generators.createCrossBlockWithDefaultItem(ModBlocks.WILD_ACONITE, BlockModelGenerators.PlantType.NOT_TINTED);
 		generators.createCropBlock(ModBlocks.GARLIC, BlockStateProperties.AGE_3, 0, 1, 2, 3);
 		SLibDataUtils.createCropCrossBlock(generators, ModBlocks.ACONITE, BlockStateProperties.AGE_3, 0, 1, 2, 3);
-		registerFirebomb(generators);
+		createExistingModel(generators, ModBlocks.WOODEN_STAKE, BlockModelGenerators.ROTATION_HORIZONTAL_FACING_ALT);
+		createFirebomb(generators);
 	}
 
 	@Override
@@ -88,15 +90,15 @@ public class ModModelProvider extends FabricModelProvider {
 		generators.generateFlatItem(ModItems.WEREWOLF_HUNTER_LEGGINGS, ModelTemplates.FLAT_ITEM);
 		generators.generateFlatItem(ModItems.WEREWOLF_HUNTER_BOOTS, ModelTemplates.FLAT_ITEM);
 		generators.generateFlatItem(ModItems.WEREWOLF_HUNTER_WOLF_ARMOR, ModelTemplates.FLAT_ITEM);
-		registerWithFullCondition(generators, ModItems.VAMPIRIC_DAGGER);
-		registerHalberd(generators, ModItems.HALBERD, new Material(Nycto.id("item/halberd_in_hand")), new Material(Nycto.id("item/empty")));
-		registerHalberd(generators, ModItems.GARLIC_COATED_HALBERD, new Material(Nycto.id("item/halberd_in_hand_coated")), new Material(Nycto.id("item/halberd_in_hand_extra_garlic")));
-		registerHalberd(generators, ModItems.ACONITE_COATED_HALBERD, new Material(Nycto.id("item/halberd_in_hand_coated")), new Material(Nycto.id("item/halberd_in_hand_extra_aconite")));
+		generateWithFull(generators, ModItems.VAMPIRIC_DAGGER);
+		generateHalberd(generators, ModItems.HALBERD, new Material(Nycto.id("item/halberd_in_hand")), new Material(Nycto.id("item/empty")));
+		generateHalberd(generators, ModItems.GARLIC_COATED_HALBERD, new Material(Nycto.id("item/halberd_in_hand_coated")), new Material(Nycto.id("item/halberd_in_hand_extra_garlic")));
+		generateHalberd(generators, ModItems.ACONITE_COATED_HALBERD, new Material(Nycto.id("item/halberd_in_hand_coated")), new Material(Nycto.id("item/halberd_in_hand_extra_aconite")));
 		generators.generateFlatItem(ModItems.WOODEN_STAKE, ModelTemplates.FLAT_HANDHELD_ITEM);
 		ModelTemplates.CROSSBOW.create(Nycto.id("item/crossbow_wooden_stake"), TextureMapping.layer0(new Material(Nycto.id("item/crossbow_wooden_stake"))), generators.modelOutput);
 		generators.generateFlatItem(ModItems.ACONITE_ARROW, ModelTemplates.FLAT_ITEM);
 		generators.generateFlatItem(ModItems.FIREBOMB, ModelTemplates.FLAT_ITEM);
-		registerTintedBottle(generators, ModItems.BLOOD_BOTTLE, 0xFF7F0000);
+		generateTintedBottle(generators, ModItems.BLOOD_BOTTLE, 0xFF7F0000);
 		generators.generateFlatItem(ModItems.VAMPIRE_BLOOD_BOTTLE, ModelTemplates.FLAT_ITEM);
 		generators.generateFlatItem(ModItems.AMBROSIA_BOTTLE, ModelTemplates.FLAT_ITEM);
 		generators.generateFlatItem(ModItems.GRILLED_GARLIC, ModelTemplates.FLAT_ITEM);
@@ -116,7 +118,7 @@ public class ModModelProvider extends FabricModelProvider {
 		ModelTemplates.FLAT_ITEM.create(Nycto.id("item/lingering_garlic_brew"), TextureMapping.layer0(new Material(Nycto.id("item/lingering_garlic_brew"))), generators.modelOutput);
 	}
 
-	public static void registerCoffin(BlockModelGenerators generators, Block block, Material base, Block particle, Block headModel) {
+	public static void createCoffin(BlockModelGenerators generators, Block block, Material base, Block particle, Block headModel) {
 		Material particleId = TextureMapping.getBlockTexture(particle);
 		COFFIN.create(block, TextureMapping.singleSlot(BASE, base).put(TextureSlot.PARTICLE, particleId), generators.modelOutput);
 		COFFIN_CLOSED.createWithSuffix(block, "_closed", TextureMapping.singleSlot(BASE, base).put(TextureSlot.PARTICLE, particleId), generators.modelOutput);
@@ -137,24 +139,34 @@ public class ModModelProvider extends FabricModelProvider {
 	}
 
 
-	public static void registerHalberd(ItemModelGenerators generators, Item item, Material baseId, Material extraId) {
+	public static void generateHalberd(ItemModelGenerators generators, Item item, Material baseId, Material extraId) {
 		ItemModel.Unbaked normal = ItemModelUtils.plainModel(generators.createFlatItemModel(item, ModelTemplates.FLAT_HANDHELD_ITEM));
 		ItemModel.Unbaked inHand = ItemModelUtils.plainModel(HALBERD_IN_HAND.create(ModelLocationUtils.getModelLocation(item, "_in_hand"), new TextureMapping().put(BASE, baseId).put(EXTRA, extraId), generators.modelOutput));
 		generators.itemModelOutput.accept(item, ItemModelGenerators.createFlatModelDispatch(normal, inHand));
 	}
 
-	public static void registerWithFullCondition(ItemModelGenerators generators, Item item) {
+	public static void generateWithFull(ItemModelGenerators generators, Item item) {
 		ItemModel.Unbaked main = ItemModelUtils.plainModel(generators.createFlatItemModel(item, ModelTemplates.FLAT_HANDHELD_ITEM));
 		ItemModel.Unbaked full = ItemModelUtils.plainModel(generators.createFlatItemModel(item, "_full", ModelTemplates.FLAT_HANDHELD_ITEM));
 		generators.generateBooleanDispatch(item, new FullDaggerProperty(), full, main);
 	}
 
-	public static void registerTintedBottle(ItemModelGenerators generators, Item item, int color) {
+	public static void generateTintedBottle(ItemModelGenerators generators, Item item, int color) {
 		Identifier identifier = generators.generateLayeredItem(item, new Material(ModelLocationUtils.decorateItemModelLocation("potion_overlay")), new Material(ModelLocationUtils.getModelLocation(Items.POTION)));
 		generators.itemModelOutput.accept(item, ItemModelUtils.tintedModel(identifier, new Constant(color)));
 	}
 
-	private static void registerFirebomb(BlockModelGenerators generators) {
+	@SafeVarargs
+	public static void createExistingModel(BlockModelGenerators generators, Block block, PropertyDispatch<VariantMutator>... mutators) {
+		MultiVariant model = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block));
+		MultiVariantGenerator dispatch = MultiVariantGenerator.dispatch(block, model);
+		for (PropertyDispatch<VariantMutator> mutator : mutators) {
+			dispatch = dispatch.with(mutator);
+		}
+		generators.blockStateOutput.accept(dispatch);
+	}
+
+	private static void createFirebomb(BlockModelGenerators generators) {
 		MultiVariant weightedVariant = generators.createFloorFireModels(ModBlocks.FIREBOMB);
 		MultiVariant weightedVariant2 = generators.createSideFireModels(ModBlocks.FIREBOMB);
 		generators.blockStateOutput

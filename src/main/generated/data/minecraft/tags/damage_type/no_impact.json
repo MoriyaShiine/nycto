@@ -1,8 +1,5 @@
 {
   "values": [
-	{
-	  "id": "nycto:bleed",
-	  "required": false
-	}
+	"nycto:bleed"
   ]
 }

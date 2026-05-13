@@ -86,10 +86,15 @@ public class ModItems {
 			List.of(Identifier.withDefaultNamespace("container/slot/ingot")),
 			settings));
 
-	public static final Item VAMPIRE_HELMET = registerItem("vampire_helmet", new Item.Properties().humanoidArmor(ModArmorMaterials.VAMPIRE, ArmorType.HELMET));
-	public static final Item VAMPIRE_CHESTPLATE = registerItem("vampire_chestplate", CapeItem::new, new Item.Properties().humanoidArmor(ModArmorMaterials.VAMPIRE, ArmorType.CHESTPLATE).component(ModComponentTypes.SHOW_CAPE, true));
-	public static final Item VAMPIRE_LEGGINGS = registerItem("vampire_leggings", new Item.Properties().humanoidArmor(ModArmorMaterials.VAMPIRE, ArmorType.LEGGINGS));
-	public static final Item VAMPIRE_BOOTS = registerItem("vampire_boots", new Item.Properties().humanoidArmor(ModArmorMaterials.VAMPIRE, ArmorType.BOOTS));
+	public static final Item VAMPIRE_HELMET = registerItem("vampire_helmet", properties()
+			.humanoidArmor(ModArmorMaterials.VAMPIRE, ArmorType.HELMET));
+	public static final Item VAMPIRE_CHESTPLATE = registerItem("vampire_chestplate", CapeItem::new, properties()
+			.humanoidArmor(ModArmorMaterials.VAMPIRE, ArmorType.CHESTPLATE)
+			.component(ModComponentTypes.SHOW_CAPE, true));
+	public static final Item VAMPIRE_LEGGINGS = registerItem("vampire_leggings", properties()
+			.humanoidArmor(ModArmorMaterials.VAMPIRE, ArmorType.LEGGINGS));
+	public static final Item VAMPIRE_BOOTS = registerItem("vampire_boots", properties()
+			.humanoidArmor(ModArmorMaterials.VAMPIRE, ArmorType.BOOTS));
 
 	public static final Item VAMPIRE_HUNTER_HELMET = registerHunterArmor("vampire_hunter_helmet", ArmorType.HELMET, ModAttributes.VAMPIRE_RESISTANCE);
 	public static final Item VAMPIRE_HUNTER_CHESTPLATE = registerHunterArmor("vampire_hunter_chestplate", ArmorType.CHESTPLATE, ModAttributes.VAMPIRE_RESISTANCE);
@@ -108,14 +113,20 @@ public class ModItems {
 	public static final Item GARLIC_COATED_HALBERD = registerHalberd("garlic_coated_halberd");
 	public static final Item ACONITE_COATED_HALBERD = registerHalberd("aconite_coated_halberd");
 
-	public static final Item WOODEN_STAKE = registerItem("wooden_stake", WoodenStakeItem::new);
+	public static final Item WOODEN_STAKE = registerItem("wooden_stake", properties -> new WoodenStakeItem(ModBlocks.WOODEN_STAKE, properties), properties()
+			.useBlockDescriptionPrefix()
+			.attributes(ToolMaterial.WOOD.createToolAttributes(WoodenStakeItem.DAMAGE, -3.6F)));
 	public static final Item ACONITE_ARROW = registerItem("aconite_arrow", AconiteArrowItem::new);
-	public static final Item FIREBOMB = registerItem("firebomb", FirebombItem::new, properties().stacksTo(16));
+	public static final Item FIREBOMB = registerItem("firebomb", FirebombItem::new, properties()
+			.useBlockDescriptionPrefix()
+			.stacksTo(16));
 
 	public static final Item BLOOD_BOTTLE = registerItem("blood_bottle", drink(ModConsumables.BLOOD_BOTTLE));
-	public static final Item PLAYER_BLOOD_BOTTLE = registerItem("player_blood_bottle", PlayerBloodBottleItem::new, drink(ModConsumables.BLOOD_BOTTLE).overrideDescription(BLOOD_BOTTLE.getDescriptionId()).modelId(Nycto.id("blood_bottle")));
+	public static final Item PLAYER_BLOOD_BOTTLE = registerItem("player_blood_bottle", PlayerBloodBottleItem::new, drink(ModConsumables.BLOOD_BOTTLE)
+			.overrideDescription(BLOOD_BOTTLE.getDescriptionId()).modelId(Nycto.id("blood_bottle")));
 	public static final Item VAMPIRE_BLOOD_BOTTLE = registerItem("vampire_blood_bottle", drink(ModConsumables.VAMPIRE_BLOOD_BOTTLE));
-	public static final Item PLAYER_VAMPIRE_BLOOD_BOTTLE = registerItem("player_vampire_blood_bottle", PlayerBloodBottleItem::new, drink(ModConsumables.VAMPIRE_BLOOD_BOTTLE).overrideDescription(VAMPIRE_BLOOD_BOTTLE.getDescriptionId()).modelId(Nycto.id("vampire_blood_bottle")));
+	public static final Item PLAYER_VAMPIRE_BLOOD_BOTTLE = registerItem("player_vampire_blood_bottle", PlayerBloodBottleItem::new, drink(ModConsumables.VAMPIRE_BLOOD_BOTTLE)
+			.overrideDescription(VAMPIRE_BLOOD_BOTTLE.getDescriptionId()).modelId(Nycto.id("vampire_blood_bottle")));
 	public static final Item AMBROSIA_BOTTLE = registerItem("ambrosia_bottle", properties()
 			.rarity(Rarity.RARE)
 			.food(ModFoods.AMBROSIA_BOTTLE, ModConsumables.AMBROSIA_BOTTLE)
@@ -124,9 +135,12 @@ public class ModItems {
 			.usingConvertsTo(Items.GLASS_BOTTLE)
 			.stacksTo(16));
 
-	public static final Item GARLIC = registerItem("garlic", settings -> new TransformationCheckerBlockItem(ModBlocks.GARLIC, settings, NyctoAPI::isVampire), properties().food(ModFoods.GARLIC));
-	public static final Item GRILLED_GARLIC = registerItem("grilled_garlic", properties().food(ModFoods.GRILLED_GARLIC));
-	public static final Item GARLIC_BREAD = registerItem("garlic_bread", properties().food(ModFoods.GARLIC_BREAD));
+	public static final Item GARLIC = registerItem("garlic", settings -> new TransformationCheckerBlockItem(ModBlocks.GARLIC, settings, NyctoAPI::isVampire), properties()
+			.food(ModFoods.GARLIC));
+	public static final Item GRILLED_GARLIC = registerItem("grilled_garlic", properties()
+			.food(ModFoods.GRILLED_GARLIC));
+	public static final Item GARLIC_BREAD = registerItem("garlic_bread", properties()
+			.food(ModFoods.GARLIC_BREAD));
 
 	public static final Item ACONITE_SEEDS = registerItem("aconite_seeds", settings -> new BlockItem(ModBlocks.ACONITE, settings));
 	public static final Item ACONITE = registerItem("aconite", settings -> new TransformationCheckerBlockItem(ModBlocks.ACONITE, settings, NyctoAPI::isWerewolf));
@@ -135,15 +149,24 @@ public class ModItems {
 	public static final Item VAMPIRE_HUNTER_CONTRACT = registerItem("vampire_hunter_contract", settings -> new HunterContractItem(settings, ModHunterTypes.VAMPIRE));
 	public static final Item WEREWOLF_HUNTER_CONTRACT = registerItem("werewolf_hunter_contract", settings -> new HunterContractItem(settings, ModHunterTypes.WEREWOLF));
 
-	public static final Item VAMPIRE_BAT_BANNER_PATTERN = registerItem("vampire_bat_banner_pattern", properties().stacksTo(1).delayedComponent(DataComponents.PROVIDES_BANNER_PATTERNS, context -> context.getOrThrow(ModBannerPatternTags.PATTERN_ITEM_VAMPIRE_BAT)));
-	public static final Item WOLF_SKULL_BANNER_PATTERN = registerItem("wolf_skull_banner_pattern", properties().stacksTo(1).delayedComponent(DataComponents.PROVIDES_BANNER_PATTERNS, context -> context.getOrThrow(ModBannerPatternTags.PATTERN_ITEM_WOLF_SKULL)));
-	public static final Item HUNTERS_MARK_BANNER_PATTERN = registerItem("hunters_mark_banner_pattern", properties().stacksTo(1).delayedComponent(DataComponents.PROVIDES_BANNER_PATTERNS, context -> context.getOrThrow(ModBannerPatternTags.PATTERN_ITEM_HUNTERS_MARK)));
+	public static final Item VAMPIRE_BAT_BANNER_PATTERN = registerItem("vampire_bat_banner_pattern", properties()
+			.stacksTo(1)
+			.delayedComponent(DataComponents.PROVIDES_BANNER_PATTERNS, context -> context.getOrThrow(ModBannerPatternTags.PATTERN_ITEM_VAMPIRE_BAT)));
+	public static final Item WOLF_SKULL_BANNER_PATTERN = registerItem("wolf_skull_banner_pattern", properties()
+			.stacksTo(1)
+			.delayedComponent(DataComponents.PROVIDES_BANNER_PATTERNS, context -> context.getOrThrow(ModBannerPatternTags.PATTERN_ITEM_WOLF_SKULL)));
+	public static final Item HUNTERS_MARK_BANNER_PATTERN = registerItem("hunters_mark_banner_pattern", properties()
+			.stacksTo(1)
+			.delayedComponent(DataComponents.PROVIDES_BANNER_PATTERNS, context -> context.getOrThrow(ModBannerPatternTags.PATTERN_ITEM_HUNTERS_MARK)));
 
-	public static final Item VAMPIRE_SPAWN_EGG = registerItem("vampire_spawn_egg", SpawnEggItem::new, properties().spawnEgg(ModEntityTypes.VAMPIRE));
-	public static final Item HUNTER_SPAWN_EGG = registerItem("hunter_spawn_egg", SpawnEggItem::new, properties().spawnEgg(ModEntityTypes.HUNTER));
+	public static final Item VAMPIRE_SPAWN_EGG = registerItem("vampire_spawn_egg", SpawnEggItem::new, properties()
+			.spawnEgg(ModEntityTypes.VAMPIRE));
+	public static final Item HUNTER_SPAWN_EGG = registerItem("hunter_spawn_egg", SpawnEggItem::new, properties()
+			.spawnEgg(ModEntityTypes.HUNTER));
 
 	public static Item registerCoffin(String name, Block block) {
-		return registerBlockItem(name, block, properties().stacksTo(1));
+		return registerBlockItem(name, block, properties()
+				.stacksTo(1));
 	}
 
 	public static Item registerHunterArmor(String name, ArmorType type, Holder<Attribute> attribute) {

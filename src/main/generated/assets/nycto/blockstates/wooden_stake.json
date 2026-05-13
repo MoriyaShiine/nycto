@@ -1,0 +1,19 @@
+{
+  "variants": {
+	"facing=east": {
+	  "model": "nycto:block/wooden_stake",
+	  "y": 270
+	},
+	"facing=north": {
+	  "model": "nycto:block/wooden_stake",
+	  "y": 180
+	},
+	"facing=south": {
+	  "model": "nycto:block/wooden_stake"
+	},
+	"facing=west": {
+	  "model": "nycto:block/wooden_stake",
+	  "y": 90
+	}
+  }
+}

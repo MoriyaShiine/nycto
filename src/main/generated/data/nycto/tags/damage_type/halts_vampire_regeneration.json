@@ -2,13 +2,8 @@
   "values": [
 	"#minecraft:bypasses_invulnerability",
 	"#minecraft:is_fire",
-	{
-	  "id": "nycto:sun",
-	  "required": false
-	},
-	{
-	  "id": "nycto:toxic_touch",
-	  "required": false
-	}
+	"nycto:sun",
+	"nycto:toxic_touch",
+	"nycto:wooden_stake"
   ]
 }

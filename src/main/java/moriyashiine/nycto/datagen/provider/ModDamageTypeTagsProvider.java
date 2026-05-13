@@ -28,25 +28,30 @@ public class ModDamageTypeTagsProvider extends FabricTagsProvider<DamageType> {
 		builder(ModDamageTypeTags.HALTS_VAMPIRE_REGENERATION)
 				.forceAddTag(DamageTypeTags.BYPASSES_INVULNERABILITY)
 				.forceAddTag(DamageTypeTags.IS_FIRE)
-				.addOptional(ModDamageTypes.SUN)
-				.addOptional(ModDamageTypes.TOXIC_TOUCH);
+				.add(ModDamageTypes.SUN)
+				.add(ModDamageTypes.TOXIC_TOUCH)
+				.add(ModDamageTypes.WOODEN_STAKE_FALL);
 
 		builder(DamageTypeTags.BYPASSES_ARMOR)
-				.addOptional(ModDamageTypes.BLEED)
-				.addOptional(ModDamageTypes.SUN)
-				.addOptional(ModDamageTypes.TOXIC_TOUCH);
+				.add(ModDamageTypes.BLEED)
+				.add(ModDamageTypes.SUN)
+				.add(ModDamageTypes.TOXIC_TOUCH)
+				.add(ModDamageTypes.WOODEN_STAKE_FALL);
 		builder(DamageTypeTags.BYPASSES_COOLDOWN)
-				.addOptional(ModDamageTypes.BLEED)
-				.addOptional(ModDamageTypes.TOXIC_TOUCH);
+				.add(ModDamageTypes.BLEED)
+				.add(ModDamageTypes.TOXIC_TOUCH);
 		builder(DamageTypeTags.BYPASSES_ENCHANTMENTS)
-				.addOptional(ModDamageTypes.BLEED)
-				.addOptional(ModDamageTypes.SUN)
-				.addOptional(ModDamageTypes.TOXIC_TOUCH);
+				.add(ModDamageTypes.BLEED)
+				.add(ModDamageTypes.SUN)
+				.add(ModDamageTypes.TOXIC_TOUCH);
+		builder(DamageTypeTags.IS_FALL)
+				.add(ModDamageTypes.WOODEN_STAKE_FALL);
 		builder(DamageTypeTags.NO_IMPACT)
-				.addOptional(ModDamageTypes.BLEED);
+				.add(ModDamageTypes.BLEED);
 		builder(DamageTypeTags.NO_KNOCKBACK)
-				.addOptional(ModDamageTypes.BLEED)
-				.addOptional(ModDamageTypes.SUN)
-				.addOptional(ModDamageTypes.TOXIC_TOUCH);
+				.add(ModDamageTypes.BLEED)
+				.add(ModDamageTypes.SUN)
+				.add(ModDamageTypes.TOXIC_TOUCH)
+				.add(ModDamageTypes.WOODEN_STAKE_FALL);
 	}
 }
