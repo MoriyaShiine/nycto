@@ -67,11 +67,11 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 			int max = 0;
 			if (exposed) {
 				boolean sunResistance = NyctoUtil.hasSunResistance(obj);
-				boolean photophobia = obj instanceof Player player && NyctoAPI.hasPower(player, ModPowers.PHOTOPHOBIA);
-				boolean cappedBurnTime = !vampireSunExposureMode.burn && sunResistance && !photophobia;
+				boolean pyrophobia = obj instanceof Player player && NyctoAPI.hasPower(player, ModPowers.PYROPHOBIA);
+				boolean cappedBurnTime = !vampireSunExposureMode.burn && sunResistance && !pyrophobia;
 				max = cappedBurnTime ? MIN_DEBUFF_EXPOSURE_TIME : MAX_EXPOSURE_TIME;
 				if (exposureTime < max) {
-					exposureTime = Math.min(max, exposureTime + getExposureTicks(sunResistance, photophobia, cappedBurnTime));
+					exposureTime = Math.min(max, exposureTime + getExposureTicks(sunResistance, pyrophobia, cappedBurnTime));
 				} else if (exposureTime >= MAX_EXPOSURE_TIME) {
 					obj.igniteForSeconds(4);
 				}
@@ -136,11 +136,11 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 		return exposureTime;
 	}
 
-	private int getExposureTicks(boolean sunResistance, boolean photophobia, boolean cappedBurnTime) {
+	private int getExposureTicks(boolean sunResistance, boolean pyrophobia, boolean cappedBurnTime) {
 		if (cappedBurnTime) {
 			return 2;
 		}
-		int ticks = photophobia ? 8 : 2;
+		int ticks = pyrophobia ? 8 : 2;
 		if (sunResistance) {
 			ticks /= 2;
 		}
