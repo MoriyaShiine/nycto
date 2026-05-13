@@ -6,6 +6,7 @@ package moriyashiine.nycto.common.component.entity;
 
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.init.ModMobEffects;
+import moriyashiine.nycto.common.init.ModPowers;
 import moriyashiine.nycto.common.world.transformation.VampireTransformation;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -37,7 +38,7 @@ public class SyncedConfigValuesComponent implements AutoSyncedComponent, ServerT
 
 	@Override
 	public void serverTick() {
-		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.STEP_HEIGHT, VampireTransformation.STEP_HEIGHT_MODIFIER, hasVampireStepHeight() && !obj.hasEffect(ModMobEffects.VAMPIRE_WARD) && !NyctoAPI.hasSunDebuff(obj) && NyctoAPI.isVampire(obj));
+		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.STEP_HEIGHT, VampireTransformation.STEP_HEIGHT_MODIFIER, hasVampireStepHeight() && !obj.hasEffect(ModMobEffects.VAMPIRE_WARD) && !NyctoAPI.hasSunDebuff(obj) && !NyctoAPI.hasPower(obj, ModPowers.HUMANITY) && NyctoAPI.isVampire(obj));
 	}
 
 	public boolean hasVampireChargeJump() {

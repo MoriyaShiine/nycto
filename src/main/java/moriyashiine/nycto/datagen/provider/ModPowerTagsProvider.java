@@ -36,6 +36,7 @@ public class ModPowerTagsProvider extends FabricTagsProvider.FabricIntrinsicHold
 				.add(ModPowers.KEEN_SENSES)
 				.add(ModPowers.MIST_FORM)
 				.add(ModPowers.VAMPIRIC_THRALL)
+				.add(ModPowers.HUMANITY)
 				.add(ModPowers.HYDROPHOBIA)
 				.add(ModPowers.PYROPHOBIA)
 				.add(ModPowers.RICH_TASTES)

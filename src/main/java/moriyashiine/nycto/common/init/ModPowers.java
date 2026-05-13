@@ -32,6 +32,7 @@ public class ModPowers {
 	public static final VampireActivePower MIST_FORM = registerPower("mist_form", new MistFormPower());
 	public static final VampireActivePower VAMPIRIC_THRALL = registerPower("vampiric_thrall", new VampiricThrallPower());
 
+	public static final Power HUMANITY = registerPower("humanity", new Weakness());
 	public static final Power HYDROPHOBIA = registerPower("hydrophobia", new HydrophobiaWeakness());
 	public static final Power PYROPHOBIA = registerPower("pyrophobia", new Weakness());
 	public static final Power RICH_TASTES = registerPower("rich_tastes", new RichTastesWeakness());

@@ -6,6 +6,7 @@ package moriyashiine.nycto.common.component.entity;
 
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.ModPowers;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.storage.ValueInput;
@@ -37,7 +38,7 @@ public class VampireChargeJumpComponent implements AutoSyncedComponent, CommonTi
 	@Override
 	public void tick() {
 		if (enabled) {
-			if (obj.onGround() && obj.isShiftKeyDown() && ModEntityComponents.SYNCED_CONFIG_VALUES.get(obj).hasVampireChargeJump() && !NyctoAPI.hasSunDebuff(obj)) {
+			if (obj.onGround() && obj.isShiftKeyDown() && ModEntityComponents.SYNCED_CONFIG_VALUES.get(obj).hasVampireChargeJump() && !NyctoAPI.hasSunDebuff(obj) && !NyctoAPI.hasPower(obj, ModPowers.HUMANITY)) {
 				if (jumpStrength < 20) {
 					jumpStrength++;
 				}

@@ -6,6 +6,7 @@ package moriyashiine.nycto.common.world.effect;
 
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.api.world.effect.EntityRemovableMobEffect;
+import moriyashiine.nycto.api.world.transformation.Transformation;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
@@ -18,7 +19,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class VampireWardMobEffect extends EntityRemovableMobEffect {
 	private static final AttributeModifier NON_PLAYER_ATTACK_MODIFIER = new AttributeModifier(Nycto.id("vampire_ward"), -3, AttributeModifier.Operation.ADD_VALUE);
-	private static final AttributeModifier NON_PLAYER_SPEED_MODIFIER = new AttributeModifier(Nycto.id("vampire_ward"), -0.3, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+	private static final AttributeModifier NON_PLAYER_SPEED_MODIFIER = new AttributeModifier(Nycto.id("vampire_ward"), -0.3, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
 
 	public VampireWardMobEffect(MobEffectCategory category, int color) {
 		super(category, color);
@@ -50,11 +51,17 @@ public class VampireWardMobEffect extends EntityRemovableMobEffect {
 
 	public static void applyAttributes(LivingEntity entity, boolean shouldRemove) {
 		if (NyctoAPI.isVampire(entity)) {
+			boolean fallback = true;
 			if (entity instanceof ServerPlayer player) {
-				NyctoAPI.getTransformation(player).applyModifiers(player, !shouldRemove);
-			} else {
-				SLibUtils.conditionallyApplyAttributeModifier(entity, Attributes.ATTACK_DAMAGE, NON_PLAYER_ATTACK_MODIFIER, !shouldRemove);
-				SLibUtils.conditionallyApplyAttributeModifier(entity, Attributes.MOVEMENT_SPEED, NON_PLAYER_SPEED_MODIFIER, !shouldRemove);
+				Transformation transformation = NyctoAPI.getTransformation(player);
+				if (!transformation.getAttributeModifiers(player).attributeModifiers().isEmpty()) {
+					fallback = false;
+					transformation.applyModifiers(player, !shouldRemove);
+				}
+			}
+			if (fallback) {
+				SLibUtils.conditionallyApplyAttributeModifier(entity, Attributes.ATTACK_DAMAGE, NON_PLAYER_ATTACK_MODIFIER, shouldRemove);
+				SLibUtils.conditionallyApplyAttributeModifier(entity, Attributes.MOVEMENT_SPEED, NON_PLAYER_SPEED_MODIFIER, shouldRemove);
 			}
 		}
 	}

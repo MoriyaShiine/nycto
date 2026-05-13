@@ -64,11 +64,13 @@ public class VampireTransformation extends Transformation {
 	@Override
 	public AttributeModifierSet getAttributeModifiers(ServerPlayer player) {
 		AttributeModifierSet set = super.getAttributeModifiers(player);
-		int weaknesses = NyctoAPI.getPowers(player).stream().filter(instance -> instance.getPower().isWeakness() && instance.is(ModPowerTags.VAMPIRE_CHOOSABLE)).collect(Collectors.toSet()).size();
-		set.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(Nycto.id("vampire_bonus"), 1 + (2 / 3D * weaknesses), AttributeModifier.Operation.ADD_VALUE));
-		set.addModifier(Attributes.MOVEMENT_SPEED, new AttributeModifier(Nycto.id("vampire_bonus"), 0.15 + (0.1 * weaknesses), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
-		set.addModifier(Attributes.JUMP_STRENGTH, new AttributeModifier(Nycto.id("vampire_bonus"), 0.06 * weaknesses, AttributeModifier.Operation.ADD_VALUE));
-		set.addModifier(Attributes.SAFE_FALL_DISTANCE, new AttributeModifier(Nycto.id("vampire_bonus"), 1 + weaknesses, AttributeModifier.Operation.ADD_VALUE));
+		if (!NyctoAPI.hasPower(player, ModPowers.HUMANITY)) {
+			int weaknesses = NyctoAPI.getPowers(player).stream().filter(instance -> instance.getPower().isWeakness() && instance.is(ModPowerTags.VAMPIRE_CHOOSABLE)).collect(Collectors.toSet()).size();
+			set.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(Nycto.id("vampire_bonus"), 1 + (2 / 3D * weaknesses), AttributeModifier.Operation.ADD_VALUE));
+			set.addModifier(Attributes.MOVEMENT_SPEED, new AttributeModifier(Nycto.id("vampire_bonus"), 0.15 + (0.1 * weaknesses), AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+			set.addModifier(Attributes.JUMP_STRENGTH, new AttributeModifier(Nycto.id("vampire_bonus"), 0.06 * weaknesses, AttributeModifier.Operation.ADD_VALUE));
+			set.addModifier(Attributes.SAFE_FALL_DISTANCE, new AttributeModifier(Nycto.id("vampire_bonus"), 1 + weaknesses, AttributeModifier.Operation.ADD_VALUE));
+		}
 		return set;
 	}
 
@@ -87,6 +89,10 @@ public class VampireTransformation extends Transformation {
 	}
 
 	public static int getHealTicks(Player player) {
-		return DarkFormPower.isDarkFormActive(player) ? 10 : 15;
+		int ticks = DarkFormPower.isDarkFormActive(player) ? 10 : 15;
+		if (NyctoAPI.hasPower(player, ModPowers.HUMANITY)) {
+			ticks += 5;
+		}
+		return ticks;
 	}
 }
