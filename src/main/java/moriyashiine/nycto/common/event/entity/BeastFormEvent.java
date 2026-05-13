@@ -40,13 +40,10 @@ public class BeastFormEvent {
 		@Override
 		public PreventionResult getPreventionResult(LivingEntity entity, ItemStack stack, EquipmentSlot slot) {
 			if (NyctoAPI.isBeastForm(entity)) {
+				boolean blocksAttacks = stack.has(DataComponents.BLOCKS_ATTACKS);
 				boolean equippable = stack.has(DataComponents.EQUIPPABLE);
-				if (equippable || stack.is(ModItemTags.BEAST_UNEQUIPPABLE)) {
-					if (equippable) {
-						if (slot.isArmor()) {
-							return PreventionResult.PREVENT_AND_STORE;
-						}
-					} else {
+				if (blocksAttacks || equippable || stack.is(ModItemTags.BEAST_UNEQUIPPABLE)) {
+					if (blocksAttacks || !equippable || slot.isArmor()) {
 						return PreventionResult.PREVENT_AND_STORE;
 					}
 				}
