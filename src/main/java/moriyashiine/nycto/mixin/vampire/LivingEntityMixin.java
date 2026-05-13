@@ -4,7 +4,6 @@
 
 package moriyashiine.nycto.mixin.vampire;
 
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.world.power.vampire.weakness.VilePresenceWeakness;
@@ -29,26 +28,6 @@ public abstract class LivingEntityMixin extends Entity {
 
 	public LivingEntityMixin(EntityType<?> type, Level level) {
 		super(type, level);
-	}
-
-	@ModifyReturnValue(method = "canFreeze", at = @At("RETURN"))
-	private boolean nycto$vampire$freezeImmunity(boolean original) {
-		return original && !NyctoAPI.isVampire(this);
-	}
-
-	@ModifyReturnValue(method = "canBreatheUnderwater", at = @At("RETURN"))
-	private boolean nycto$vampire$breatheUnderwater(boolean original) {
-		return original || NyctoAPI.isVampire(this);
-	}
-
-	@ModifyExpressionValue(method = "canBeAffected", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;is(Lnet/minecraft/tags/TagKey;)Z", ordinal = 2))
-	private boolean nycto$vampire$ignorePoisonAndRegen(boolean original) {
-		return original || NyctoAPI.isVampire(this);
-	}
-
-	@ModifyReturnValue(method = "isInvertedHealAndHarm", at = @At("RETURN"))
-	private boolean nycto$vampire$invertedHealingAndHarm(boolean original) {
-		return original || NyctoAPI.isVampire(this);
 	}
 
 	@SuppressWarnings("ConstantValue")

@@ -29,6 +29,8 @@ public class VampireTransformation extends Transformation {
 
 	public static final float VAMPIRE_EXHAUSTION_MULTIPLIER = 3.25F;
 
+	public static boolean ignoreIsCalls = false;
+
 	private static final PowerHotbarTextureSet POWER_HOTBAR_TEXTURE_SET = new PowerHotbarTextureSet(
 			Nycto.id("hud/power_hotbar/vampire/hotbar"),
 			Nycto.id("hud/power_hotbar/vampire/selection"),
