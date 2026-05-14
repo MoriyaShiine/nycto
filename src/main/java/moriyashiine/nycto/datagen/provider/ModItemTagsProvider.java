@@ -7,7 +7,6 @@ package moriyashiine.nycto.datagen.provider;
 import moriyashiine.nycto.common.init.ModItems;
 import moriyashiine.nycto.common.tag.ModBlockTags;
 import moriyashiine.nycto.common.tag.ModItemTags;
-import moriyashiine.strawberrylib.api.module.tag.SLibItemTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
@@ -83,11 +82,6 @@ public class ModItemTagsProvider extends FabricTagsProvider.ItemTagsProvider {
 				.add(Items.GHAST_TEAR)
 				.add(Items.NETHERITE_SCRAP);
 
-		valueLookupBuilder(SLibItemTags.UNTRIMMABLE_ARMOR)
-				.addTag(ModItemTags.VAMPIRE_ARMOR)
-				.addTag(ModItemTags.VAMPIRE_HUNTER_ARMOR)
-				.addTag(ModItemTags.WEREWOLF_HUNTER_ARMOR);
-
 		valueLookupBuilder(ConventionalItemTags.FOODS)
 				.add(ModItems.GARLIC)
 				.add(ModItems.GRILLED_GARLIC)
@@ -129,5 +123,10 @@ public class ModItemTagsProvider extends FabricTagsProvider.ItemTagsProvider {
 
 		valueLookupBuilder(TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("enchancement", "cannot_automatically_consume")))
 				.add(ModItems.AMBROSIA_BOTTLE);
+
+		valueLookupBuilder(ItemTags.TRIMMABLE_ARMOR)
+				.removeTag(ModItemTags.VAMPIRE_ARMOR)
+				.removeTag(ModItemTags.VAMPIRE_HUNTER_ARMOR)
+				.removeTag(ModItemTags.WEREWOLF_HUNTER_ARMOR);
 	}
 }
