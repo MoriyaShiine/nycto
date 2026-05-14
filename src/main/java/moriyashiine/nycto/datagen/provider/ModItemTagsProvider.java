@@ -108,6 +108,10 @@ public class ModItemTagsProvider extends FabricTagsProvider.ItemTagsProvider {
 				.add(ModItems.VAMPIRE_BOOTS)
 				.add(ModItems.VAMPIRE_HUNTER_BOOTS)
 				.add(ModItems.WEREWOLF_HUNTER_BOOTS);
+		valueLookupBuilder(ItemTags.FREEZE_IMMUNE_WEARABLES)
+				.addTag(ModItemTags.VAMPIRE_ARMOR)
+				.addTag(ModItemTags.VAMPIRE_HUNTER_ARMOR)
+				.addTag(ModItemTags.WEREWOLF_HUNTER_ARMOR);
 		valueLookupBuilder(ItemTags.SWORDS)
 				.add(ModItems.VAMPIRIC_DAGGER);
 		valueLookupBuilder(ItemTags.AXES)
