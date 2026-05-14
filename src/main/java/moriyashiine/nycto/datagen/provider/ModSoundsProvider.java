@@ -27,6 +27,10 @@ public class ModSoundsProvider extends FabricSoundsProvider {
 	protected void configure(HolderLookup.Provider registries, SoundExporter exporter) {
 		exporter.add(ModSoundEvents.BLOCK_ALTAR_USE, of().subtitle("subtitles.nycto.block.altar.use")
 				.sound(ofFile(id("block/altar/use"))));
+		exporter.add(ModSoundEvents.BLOCK_BLOOD_FOUNTAIN_LOCK, of().subtitle("subtitles.nycto.block.blood_fountain.lock")
+				.sound(ofEvent(SoundEvents.STONE_BUTTON_CLICK_ON)));
+		exporter.add(ModSoundEvents.BLOCK_BLOOD_FOUNTAIN_UNLOCK, of().subtitle("subtitles.nycto.block.blood_fountain.unlock")
+				.sound(ofEvent(SoundEvents.STONE_BUTTON_CLICK_OFF)));
 
 		exporter.add(ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK, of().subtitle("subtitles.item.honey_bottle.drink")
 				.sound(ofEvent(SoundEvents.HONEY_DRINK)));

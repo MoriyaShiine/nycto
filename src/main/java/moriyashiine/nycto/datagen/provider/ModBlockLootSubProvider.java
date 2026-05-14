@@ -47,6 +47,7 @@ public class ModBlockLootSubProvider extends FabricBlockLootSubProvider {
 		add(ModBlocks.BAMBOO_COFFIN, createSinglePropConditionTable(ModBlocks.BAMBOO_COFFIN, BedBlock.PART, BedPart.HEAD));
 		add(ModBlocks.CRIMSON_COFFIN, createSinglePropConditionTable(ModBlocks.CRIMSON_COFFIN, BedBlock.PART, BedPart.HEAD));
 		add(ModBlocks.WARPED_COFFIN, createSinglePropConditionTable(ModBlocks.WARPED_COFFIN, BedBlock.PART, BedPart.HEAD));
+		dropSelf(ModBlocks.BLOOD_FOUNTAIN);
 		dropSelf(ModBlocks.GARLIC_WREATH);
 		dropSelf(ModBlocks.ACONITE_GARLAND);
 		add(ModBlocks.WILD_GARLIC, createShearsDispatchTable(ModBlocks.WILD_GARLIC, applyExplosionDecay(ModBlocks.WILD_GARLIC, LootItem.lootTableItem(ModItems.GARLIC).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2))))));

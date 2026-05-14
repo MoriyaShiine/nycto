@@ -1,0 +1,94 @@
+{
+  "variants": {
+	"facing=east,fill_state=ambrosia,locked=false": {
+	  "model": "nycto:block/blood_fountain_ambrosia",
+	  "y": 90
+	},
+	"facing=east,fill_state=ambrosia,locked=true": {
+	  "model": "nycto:block/blood_fountain_ambrosia_locked",
+	  "y": 90
+	},
+	"facing=east,fill_state=blood,locked=false": {
+	  "model": "nycto:block/blood_fountain_blood",
+	  "y": 90
+	},
+	"facing=east,fill_state=blood,locked=true": {
+	  "model": "nycto:block/blood_fountain_blood_locked",
+	  "y": 90
+	},
+	"facing=east,fill_state=empty,locked=false": {
+	  "model": "nycto:block/blood_fountain",
+	  "y": 90
+	},
+	"facing=east,fill_state=empty,locked=true": {
+	  "model": "nycto:block/blood_fountain_locked",
+	  "y": 90
+	},
+	"facing=north,fill_state=ambrosia,locked=false": {
+	  "model": "nycto:block/blood_fountain_ambrosia"
+	},
+	"facing=north,fill_state=ambrosia,locked=true": {
+	  "model": "nycto:block/blood_fountain_ambrosia_locked"
+	},
+	"facing=north,fill_state=blood,locked=false": {
+	  "model": "nycto:block/blood_fountain_blood"
+	},
+	"facing=north,fill_state=blood,locked=true": {
+	  "model": "nycto:block/blood_fountain_blood_locked"
+	},
+	"facing=north,fill_state=empty,locked=false": {
+	  "model": "nycto:block/blood_fountain"
+	},
+	"facing=north,fill_state=empty,locked=true": {
+	  "model": "nycto:block/blood_fountain_locked"
+	},
+	"facing=south,fill_state=ambrosia,locked=false": {
+	  "model": "nycto:block/blood_fountain_ambrosia",
+	  "y": 180
+	},
+	"facing=south,fill_state=ambrosia,locked=true": {
+	  "model": "nycto:block/blood_fountain_ambrosia_locked",
+	  "y": 180
+	},
+	"facing=south,fill_state=blood,locked=false": {
+	  "model": "nycto:block/blood_fountain_blood",
+	  "y": 180
+	},
+	"facing=south,fill_state=blood,locked=true": {
+	  "model": "nycto:block/blood_fountain_blood_locked",
+	  "y": 180
+	},
+	"facing=south,fill_state=empty,locked=false": {
+	  "model": "nycto:block/blood_fountain",
+	  "y": 180
+	},
+	"facing=south,fill_state=empty,locked=true": {
+	  "model": "nycto:block/blood_fountain_locked",
+	  "y": 180
+	},
+	"facing=west,fill_state=ambrosia,locked=false": {
+	  "model": "nycto:block/blood_fountain_ambrosia",
+	  "y": 270
+	},
+	"facing=west,fill_state=ambrosia,locked=true": {
+	  "model": "nycto:block/blood_fountain_ambrosia_locked",
+	  "y": 270
+	},
+	"facing=west,fill_state=blood,locked=false": {
+	  "model": "nycto:block/blood_fountain_blood",
+	  "y": 270
+	},
+	"facing=west,fill_state=blood,locked=true": {
+	  "model": "nycto:block/blood_fountain_blood_locked",
+	  "y": 270
+	},
+	"facing=west,fill_state=empty,locked=false": {
+	  "model": "nycto:block/blood_fountain",
+	  "y": 270
+	},
+	"facing=west,fill_state=empty,locked=true": {
+	  "model": "nycto:block/blood_fountain_locked",
+	  "y": 270
+	}
+  }
+}

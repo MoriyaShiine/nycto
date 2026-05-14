@@ -152,6 +152,7 @@ public class NyctoClient implements ClientModInitializer {
 	}
 
 	private void initParticles() {
+		ParticleProviderRegistry.getInstance().register(ModParticleTypes.AMBROSIA, BloodParticle.Provider::new);
 		ParticleProviderRegistry.getInstance().register(ModParticleTypes.BLOOD, BloodParticle.Provider::new);
 
 		ParticleProviderRegistry.getInstance().register(ModParticleTypes.BAT_SWARM_CENTER, BatSwarmParticle.BatSwarmProvider::new);

@@ -5,6 +5,24 @@
 	],
 	"subtitle": "subtitles.nycto.block.altar.use"
   },
+  "block.blood_fountain.lock": {
+	"sounds": [
+	  {
+		"type": "event",
+		"name": "minecraft:block.stone_button.click_on"
+	  }
+	],
+	"subtitle": "subtitles.nycto.block.blood_fountain.lock"
+  },
+  "block.blood_fountain.unlock": {
+	"sounds": [
+	  {
+		"type": "event",
+		"name": "minecraft:block.stone_button.click_off"
+	  }
+	],
+	"subtitle": "subtitles.nycto.block.blood_fountain.unlock"
+  },
   "entity.blood_flechette.hit_block": {
 	"sounds": [
 	  {

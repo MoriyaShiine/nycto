@@ -4,6 +4,7 @@
 
 package moriyashiine.nycto.client.particle;
 
+import moriyashiine.nycto.common.world.level.block.entity.BloodFountainBlockEntity;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
@@ -15,13 +16,16 @@ import net.minecraft.util.RandomSource;
 public class BloodParticle extends SingleQuadParticle {
 	private final SpriteSet sprites;
 
-	public BloodParticle(ClientLevel level, double x, double y, double z, SpriteSet sprites) {
+	public BloodParticle(ClientLevel level, double x, double y, double z, double xa, double ya, double za, SpriteSet sprites) {
 		super(level, x, y, z, sprites.first());
+		xd = xa;
+		yd = ya;
+		zd = za;
 		this.sprites = sprites;
 		setSpriteFromAge(sprites);
 		setSize(0.01F, 0.01F);
-		gravity = 0.06F;
-		lifetime = 8;
+		gravity = BloodFountainBlockEntity.GRAVITY;
+		lifetime = BloodFountainBlockEntity.LIFETIME;
 	}
 
 	@Override
@@ -38,7 +42,7 @@ public class BloodParticle extends SingleQuadParticle {
 			remove();
 		} else {
 			setSpriteFromAge(sprites);
-			yd = yd - gravity;
+			yd -= gravity;
 			move(xd, yd, zd);
 			if (onGround) {
 				remove();
@@ -53,7 +57,7 @@ public class BloodParticle extends SingleQuadParticle {
 	public record Provider(SpriteSet sprites) implements ParticleProvider<SimpleParticleType> {
 		@Override
 		public Particle createParticle(SimpleParticleType options, ClientLevel level, double x, double y, double z, double xAux, double yAux, double zAux, RandomSource random) {
-			return new BloodParticle(level, x, y, z, sprites());
+			return new BloodParticle(level, x, y, z, xAux, yAux, zAux, sprites());
 		}
 	}
 }

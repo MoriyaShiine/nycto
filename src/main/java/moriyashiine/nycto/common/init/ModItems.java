@@ -55,6 +55,8 @@ public class ModItems {
 	public static final Item CRIMSON_COFFIN = registerCoffin("crimson_coffin", ModBlocks.CRIMSON_COFFIN);
 	public static final Item WARPED_COFFIN = registerCoffin("warped_coffin", ModBlocks.WARPED_COFFIN);
 
+	public static final Item BLOOD_FOUNTAIN = registerBlockItem("blood_fountain", ModBlocks.BLOOD_FOUNTAIN);
+
 	public static final Item GARLIC_WREATH = registerBlockItem("garlic_wreath", ModBlocks.GARLIC_WREATH);
 	public static final Item ACONITE_GARLAND = registerBlockItem("aconite_garland", ModBlocks.ACONITE_GARLAND);
 
@@ -222,6 +224,8 @@ public class ModItems {
 			output.accept(BAMBOO_COFFIN);
 			output.accept(CRIMSON_COFFIN);
 			output.accept(WARPED_COFFIN);
+
+			output.accept(BLOOD_FOUNTAIN);
 
 			output.accept(GARLIC_WREATH);
 			output.accept(ACONITE_GARLAND);

@@ -1,0 +1,6 @@
+{
+  "parent": "nycto:block/blood_fountain_blood",
+  "textures": {
+	"3": "minecraft:block/redstone_dust_overlay"
+  }
+}

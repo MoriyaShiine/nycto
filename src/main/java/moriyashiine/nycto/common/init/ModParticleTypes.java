@@ -12,6 +12,7 @@ import static moriyashiine.strawberrylib.api.module.SLibRegistries.registerParti
 public class ModParticleTypes {
 	public static final int BLOOD_PARTICLE_COUNT = 8;
 
+	public static final SimpleParticleType AMBROSIA = registerParticleType("ambrosia", FabricParticleTypes.simple());
 	public static final SimpleParticleType BLOOD = registerParticleType("blood", FabricParticleTypes.simple());
 
 	public static final SimpleParticleType BAT_SWARM_CENTER = registerParticleType("bat_swarm_center", FabricParticleTypes.simple());

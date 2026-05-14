@@ -12,6 +12,8 @@ import static moriyashiine.strawberrylib.api.module.SLibRegistries.registerSound
 
 public class ModSoundEvents {
 	public static final SoundEvent BLOCK_ALTAR_USE = registerSoundEvent("block.altar.use");
+	public static final SoundEvent BLOCK_BLOOD_FOUNTAIN_LOCK = registerSoundEvent("block.blood_fountain.lock");
+	public static final SoundEvent BLOCK_BLOOD_FOUNTAIN_UNLOCK = registerSoundEvent("block.blood_fountain.unlock");
 
 	public static final Holder<SoundEvent> ITEM_BLOOD_BOTTLE_DRINK = registerSoundEventHolder("item.blood_bottle.drink");
 	public static final SoundEvent ITEM_VAMPIRIC_DAGGER_EXTRACT_FAIL = registerSoundEvent("item.vampiric_dagger.extract_fail");

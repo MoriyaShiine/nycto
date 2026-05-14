@@ -8,6 +8,7 @@ import moriyashiine.nycto.client.renderer.item.properties.conditional.FullDagger
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.init.ModBlocks;
 import moriyashiine.nycto.common.init.ModItems;
+import moriyashiine.nycto.common.world.level.block.BloodFountainBlock;
 import moriyashiine.strawberrylib.api.module.SLibDataUtils;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
@@ -61,13 +62,14 @@ public class ModModelProvider extends FabricModelProvider {
 		createCoffin(generators, ModBlocks.BAMBOO_COFFIN, new Material(Nycto.id("block/coffin_bamboo")), Blocks.BAMBOO_PLANKS, Blocks.BAMBOO_SIGN);
 		createCoffin(generators, ModBlocks.CRIMSON_COFFIN, new Material(Nycto.id("block/coffin_crimson")), Blocks.CRIMSON_PLANKS, Blocks.CRIMSON_SIGN);
 		createCoffin(generators, ModBlocks.WARPED_COFFIN, new Material(Nycto.id("block/coffin_warped")), Blocks.WARPED_PLANKS, Blocks.WARPED_SIGN);
+		createBloodFountain(generators);
 		createGarlicWreath(generators);
 		createAconiteGarland(generators);
 		generators.createCrossBlockWithDefaultItem(ModBlocks.WILD_GARLIC, BlockModelGenerators.PlantType.NOT_TINTED);
 		generators.createCrossBlockWithDefaultItem(ModBlocks.WILD_ACONITE, BlockModelGenerators.PlantType.NOT_TINTED);
 		generators.createCropBlock(ModBlocks.GARLIC, BlockStateProperties.AGE_3, 0, 1, 2, 3);
 		SLibDataUtils.createCropCrossBlock(generators, ModBlocks.ACONITE, BlockStateProperties.AGE_3, 0, 1, 2, 3);
-		createWithExistingModel(generators, ModBlocks.WOODEN_STAKE, BlockModelGenerators.ROTATION_HORIZONTAL_FACING_ALT);
+		createWithExistingModel(generators, ModBlocks.WOODEN_STAKE, BlockModelGenerators.ROTATION_HORIZONTAL_FACING);
 		createFirebomb(generators);
 	}
 
@@ -168,6 +170,25 @@ public class ModModelProvider extends FabricModelProvider {
 			dispatch = dispatch.with(mutator);
 		}
 		generators.blockStateOutput.accept(dispatch);
+	}
+
+	private static void createBloodFountain(BlockModelGenerators generators) {
+		MultiVariantGenerator.Empty dispatch = MultiVariantGenerator.dispatch(ModBlocks.BLOOD_FOUNTAIN);
+		MultiVariant empty = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(ModBlocks.BLOOD_FOUNTAIN));
+		MultiVariant empty_locked = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(ModBlocks.BLOOD_FOUNTAIN, "_locked"));
+		MultiVariant blood = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(ModBlocks.BLOOD_FOUNTAIN, "_blood"));
+		MultiVariant blood_locked = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(ModBlocks.BLOOD_FOUNTAIN, "_blood_locked"));
+		MultiVariant ambrosia = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(ModBlocks.BLOOD_FOUNTAIN, "_ambrosia"));
+		MultiVariant ambrosia_locked = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(ModBlocks.BLOOD_FOUNTAIN, "_ambrosia_locked"));
+		generators.blockStateOutput.accept(dispatch
+				.with(PropertyDispatch.initial(BlockStateProperties.LOCKED, BloodFountainBlock.FILL_STATE)
+						.select(false, BloodFountainBlock.FillState.EMPTY, empty)
+						.select(true, BloodFountainBlock.FillState.EMPTY, empty_locked)
+						.select(false, BloodFountainBlock.FillState.BLOOD, blood)
+						.select(true, BloodFountainBlock.FillState.BLOOD, blood_locked)
+						.select(false, BloodFountainBlock.FillState.AMBROSIA, ambrosia)
+						.select(true, BloodFountainBlock.FillState.AMBROSIA, ambrosia_locked))
+				.with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
 	}
 
 	private static void createGarlicWreath(BlockModelGenerators generators) {

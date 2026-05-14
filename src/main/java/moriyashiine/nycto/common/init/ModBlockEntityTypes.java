@@ -4,6 +4,7 @@
 
 package moriyashiine.nycto.common.init;
 
+import moriyashiine.nycto.common.world.level.block.entity.BloodFountainBlockEntity;
 import moriyashiine.nycto.common.world.level.block.entity.CoffinBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -24,6 +25,9 @@ public class ModBlockEntityTypes {
 			ModBlocks.BAMBOO_COFFIN,
 			ModBlocks.CRIMSON_COFFIN,
 			ModBlocks.WARPED_COFFIN
+	));
+	public static final BlockEntityType<BloodFountainBlockEntity> BLOOD_FOUNTAIN = registerBlockEntityType("blood_fountain", FabricBlockEntityTypeBuilder.create(BloodFountainBlockEntity::new,
+			ModBlocks.BLOOD_FOUNTAIN
 	));
 
 	public static void init() {

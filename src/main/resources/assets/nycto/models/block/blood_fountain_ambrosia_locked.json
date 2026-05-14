@@ -1,0 +1,6 @@
+{
+  "parent": "nycto:block/blood_fountain_ambrosia",
+  "textures": {
+	"0": "nycto:block/blood_fountain_bats_locked"
+  }
+}

@@ -39,6 +39,8 @@ public class ModBlocks {
 	public static final Block CRIMSON_COFFIN = registerCoffin("crimson_coffin", Blocks.CRIMSON_PLANKS);
 	public static final Block WARPED_COFFIN = registerCoffin("warped_coffin", Blocks.WARPED_PLANKS);
 
+	public static final Block BLOOD_FOUNTAIN = registerBlock("blood_fountain", BloodFountainBlock::new, ofFullCopy(Blocks.STONE_BRICKS));
+
 	public static final Block GARLIC_WREATH = registerBlock("garlic_wreath", GarlicWreathBlock::new, of()
 			.noCollision()
 			.strength(0.5F)
@@ -80,6 +82,7 @@ public class ModBlocks {
 
 	public static void init() {
 		registerBlockType("vampire_altar", VampireAltarBlock.CODEC);
+		registerBlockType("blood_fountain", BloodFountainBlock.CODEC);
 		registerBlockType("wooden_stake", WoodenStakeBlock.CODEC);
 		registerBlockType("firebomb", FirebombBlock.CODEC);
 		FlammableBlockRegistry.getDefaultInstance().add(WILD_GARLIC, 60, 100);

@@ -65,7 +65,8 @@ public class ModBlockTagsProvider extends FabricTagsProvider.BlockTagsProvider {
 				.add(ModBlocks.ACONITE)
 				.add(ModBlocks.WOODEN_STAKE);
 		valueLookupBuilder(BlockTags.MINEABLE_WITH_PICKAXE)
-				.add(ModBlocks.WEREWOLF_ALTAR);
+				.add(ModBlocks.WEREWOLF_ALTAR)
+				.add(ModBlocks.BLOOD_FOUNTAIN);
 		valueLookupBuilder(BlockTags.BEDS)
 				.addTag(ModBlockTags.COFFINS);
 		valueLookupBuilder(BlockTags.CROPS)
