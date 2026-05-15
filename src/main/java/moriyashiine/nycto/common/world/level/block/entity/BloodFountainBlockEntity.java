@@ -6,6 +6,7 @@ package moriyashiine.nycto.common.world.level.block.entity;
 
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.component.entity.BloodComponent;
+import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
 import moriyashiine.nycto.common.init.*;
 import moriyashiine.nycto.common.world.item.consumeeffects.FillBloodConsumeEffect;
 import moriyashiine.nycto.common.world.level.block.BloodFountainBlock;
@@ -83,6 +84,7 @@ public class BloodFountainBlockEntity extends BlockEntity {
 
 			((ServerLevel) level).sendParticles(particle, bx, by, bz, 0, vx, vy, vz, 1);
 
+			ModEntityComponents.VAMPIRIC_THRALL.maybeGet(entity.feedingEntity).ifPresent(VampiricThrallComponent::setFeeding);
 			if (++entity.feedingTicks == MAX_FEEDING_TICKS) {
 				int fillAmount = 0;
 				if (entity.getTopStack().has(DataComponents.CONSUMABLE)) {
@@ -146,12 +148,8 @@ public class BloodFountainBlockEntity extends BlockEntity {
 		return false;
 	}
 
-	private ItemStack getTopStack() {
-		int slot = getTopIndex();
-		if (slot != -1) {
-			return bottles.get(slot);
-		}
-		return ItemStack.EMPTY;
+	public int getFilledBottles() {
+		return getTopIndex() + 1;
 	}
 
 	private int getTopIndex() {
@@ -161,6 +159,14 @@ public class BloodFountainBlockEntity extends BlockEntity {
 			}
 		}
 		return -1;
+	}
+
+	private ItemStack getTopStack() {
+		int slot = getTopIndex();
+		if (slot != -1) {
+			return bottles.get(slot);
+		}
+		return ItemStack.EMPTY;
 	}
 
 	private void updateFillState() {

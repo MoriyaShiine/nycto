@@ -22,8 +22,11 @@ public class PathNavigationMixin {
 
 	@ModifyReturnValue(method = "isDone", at = @At("RETURN"))
 	private boolean nycto$vampiricThrall(boolean original) {
-		if (!original && ModEntityComponents.VAMPIRIC_THRALL.get(mob).getFollowMode() == VampiricThrallComponent.FollowMode.STAY) {
-			return mob.getTarget() == null;
+		if (!original) {
+			VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.get(mob);
+			if (vampiricThrallComponent.isFeeding() || vampiricThrallComponent.getFollowMode() == VampiricThrallComponent.FollowMode.STAY) {
+				return mob.getTarget() == null;
+			}
 		}
 		return original;
 	}
