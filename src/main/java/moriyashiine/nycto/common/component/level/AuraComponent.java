@@ -63,7 +63,7 @@ public class AuraComponent implements AutoSyncedComponent, ServerTickingComponen
 
 	public static void applyAura(Level level, BlockPos pos, int radius, boolean healBlock, Predicate<LivingEntity> predicate) {
 		level.getEntitiesOfClass(LivingEntity.class, new AABB(pos.getCenter().add(-radius, -radius, -radius), pos.getCenter().add(radius, radius, radius))).forEach(foundEntity -> {
-			if (predicate.test(foundEntity) && level.clip(new ClipContext(pos.getCenter(), foundEntity.getEyePosition(), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, foundEntity)).getType() == HitResult.Type.MISS) {
+			if (foundEntity.slib$isSurvival() && predicate.test(foundEntity) && level.clip(new ClipContext(pos.getCenter(), foundEntity.getEyePosition(), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, foundEntity)).getType() == HitResult.Type.MISS) {
 				foundEntity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 30, 1, true, false));
 				foundEntity.addEffect(new MobEffectInstance(MobEffects.MINING_FATIGUE, 30, 1, true, false));
 				if (healBlock) {
