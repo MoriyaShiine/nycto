@@ -119,7 +119,7 @@ public class DarkFormComponent extends VampireFormChangeComponent implements Com
 		jumpCooldown = DarkForm.JUMP_COOLDOWN;
 		obj.jumpFromGround();
 		obj.setDeltaMovement(obj.getDeltaMovement().multiply(1.3, 1.1, 1.3));
-		SLibUtils.playSound(obj, ModSoundEvents.ENTITY_DARK_FORM_FLAP);
+		SLibUtils.playSound(obj, ModSoundEvents.DARK_FORM_FLAP);
 	}
 
 	public boolean canJump() {

@@ -27,7 +27,7 @@ public class BloodFlechettesGoal extends Goal {
 	@Override
 	public void start() {
 		mob.useAbility(ModPowers.BLOOD_FLECHETTES);
-		SLibUtils.playAnchoredSound(mob, ModSoundEvents.POWER_BLOOD_FLECHETTES_USE);
+		SLibUtils.playAnchoredSound(mob, ModSoundEvents.BLOOD_FLECHETTES_USE);
 		mob.lookAt(EntityAnchorArgument.Anchor.EYES, mob.getTarget().getEyePosition());
 		BloodFlechettesPower.spawnProjectiles(mob.level(), mob);
 	}

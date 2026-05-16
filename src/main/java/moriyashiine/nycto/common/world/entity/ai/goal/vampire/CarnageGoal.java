@@ -26,7 +26,7 @@ public class CarnageGoal extends Goal {
 	@Override
 	public void start() {
 		mob.useAbility(ModPowers.CARNAGE);
-		SLibUtils.playAnchoredSound(mob, ModSoundEvents.POWER_CARNAGE_USE);
+		SLibUtils.playAnchoredSound(mob, ModSoundEvents.CARNAGE_USE);
 		CarnagePower.activate(mob);
 	}
 }

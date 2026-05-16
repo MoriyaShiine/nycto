@@ -32,13 +32,13 @@ public class BloodFlechette extends ThrowableProjectile {
 	@Override
 	protected void onHitBlock(BlockHitResult hitResult) {
 		super.onHitBlock(hitResult);
-		playSound(ModSoundEvents.ENTITY_BLOOD_FLECHETTE_HIT_BLOCK);
+		playSound(ModSoundEvents.BLOOD_FLECHETTE_HIT_BLOCK);
 	}
 
 	@Override
 	protected void onHitEntity(EntityHitResult hitResult) {
 		super.onHitEntity(hitResult);
-		playSound(ModSoundEvents.ENTITY_BLOOD_FLECHETTE_HIT_ENTITY);
+		playSound(ModSoundEvents.BLOOD_FLECHETTE_HIT_ENTITY);
 		Entity entity = hitResult.getEntity();
 		if (level() instanceof ServerLevel level) {
 			entity.invulnerableTime = 0;

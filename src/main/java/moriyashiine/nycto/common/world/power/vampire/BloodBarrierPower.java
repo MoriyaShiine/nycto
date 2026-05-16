@@ -25,7 +25,7 @@ public class BloodBarrierPower extends VampireActivePower {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return ModSoundEvents.POWER_BLOOD_BARRIER_USE;
+		return ModSoundEvents.BLOOD_BARRIER_USE;
 	}
 
 	@Override

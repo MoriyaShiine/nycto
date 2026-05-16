@@ -25,7 +25,7 @@ public class CarnagePower extends VampireActivePower {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return ModSoundEvents.POWER_CARNAGE_USE;
+		return ModSoundEvents.CARNAGE_USE;
 	}
 
 	@Override

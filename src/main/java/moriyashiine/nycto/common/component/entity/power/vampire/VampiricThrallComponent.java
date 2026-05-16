@@ -97,7 +97,7 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 				Entity owner = obj.level().getEntityInAnyDimension(ownerUuid);
 				if (owner instanceof Player player && !NyctoAPI.hasPower(player, ModPowers.VAMPIRIC_THRALL)) {
 					SLibUtils.addParticles(obj, ParticleTypes.SMOKE, 16, ParticleAnchor.BODY);
-					SLibUtils.playSound(obj, ModSoundEvents.ENTITY_GENERIC_TRANSFORM_HUMAN);
+					SLibUtils.playSound(obj, ModSoundEvents.GENERIC_TRANSFORM_HUMAN);
 					VampiricThrallPower.setThrall(obj, null);
 					return;
 				}

@@ -159,7 +159,7 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 			return false;
 		}
 		if (obj.getRandom().nextFloat() <= 2 / 3F && NyctoUtil.hasBloodDrainResistance(obj)) {
-			SLibUtils.playSound(obj, ModSoundEvents.ENTITY_GENERIC_BLOOD_DRAIN_BLOCKED, 1, Mth.nextFloat(obj.getRandom(), 0.95F, 1.05F));
+			SLibUtils.playSound(obj, ModSoundEvents.GENERIC_BLOOD_DRAIN_BLOCKED, 1, Mth.nextFloat(obj.getRandom(), 0.95F, 1.05F));
 			return false;
 		}
 		boolean drain = drain(amount, true);

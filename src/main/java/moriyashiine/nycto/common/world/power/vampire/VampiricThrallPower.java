@@ -45,14 +45,14 @@ public class VampiricThrallPower extends VampireActivePower {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return ModSoundEvents.POWER_HYPNOTIZE_USE;
+		return ModSoundEvents.HYPNOTIZE_USE;
 	}
 
 	@Override
 	public void use(ServerLevel level, ServerPlayer player) {
 		if (ProjectileUtil.getHitResultOnViewVector(player, entity -> entity instanceof Mob, player.entityInteractionRange()) instanceof EntityHitResult hitResult && hitResult.getEntity() instanceof Mob mob && canBeThralled(player, mob)) {
 			SLibUtils.addAnchoredParticle(mob, ModParticleTypes.THRALLED, mob.getEyeHeight(), 0, 0);
-			SLibUtils.playSound(mob, ModSoundEvents.POWER_VAMPIRIC_THRALL_CONVERT);
+			SLibUtils.playSound(mob, ModSoundEvents.VAMPIRIC_THRALL_CONVERT);
 			if (NyctoUtil.isVillager(mob)) {
 				mob.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.35);
 			}

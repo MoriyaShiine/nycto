@@ -102,7 +102,7 @@ public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingCo
 				}
 			}
 			if (obj.tickCount % frequency == 0) {
-				obj.makeSound(ModSoundEvents.POWER_KEEN_SENSES_HEARTBEAT);
+				obj.makeSound(ModSoundEvents.KEEN_SENSES_HEARTBEAT);
 			}
 		}
 	}

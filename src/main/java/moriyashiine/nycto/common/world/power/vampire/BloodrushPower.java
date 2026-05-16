@@ -41,7 +41,7 @@ public class BloodrushPower extends VampireActivePower implements FormChanger {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return ModSoundEvents.POWER_BLOODRUSH_USE;
+		return ModSoundEvents.BLOODRUSH_USE;
 	}
 
 	@Override

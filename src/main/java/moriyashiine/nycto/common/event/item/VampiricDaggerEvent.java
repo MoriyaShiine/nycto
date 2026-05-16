@@ -66,7 +66,7 @@ public class VampiricDaggerEvent {
 									ItemStack filled = ItemUtils.createFilledResult(bottle, playerAttacker, bloodBottle);
 									playerAttacker.setItemInHand(InteractionHand.OFF_HAND, filled);
 									VampiricDaggerItem.extractBlood(attacker, stack, bloodBottle);
-									SLibUtils.playSound(playerAttacker, ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK.value(), 0.8F, 1);
+									SLibUtils.playSound(playerAttacker, ModSoundEvents.BLOOD_BOTTLE_DRINK.value(), 0.8F, 1);
 								}
 							}
 						}

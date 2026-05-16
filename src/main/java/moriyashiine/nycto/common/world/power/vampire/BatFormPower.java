@@ -55,7 +55,7 @@ public class BatFormPower extends VampireActivePower implements FormChanger {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return ModEntityComponents.BAT_FORM.get(player).isEnabled() ? ModSoundEvents.POWER_BAT_FORM_OFF : ModSoundEvents.POWER_BAT_FORM_ON;
+		return ModEntityComponents.BAT_FORM.get(player).isEnabled() ? ModSoundEvents.BAT_FORM_OFF : ModSoundEvents.BAT_FORM_ON;
 	}
 
 	@Override

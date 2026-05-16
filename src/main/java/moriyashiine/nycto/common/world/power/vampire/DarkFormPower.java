@@ -49,7 +49,7 @@ public class DarkFormPower extends VampireActivePower implements FormChanger {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return ModEntityComponents.DARK_FORM.get(player).isEnabled() ? ModSoundEvents.POWER_DARK_FORM_OFF : ModSoundEvents.POWER_DARK_FORM_ON;
+		return ModEntityComponents.DARK_FORM.get(player).isEnabled() ? ModSoundEvents.DARK_FORM_OFF : ModSoundEvents.DARK_FORM_ON;
 	}
 
 	@Override

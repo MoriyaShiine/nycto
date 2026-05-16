@@ -40,7 +40,7 @@ public class HypnotizePower extends VampireActivePower {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return player.isShiftKeyDown() ? ModSoundEvents.POWER_HYPNOTIZE_USE_INVERSE : ModSoundEvents.POWER_HYPNOTIZE_USE;
+		return player.isShiftKeyDown() ? ModSoundEvents.HYPNOTIZE_USE_INVERSE : ModSoundEvents.HYPNOTIZE_USE;
 	}
 
 	@Override

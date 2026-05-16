@@ -66,7 +66,7 @@ public class BloodBarrierComponent implements AutoSyncedComponent, CommonTicking
 	}
 
 	public void breakBarrier() {
-		SLibUtils.playSound(obj, ModSoundEvents.POWER_BLOOD_BARRIER_BREAK, 1, Mth.nextFloat(obj.getRandom(), 0.8F, 1.2F));
+		SLibUtils.playSound(obj, ModSoundEvents.BLOOD_BARRIER_BREAK, 1, Mth.nextFloat(obj.getRandom(), 0.8F, 1.2F));
 		barriers--;
 		addParticles(barriers);
 		if (barriers == 0) {

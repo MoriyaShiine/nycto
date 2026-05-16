@@ -26,7 +26,7 @@ public class BloodBarrierGoal extends Goal {
 	@Override
 	public void start() {
 		mob.useAbility(ModPowers.BLOOD_BARRIER);
-		SLibUtils.playAnchoredSound(mob, ModSoundEvents.POWER_BLOOD_BARRIER_USE);
+		SLibUtils.playAnchoredSound(mob, ModSoundEvents.BLOOD_BARRIER_USE);
 		BloodBarrierPower.activate(mob);
 	}
 }

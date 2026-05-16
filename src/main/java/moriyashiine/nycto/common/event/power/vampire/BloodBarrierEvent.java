@@ -24,7 +24,7 @@ public class BloodBarrierEvent implements ServerLivingEntityEvents.AllowDamage {
 				if (amount >= 3) {
 					bloodBarrierComponent.breakBarrier();
 				} else {
-					SLibUtils.playSound(entity, ModSoundEvents.POWER_BLOOD_BARRIER_HIT, 1, Mth.nextFloat(entity.getRandom(), 0.8F, 1.2F));
+					SLibUtils.playSound(entity, ModSoundEvents.BLOOD_BARRIER_HIT, 1, Mth.nextFloat(entity.getRandom(), 0.8F, 1.2F));
 				}
 				return false;
 			}

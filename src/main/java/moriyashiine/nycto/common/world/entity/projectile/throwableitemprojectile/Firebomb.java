@@ -72,7 +72,7 @@ public class Firebomb extends ThrowableItemProjectile {
 			});
 			SLibUtils.addParticles(this, ParticleTypes.FLAME, 32, ParticleAnchor.BODY, PARTICLE_VELOCITY);
 			SLibUtils.addParticles(this, ParticleTypes.SMOKE, 8, ParticleAnchor.BODY, PARTICLE_VELOCITY);
-			SLibUtils.playSound(this, ModSoundEvents.ENTITY_FIREBOMB_IMPACT, 1, Mth.nextFloat(getRandom(), 0.8F, 1.2F));
+			SLibUtils.playSound(this, ModSoundEvents.FIREBOMB_IMPACT, 1, Mth.nextFloat(getRandom(), 0.8F, 1.2F));
 			level.levelEvent(LevelEvent.PARTICLES_INSTANT_POTION_SPLASH, blockPosition(), MobEffects.FIRE_RESISTANCE.value().getColor());
 			discard();
 		}

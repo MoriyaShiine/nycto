@@ -175,10 +175,10 @@ public class NyctoAPI {
 		toRemove.forEach(power -> removePower(player, power));
 		SLibUtils.addParticles(player, ParticleTypes.SMOKE, 16, ParticleAnchor.BODY);
 		if (toRemove.isEmpty()) {
-			SLibUtils.playAnchoredSound(player, ModSoundEvents.ENTITY_GENERIC_TRANSFORM_HUMAN);
+			SLibUtils.playAnchoredSound(player, ModSoundEvents.GENERIC_TRANSFORM_HUMAN);
 			setTransformation(player, ModTransformations.HUMAN);
 		} else {
-			SLibUtils.playAnchoredSound(player, ModSoundEvents.ENTITY_GENERIC_REMOVE_POWER);
+			SLibUtils.playAnchoredSound(player, ModSoundEvents.GENERIC_REMOVE_POWER);
 		}
 	}
 }

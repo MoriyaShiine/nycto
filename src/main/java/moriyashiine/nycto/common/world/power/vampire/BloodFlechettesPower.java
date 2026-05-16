@@ -27,7 +27,7 @@ public class BloodFlechettesPower extends VampireActivePower {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return ModSoundEvents.POWER_BLOOD_FLECHETTES_USE;
+		return ModSoundEvents.BLOOD_FLECHETTES_USE;
 	}
 
 	@Override

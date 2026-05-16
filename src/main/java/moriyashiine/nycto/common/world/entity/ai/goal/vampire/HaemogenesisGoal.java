@@ -26,7 +26,7 @@ public class HaemogenesisGoal extends Goal {
 	@Override
 	public void start() {
 		mob.useAbility(ModPowers.HAEMOGENESIS);
-		SLibUtils.playAnchoredSound(mob, ModSoundEvents.POWER_HAEMOGENESIS_USE);
+		SLibUtils.playAnchoredSound(mob, ModSoundEvents.HAEMOGENESIS_USE);
 		HaemogenesisPower.startHealing(mob);
 	}
 }

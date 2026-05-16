@@ -121,7 +121,7 @@ public class VampireEvent {
 							living.hurtServer(serverWorld, level.damageSources().source(ModDamageTypes.BLEED, player), 2);
 						}
 						if (livingBloodComponent.drainAttack(drainAmount)) {
-							SLibUtils.playSound(entity, ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK.value());
+							SLibUtils.playSound(entity, ModSoundEvents.BLOOD_BOTTLE_DRINK.value());
 							fillAmount = getModifiedFillAmount(fillAmount, qualityBlood, living.getRandom());
 							if (fillAmount > 0) {
 								playerBloodComponent.fill(fillAmount);

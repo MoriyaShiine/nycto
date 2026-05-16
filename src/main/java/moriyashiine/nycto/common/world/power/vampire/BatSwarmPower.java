@@ -28,7 +28,7 @@ public class BatSwarmPower extends VampireActivePower {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return ModSoundEvents.POWER_BAT_SWARM_USE;
+		return ModSoundEvents.BAT_SWARM_USE;
 	}
 
 	@Override

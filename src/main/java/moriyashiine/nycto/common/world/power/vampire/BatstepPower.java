@@ -37,7 +37,7 @@ public class BatstepPower extends VampireActivePower {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return ModSoundEvents.POWER_BATSTEP_USE;
+		return ModSoundEvents.BATSTEP_USE;
 	}
 
 	@Override

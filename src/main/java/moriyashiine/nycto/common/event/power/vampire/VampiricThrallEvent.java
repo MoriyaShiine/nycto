@@ -121,7 +121,7 @@ public class VampiricThrallEvent {
 								if (!level.isClientSide()) {
 									bloodComponent.fill(fillAmount);
 									NyctoUtil.spawnBloodParticles(entity);
-									SLibUtils.playSound(entity, ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK.value());
+									SLibUtils.playSound(entity, ModSoundEvents.BLOOD_BOTTLE_DRINK.value());
 									entity.gameEvent(GameEvent.DRINK);
 									if (entity instanceof LivingEntity living) {
 										effects.forEach(effect -> effect.apply(level, stack, living));

@@ -134,17 +134,17 @@ public class Hunter extends Pillager {
 
 	@Override
 	protected @Nullable SoundEvent getAmbientSound() {
-		return ModSoundEvents.ENTITY_HUNTER_AMBIENT;
+		return ModSoundEvents.HUNTER_AMBIENT;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return ModSoundEvents.ENTITY_HUNTER_HURT;
+		return ModSoundEvents.HUNTER_HURT;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return ModSoundEvents.ENTITY_HUNTER_DEATH;
+		return ModSoundEvents.HUNTER_DEATH;
 	}
 
 	@Override

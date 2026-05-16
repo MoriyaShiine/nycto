@@ -140,17 +140,17 @@ public class Vampire extends Monster {
 
 	@Override
 	protected @Nullable SoundEvent getAmbientSound() {
-		return ModSoundEvents.ENTITY_VAMPIRE_AMBIENT;
+		return ModSoundEvents.VAMPIRE_AMBIENT;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return ModSoundEvents.ENTITY_VAMPIRE_HURT;
+		return ModSoundEvents.VAMPIRE_HURT;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return ModSoundEvents.ENTITY_VAMPIRE_DEATH;
+		return ModSoundEvents.VAMPIRE_DEATH;
 	}
 
 	@Override
@@ -185,7 +185,7 @@ public class Vampire extends Monster {
 						int amount = Math.min(5, targetBloodComponent.getBlood());
 						if (targetBloodComponent.drainAttack(amount)) {
 							selfBloodComponent.fill(amount);
-							SLibUtils.playSound(target, ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK.value());
+							SLibUtils.playSound(target, ModSoundEvents.BLOOD_BOTTLE_DRINK.value());
 						}
 					}
 				}

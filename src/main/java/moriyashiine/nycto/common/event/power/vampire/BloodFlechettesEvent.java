@@ -22,7 +22,7 @@ public class BloodFlechettesEvent implements AfterDamageIncludingDeathEvent {
 			int drainAmount = Mth.floor(Math.min(modifiedDamage * 0.2, bloodComponent.getBlood()));
 			bloodComponent.drainAttack(drainAmount);
 			attacker.heal(drainAmount);
-			SLibUtils.playSound(attacker, ModSoundEvents.POWER_BLOOD_FLECHETTES_LIFE_DRAIN);
+			SLibUtils.playSound(attacker, ModSoundEvents.BLOOD_FLECHETTES_LIFE_DRAIN);
 		}
 	}
 }

@@ -20,7 +20,7 @@ public class CarnageEvent implements AfterDamageIncludingDeathEvent {
 			BloodComponent bloodComponent = ModEntityComponents.BLOOD.get(victim);
 			bloodComponent.drainAttack(Mth.floor(Math.min(5, modifiedDamage)));
 			bloodComponent.setBleedTicks(80);
-			SLibUtils.playSound(victim, ModSoundEvents.POWER_CARNAGE_HIT, 1, Mth.nextFloat(victim.getRandom(), 0.8F, 1.2F));
+			SLibUtils.playSound(victim, ModSoundEvents.CARNAGE_HIT, 1, Mth.nextFloat(victim.getRandom(), 0.8F, 1.2F));
 		}
 	}
 }

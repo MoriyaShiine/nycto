@@ -19,7 +19,7 @@ public class ModConsumables {
 
 	public static final Consumable BLOOD_BOTTLE = Consumables.defaultDrink()
 			.consumeSeconds(2)
-			.sound(ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK)
+			.sound(ModSoundEvents.BLOOD_BOTTLE_DRINK)
 			.onConsume(new FillBloodConsumeEffect(BLOOD_FILL_AMOUNT, new ApplyStatusEffectsConsumeEffect(
 					List.of(
 							new MobEffectInstance(MobEffects.POISON, 200),
@@ -30,7 +30,7 @@ public class ModConsumables {
 			.build();
 	public static final Consumable VAMPIRE_BLOOD_BOTTLE = Consumables.defaultDrink()
 			.consumeSeconds(2)
-			.sound(ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK)
+			.sound(ModSoundEvents.BLOOD_BOTTLE_DRINK)
 			.onConsume(new FillBloodConsumeEffect(BLOOD_FILL_AMOUNT, new ApplyStatusEffectsConsumeEffect(
 					List.of(
 							new MobEffectInstance(ModMobEffects.VAMPIRISM, 600)
@@ -39,7 +39,7 @@ public class ModConsumables {
 			.build();
 	public static final Consumable AMBROSIA_BOTTLE = Consumables.defaultDrink()
 			.consumeSeconds(2)
-			.sound(ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK)
+			.sound(ModSoundEvents.BLOOD_BOTTLE_DRINK)
 			.onConsume(new ApplyStatusEffectsConsumeEffect(
 					List.of(
 							new MobEffectInstance(MobEffects.HASTE, 400, 1),

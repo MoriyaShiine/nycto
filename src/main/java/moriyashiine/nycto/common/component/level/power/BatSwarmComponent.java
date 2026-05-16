@@ -211,7 +211,7 @@ public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComp
 		private void feed(LivingEntity target) {
 			if (target == owner) {
 				if (getBlood() >= BLOOD_FILL_AMOUNT && ModEntityComponents.BLOOD.get(target).fill(BLOOD_FILL_AMOUNT)) {
-					SLibUtils.playSound(target, ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK.value());
+					SLibUtils.playSound(target, ModSoundEvents.BLOOD_BOTTLE_DRINK.value());
 					blood -= BLOOD_FILL_AMOUNT;
 					ModLevelComponents.BAT_SWARM.sync(target.level());
 				}
@@ -225,7 +225,7 @@ public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComp
 				target.hurt(target.damageSources().source(ModDamageTypes.BLEED, null, owner), 1);
 				if (canDrain) {
 					if (ModEntityComponents.BLOOD.get(target).drainAttack(BLOOD_DRAIN_AMOUNT)) {
-						SLibUtils.playSound(target, ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK.value());
+						SLibUtils.playSound(target, ModSoundEvents.BLOOD_BOTTLE_DRINK.value());
 						blood += BLOOD_DRAIN_AMOUNT / (qualityBlood ? 1 : 2);
 						ModLevelComponents.BAT_SWARM.sync(target.level());
 					}

@@ -101,7 +101,7 @@ public class BloodFountainBlock extends BaseEntityBlock implements SimpleWaterlo
 	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
 		if (player.isShiftKeyDown()) {
 			if (!level.isClientSide()) {
-				level.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, state.getValue(BlockStateProperties.LOCKED) ? ModSoundEvents.BLOCK_BLOOD_FOUNTAIN_UNLOCK : ModSoundEvents.BLOCK_BLOOD_FOUNTAIN_LOCK, SoundSource.BLOCKS, 1, 1);
+				level.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, state.getValue(BlockStateProperties.LOCKED) ? ModSoundEvents.BLOOD_FOUNTAIN_UNLOCK : ModSoundEvents.BLOOD_FOUNTAIN_LOCK, SoundSource.BLOCKS, 1, 1);
 				level.setBlockAndUpdate(pos, state.cycle(BlockStateProperties.LOCKED));
 			}
 			return InteractionResult.SUCCESS;
@@ -115,7 +115,7 @@ public class BloodFountainBlock extends BaseEntityBlock implements SimpleWaterlo
 			ItemStack copy = itemStack.copyWithCount(1);
 			if (blockEntity.insertBottle(copy)) {
 				if (!level.isClientSide()) {
-					level.playSound(null, pos, ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK.value(), SoundSource.BLOCKS, 1, 1);
+					level.playSound(null, pos, ModSoundEvents.BLOOD_BOTTLE_DRINK.value(), SoundSource.BLOCKS, 1, 1);
 					itemStack.consume(1, player);
 					if (!player.isCreative() && copy.has(DataComponents.USE_REMAINDER)) {
 						player.handleExtraItemsCreatedOnUse(copy.get(DataComponents.USE_REMAINDER).convertInto().create());

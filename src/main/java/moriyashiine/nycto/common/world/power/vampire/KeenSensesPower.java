@@ -41,7 +41,7 @@ public class KeenSensesPower extends VampireActivePower {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return ModEntityComponents.KEEN_SENSES.get(player).isEnabled() ? ModSoundEvents.POWER_KEEN_SENSES_OFF : ModSoundEvents.POWER_KEEN_SENSES_ON;
+		return ModEntityComponents.KEEN_SENSES.get(player).isEnabled() ? ModSoundEvents.KEEN_SENSES_OFF : ModSoundEvents.KEEN_SENSES_ON;
 	}
 
 	@Override

@@ -98,7 +98,7 @@ public class BloodFountainBlockEntity extends BlockEntity {
 					}
 				}
 				ModEntityComponents.BLOOD.get(entity.feedingEntity).fill(fillAmount);
-				SLibUtils.playSound(entity.feedingEntity, ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK.value());
+				SLibUtils.playSound(entity.feedingEntity, ModSoundEvents.BLOOD_BOTTLE_DRINK.value());
 				entity.bottles.set(entity.getTopIndex(), ItemStack.EMPTY);
 				entity.updateFillState();
 				entity.setChanged();

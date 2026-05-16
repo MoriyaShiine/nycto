@@ -41,7 +41,7 @@ public class NightVisionPower extends ActivePower {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return ModEntityComponents.NIGHT_VISION.get(player).isEnabled() ? ModSoundEvents.POWER_NIGHT_VISION_OFF : ModSoundEvents.POWER_NIGHT_VISION_ON;
+		return ModEntityComponents.NIGHT_VISION.get(player).isEnabled() ? ModSoundEvents.NIGHT_VISION_OFF : ModSoundEvents.NIGHT_VISION_ON;
 	}
 
 	@Override

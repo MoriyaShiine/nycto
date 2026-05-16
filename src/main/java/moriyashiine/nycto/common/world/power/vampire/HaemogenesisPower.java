@@ -25,7 +25,7 @@ public class HaemogenesisPower extends VampireActivePower {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return ModSoundEvents.POWER_HAEMOGENESIS_USE;
+		return ModSoundEvents.HAEMOGENESIS_USE;
 	}
 
 	@Override

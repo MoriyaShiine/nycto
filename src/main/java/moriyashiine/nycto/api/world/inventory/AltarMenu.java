@@ -136,7 +136,7 @@ public abstract class AltarMenu extends AbstractContainerMenu {
 				clearContainer(player, altarSlots);
 				altarSlots.setChanged();
 				slotsChanged(altarSlots);
-				level.playSound(null, pos, ModSoundEvents.BLOCK_ALTAR_USE, SoundSource.BLOCKS, 1, level.getRandom().nextFloat() * 0.1F + 0.9F);
+				level.playSound(null, pos, ModSoundEvents.ALTAR_USE, SoundSource.BLOCKS, 1, level.getRandom().nextFloat() * 0.1F + 0.9F);
 			});
 			apply(player, buttonId);
 			return true;

@@ -47,7 +47,7 @@ public class MistFormPower extends VampireActivePower implements FormChanger {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return ModEntityComponents.MIST_FORM.get(player).isEnabled() ? ModSoundEvents.POWER_MIST_FORM_OFF : ModSoundEvents.POWER_MIST_FORM_ON;
+		return ModEntityComponents.MIST_FORM.get(player).isEnabled() ? ModSoundEvents.MIST_FORM_OFF : ModSoundEvents.MIST_FORM_ON;
 	}
 
 	@Override

@@ -78,12 +78,12 @@ public class VampiricDaggerItem extends Item {
 				if (player.getInventory().add(bloodBottle)) {
 					carriedItem.get().consume(1, player);
 				} else {
-					player.playSound(ModSoundEvents.ITEM_VAMPIRIC_DAGGER_EXTRACT_FAIL, 1, 1);
+					player.playSound(ModSoundEvents.VAMPIRIC_DAGGER_EXTRACT_FAIL, 1, 1);
 					return true;
 				}
 			}
 			extractBlood(player, self, bloodBottle);
-			player.playSound(ModSoundEvents.ITEM_BLOOD_BOTTLE_DRINK.value(), 0.8F, 1);
+			player.playSound(ModSoundEvents.BLOOD_BOTTLE_DRINK.value(), 0.8F, 1);
 			player.containerMenu.slotsChanged(player.getInventory());
 			return true;
 		}
