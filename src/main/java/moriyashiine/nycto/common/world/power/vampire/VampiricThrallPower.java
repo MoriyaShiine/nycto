@@ -16,10 +16,7 @@ import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.OwnableEntity;
-import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.equine.AbstractHorse;
 import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
@@ -67,7 +64,7 @@ public class VampiricThrallPower extends VampireActivePower {
 		ModEntityComponents.BLOOD.get(player).drain(getCost(player));
 	}
 
-	public static void setThrall(Mob mob, @Nullable Player owner) {
+	public static void setThrall(Mob mob, @Nullable Entity owner) {
 		VampireTransformation.setComponents(mob, owner != null);
 		ModEntityComponents.VAMPIRIC_THRALL.get(mob).reset(owner);
 		HypnotizePower.forget(mob);
@@ -82,14 +79,14 @@ public class VampiricThrallPower extends VampireActivePower {
 		}
 	}
 
-	public static boolean canBeThralled(Player player, Mob target) {
+	public static boolean canBeThralled(LivingEntity entity, Mob target) {
 		if (target.slib$exists() && target.is(ModEntityTypeTags.CAN_BE_THRALLED)) {
 			if (target instanceof OwnableEntity ownable) {
 				if (!isTamed(target)) {
 					return false;
 				}
-				if (!player.level().isClientSide()) {
-					if (ownable.getOwnerReference() == null || !ownable.getOwnerReference().matches(player)) {
+				if (!entity.level().isClientSide()) {
+					if (ownable.getOwnerReference() == null || !ownable.getOwnerReference().matches(entity)) {
 						return false;
 					}
 				}

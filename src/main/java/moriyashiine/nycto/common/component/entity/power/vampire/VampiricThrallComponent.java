@@ -122,7 +122,7 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 		ModEntityComponents.VAMPIRIC_THRALL.sync(obj);
 	}
 
-	public void reset(@Nullable Player owner) {
+	public void reset(@Nullable Entity owner) {
 		setOwner(owner);
 		fountainMemories.clear();
 		followMode = FollowMode.FOLLOW;

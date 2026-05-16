@@ -7,7 +7,6 @@ package moriyashiine.nycto.common.component.entity.power.util;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jspecify.annotations.Nullable;
@@ -43,11 +42,11 @@ public abstract class HasOwnerComponent implements AutoSyncedComponent {
 		return entity != null && entity.getUUID().equals(ownerUuid);
 	}
 
-	public void setOwner(Player player) {
-		if (player == null) {
+	public void setOwner(Entity entity) {
+		if (entity == null) {
 			ownerUuid = null;
 		} else {
-			ownerUuid = player.getUUID();
+			ownerUuid = entity.getUUID();
 		}
 		sync();
 	}
