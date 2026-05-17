@@ -12,7 +12,6 @@ import moriyashiine.nycto.client.event.integration.HeartyMealsEvent;
 import moriyashiine.nycto.client.event.power.*;
 import moriyashiine.nycto.client.gui.hud.PowerHotbarHudElement;
 import moriyashiine.nycto.client.gui.hud.SunExposureHudElement;
-import moriyashiine.nycto.client.gui.hud.VampireChargeJumpHudElement;
 import moriyashiine.nycto.client.gui.hud.VampireHudElement;
 import moriyashiine.nycto.client.gui.hud.power.CarnageHudElement;
 import moriyashiine.nycto.client.gui.hud.power.KeenSensesHudElement;
@@ -41,8 +40,8 @@ import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.init.*;
 import moriyashiine.strawberrylib.api.event.TickEntityEvent;
 import moriyashiine.strawberrylib.api.event.client.AddNightVisionScaleEvent;
-import moriyashiine.strawberrylib.api.event.client.DisableContextualInfoEvent;
 import moriyashiine.strawberrylib.api.event.client.OutlineEntityEvent;
+import moriyashiine.strawberrylib.api.event.client.ReplaceContextualInfoEvent;
 import moriyashiine.strawberrylib.api.event.client.ReplaceHeartTexturesEvent;
 import moriyashiine.strawberrylib.api.registry.client.particle.AnchoredParticle;
 import net.fabricmc.api.ClientModInitializer;
@@ -197,7 +196,7 @@ public class NyctoClient implements ClientModInitializer {
 		ClientTickEvents.END_LEVEL_TICK.register(new PowerClientEvent.Tick());
 		LivingEntityFeatureRenderEvents.ALLOW_CAPE_RENDER.register(new ShowCapeEvent());
 		// vampire
-		DisableContextualInfoEvent.EVENT.register(new VampireClientEvent());
+		ReplaceContextualInfoEvent.EVENT.register(new VampireClientEvent());
 		// power
 		AddNightVisionScaleEvent.EVENT.register(new NightVisionEvent());
 		OutlineEntityEvent.EVENT.register(new BloodFlechettesClientEvent());
@@ -215,7 +214,6 @@ public class NyctoClient implements ClientModInitializer {
 		HudElementRegistry.attachElementAfter(VanillaHudElements.HOTBAR, Nycto.id("power_hotbar"), new PowerHotbarHudElement());
 		HudElementRegistry.attachElementAfter(VanillaHudElements.MISC_OVERLAYS, Nycto.id("sun_exposure"), new SunExposureHudElement());
 		HudElementRegistry.attachElementAfter(VanillaHudElements.CROSSHAIR, Nycto.id("vampire"), new VampireHudElement());
-		HudElementRegistry.attachElementAfter(VanillaHudElements.HOTBAR, Nycto.id("vampire_charge_jump"), new VampireChargeJumpHudElement());
 		// power hud elements
 		HudElementRegistry.attachElementAfter(VanillaHudElements.MISC_OVERLAYS, Nycto.id("carnage"), new CarnageHudElement());
 		HudElementRegistry.attachElementAfter(VanillaHudElements.MISC_OVERLAYS, Nycto.id("keen_senses"), new KeenSensesHudElement());

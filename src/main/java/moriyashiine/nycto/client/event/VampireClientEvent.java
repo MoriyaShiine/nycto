@@ -4,19 +4,31 @@
 
 package moriyashiine.nycto.client.event;
 
+import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.component.entity.VampireChargeJumpComponent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.strawberrylib.api.event.client.DisableContextualInfoEvent;
-import net.fabricmc.fabric.api.util.TriState;
+import moriyashiine.strawberrylib.api.event.client.ReplaceContextualInfoEvent;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
-public class VampireClientEvent implements DisableContextualInfoEvent {
+public class VampireClientEvent implements ReplaceContextualInfoEvent {
+	private static final Identifier BACKGROUND_TEXTURE = Nycto.id("hud/vampire_charge_jump/background");
+	private static final Identifier PROGRESS_TEXTURE = Nycto.id("hud/vampire_charge_jump/progress");
+
 	@Override
-	public TriState shouldDisable(Player player) {
+	public ContextualInfo getInfo(Player player) {
 		VampireChargeJumpComponent vampireChargeJumpComponent = ModEntityComponents.VAMPIRE_CHARGE_JUMP.get(player);
-		if (vampireChargeJumpComponent.isEnabled() && vampireChargeJumpComponent.getBoostProgress() > 0) {
-			return TriState.TRUE;
+		if (vampireChargeJumpComponent.isEnabled()) {
+			float boostProgress = vampireChargeJumpComponent.getBoostProgress();
+			if (boostProgress > 0) {
+				return new ContextualInfo(BACKGROUND_TEXTURE, PROGRESS_TEXTURE, boostProgress);
+			}
 		}
-		return TriState.DEFAULT;
+		return null;
+	}
+
+	@Override
+	public int getPriority() {
+		return 900;
 	}
 }
