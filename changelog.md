@@ -1,4 +1,28 @@
 ------------------------------------------------------
+Version 26.1-b10
+------------------------------------------------------
+- add blood fountain
+  - can store up to 16 blood bottles
+  - feeds nearby vampires that could drink a blood bottle without wasting it
+  - thralls will use blood fountains automatically when set to wander or defend
+  - lockable by sneak using with an empty hand to prevent auto-feeding
+- altars are now waterloggable
+- wooden stakes can now be placed when sneaking
+  - acts like pointed dripstone, but vampires are weak to it
+- add humanity weakness
+    - `You lose your innate physical benefits from being a vampire, and regenerate health slower.`
+- merge pyrophobia and photophobia
+  - if you had photophobia, you are given pyrophobia. if you also had pyrophobia, you are given humanity.
+- witches now use healing on all undead, not just vampires
+- rich tastes now gives hunger when near humanoid mobs if you haven't fed in the last 16 seconds
+- garlic brew now only removes 1 power
+- fix beast forms being able to use shields
+- garlic wreaths no longer apply to players in creative
+- vampires are now actually treated as in the undead tag (but not sensitive_to_smite or wither_friends)
+- vampire armor, vampire hunter armor, and werewolf hunter armor now prevent you from freezing in powder snow
+- untrimmable armors are now removed from `minecraft:trimmable_armor` using fabric api instead of added to `strawberrylib:untrimmable_armor`
+
+------------------------------------------------------
 Version 26.1-b9
 ------------------------------------------------------
 - add api calls for hasBlood and hasQualityBlood
