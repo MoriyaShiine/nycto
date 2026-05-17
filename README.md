@@ -37,11 +37,11 @@ You may choose up to 6 vampire powers at a time out of 13 total:
 - Vampiric Thrall: Permanently enthralls a humanoid mob or tamed horse or wolf to become your minion. Thralls retain their abilities from before their undeath. Success is dependent on their current health. Can be told to either follow, stay, or wander by sneak interacting. Can be fed Blood Bottles by sneak interacting.
 ```
 
-Every other power you choose must also come with a weakness:
+Every other power you choose must also come with a chosen weakness:
 ```
+- Humanity: You lose your innate physical benefits from being a vampire, and regenerate health slower.
 - Hydrophobia: Hinders movement in water and rain.
-- Photophobia: You burn much faster in the sun.
-- Pyrophobia: Fire and lava deal more damage.
+- Pyrophobia: You burn much faster in the sun. Fire and lava deal more damage.
 - Rich Tastes: You can only drink blood from humanoid mobs. Blood Bottles aren't as filling.
 - Thin Blood: Blood no longer saves you from death.
 - Vile Presence: Mobs become aggressive, animals flee from you and cannot be bred or tamed, and villager trades are more expensive. Hypnotized mobs are unaffected.
