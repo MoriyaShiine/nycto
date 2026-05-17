@@ -156,19 +156,15 @@ public class NyctoAPI {
 		return sunExposureComponent != null && sunExposureComponent.hasVampireSunDebuff() && sunExposureComponent.getExposureTime() >= SunExposureComponent.MIN_DEBUFF_EXPOSURE_TIME;
 	}
 
-	public static void partiallyCureTransformation(ServerPlayer player, TagKey<Power> choosablePowers) {
+	public static void removePowerOrCure(ServerPlayer player, TagKey<Power> choosablePowers) {
 		List<PowerInstance> powers = getPowers(player);
 		Set<Power> toRemove = new HashSet<>();
-		boolean foundNegative = false;
 		for (int i = powers.size() - 1; i >= 0; i--) {
 			PowerInstance instance = powers.get(i);
 			if (instance.is(choosablePowers)) {
 				toRemove.add(instance.getPower());
-				if (foundNegative) {
+				if (!instance.getPower().isWeakness()) {
 					break;
-				}
-				if (instance.getPower().isWeakness()) {
-					foundNegative = true;
 				}
 			}
 		}

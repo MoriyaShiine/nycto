@@ -29,7 +29,7 @@ public abstract class PotionContentsMixin {
 	private void nycto$brew(LivingEntity entity, float durationScale, CallbackInfo ci) {
 		if (entity instanceof ServerPlayer player) {
 			if (NyctoAPI.isVampire(player) && potion().stream().anyMatch(potion -> potion == ModPotions.GARLIC || potion == ModPotions.LONG_GARLIC || potion == ModPotions.STRONG_GARLIC)) {
-				NyctoAPI.partiallyCureTransformation(player, ModPowerTags.VAMPIRE_CHOOSABLE);
+				NyctoAPI.removePowerOrCure(player, ModPowerTags.VAMPIRE_CHOOSABLE);
 			}
 		}
 	}
