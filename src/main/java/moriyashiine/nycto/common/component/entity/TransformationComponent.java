@@ -4,7 +4,6 @@
 
 package moriyashiine.nycto.common.component.entity;
 
-import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.api.init.NyctoRegistries;
 import moriyashiine.nycto.api.world.power.ActivePower;
 import moriyashiine.nycto.api.world.power.Power;

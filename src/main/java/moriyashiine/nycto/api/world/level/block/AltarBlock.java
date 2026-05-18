@@ -30,6 +30,8 @@ public abstract class AltarBlock extends Block implements SimpleWaterloggedBlock
 
 	public AltarBlock(Properties properties) {
 		super(properties);
+		registerDefaultState(defaultBlockState()
+				.setValue(BlockStateProperties.WATERLOGGED, false));
 	}
 
 	@Override

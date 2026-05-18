@@ -35,6 +35,8 @@ public class WoodenStakeBlock extends Block implements SimpleWaterloggedBlock {
 
 	public WoodenStakeBlock(Properties properties) {
 		super(properties);
+		registerDefaultState(defaultBlockState()
+				.setValue(BlockStateProperties.WATERLOGGED, false));
 	}
 
 	@Override
