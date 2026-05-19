@@ -5,7 +5,7 @@
 package moriyashiine.nycto.mixin.misc;
 
 import moriyashiine.nycto.api.NyctoAPI;
-import moriyashiine.nycto.common.init.ModDamageTypes;
+import moriyashiine.nycto.common.init.NyctoDamageTypes;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -26,7 +26,7 @@ public abstract class SunDamageMixin extends Entity {
 	@ModifyVariable(method = "hurtServer", at = @At("HEAD"), argsOnly = true)
 	private DamageSource nycto$sunDamage(DamageSource source) {
 		if (source.is(DamageTypeTags.IS_FIRE) && !source.is(DamageTypeTags.IS_PROJECTILE) && NyctoAPI.isVampire(this)) {
-			return damageSources().source(ModDamageTypes.SUN, source.getDirectEntity(), source.getEntity());
+			return damageSources().source(NyctoDamageTypes.SUN, source.getDirectEntity(), source.getEntity());
 		}
 		return source;
 	}

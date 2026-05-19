@@ -5,7 +5,7 @@
 package moriyashiine.nycto.client.renderer.entity.armor.model;
 
 import moriyashiine.nycto.common.Nycto;
-import moriyashiine.nycto.common.init.ModComponentTypes;
+import moriyashiine.nycto.common.init.NyctoDataComponents;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -95,6 +95,6 @@ public class VampireArmorModel<S extends HumanoidRenderState> extends HumanoidMo
 			);
 		}
 
-		cape.visible = state.chestEquipment.getOrDefault(ModComponentTypes.SHOW_CAPE, false);
+		cape.visible = state.chestEquipment.getOrDefault(NyctoDataComponents.SHOW_CAPE, false);
 	}
 }

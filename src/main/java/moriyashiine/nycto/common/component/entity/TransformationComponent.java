@@ -4,16 +4,12 @@
 
 package moriyashiine.nycto.common.component.entity;
 
-import moriyashiine.nycto.api.init.NyctoRegistries;
 import moriyashiine.nycto.api.world.power.ActivePower;
 import moriyashiine.nycto.api.world.power.Power;
 import moriyashiine.nycto.api.world.power.PowerInstance;
 import moriyashiine.nycto.api.world.transformation.Transformation;
-import moriyashiine.nycto.common.init.ModPowers;
-import moriyashiine.nycto.common.init.ModTransformations;
-import moriyashiine.nycto.common.tag.ModPowerTags;
+import moriyashiine.nycto.common.init.NyctoTransformations;
 import moriyashiine.nycto.common.util.NyctoUtil;
-import net.minecraft.core.Registry;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
@@ -24,11 +20,10 @@ import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class TransformationComponent implements AutoSyncedComponent, CommonTickingComponent {
 	private final Player obj;
-	private Transformation transformation = ModTransformations.HUMAN;
+	private Transformation transformation = NyctoTransformations.HUMAN;
 	private final List<PowerInstance> powers = new ArrayList<>();
 	private int powerIndex = 0;
 	private int upgradeCostSeed = 0;
@@ -39,41 +34,16 @@ public class TransformationComponent implements AutoSyncedComponent, CommonTicki
 
 	@Override
 	public void readData(ValueInput input) {
-		transformation = input.read("Transformation", NyctoRegistries.TRANSFORMATION.byNameCodec()).orElse(ModTransformations.HUMAN);
+		transformation = input.read("Transformation", Transformation.CODEC).orElse(NyctoTransformations.HUMAN);
 		powers.clear();
 		powers.addAll(input.read("Powers", PowerInstance.CODEC.listOf()).orElse(List.of()));
 		powerIndex = input.getIntOr("PowerIndex", 0);
 		upgradeCostSeed = input.getIntOr("UpgradeCostSeed", 0);
-		photoFix();
-	}
-
-	// todo remove in 26.2
-	private void photoFix() {
-		int powerCount = powers.stream().filter(power -> !power.getPower().isWeakness() && power.is(ModPowerTags.VAMPIRE_CHOOSABLE)).collect(Collectors.toSet()).size();
-		int weaknessCount = powers.stream().filter(power -> power.getPower().isWeakness() && power.is(ModPowerTags.VAMPIRE_CHOOSABLE)).collect(Collectors.toSet()).size();
-		if (Math.ceil(powerCount / 2F) > weaknessCount) {
-			Registry<Power> powerRegistry = obj.level().registryAccess().lookupOrThrow(NyctoRegistries.POWER_KEY);
-			Power fallbackPower = hasPower(ModPowers.PYROPHOBIA) ? ModPowers.HUMANITY : ModPowers.PYROPHOBIA;
-			Power fallback = powerRegistry.get(powerRegistry.getResourceKey(fallbackPower).orElseThrow()).get().value();
-			int consecutivePowers = 0;
-			for (int i = 0; i < powers.size(); i++) {
-				if (powers.get(i).getPower().isWeakness()) {
-					consecutivePowers = 0;
-				} else {
-					consecutivePowers++;
-				}
-				if (consecutivePowers == 3) {
-					powers.add(i, new PowerInstance(fallback));
-					break;
-				}
-			}
-
-		}
 	}
 
 	@Override
 	public void writeData(ValueOutput output) {
-		output.store("Transformation", NyctoRegistries.TRANSFORMATION.byNameCodec(), transformation);
+		output.store("Transformation", Transformation.CODEC, transformation);
 		output.store("Powers", PowerInstance.CODEC.listOf(), powers);
 		output.putInt("PowerIndex", powerIndex);
 		output.putInt("UpgradeCostSeed", upgradeCostSeed);
@@ -82,9 +52,6 @@ public class TransformationComponent implements AutoSyncedComponent, CommonTicki
 	@Override
 	public void tick() {
 		if (obj.slib$exists()) {
-			if (obj instanceof ServerPlayer player) {
-				transformation.tick(player);
-			}
 			powers.forEach(instance -> {
 				if (obj instanceof ServerPlayer player) {
 					instance.getPower().tick(player);

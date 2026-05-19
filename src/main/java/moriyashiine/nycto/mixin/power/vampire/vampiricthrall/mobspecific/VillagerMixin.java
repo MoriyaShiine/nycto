@@ -5,8 +5,8 @@
 package moriyashiine.nycto.mixin.power.vampire.vampiricthrall.mobspecific;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModEnvironmentAttributes;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEnvironmentAttributes;
 import net.minecraft.world.attribute.EnvironmentAttribute;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.villager.AbstractVillager;
@@ -25,32 +25,32 @@ public abstract class VillagerMixin extends AbstractVillager {
 
 	@ModifyArg(method = "registerBrainGoals", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/Brain;setSchedule(Lnet/minecraft/world/attribute/EnvironmentAttribute;)V", ordinal = 0))
 	private EnvironmentAttribute<Activity> nycto$vampiricThrallBabySchedule(EnvironmentAttribute<Activity> schedule) {
-		if (ModEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner()) {
-			return ModEnvironmentAttributes.BABY_VAMPIRE_VILLAGER_ACTIVITY_GAMEPLAY;
+		if (NyctoEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner()) {
+			return NyctoEnvironmentAttributes.BABY_VAMPIRE_VILLAGER_ACTIVITY_GAMEPLAY;
 		}
 		return schedule;
 	}
 
 	@ModifyArg(method = "registerBrainGoals", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/Brain;setSchedule(Lnet/minecraft/world/attribute/EnvironmentAttribute;)V", ordinal = 1))
 	private EnvironmentAttribute<Activity> nycto$vampiricThrallSchedule(EnvironmentAttribute<Activity> schedule) {
-		if (ModEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner()) {
-			return ModEnvironmentAttributes.VAMPIRE_VILLAGER_ACTIVITY_GAMEPLAY;
+		if (NyctoEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner()) {
+			return NyctoEnvironmentAttributes.VAMPIRE_VILLAGER_ACTIVITY_GAMEPLAY;
 		}
 		return schedule;
 	}
 
 	@ModifyReturnValue(method = "canBreed", at = @At("RETURN"))
 	private boolean nycto$vampiricThrallBreed(boolean original) {
-		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner();
+		return original && !NyctoEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner();
 	}
 
 	@ModifyReturnValue(method = "hungry", at = @At("RETURN"))
 	private boolean nycto$vampiricThrallFood(boolean original) {
-		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner();
+		return original && !NyctoEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner();
 	}
 
 	@ModifyReturnValue(method = "wantsToSpawnGolem", at = @At("RETURN"))
 	private boolean nycto$vampiricThrallGolem(boolean original) {
-		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner();
+		return original && !NyctoEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner();
 	}
 }

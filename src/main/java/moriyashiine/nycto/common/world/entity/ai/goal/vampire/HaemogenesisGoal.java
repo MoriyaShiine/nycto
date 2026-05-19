@@ -4,8 +4,8 @@
 
 package moriyashiine.nycto.common.world.entity.ai.goal.vampire;
 
-import moriyashiine.nycto.common.init.ModPowers;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoPowers;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import moriyashiine.nycto.common.world.entity.monster.Vampire;
 import moriyashiine.nycto.common.world.power.vampire.HaemogenesisPower;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
@@ -20,13 +20,13 @@ public class HaemogenesisGoal extends Goal {
 
 	@Override
 	public boolean canUse() {
-		return mob.canUsePower(ModPowers.HAEMOGENESIS) && mob.getHealth() <= mob.getMaxHealth() * 0.7F;
+		return mob.canUsePower(NyctoPowers.HAEMOGENESIS) && mob.getHealth() <= mob.getMaxHealth() * 0.7F;
 	}
 
 	@Override
 	public void start() {
-		mob.useAbility(ModPowers.HAEMOGENESIS);
-		SLibUtils.playAnchoredSound(mob, ModSoundEvents.HAEMOGENESIS_USE);
+		mob.useAbility(NyctoPowers.HAEMOGENESIS);
+		SLibUtils.playAnchoredSound(mob, NyctoSoundEvents.HAEMOGENESIS_USE);
 		HaemogenesisPower.startHealing(mob);
 	}
 }

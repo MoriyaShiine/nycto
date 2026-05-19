@@ -6,8 +6,8 @@ package moriyashiine.nycto.common.world.power.vampire;
 
 import moriyashiine.nycto.api.world.power.FormChanger;
 import moriyashiine.nycto.common.component.entity.power.vampire.BatFormComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import moriyashiine.strawberrylib.api.module.SLibRegistries;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.minecraft.server.level.ServerLevel;
@@ -29,9 +29,9 @@ public class BatFormPower extends VampireActivePower implements FormChanger {
 
 	@Override
 	public void onRemoved(ServerPlayer player) {
-		BatFormComponent batFormComponent = ModEntityComponents.BAT_FORM.get(player);
-		if (batFormComponent.isEnabled()) {
-			batFormComponent.toggle();
+		BatFormComponent batForm = NyctoEntityComponents.BAT_FORM.get(player);
+		if (batForm.isEnabled()) {
+			batForm.toggle();
 		}
 	}
 
@@ -45,7 +45,7 @@ public class BatFormPower extends VampireActivePower implements FormChanger {
 
 	@Override
 	public boolean isFormActive(Player player) {
-		return ModEntityComponents.BAT_FORM.get(player).isEnabled();
+		return NyctoEntityComponents.BAT_FORM.get(player).isEnabled();
 	}
 
 	@Override
@@ -55,11 +55,11 @@ public class BatFormPower extends VampireActivePower implements FormChanger {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return ModEntityComponents.BAT_FORM.get(player).isEnabled() ? ModSoundEvents.BAT_FORM_OFF : ModSoundEvents.BAT_FORM_ON;
+		return NyctoEntityComponents.BAT_FORM.get(player).isEnabled() ? NyctoSoundEvents.BAT_FORM_OFF : NyctoSoundEvents.BAT_FORM_ON;
 	}
 
 	@Override
 	public void use(ServerLevel level, ServerPlayer player) {
-		ModEntityComponents.BAT_FORM.get(player).toggle();
+		NyctoEntityComponents.BAT_FORM.get(player).toggle();
 	}
 }

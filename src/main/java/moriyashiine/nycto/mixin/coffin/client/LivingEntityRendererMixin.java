@@ -6,7 +6,7 @@ package moriyashiine.nycto.mixin.coffin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import moriyashiine.nycto.client.renderer.entity.state.CoffinRenderState;
-import moriyashiine.nycto.common.tag.ModBlockTags;
+import moriyashiine.nycto.common.tag.NyctoBlockTags;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
@@ -31,7 +31,7 @@ public class LivingEntityRendererMixin<T extends LivingEntity, S extends LivingE
 	private void nycto$coffin(T entity, S state, float partialTicks, CallbackInfo ci) {
 		CoffinRenderState coffinRenderState = new CoffinRenderState();
 		entity.getSleepingPos().ifPresent(pos -> {
-			if (entity.level().getBlockState(pos).is(ModBlockTags.COFFINS)) {
+			if (entity.level().getBlockState(pos).is(NyctoBlockTags.COFFINS)) {
 				state.isInvisible = true;
 				coffinRenderState.sleepingInCoffin = true;
 			}

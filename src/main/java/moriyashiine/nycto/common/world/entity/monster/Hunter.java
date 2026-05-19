@@ -8,12 +8,13 @@ import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.api.init.NyctoRegistries;
 import moriyashiine.nycto.api.world.entity.huntertype.HunterType;
 import moriyashiine.nycto.common.Nycto;
-import moriyashiine.nycto.common.init.ModHunterTypes;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoHunterTypes;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import moriyashiine.nycto.common.world.entity.ai.goal.hunter.PathToContractPosGoal;
 import moriyashiine.nycto.common.world.entity.ai.goal.hunter.UltimateTargetGoal;
+import moriyashiine.nycto.common.world.entity.ai.goal.hunter.UseCustomItemGoal;
 import moriyashiine.superbsteeds.common.component.entity.HorseAttributesComponent;
-import moriyashiine.superbsteeds.common.init.ModEntityComponents;
+import moriyashiine.superbsteeds.common.init.SuperbSteedsEntityComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -72,7 +73,7 @@ public class Hunter extends Pillager {
 	protected void readAdditionalSaveData(ValueInput input) {
 		super.readAdditionalSaveData(input);
 		setCanPickUpLoot(false);
-		entityData.set(HUNTER_TYPE_ID, input.read("HunterType", HunterType.CODEC).orElse(ModHunterTypes.VAMPIRE));
+		entityData.set(HUNTER_TYPE_ID, input.read("HunterType", HunterType.CODEC).orElse(NyctoHunterTypes.VAMPIRE));
 		ultimateTarget = input.read("UltimateTarget", UUIDUtil.AUTHLIB_CODEC).orElse(null);
 		contractPos = input.read("ContractPos", BlockPos.CODEC).orElse(null);
 		contractPathTicks = input.getIntOr("ContractPathTicks", 0);
@@ -90,7 +91,7 @@ public class Hunter extends Pillager {
 	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder entityData) {
 		super.defineSynchedData(entityData);
-		entityData.define(HUNTER_TYPE_ID, ModHunterTypes.VAMPIRE);
+		entityData.define(HUNTER_TYPE_ID, NyctoHunterTypes.VAMPIRE);
 	}
 
 	@Override
@@ -122,8 +123,9 @@ public class Hunter extends Pillager {
 		goalSelector.addGoal(0, new FloatGoal(this));
 		goalSelector.addGoal(0, new PathToContractPosGoal(this));
 		goalSelector.addGoal(0, new UltimateTargetGoal(this));
-		goalSelector.addGoal(1, new net.minecraft.world.entity.ai.goal.OpenDoorGoal(this, true));
+		goalSelector.addGoal(1, new OpenDoorGoal(this, true));
 		goalSelector.addGoal(2, new RangedCrossbowAttackGoal<>(this, 1, 16));
+		goalSelector.addGoal(2, new UseCustomItemGoal(this));
 		goalSelector.addGoal(3, new MeleeAttackGoal(this, 1, false));
 		goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.8));
 		goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 8));
@@ -134,17 +136,17 @@ public class Hunter extends Pillager {
 
 	@Override
 	protected @Nullable SoundEvent getAmbientSound() {
-		return ModSoundEvents.HUNTER_AMBIENT;
+		return NyctoSoundEvents.HUNTER_AMBIENT;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return ModSoundEvents.HUNTER_HURT;
+		return NyctoSoundEvents.HUNTER_HURT;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return ModSoundEvents.HUNTER_DEATH;
+		return NyctoSoundEvents.HUNTER_DEATH;
 	}
 
 	@Override
@@ -239,7 +241,7 @@ public class Hunter extends Pillager {
 	}
 
 	public static void mountHorse(ServerLevel level, LivingEntity entity) {
-		Horse horse = EntityType.HORSE.create(level, EntitySpawnReason.TRIGGERED);
+		Horse horse = EntityTypes.HORSE.create(level, EntitySpawnReason.TRIGGERED);
 		if (horse.randomTeleport(entity.getX(), entity.getY(), entity.getZ(), false)) {
 			horse.finalizeSpawn(level, level.getCurrentDifficultyAt(entity.blockPosition()), EntitySpawnReason.TRIGGERED, null);
 			horse.setOwner(entity);
@@ -247,7 +249,7 @@ public class Hunter extends Pillager {
 			level.addFreshEntity(horse);
 			entity.startRiding(horse);
 			if (Nycto.superbSteedsLoaded) {
-				HorseAttributesComponent horseAttributesComponent = ModEntityComponents.HORSE_ATTRIBUTES.get(horse);
+				HorseAttributesComponent horseAttributesComponent = SuperbSteedsEntityComponents.HORSE_ATTRIBUTES.get(horse);
 				while (horseAttributesComponent.getSpeed() < 5) {
 					horseAttributesComponent.incrementSpeed();
 				}

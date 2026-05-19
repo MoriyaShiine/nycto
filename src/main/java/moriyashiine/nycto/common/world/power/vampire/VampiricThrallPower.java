@@ -5,11 +5,11 @@
 package moriyashiine.nycto.common.world.power.vampire;
 
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModMobEffects;
-import moriyashiine.nycto.common.init.ModParticleTypes;
-import moriyashiine.nycto.common.init.ModSoundEvents;
-import moriyashiine.nycto.common.tag.ModEntityTypeTags;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoMobEffects;
+import moriyashiine.nycto.common.init.NyctoParticleTypes;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
+import moriyashiine.nycto.common.tag.NyctoEntityTypeTags;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.nycto.common.world.transformation.VampireTransformation;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
@@ -42,14 +42,14 @@ public class VampiricThrallPower extends VampireActivePower {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return ModSoundEvents.HYPNOTIZE_USE;
+		return NyctoSoundEvents.HYPNOTIZE_USE;
 	}
 
 	@Override
 	public void use(ServerLevel level, ServerPlayer player) {
 		if (ProjectileUtil.getHitResultOnViewVector(player, entity -> entity instanceof Mob, player.entityInteractionRange()) instanceof EntityHitResult hitResult && hitResult.getEntity() instanceof Mob mob && canBeThralled(player, mob)) {
-			SLibUtils.addAnchoredParticle(mob, ModParticleTypes.THRALLED, mob.getEyeHeight(), 0, 0);
-			SLibUtils.playSound(mob, ModSoundEvents.VAMPIRIC_THRALL_CONVERT);
+			SLibUtils.addAnchoredParticle(mob, NyctoParticleTypes.THRALLED, mob.getEyeHeight(), 0, 0);
+			SLibUtils.playSound(mob, NyctoSoundEvents.VAMPIRIC_THRALL_CONVERT);
 			if (NyctoUtil.isVillager(mob)) {
 				mob.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.35);
 			}
@@ -57,16 +57,16 @@ public class VampiricThrallPower extends VampireActivePower {
 				piglin.setImmuneToZombification(true);
 			}
 			mob.setPersistenceRequired();
-			mob.removeEffect(ModMobEffects.HYPNOTIZED);
-			level.getEntitiesOfClass(Mob.class, new AABB(mob.blockPosition()).inflate(32), entity -> ModEntityComponents.VAMPIRIC_THRALL.get(entity).isOwner(player)).forEach(HypnotizePower::forget);
+			mob.removeEffect(NyctoMobEffects.HYPNOTIZED);
+			level.getEntitiesOfClass(Mob.class, new AABB(mob.blockPosition()).inflate(32), entity -> NyctoEntityComponents.VAMPIRIC_THRALL.get(entity).isOwner(player)).forEach(HypnotizePower::forget);
 			setThrall(mob, player);
 		}
-		ModEntityComponents.BLOOD.get(player).drain(getCost(player));
+		NyctoEntityComponents.BLOOD.get(player).drain(getCost(player));
 	}
 
 	public static void setThrall(Mob mob, @Nullable Entity owner) {
 		VampireTransformation.setComponents(mob, owner != null);
-		ModEntityComponents.VAMPIRIC_THRALL.get(mob).reset(owner);
+		NyctoEntityComponents.VAMPIRIC_THRALL.get(mob).reset(owner);
 		HypnotizePower.forget(mob);
 		if (mob instanceof Raider raider) {
 			Raid raid = raider.getCurrentRaid();
@@ -80,7 +80,7 @@ public class VampiricThrallPower extends VampireActivePower {
 	}
 
 	public static boolean canBeThralled(LivingEntity entity, Mob target) {
-		if (target.slib$exists() && target.is(ModEntityTypeTags.CAN_BE_THRALLED)) {
+		if (target.slib$exists() && target.is(NyctoEntityTypeTags.CAN_BE_THRALLED)) {
 			if (target instanceof OwnableEntity ownable) {
 				if (!isTamed(target)) {
 					return false;
@@ -91,8 +91,8 @@ public class VampiricThrallPower extends VampireActivePower {
 					}
 				}
 			}
-			VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(target);
-			if (vampiricThrallComponent != null && !vampiricThrallComponent.hasOwner()) {
+			VampiricThrallComponent vampiricThrall = NyctoEntityComponents.VAMPIRIC_THRALL.getNullable(target);
+			if (vampiricThrall != null && !vampiricThrall.hasOwner()) {
 				return target.getHealth() <= THRESHOLD || target instanceof OwnableEntity;
 			}
 		}

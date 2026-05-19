@@ -4,7 +4,7 @@
 
 package moriyashiine.nycto.mixin.power.vampire.mistform;
 
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 
@@ -12,12 +12,12 @@ import org.spongepowered.asm.mixin.Mixin;
 public class PlayerMixin extends LivingEntityMixin {
 	@Override
 	protected boolean nycto$mistForm(boolean original) {
-		return super.nycto$mistForm(original) || ModEntityComponents.MIST_FORM.get(this).isEnabled();
+		return super.nycto$mistForm(original) || NyctoEntityComponents.MIST_FORM.get(this).isEnabled();
 	}
 
 	@Override
 	protected float nycto$mistForm(float original) {
-		if (ModEntityComponents.MIST_FORM.get(this).isEnabled()) {
+		if (NyctoEntityComponents.MIST_FORM.get(this).isEnabled()) {
 			return 0;
 		}
 		return super.nycto$mistForm(original);

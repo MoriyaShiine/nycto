@@ -4,6 +4,7 @@
 
 package moriyashiine.nycto.mixin.power.vampire.keensenses.client;
 
+import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.resource.CrossFrameResourcePool;
 import moriyashiine.nycto.client.event.power.KeenSensesClientEvent;
 import moriyashiine.nycto.common.Nycto;
@@ -27,6 +28,10 @@ public abstract class GameRendererMixin {
 
 	@Shadow
 	@Final
+	private RenderTarget mainRenderTarget;
+
+	@Shadow
+	@Final
 	private CrossFrameResourcePool resourcePool;
 
 	@Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;doEntityOutline()V"))
@@ -34,7 +39,7 @@ public abstract class GameRendererMixin {
 		if (KeenSensesClientEvent.shouldRenderShader()) {
 			PostChain postChain = minecraft.getShaderManager().getPostChain(Nycto.id("keen_senses"), LevelTargetBundle.MAIN_TARGETS);
 			if (postChain != null) {
-				postChain.process(minecraft.getMainRenderTarget(), resourcePool);
+				postChain.process(mainRenderTarget, resourcePool);
 			}
 		}
 	}

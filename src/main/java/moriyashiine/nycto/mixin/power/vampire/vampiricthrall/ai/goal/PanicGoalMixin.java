@@ -5,7 +5,7 @@
 package moriyashiine.nycto.mixin.power.vampire.vampiricthrall.ai.goal;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
 import org.spongepowered.asm.mixin.Final;
@@ -21,6 +21,6 @@ public class PanicGoalMixin {
 
 	@ModifyReturnValue(method = "shouldPanic", at = @At("RETURN"))
 	private boolean nycto$vampiricThrall(boolean original) {
-		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(mob).hasOwner();
+		return original && !NyctoEntityComponents.VAMPIRIC_THRALL.get(mob).hasOwner();
 	}
 }

@@ -15,6 +15,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ambient.Bat;
 
 public class FormChangeClientEvent implements ClientTickEvents.EndTick {
+	public static void init() {
+		ClientTickEvents.END_CLIENT_TICK.register(new FormChangeClientEvent());
+	}
+
 	public static BatModel batModel = null;
 	public static DarkFormModel darkFormModel = null;
 
@@ -22,15 +26,15 @@ public class FormChangeClientEvent implements ClientTickEvents.EndTick {
 	public void onEndTick(Minecraft client) {
 		if (client.player != null) {
 			LivingEntity replacement = SLibUtils.getModelReplacement(client.player);
-			if (replacement instanceof DarkForm) {
-				darkFormModel = new DarkFormModel(client.getEntityModels().bakeLayer(DarkFormModel.LAYER));
-			} else {
-				darkFormModel = null;
-			}
 			if (replacement instanceof Bat) {
 				batModel = new BatModel(client.getEntityModels().bakeLayer(ModelLayers.BAT));
 			} else {
 				batModel = null;
+			}
+			if (replacement instanceof DarkForm) {
+				darkFormModel = new DarkFormModel(client.getEntityModels().bakeLayer(DarkFormModel.LAYER));
+			} else {
+				darkFormModel = null;
 			}
 		} else {
 			batModel = null;

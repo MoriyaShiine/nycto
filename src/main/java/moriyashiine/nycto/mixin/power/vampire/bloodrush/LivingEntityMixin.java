@@ -6,7 +6,7 @@ package moriyashiine.nycto.mixin.power.vampire.bloodrush;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import moriyashiine.nycto.common.component.entity.power.vampire.BloodrushComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,8 +16,8 @@ public class LivingEntityMixin {
 	@ModifyExpressionValue(method = "checkAutoSpinAttack", at = @At(value = "INVOKE", target = "Ljava/util/List;isEmpty()Z"))
 	private boolean nycto$bloodrush(boolean original) {
 		if (!original) {
-			BloodrushComponent bloodrushComponent = ModEntityComponents.BLOODRUSH.getNullable(this);
-			if (bloodrushComponent != null && bloodrushComponent.isActive(false)) {
+			BloodrushComponent bloodrush = NyctoEntityComponents.BLOODRUSH.getNullable(this);
+			if (bloodrush != null && bloodrush.isActive(false)) {
 				return true;
 			}
 		}

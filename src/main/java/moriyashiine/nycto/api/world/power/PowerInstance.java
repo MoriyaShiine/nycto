@@ -6,12 +6,11 @@ package moriyashiine.nycto.api.world.power;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import moriyashiine.nycto.api.init.NyctoRegistries;
 import net.minecraft.tags.TagKey;
 
 public class PowerInstance {
 	public static final Codec<PowerInstance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-			NyctoRegistries.POWER.byNameCodec().fieldOf("power").forGetter(PowerInstance::getPower),
+			Power.CODEC.fieldOf("power").forGetter(PowerInstance::getPower),
 			Codec.INT.fieldOf("cooldown").forGetter(PowerInstance::getCooldown)
 	).apply(instance, PowerInstance::new));
 

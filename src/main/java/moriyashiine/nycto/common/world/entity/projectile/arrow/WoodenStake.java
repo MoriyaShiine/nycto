@@ -4,8 +4,8 @@
 
 package moriyashiine.nycto.common.world.entity.projectile.arrow;
 
-import moriyashiine.nycto.common.init.ModEntityTypes;
-import moriyashiine.nycto.common.init.ModItems;
+import moriyashiine.nycto.common.init.NyctoEntityTypes;
+import moriyashiine.nycto.common.init.NyctoItems;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
@@ -19,11 +19,11 @@ public class WoodenStake extends AbstractArrow {
 	}
 
 	public WoodenStake(Level level, double x, double y, double z, ItemStack pickupItemStack, @Nullable ItemStack firedFromWeapon) {
-		super(ModEntityTypes.WOODEN_STAKE, x, y, z, level, pickupItemStack, firedFromWeapon);
+		super(NyctoEntityTypes.WOODEN_STAKE, x, y, z, level, pickupItemStack, firedFromWeapon);
 	}
 
 	public WoodenStake(Level level, LivingEntity mob, ItemStack pickupItemStack, @Nullable ItemStack firedFromWeapon) {
-		super(ModEntityTypes.WOODEN_STAKE, mob, level, pickupItemStack, firedFromWeapon);
+		super(NyctoEntityTypes.WOODEN_STAKE, mob, level, pickupItemStack, firedFromWeapon);
 		if (mob.hasInfiniteMaterials()) {
 			pickup = Pickup.CREATIVE_ONLY;
 		}
@@ -31,6 +31,6 @@ public class WoodenStake extends AbstractArrow {
 
 	@Override
 	protected ItemStack getDefaultPickupItem() {
-		return ModItems.WOODEN_STAKE.getDefaultInstance();
+		return NyctoItems.WOODEN_STAKE.getDefaultInstance();
 	}
 }

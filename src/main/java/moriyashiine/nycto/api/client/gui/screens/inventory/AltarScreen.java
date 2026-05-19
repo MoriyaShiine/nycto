@@ -4,6 +4,7 @@
 
 package moriyashiine.nycto.api.client.gui.screens.inventory;
 
+import com.mojang.datafixers.util.Pair;
 import moriyashiine.nycto.api.init.NyctoRegistries;
 import moriyashiine.nycto.api.world.inventory.AltarMenu;
 import moriyashiine.nycto.api.world.power.Power;
@@ -22,7 +23,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Inventory;
 
 import java.util.ArrayList;
@@ -92,17 +92,17 @@ public abstract class AltarScreen<T extends AltarMenu> extends AbstractContainer
 					return true;
 				}
 			}
-			Tuple<Integer, Boolean> clicked = clickPower(posX + 13, posY + 17, (int) event.x(), (int) event.y(), true);
-			int clickedIndex = clicked.getA();
+			Pair<Integer, Boolean> clicked = clickPower(posX + 13, posY + 17, (int) event.x(), (int) event.y(), true);
+			int clickedIndex = clicked.getFirst();
 			if (clickedIndex != -1) {
-				if (clicked.getB()) {
+				if (clicked.getSecond()) {
 					if (needsWeakness) {
 						selectedWeaknessIndex = clickedIndex;
 					}
 				} else {
 					selectedPowerIndex = clickedIndex;
 				}
-				if ((selectedPowerIndex != -1 && !clicked.getB()) || (selectedWeaknessIndex != -1 && clicked.getB())) {
+				if ((selectedPowerIndex != -1 && !clicked.getSecond()) || (selectedWeaknessIndex != -1 && clicked.getSecond())) {
 					minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
 					return true;
 				}
@@ -110,10 +110,10 @@ public abstract class AltarScreen<T extends AltarMenu> extends AbstractContainer
 		}
 		// player powers
 		if (menu.getPlayerPowers() >= 2) {
-			Tuple<Integer, Boolean> clicked = clickPower(posX + 13, posY + 17, (int) event.x(), (int) event.y(), false);
-			int clickedIndex = clicked.getA();
+			Pair<Integer, Boolean> clicked = clickPower(posX + 13, posY + 17, (int) event.x(), (int) event.y(), false);
+			int clickedIndex = clicked.getFirst();
 			if (clickedIndex != -1) {
-				if (!clicked.getB() || menu.playerPowers.stream().filter(Power::isWeakness).collect(Collectors.toSet()).size() >= 2) {
+				if (!clicked.getSecond() || menu.playerPowers.stream().filter(Power::isWeakness).collect(Collectors.toSet()).size() >= 2) {
 					minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
 					Power first = null;
 					if (selectedPlayerPowerIndex != -1) {
@@ -241,7 +241,7 @@ public abstract class AltarScreen<T extends AltarMenu> extends AbstractContainer
 		}
 	}
 
-	private Tuple<Integer, Boolean> clickPower(int posX, int posY, int mouseX, int mouseY, boolean selectable) {
+	private Pair<Integer, Boolean> clickPower(int posX, int posY, int mouseX, int mouseY, boolean selectable) {
 		int powers = 0;
 		if (selectable) {
 			for (int i = 0; i < menu.selectablePowers.size(); i++) {
@@ -256,7 +256,7 @@ public abstract class AltarScreen<T extends AltarMenu> extends AbstractContainer
 				}
 				int offsetY = (row * 17) + (power.isWeakness() ? 42 : 0);
 				if (isInBounds(posX + offsetX, posY + offsetY, mouseX, mouseY, 0, 16, 0, 16)) {
-					return new Tuple<>(i, power.isWeakness());
+					return Pair.of(i, power.isWeakness());
 				}
 			}
 		} else {
@@ -271,11 +271,11 @@ public abstract class AltarScreen<T extends AltarMenu> extends AbstractContainer
 				}
 				int offsetY = 69 + (power.isWeakness() ? 23 : 0);
 				if (isInBounds(posX + offsetX, posY + offsetY, mouseX, mouseY, 0, 16, 0, 16)) {
-					return new Tuple<>(i, power.isWeakness());
+					return Pair.of(i, power.isWeakness());
 				}
 			}
 		}
-		return new Tuple<>(-1, false);
+		return Pair.of(-1, false);
 	}
 
 	private boolean needsWeakness() {

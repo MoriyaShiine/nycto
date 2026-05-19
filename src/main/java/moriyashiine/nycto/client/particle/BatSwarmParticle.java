@@ -4,7 +4,7 @@
 
 package moriyashiine.nycto.client.particle;
 
-import moriyashiine.nycto.common.init.ModParticleTypes;
+import moriyashiine.nycto.common.init.NyctoParticleTypes;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
@@ -40,7 +40,7 @@ public class BatSwarmParticle extends SingleQuadParticle {
 		if (age % 2 == 0) {
 			spriteIndex = spriteIndex == 0 ? lifetime : 0;
 			if (hasBlood) {
-				level.addParticle(ModParticleTypes.BLOOD, x, y, z, 0, 0, 0);
+				level.addParticle(NyctoParticleTypes.BLOOD, x, y, z, 0, 0, 0);
 			}
 		}
 	}

@@ -5,7 +5,7 @@
 package moriyashiine.nycto.mixin.coffin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import moriyashiine.nycto.common.tag.ModBlockTags;
+import moriyashiine.nycto.common.tag.NyctoBlockTags;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.ai.village.poi.PoiTypes;
@@ -26,7 +26,7 @@ public class PoiTypesMixin {
 
 	@ModifyReturnValue(method = "forState", at = @At("RETURN"))
 	private static Optional<Holder<PoiType>> nycto$coffin(Optional<Holder<PoiType>> original, BlockState state) {
-		if (state.is(ModBlockTags.COFFINS)) {
+		if (state.is(NyctoBlockTags.COFFINS)) {
 			return TYPE_BY_STATE.values().stream().filter(entry -> entry.is(PoiTypes.HOME)).findFirst();
 		}
 		return original;
@@ -34,6 +34,6 @@ public class PoiTypesMixin {
 
 	@ModifyReturnValue(method = "hasPoi", at = @At("RETURN"))
 	private static boolean nycto$coffin(boolean original, BlockState state) {
-		return original || state.is(ModBlockTags.COFFINS);
+		return original || state.is(NyctoBlockTags.COFFINS);
 	}
 }

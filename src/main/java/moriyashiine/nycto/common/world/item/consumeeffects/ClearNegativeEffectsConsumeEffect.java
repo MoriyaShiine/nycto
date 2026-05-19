@@ -6,8 +6,7 @@ package moriyashiine.nycto.common.world.item.consumeeffects;
 
 import com.mojang.serialization.MapCodec;
 import moriyashiine.nycto.api.NyctoAPI;
-import moriyashiine.nycto.common.init.ModConsumeEffectTypes;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoConsumeEffectTypes;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -26,7 +25,7 @@ public record ClearNegativeEffectsConsumeEffect() implements ConsumeEffect {
 
 	@Override
 	public Type<ClearNegativeEffectsConsumeEffect> getType() {
-		return ModConsumeEffectTypes.CLEAR_NEGATIVE_EFFECTS;
+		return NyctoConsumeEffectTypes.CLEAR_NEGATIVE_EFFECTS;
 	}
 
 	@Override
@@ -43,7 +42,7 @@ public record ClearNegativeEffectsConsumeEffect() implements ConsumeEffect {
 				}
 			}
 		}
-		if (ModEntityComponents.HEAL_BLOCK.get(user).isHealingBlocked()) {
+		if (NyctoAPI.isHealingBlocked(user)) {
 			NyctoAPI.applyHealBlock(user, 0);
 			removed = true;
 		}

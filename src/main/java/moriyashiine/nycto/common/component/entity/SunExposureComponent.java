@@ -5,13 +5,11 @@
 package moriyashiine.nycto.common.component.entity;
 
 import moriyashiine.nycto.api.NyctoAPI;
-import moriyashiine.nycto.api.world.power.PowerInstance;
-import moriyashiine.nycto.common.NyctoAPIImpl;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModGameRules;
-import moriyashiine.nycto.common.init.ModPowers;
-import moriyashiine.nycto.common.tag.ModBlockTags;
-import moriyashiine.nycto.common.tag.ModPowerTags;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoGameRules;
+import moriyashiine.nycto.common.init.NyctoPowers;
+import moriyashiine.nycto.common.tag.NyctoBlockTags;
+import moriyashiine.nycto.common.tag.NyctoPowerTags;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.nycto.common.util.VampireSunExposureMode;
 import moriyashiine.nycto.common.world.effect.VampireWardMobEffect;
@@ -67,7 +65,7 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 			int max = 0;
 			if (exposed) {
 				boolean sunResistance = NyctoUtil.hasSunResistance(obj);
-				boolean pyrophobia = obj instanceof Player player && NyctoAPI.hasPower(player, ModPowers.PYROPHOBIA);
+				boolean pyrophobia = obj instanceof Player player && NyctoAPI.hasPower(player, NyctoPowers.PYROPHOBIA);
 				boolean cappedBurnTime = !vampireSunExposureMode.burn && sunResistance && !pyrophobia;
 				max = cappedBurnTime ? MIN_DEBUFF_EXPOSURE_TIME : MAX_EXPOSURE_TIME;
 				if (exposureTime < max) {
@@ -76,11 +74,7 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 					obj.igniteForSeconds(4);
 				}
 				if (vampireSunExposureMode.debuff && obj instanceof Player player) {
-					for (PowerInstance power : NyctoAPI.getPowers(player)) {
-						if (power.getCooldown() <= 0 && power.is(ModPowerTags.VAMPIRE_CHOOSABLE)) {
-							NyctoAPIImpl.setPowerCooldown(player, power.getPower(), BLOCKED_COOLDOWN);
-						}
-					}
+					NyctoUtil.blockPowers(player, power -> power.is(NyctoPowerTags.VAMPIRE_CHOOSABLE));
 				}
 			}
 			if (exposureTime > max) {
@@ -108,7 +102,7 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 	}
 
 	public void sync() {
-		ModEntityComponents.SUN_EXPOSURE.sync(obj);
+		NyctoEntityComponents.SUN_EXPOSURE.sync(obj);
 	}
 
 	public void reset() {
@@ -149,7 +143,7 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 
 	private boolean tickGameRule() {
 		boolean changed = false;
-		VampireSunExposureMode mode = ((ServerLevel) obj.level()).getGameRules().get(ModGameRules.VAMPIRE_SUN_EXPOSURE_MODE);
+		VampireSunExposureMode mode = ((ServerLevel) obj.level()).getGameRules().get(NyctoGameRules.VAMPIRE_SUN_EXPOSURE_MODE);
 		if (vampireSunExposureMode != mode) {
 			vampireSunExposureMode = mode;
 			changed = true;
@@ -169,7 +163,7 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 				if (obj instanceof ServerPlayer player) {
 					NyctoUtil.disableFormChangePowers(player.level(), player, null);
 				}
-				if (ModEntityComponents.HEAL_BLOCK.get(obj).getTicksToBlock() < -BLOCKED_COOLDOWN) {
+				if (NyctoEntityComponents.HEAL_BLOCK.get(obj).getTicksToBlock() < -BLOCKED_COOLDOWN) {
 					NyctoAPI.applyHealBlock(obj, -BLOCKED_COOLDOWN);
 				}
 			}
@@ -182,7 +176,7 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 		if (NyctoAPI.hasRespawnLeniency(obj) || !obj.level().isBrightOutside() || !obj.slib$isSurvival() || obj.isInRain()) {
 			return false;
 		}
-		if (obj.getSleepingPos().isPresent() && obj.level().getBlockState(obj.getSleepingPos().get()).is(ModBlockTags.COFFINS)) {
+		if (obj.getSleepingPos().isPresent() && obj.level().getBlockState(obj.getSleepingPos().get()).is(NyctoBlockTags.COFFINS)) {
 			return false;
 		}
 		return exposedAtPos(obj, obj.blockPosition());

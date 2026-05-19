@@ -7,7 +7,7 @@ package moriyashiine.nycto.mixin.power.vampire.bloodrush.client;
 import moriyashiine.nycto.client.renderer.entity.layers.BloodrushAuraLayer;
 import moriyashiine.nycto.client.renderer.entity.state.BloodrushRenderState;
 import moriyashiine.nycto.common.component.entity.power.vampire.BloodrushComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.minecraft.client.entity.ClientAvatarEntity;
 import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -33,11 +33,11 @@ public abstract class AvatarRendererMixin<AvatarlikeEntity extends Avatar & Clie
 
 	@Inject(method = "extractRenderState(Lnet/minecraft/world/entity/Avatar;Lnet/minecraft/client/renderer/entity/state/AvatarRenderState;F)V", at = @At("TAIL"))
 	private void nycto$bloodrush(AvatarlikeEntity entity, AvatarRenderState state, float partialTicks, CallbackInfo ci) {
-		BloodrushComponent bloodrushComponent = ModEntityComponents.BLOODRUSH.getNullable(entity);
-		if (bloodrushComponent != null) {
+		BloodrushComponent bloodrush = NyctoEntityComponents.BLOODRUSH.getNullable(entity);
+		if (bloodrush != null) {
 			BloodrushRenderState bloodrushRenderState = new BloodrushRenderState();
-			bloodrushRenderState.usingBloodrush = bloodrushComponent.isActive(false);
-			bloodrushRenderState.usingBloodrushLenient = bloodrushComponent.isActive(true);
+			bloodrushRenderState.usingBloodrush = bloodrush.isActive(false);
+			bloodrushRenderState.usingBloodrushLenient = bloodrush.isActive(true);
 			state.setData(BloodrushRenderState.KEY, bloodrushRenderState);
 		}
 	}

@@ -5,9 +5,9 @@
 package moriyashiine.nycto.datagen.provider.integration.anthropophagy;
 
 import moriyashiine.anthropophagy.api.datagen.FleshDropsProvider;
-import moriyashiine.anthropophagy.common.init.ModItems;
+import moriyashiine.anthropophagy.common.references.AnthropophagyItemIds;
 import moriyashiine.nycto.common.Nycto;
-import moriyashiine.nycto.common.init.ModEntityTypes;
+import moriyashiine.nycto.common.references.NyctoEntityTypeIds;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.minecraft.core.HolderLookup;
 
@@ -20,8 +20,8 @@ public class NyctoFleshDropsProvider extends FleshDropsProvider {
 
 	@Override
 	protected void configure(Output output) {
-		output.accept(ModEntityTypes.HUNTER, ModItems.FLESH, ModItems.COOKED_FLESH);
-		output.accept(ModEntityTypes.VAMPIRE, ModItems.CORRUPT_FLESH);
+		output.accept(NyctoEntityTypeIds.HUNTER, AnthropophagyItemIds.FLESH, AnthropophagyItemIds.COOKED_FLESH);
+		output.accept(NyctoEntityTypeIds.VAMPIRE, AnthropophagyItemIds.CORRUPT_FLESH);
 	}
 
 	@Override

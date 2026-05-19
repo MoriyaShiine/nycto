@@ -4,7 +4,7 @@
 
 package moriyashiine.nycto.mixin.woodenstake;
 
-import moriyashiine.nycto.common.init.ModItems;
+import moriyashiine.nycto.common.init.NyctoItems;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import org.spongepowered.asm.mixin.Final;
@@ -22,6 +22,6 @@ public class ProjectileWeaponItemMixin {
 	public static Predicate<ItemStack> ARROW_OR_FIREWORK;
 
 	static {
-		ARROW_OR_FIREWORK = ARROW_OR_FIREWORK.or(stack -> stack.is(ModItems.WOODEN_STAKE));
+		ARROW_OR_FIREWORK = ARROW_OR_FIREWORK.or(stack -> stack.is(NyctoItems.WOODEN_STAKE));
 	}
 }

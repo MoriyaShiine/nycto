@@ -12,7 +12,7 @@ import moriyashiine.nycto.client.renderer.entity.layers.WolfHunterArmorLayer;
 import moriyashiine.nycto.common.component.entity.TransformationComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricVexComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,17 +20,17 @@ import net.minecraft.world.entity.player.Player;
 
 public class NyctoClientAPI {
 	public static boolean isHighlightingPower(Player player, Power power) {
-		TransformationComponent transformationComponent = ModEntityComponents.TRANSFORMATION.get(player);
-		return PowerClientEvent.isActive(player, transformationComponent) && transformationComponent.getPowers().get(transformationComponent.getPowerIndex()).getPower() == power;
+		TransformationComponent transformation = NyctoEntityComponents.TRANSFORMATION.get(player);
+		return PowerClientEvent.isActive(player, transformation) && transformation.getPowers().get(transformation.getPowerIndex()).getPower() == power;
 	}
 
 	public static boolean hasVampiricThrallTexture(LivingEntity entity) {
-		VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
-		if (vampiricThrallComponent != null && vampiricThrallComponent.hasOwner()) {
+		VampiricThrallComponent vampiricThrall = NyctoEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
+		if (vampiricThrall != null && vampiricThrall.hasOwner()) {
 			return true;
 		}
-		VampiricVexComponent vampiricVexComponent = ModEntityComponents.VAMPIRIC_VEX.getNullable(entity);
-		return vampiricVexComponent != null && vampiricVexComponent.hasOwner();
+		VampiricVexComponent vampiricVex = NyctoEntityComponents.VAMPIRIC_VEX.getNullable(entity);
+		return vampiricVex != null && vampiricVex.hasOwner();
 	}
 
 	public static <T extends LivingEntity> void registerVampiricThrallRenderer(EntityType<T> type, VampiricThrallRenderer<T> renderer) {

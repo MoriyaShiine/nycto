@@ -6,7 +6,7 @@ package moriyashiine.nycto.client.gui.hud.power;
 
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.component.entity.power.vampire.CarnageComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElement;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -20,13 +20,11 @@ public class CarnageHudElement implements HudElement {
 	@Override
 	public void extractRenderState(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker) {
 		Minecraft client = Minecraft.getInstance();
-		if (!client.options.hideGui) {
-			Player player = client.player;
-			if (player != null) {
-				CarnageComponent carnageComponent = ModEntityComponents.CARNAGE.get(player);
-				if (carnageComponent.isActive()) {
-					client.gui.extractTextureOverlay(graphics, CARNAGE_OVERLAY, carnageComponent.getOverlayOpacity(2 / 3F));
-				}
+		Player player = client.player;
+		if (player != null) {
+			CarnageComponent carnage = NyctoEntityComponents.CARNAGE.get(player);
+			if (carnage.isActive()) {
+				client.gui.hud.extractTextureOverlay(graphics, CARNAGE_OVERLAY, carnage.getOverlayOpacity(2 / 3F));
 			}
 		}
 	}

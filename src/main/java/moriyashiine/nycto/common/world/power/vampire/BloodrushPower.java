@@ -6,8 +6,8 @@ package moriyashiine.nycto.common.world.power.vampire;
 
 import moriyashiine.nycto.api.world.power.FormChanger;
 import moriyashiine.nycto.client.payload.PlayBloodrushSoundPayload;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -26,12 +26,12 @@ public class BloodrushPower extends VampireActivePower implements FormChanger {
 
 	@Override
 	public boolean isFormActive(Player player) {
-		return ModEntityComponents.BLOODRUSH.get(player).isActive(false);
+		return NyctoEntityComponents.BLOODRUSH.get(player).isActive(false);
 	}
 
 	@Override
 	public void disable(ServerLevel level, ServerPlayer player) {
-		ModEntityComponents.BLOODRUSH.get(player).use(1);
+		NyctoEntityComponents.BLOODRUSH.get(player).use(1);
 	}
 
 	@Override
@@ -41,12 +41,12 @@ public class BloodrushPower extends VampireActivePower implements FormChanger {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return ModSoundEvents.BLOODRUSH_USE;
+		return NyctoSoundEvents.BLOODRUSH_USE;
 	}
 
 	@Override
 	public void use(ServerLevel level, ServerPlayer player) {
-		ModEntityComponents.BLOODRUSH.get(player).use(90);
-		ModEntityComponents.BLOOD.get(player).drain(getCost(player));
+		NyctoEntityComponents.BLOODRUSH.get(player).use(90);
+		NyctoEntityComponents.BLOOD.get(player).drain(getCost(player));
 	}
 }

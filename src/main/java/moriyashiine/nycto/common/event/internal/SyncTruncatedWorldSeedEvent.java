@@ -10,6 +10,10 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.minecraft.server.level.ServerPlayer;
 
 public class SyncTruncatedWorldSeedEvent implements ServerPlayerEvents.Join {
+	public static void init() {
+		ServerPlayerEvents.JOIN.register(new SyncTruncatedWorldSeedEvent());
+	}
+
 	@Override
 	public void onJoin(ServerPlayer player) {
 		NyctoUtil.truncatedWorldSeed = (int) player.level().getSeed();

@@ -5,17 +5,21 @@
 package moriyashiine.nycto.common.event.power.vampire;
 
 import moriyashiine.nycto.common.component.entity.power.vampire.HypnotizedComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModMobEffects;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoMobEffects;
 import moriyashiine.strawberrylib.api.event.AfterDamageIncludingDeathEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 
 public class HypnotizeEvent implements AfterDamageIncludingDeathEvent {
+	public static void init() {
+		AfterDamageIncludingDeathEvent.EVENT.register(new HypnotizeEvent());
+	}
+
 	@Override
 	public void afterDamage(LivingEntity victim, DamageSource source, float originalDamage, float modifiedDamage, boolean blocked) {
 		if (shouldRemoveEffect(victim, source)) {
-			victim.removeEffect(ModMobEffects.HYPNOTIZED);
+			victim.removeEffect(NyctoMobEffects.HYPNOTIZED);
 		}
 	}
 
@@ -23,7 +27,7 @@ public class HypnotizeEvent implements AfterDamageIncludingDeathEvent {
 		if (entity.slib$isPlayer()) {
 			return source.getEntity() != null;
 		}
-		HypnotizedComponent hypnotizedComponent = ModEntityComponents.HYPNOTIZED.getNullable(entity);
-		return hypnotizedComponent != null && hypnotizedComponent.isOwner(source.getEntity());
+		HypnotizedComponent hypnotized = NyctoEntityComponents.HYPNOTIZED.getNullable(entity);
+		return hypnotized != null && hypnotized.isOwner(source.getEntity());
 	}
 }

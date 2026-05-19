@@ -9,13 +9,12 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import moriyashiine.nycto.api.NyctoAPI;
-import moriyashiine.nycto.api.init.NyctoRegistries;
 import moriyashiine.nycto.api.world.power.Power;
 import moriyashiine.nycto.common.component.entity.BloodComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModGameRules;
-import moriyashiine.nycto.common.init.ModPowers;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoGameRules;
+import moriyashiine.nycto.common.init.NyctoPowers;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import moriyashiine.nycto.common.world.entity.ai.goal.vampire.*;
 import moriyashiine.nycto.common.world.transformation.VampireTransformation;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
@@ -52,12 +51,12 @@ public class Vampire extends Monster {
 	private static final int ABILITY_COOLDOWN = 40;
 
 	private static final Object2IntMap<Power> USABLE_POWERS = new Object2IntArrayMap<>(Map.of(
-			ModPowers.BATSTEP, 20 * 8,
-			ModPowers.BAT_SWARM, 20 * 20,
-			ModPowers.BLOOD_BARRIER, 20 * 15,
-			ModPowers.BLOOD_FLECHETTES, 20 * 6,
-			ModPowers.CARNAGE, 20 * 15,
-			ModPowers.HAEMOGENESIS, 20 * 10
+			NyctoPowers.BATSTEP, 20 * 8,
+			NyctoPowers.BAT_SWARM, 20 * 20,
+			NyctoPowers.BLOOD_BARRIER, 20 * 15,
+			NyctoPowers.BLOOD_FLECHETTES, 20 * 6,
+			NyctoPowers.CARNAGE, 20 * 15,
+			NyctoPowers.HAEMOGENESIS, 20 * 10
 	));
 
 	private final Set<UsablePower> usablePowers = new HashSet<>();
@@ -66,6 +65,7 @@ public class Vampire extends Monster {
 
 	public Vampire(EntityType<Vampire> type, Level level) {
 		super(type, level);
+		xpReward = 20;
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
@@ -79,7 +79,7 @@ public class Vampire extends Monster {
 
 	public static boolean checkVampireSpawnRules(EntityType<Vampire> type, ServerLevelAccessor level, EntitySpawnReason spawnReason, BlockPos pos, RandomSource random) {
 		MoonPhase moonPhase = level.getLevel().environmentAttributes().getValue(EnvironmentAttributes.MOON_PHASE, pos);
-		return Monster.checkMonsterSpawnRules(type, level, spawnReason, pos, random) && moonPhase == MoonPhase.NEW_MOON && level.getLevel().getGameRules().get(ModGameRules.SPAWN_VAMPIRES);
+		return Monster.checkMonsterSpawnRules(type, level, spawnReason, pos, random) && moonPhase == MoonPhase.NEW_MOON && level.getLevel().getGameRules().get(NyctoGameRules.SPAWN_VAMPIRES);
 	}
 
 	@Override
@@ -140,17 +140,17 @@ public class Vampire extends Monster {
 
 	@Override
 	protected @Nullable SoundEvent getAmbientSound() {
-		return ModSoundEvents.VAMPIRE_AMBIENT;
+		return NyctoSoundEvents.VAMPIRE_AMBIENT;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return ModSoundEvents.VAMPIRE_HURT;
+		return NyctoSoundEvents.VAMPIRE_HURT;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return ModSoundEvents.VAMPIRE_DEATH;
+		return NyctoSoundEvents.VAMPIRE_DEATH;
 	}
 
 	@Override
@@ -178,14 +178,14 @@ public class Vampire extends Monster {
 		if (hurtTarget) {
 			swing(InteractionHand.MAIN_HAND);
 			if (NyctoAPI.hasQualityBlood(target)) {
-				BloodComponent targetBloodComponent = ModEntityComponents.BLOOD.getNullable(target);
-				if (targetBloodComponent != null) {
-					BloodComponent selfBloodComponent = ModEntityComponents.BLOOD.get(this);
-					if (selfBloodComponent.canFill()) {
-						int amount = Math.min(5, targetBloodComponent.getBlood());
-						if (targetBloodComponent.drainAttack(amount)) {
-							selfBloodComponent.fill(amount);
-							SLibUtils.playSound(target, ModSoundEvents.BLOOD_BOTTLE_DRINK.value());
+				BloodComponent targetBlood = NyctoEntityComponents.BLOOD.getNullable(target);
+				if (targetBlood != null) {
+					BloodComponent selfBlood = NyctoEntityComponents.BLOOD.get(this);
+					if (selfBlood.canFill()) {
+						int amount = Math.min(5, targetBlood.getBlood());
+						if (targetBlood.drainAttack(amount)) {
+							selfBlood.fill(amount);
+							SLibUtils.playSound(target, NyctoSoundEvents.BLOOD_BOTTLE_DRINK.value());
 						}
 					}
 				}
@@ -205,7 +205,7 @@ public class Vampire extends Monster {
 	}
 
 	public boolean canUsePower(Power power) {
-		if (abilityCooldown == 0 && !ModEntityComponents.BLOOD.get(this).lowBlood()) {
+		if (abilityCooldown == 0 && !NyctoEntityComponents.BLOOD.get(this).lowBlood()) {
 			for (UsablePower usablePower : usablePowers) {
 				if (usablePower.power == power) {
 					return usablePower.cooldown == 0;
@@ -227,10 +227,10 @@ public class Vampire extends Monster {
 
 	public static class UsablePower {
 		private static final Codec<UsablePower> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-						NyctoRegistries.POWER.byNameCodec().fieldOf("power").forGetter(UsablePower::getPower),
-						Codec.INT.fieldOf("max_cooldown").forGetter(UsablePower::getMaxCooldown),
-						Codec.INT.fieldOf("cooldown").forGetter(UsablePower::getCooldown))
-				.apply(instance, UsablePower::new));
+				Power.CODEC.fieldOf("power").forGetter(UsablePower::getPower),
+				Codec.INT.fieldOf("max_cooldown").forGetter(UsablePower::getMaxCooldown),
+				Codec.INT.fieldOf("cooldown").forGetter(UsablePower::getCooldown)
+		).apply(instance, UsablePower::new));
 
 		private final Power power;
 		private final int maxCooldown;

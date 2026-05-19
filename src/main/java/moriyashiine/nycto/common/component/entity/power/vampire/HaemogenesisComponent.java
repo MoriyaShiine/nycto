@@ -5,7 +5,7 @@
 package moriyashiine.nycto.common.component.entity.power.vampire;
 
 import moriyashiine.nycto.api.NyctoAPI;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -39,7 +39,7 @@ public class HaemogenesisComponent implements AutoSyncedComponent, CommonTicking
 	}
 
 	public void sync() {
-		ModEntityComponents.HAEMOGENESIS.sync(obj);
+		NyctoEntityComponents.HAEMOGENESIS.sync(obj);
 	}
 
 	public boolean isHealing() {

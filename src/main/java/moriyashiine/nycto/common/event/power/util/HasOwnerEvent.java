@@ -6,7 +6,7 @@ package moriyashiine.nycto.common.event.power.util;
 
 import moriyashiine.nycto.common.component.entity.power.util.HasOwnerComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -16,11 +16,15 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 
 public class HasOwnerEvent implements ServerLivingEntityEvents.AfterDamage {
+	public static void init() {
+		ServerLivingEntityEvents.AFTER_DAMAGE.register(new HasOwnerEvent());
+	}
+
 	private static final RevengeFunction REVENGE = new RevengeFunction() {
 		@Override
 		public boolean shouldHelp(Mob mob, LivingEntity attacker, LivingEntity victim) {
 			if (SLibUtils.shouldHurt(attacker, victim) && mob.getTarget() == null) {
-				if (ModEntityComponents.VAMPIRIC_THRALL.get(mob).getFollowMode() == VampiricThrallComponent.FollowMode.STAY) {
+				if (NyctoEntityComponents.VAMPIRIC_THRALL.get(mob).getFollowMode() == VampiricThrallComponent.FollowMode.STAY) {
 					return false;
 				}
 				return HasOwnerComponent.isOwner(mob, victim);

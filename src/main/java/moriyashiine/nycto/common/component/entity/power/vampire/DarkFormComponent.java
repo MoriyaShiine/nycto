@@ -7,12 +7,12 @@ package moriyashiine.nycto.common.component.entity.power.vampire;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.component.entity.power.util.VampireFormChangeComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModEntityTypes;
-import moriyashiine.nycto.common.init.ModPowers;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityTypes;
+import moriyashiine.nycto.common.init.NyctoPowers;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import moriyashiine.nycto.common.payload.DarkFormJumpPayload;
-import moriyashiine.nycto.common.tag.ModPowerTags;
+import moriyashiine.nycto.common.tag.NyctoPowerTags;
 import moriyashiine.nycto.common.world.entity.monster.DarkForm;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
@@ -26,8 +26,6 @@ import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
-
-import java.util.stream.Collectors;
 
 public class DarkFormComponent extends VampireFormChangeComponent implements CommonTickingComponent {
 	private static final AttributeModifier ARMOR_MODIFIER = new AttributeModifier(Nycto.id("dark_form_armor"), 20, AttributeModifier.Operation.ADD_VALUE);
@@ -90,28 +88,28 @@ public class DarkFormComponent extends VampireFormChangeComponent implements Com
 	}
 
 	public void sync() {
-		ModEntityComponents.DARK_FORM.sync(obj);
+		NyctoEntityComponents.DARK_FORM.sync(obj);
 	}
 
 	@Override
 	public void toggle() {
 		SLibUtils.addParticles(obj, ParticleTypes.SMOKE, 48, ParticleAnchor.BODY);
 		if (enabled) {
-			SLibUtils.removeModelReplacementType(obj, ModEntityTypes.DARK_FORM);
+			SLibUtils.removeModelReplacementType(obj, NyctoEntityTypes.DARK_FORM);
 			drainTicks = 0;
 		} else {
-			ModEntityComponents.BLOOD.get(obj).drain(ModPowers.DARK_FORM.getCost(obj));
-			SLibUtils.addModelReplacementType(obj, ModEntityTypes.DARK_FORM, 500);
+			NyctoEntityComponents.BLOOD.get(obj).drain(NyctoPowers.DARK_FORM.getCost(obj));
+			SLibUtils.addModelReplacementType(obj, NyctoEntityTypes.DARK_FORM, 500);
 			drainTicks = POWER_DRAIN_TICKS;
 		}
 		enabled = !enabled;
-		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.ARMOR, getAdjustedModifier(ARMOR_MODIFIER), enabled);
-		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.ARMOR_TOUGHNESS, getAdjustedModifier(ARMOR_TOUGHNESS_MODIFIER), enabled);
-		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.ATTACK_DAMAGE, getAdjustedModifier(ATTACK_DAMAGE_MODIFIER), enabled);
-		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.ATTACK_SPEED, ATTACK_SPEED_MODIFIER, enabled);
-		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.BLOCK_INTERACTION_RANGE, BLOCK_INTERACTION_RANGE_MODIFIER, enabled);
-		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.ENTITY_INTERACTION_RANGE, ENTITY_INTERACTION_RANGE_MODIFIER, enabled);
-		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.KNOCKBACK_RESISTANCE, KNOCKBACK_RESISTANCE_MODIFIER, enabled);
+		SLibUtils.applyAttributeModifier(obj, Attributes.ARMOR, getAdjustedModifier(ARMOR_MODIFIER), enabled);
+		SLibUtils.applyAttributeModifier(obj, Attributes.ARMOR_TOUGHNESS, getAdjustedModifier(ARMOR_TOUGHNESS_MODIFIER), enabled);
+		SLibUtils.applyAttributeModifier(obj, Attributes.ATTACK_DAMAGE, getAdjustedModifier(ATTACK_DAMAGE_MODIFIER), enabled);
+		SLibUtils.applyAttributeModifier(obj, Attributes.ATTACK_SPEED, ATTACK_SPEED_MODIFIER, enabled);
+		SLibUtils.applyAttributeModifier(obj, Attributes.BLOCK_INTERACTION_RANGE, BLOCK_INTERACTION_RANGE_MODIFIER, enabled);
+		SLibUtils.applyAttributeModifier(obj, Attributes.ENTITY_INTERACTION_RANGE, ENTITY_INTERACTION_RANGE_MODIFIER, enabled);
+		SLibUtils.applyAttributeModifier(obj, Attributes.KNOCKBACK_RESISTANCE, KNOCKBACK_RESISTANCE_MODIFIER, enabled);
 		sync();
 	}
 
@@ -119,18 +117,15 @@ public class DarkFormComponent extends VampireFormChangeComponent implements Com
 		jumpCooldown = DarkForm.JUMP_COOLDOWN;
 		obj.jumpFromGround();
 		obj.setDeltaMovement(obj.getDeltaMovement().multiply(1.3, 1.1, 1.3));
-		SLibUtils.playSound(obj, ModSoundEvents.DARK_FORM_FLAP);
+		SLibUtils.playSound(obj, NyctoSoundEvents.DARK_FORM_FLAP);
 	}
 
 	public boolean canJump() {
-		if (obj.getAbilities().flying || obj.isInWater() || obj.isSwimming()) {
-			return false;
-		}
-		return jumpCooldown == 0 && !obj.isFallFlying() && obj.getVehicle() == null && !obj.onClimbable();
+		return jumpCooldown == 0 && SLibUtils.hasNormalMovement(obj);
 	}
 
 	private AttributeModifier getAdjustedModifier(AttributeModifier modifier) {
-		int weaknesses = NyctoAPI.getPowers(obj).stream().filter(instance -> instance.getPower().isWeakness() && instance.is(ModPowerTags.VAMPIRE_CHOOSABLE)).collect(Collectors.toSet()).size();
+		int weaknesses = NyctoAPI.getWeaknesses(obj, NyctoPowerTags.VAMPIRE_CHOOSABLE);
 		float multiplier = switch (weaknesses) {
 			case 0 -> 0.5F;
 			case 1 -> 0.7F;

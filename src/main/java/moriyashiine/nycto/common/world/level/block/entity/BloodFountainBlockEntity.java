@@ -35,6 +35,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
 public class BloodFountainBlockEntity extends BlockEntity {
@@ -49,7 +50,7 @@ public class BloodFountainBlockEntity extends BlockEntity {
 	private int feedingTicks = 0;
 
 	public BloodFountainBlockEntity(BlockPos worldPosition, BlockState blockState) {
-		super(ModBlockEntityTypes.BLOOD_FOUNTAIN, worldPosition, blockState);
+		super(NyctoBlockEntityTypes.BLOOD_FOUNTAIN, worldPosition, blockState);
 	}
 
 	public static void serverTick(Level level, BlockPos pos, BlockState state, BloodFountainBlockEntity entity) {
@@ -65,7 +66,7 @@ public class BloodFountainBlockEntity extends BlockEntity {
 			}
 		}
 		if (entity.feedingEntity != null && isValidEntity(level, pos, entity.feedingEntity)) {
-			ParticleOptions particle = entity.getTopStack().is(ModItems.AMBROSIA_BOTTLE) ? ModParticleTypes.AMBROSIA : ModParticleTypes.BLOOD;
+			ParticleOptions particle = entity.getTopStack().is(NyctoItems.AMBROSIA_BOTTLE) ? NyctoParticleTypes.AMBROSIA : NyctoParticleTypes.BLOOD;
 			double bx = pos.getX() + 0.5;
 			double by = pos.getY() + 1;
 			double bz = pos.getZ() + 0.5;
@@ -84,7 +85,7 @@ public class BloodFountainBlockEntity extends BlockEntity {
 
 			((ServerLevel) level).sendParticles(particle, bx, by, bz, 0, vx, vy, vz, 1);
 
-			ModEntityComponents.VAMPIRIC_THRALL.maybeGet(entity.feedingEntity).ifPresent(VampiricThrallComponent::setFeeding);
+			NyctoEntityComponents.VAMPIRIC_THRALL.maybeGet(entity.feedingEntity).ifPresent(VampiricThrallComponent::setFeeding);
 			if (++entity.feedingTicks == MAX_FEEDING_TICKS) {
 				int fillAmount = 0;
 				if (entity.getTopStack().has(DataComponents.CONSUMABLE)) {
@@ -97,8 +98,8 @@ public class BloodFountainBlockEntity extends BlockEntity {
 						}
 					}
 				}
-				ModEntityComponents.BLOOD.get(entity.feedingEntity).fill(fillAmount);
-				SLibUtils.playSound(entity.feedingEntity, ModSoundEvents.BLOOD_BOTTLE_DRINK.value());
+				NyctoEntityComponents.BLOOD.get(entity.feedingEntity).fill(fillAmount);
+				SLibUtils.playSound(entity.feedingEntity, NyctoSoundEvents.BLOOD_BOTTLE_DRINK.value());
 				entity.bottles.set(entity.getTopIndex(), ItemStack.EMPTY);
 				entity.updateFillState();
 				entity.setChanged();
@@ -173,7 +174,7 @@ public class BloodFountainBlockEntity extends BlockEntity {
 		BloodFountainBlock.FillState fillState = BloodFountainBlock.FillState.EMPTY;
 		ItemStack stack = getTopStack();
 		if (!stack.isEmpty()) {
-			if (stack.is(ModItems.AMBROSIA_BOTTLE)) {
+			if (stack.is(NyctoItems.AMBROSIA_BOTTLE)) {
 				fillState = BloodFountainBlock.FillState.AMBROSIA;
 			} else {
 				fillState = BloodFountainBlock.FillState.BLOOD;
@@ -194,8 +195,8 @@ public class BloodFountainBlockEntity extends BlockEntity {
 
 	public static boolean isHungryVampire(LivingEntity entity) {
 		if (NyctoAPI.isVampire(entity)) {
-			BloodComponent bloodComponent = ModEntityComponents.BLOOD.get(entity);
-			return bloodComponent.canFill() && bloodComponent.getBlood() + ModConsumables.BLOOD_FILL_AMOUNT < BloodComponent.MAX_BLOOD;
+			BloodComponent blood = NyctoEntityComponents.BLOOD.get(entity);
+			return blood.canFill() && blood.getBlood() + NyctoConsumables.BLOOD_FILL_AMOUNT < BloodComponent.MAX_BLOOD;
 		}
 		return false;
 	}
@@ -204,6 +205,6 @@ public class BloodFountainBlockEntity extends BlockEntity {
 		BlockPos above = pos.above();
 		return isHungryVampire(entity) && entity.getKnownMovement().horizontalDistanceSqr() == 0
 				&& Math.sqrt(above.distToCenterSqr(entity.getEyePosition())) < 3
-				&& level.clip(new ClipContext(above.getCenter(), entity.getEyePosition(), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity)).getType() == HitResult.Type.MISS;
+				&& level.clip(new ClipContext(Vec3.atCenterOf(above), entity.getEyePosition(), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity)).getType() == HitResult.Type.MISS;
 	}
 }

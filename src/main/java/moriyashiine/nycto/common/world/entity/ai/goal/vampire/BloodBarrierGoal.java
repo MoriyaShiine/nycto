@@ -4,8 +4,8 @@
 
 package moriyashiine.nycto.common.world.entity.ai.goal.vampire;
 
-import moriyashiine.nycto.common.init.ModPowers;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoPowers;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import moriyashiine.nycto.common.world.entity.monster.Vampire;
 import moriyashiine.nycto.common.world.power.vampire.BloodBarrierPower;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
@@ -20,13 +20,13 @@ public class BloodBarrierGoal extends Goal {
 
 	@Override
 	public boolean canUse() {
-		return mob.canUsePower(ModPowers.BLOOD_BARRIER) && mob.getTarget() != null;
+		return mob.canUsePower(NyctoPowers.BLOOD_BARRIER) && mob.getTarget() != null;
 	}
 
 	@Override
 	public void start() {
-		mob.useAbility(ModPowers.BLOOD_BARRIER);
-		SLibUtils.playAnchoredSound(mob, ModSoundEvents.BLOOD_BARRIER_USE);
+		mob.useAbility(NyctoPowers.BLOOD_BARRIER);
+		SLibUtils.playAnchoredSound(mob, NyctoSoundEvents.BLOOD_BARRIER_USE);
 		BloodBarrierPower.activate(mob);
 	}
 }

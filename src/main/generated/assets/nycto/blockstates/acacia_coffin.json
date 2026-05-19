@@ -5,7 +5,7 @@
 	  "y": 270
 	},
 	"facing=east,occupied=false,part=head": {
-	  "model": "minecraft:block/acacia_sign",
+	  "model": "minecraft:block/acacia_planks",
 	  "y": 270
 	},
 	"facing=east,occupied=true,part=foot": {
@@ -13,7 +13,7 @@
 	  "y": 270
 	},
 	"facing=east,occupied=true,part=head": {
-	  "model": "minecraft:block/acacia_sign",
+	  "model": "minecraft:block/acacia_planks",
 	  "y": 270
 	},
 	"facing=north,occupied=false,part=foot": {
@@ -21,7 +21,7 @@
 	  "y": 180
 	},
 	"facing=north,occupied=false,part=head": {
-	  "model": "minecraft:block/acacia_sign",
+	  "model": "minecraft:block/acacia_planks",
 	  "y": 180
 	},
 	"facing=north,occupied=true,part=foot": {
@@ -29,27 +29,27 @@
 	  "y": 180
 	},
 	"facing=north,occupied=true,part=head": {
-	  "model": "minecraft:block/acacia_sign",
+	  "model": "minecraft:block/acacia_planks",
 	  "y": 180
 	},
 	"facing=south,occupied=false,part=foot": {
 	  "model": "nycto:block/acacia_coffin"
 	},
 	"facing=south,occupied=false,part=head": {
-	  "model": "minecraft:block/acacia_sign"
+	  "model": "minecraft:block/acacia_planks"
 	},
 	"facing=south,occupied=true,part=foot": {
 	  "model": "nycto:block/acacia_coffin_closed"
 	},
 	"facing=south,occupied=true,part=head": {
-	  "model": "minecraft:block/acacia_sign"
+	  "model": "minecraft:block/acacia_planks"
 	},
 	"facing=west,occupied=false,part=foot": {
 	  "model": "nycto:block/acacia_coffin",
 	  "y": 90
 	},
 	"facing=west,occupied=false,part=head": {
-	  "model": "minecraft:block/acacia_sign",
+	  "model": "minecraft:block/acacia_planks",
 	  "y": 90
 	},
 	"facing=west,occupied=true,part=foot": {
@@ -57,7 +57,7 @@
 	  "y": 90
 	},
 	"facing=west,occupied=true,part=head": {
-	  "model": "minecraft:block/acacia_sign",
+	  "model": "minecraft:block/acacia_planks",
 	  "y": 90
 	}
   }

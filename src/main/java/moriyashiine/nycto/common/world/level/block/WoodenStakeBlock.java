@@ -5,7 +5,7 @@
 package moriyashiine.nycto.common.world.level.block;
 
 import com.mojang.serialization.MapCodec;
-import moriyashiine.nycto.common.init.ModDamageTypes;
+import moriyashiine.nycto.common.init.NyctoDamageTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -88,7 +88,7 @@ public class WoodenStakeBlock extends Block implements SimpleWaterloggedBlock {
 
 	@Override
 	public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, double fallDistance) {
-		entity.causeFallDamage(fallDistance + 2.5, 2.0F, level.damageSources().source(ModDamageTypes.WOODEN_STAKE_FALL));
+		entity.causeFallDamage(fallDistance + 2.5, 2.0F, level.damageSources().source(NyctoDamageTypes.WOODEN_STAKE_FALL));
 	}
 
 	@Override

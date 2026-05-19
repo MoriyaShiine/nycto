@@ -18,7 +18,8 @@ public record SyncTruncatedWorldSeedPayload(int seed) implements CustomPacketPay
 	public static final Type<SyncTruncatedWorldSeedPayload> TYPE = new Type<>(Nycto.id("sync_truncated_world_seed"));
 	public static final StreamCodec<FriendlyByteBuf, SyncTruncatedWorldSeedPayload> CODEC = StreamCodec.composite(
 			ByteBufCodecs.VAR_INT, SyncTruncatedWorldSeedPayload::seed,
-			SyncTruncatedWorldSeedPayload::new);
+			SyncTruncatedWorldSeedPayload::new
+	);
 
 	@Override
 	public Type<SyncTruncatedWorldSeedPayload> type() {

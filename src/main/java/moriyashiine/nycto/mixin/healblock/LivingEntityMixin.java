@@ -4,7 +4,7 @@
 
 package moriyashiine.nycto.mixin.healblock;
 
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.api.NyctoAPI;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class LivingEntityMixin {
 	@Inject(method = "heal", at = @At("HEAD"), cancellable = true)
 	private void nycto$healBlock(float heal, CallbackInfo ci) {
-		if (ModEntityComponents.HEAL_BLOCK.get(this).isHealingBlocked()) {
+		if (NyctoAPI.isHealingBlocked((LivingEntity) (Object) this)) {
 			ci.cancel();
 		}
 	}

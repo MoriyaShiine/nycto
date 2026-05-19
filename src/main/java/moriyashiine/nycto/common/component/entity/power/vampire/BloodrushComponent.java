@@ -7,9 +7,9 @@ package moriyashiine.nycto.common.component.entity.power.vampire;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.api.world.power.FormChanger;
 import moriyashiine.nycto.api.world.power.PowerInstance;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModParticleTypes;
-import moriyashiine.nycto.common.init.ModPowers;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoParticleTypes;
+import moriyashiine.nycto.common.init.NyctoPowers;
 import moriyashiine.strawberrylib.api.event.ModifyMovementEvents;
 import moriyashiine.strawberrylib.api.module.SLibClientUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
@@ -62,7 +62,7 @@ public class BloodrushComponent implements AutoSyncedComponent, CommonTickingCom
 			boolean disable = obj.horizontalCollision || obj.isShiftKeyDown();
 			if (!disable) {
 				for (PowerInstance power : NyctoAPI.getPowers(obj)) {
-					if (power.getPower() instanceof FormChanger formChanger && formChanger != ModPowers.BLOODRUSH && formChanger.isFormActive(obj)) {
+					if (power.getPower() instanceof FormChanger formChanger && formChanger != NyctoPowers.BLOODRUSH && formChanger.isFormActive(obj)) {
 						disable = true;
 						break;
 					}
@@ -80,12 +80,12 @@ public class BloodrushComponent implements AutoSyncedComponent, CommonTickingCom
 	public void clientTick() {
 		tick();
 		if (isActive(false)) {
-			SLibClientUtils.addParticles(obj, ModParticleTypes.BLOOD, ModParticleTypes.BLOOD_PARTICLE_COUNT, ParticleAnchor.EYES);
+			SLibClientUtils.addParticles(obj, NyctoParticleTypes.BLOOD, NyctoParticleTypes.BLOOD_PARTICLE_COUNT, ParticleAnchor.EYES);
 		}
 	}
 
 	public void sync() {
-		ModEntityComponents.BLOODRUSH.sync(obj);
+		NyctoEntityComponents.BLOODRUSH.sync(obj);
 	}
 
 	public void use(int ticks) {

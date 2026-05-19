@@ -5,7 +5,7 @@
 package moriyashiine.nycto.client.renderer.entity.state;
 
 import moriyashiine.nycto.common.component.entity.power.vampire.CarnageComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.fabricmc.fabric.api.client.rendering.v1.RenderStateDataKey;
 import net.minecraft.client.Minecraft;
@@ -30,8 +30,8 @@ public class CarnageRenderState {
 				}
 			}
 		}
-		CarnageComponent carnageComponent = ModEntityComponents.CARNAGE.get(realEntity);
-		carnageRenderState.carnageOpacity = carnageComponent.isActive() ? carnageComponent.getOverlayOpacity(0.5F) : 0;
+		CarnageComponent carnage = NyctoEntityComponents.CARNAGE.get(realEntity);
+		carnageRenderState.carnageOpacity = carnage.isActive() ? carnage.getOverlayOpacity(0.5F) : 0;
 		state.setData(KEY, carnageRenderState);
 	}
 }

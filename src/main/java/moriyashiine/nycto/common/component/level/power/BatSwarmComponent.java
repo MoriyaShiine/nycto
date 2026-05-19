@@ -68,7 +68,7 @@ public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComp
 	}
 
 	public void sync() {
-		ModLevelComponents.BAT_SWARM.sync(obj);
+		NyctoLevelComponents.BAT_SWARM.sync(obj);
 	}
 
 	public void addBatSwarm(LivingEntity owner) {
@@ -90,12 +90,12 @@ public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComp
 
 	public static class BatSwarm {
 		public static final Codec<BatSwarm> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-						UUIDUtil.AUTHLIB_CODEC.fieldOf("owner").forGetter(BatSwarm::getOwnerId),
-						Codec.INT.listOf().fieldOf("targets").forGetter(BatSwarm::getTargets),
-						Vec3.CODEC.fieldOf("pos").forGetter(BatSwarm::getPos),
-						Codec.INT.fieldOf("age").forGetter(BatSwarm::getAge),
-						Codec.INT.fieldOf("blood").forGetter(BatSwarm::getBlood))
-				.apply(instance, BatSwarm::new));
+				UUIDUtil.AUTHLIB_CODEC.fieldOf("owner").forGetter(BatSwarm::getOwnerId),
+				Codec.INT.listOf().fieldOf("targets").forGetter(BatSwarm::getTargets),
+				Vec3.CODEC.fieldOf("pos").forGetter(BatSwarm::getPos),
+				Codec.INT.fieldOf("age").forGetter(BatSwarm::getAge),
+				Codec.INT.fieldOf("blood").forGetter(BatSwarm::getBlood)
+		).apply(instance, BatSwarm::new));
 
 		public static final int MAX_AGE = 20 * 30;
 		private static final int MAX_BLOOD = 50, BLOOD_DRAIN_AMOUNT = 5, BLOOD_FILL_AMOUNT = 3;
@@ -210,24 +210,24 @@ public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComp
 
 		private void feed(LivingEntity target) {
 			if (target == owner) {
-				if (getBlood() >= BLOOD_FILL_AMOUNT && ModEntityComponents.BLOOD.get(target).fill(BLOOD_FILL_AMOUNT)) {
-					SLibUtils.playSound(target, ModSoundEvents.BLOOD_BOTTLE_DRINK.value());
+				if (getBlood() >= BLOOD_FILL_AMOUNT && NyctoEntityComponents.BLOOD.get(target).fill(BLOOD_FILL_AMOUNT)) {
+					SLibUtils.playSound(target, NyctoSoundEvents.BLOOD_BOTTLE_DRINK.value());
 					blood -= BLOOD_FILL_AMOUNT;
-					ModLevelComponents.BAT_SWARM.sync(target.level());
+					NyctoLevelComponents.BAT_SWARM.sync(target.level());
 				}
 			} else {
 				boolean hasBlood = NyctoAPI.hasBlood(target);
 				boolean qualityBlood = NyctoAPI.hasQualityBlood(target);
 				boolean canDrain = hasBlood && getBlood() < MAX_BLOOD;
-				if (!qualityBlood && owner instanceof Player player && NyctoAPI.hasPower(player, ModPowers.RICH_TASTES)) {
+				if (!qualityBlood && owner instanceof Player player && NyctoAPI.hasPower(player, NyctoPowers.RICH_TASTES)) {
 					canDrain = false;
 				}
-				target.hurt(target.damageSources().source(ModDamageTypes.BLEED, null, owner), 1);
+				target.hurt(target.damageSources().source(NyctoDamageTypes.BLEED, null, owner), 1);
 				if (canDrain) {
-					if (ModEntityComponents.BLOOD.get(target).drainAttack(BLOOD_DRAIN_AMOUNT)) {
-						SLibUtils.playSound(target, ModSoundEvents.BLOOD_BOTTLE_DRINK.value());
+					if (NyctoEntityComponents.BLOOD.get(target).drainAttack(BLOOD_DRAIN_AMOUNT)) {
+						SLibUtils.playSound(target, NyctoSoundEvents.BLOOD_BOTTLE_DRINK.value());
 						blood += BLOOD_DRAIN_AMOUNT / (qualityBlood ? 1 : 2);
-						ModLevelComponents.BAT_SWARM.sync(target.level());
+						NyctoLevelComponents.BAT_SWARM.sync(target.level());
 					}
 				}
 			}
@@ -242,9 +242,9 @@ public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComp
 				);
 				if (canSee(particlePos)) {
 					ParticleOptions particle = switch (random.nextInt(3)) {
-						case 0 -> ModParticleTypes.BAT_SWARM_LEFT;
-						case 1 -> ModParticleTypes.BAT_SWARM_RIGHT;
-						default -> ModParticleTypes.BAT_SWARM_CENTER;
+						case 0 -> NyctoParticleTypes.BAT_SWARM_LEFT;
+						case 1 -> NyctoParticleTypes.BAT_SWARM_RIGHT;
+						default -> NyctoParticleTypes.BAT_SWARM_CENTER;
 					};
 					level.addAlwaysVisibleParticle(particle,
 							particlePos.x(), particlePos.y(), particlePos.z(),

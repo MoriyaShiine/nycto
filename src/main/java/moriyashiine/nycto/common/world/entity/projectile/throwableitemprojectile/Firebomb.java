@@ -5,10 +5,10 @@
 package moriyashiine.nycto.common.world.entity.projectile.throwableitemprojectile;
 
 import it.unimi.dsi.fastutil.doubles.DoubleDoubleImmutablePair;
-import moriyashiine.nycto.common.init.ModBlocks;
-import moriyashiine.nycto.common.init.ModEntityTypes;
-import moriyashiine.nycto.common.init.ModItems;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoBlocks;
+import moriyashiine.nycto.common.init.NyctoEntityTypes;
+import moriyashiine.nycto.common.init.NyctoItems;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
 import moriyashiine.strawberrylib.api.objects.records.ParticleVelocity;
@@ -38,16 +38,16 @@ public class Firebomb extends ThrowableItemProjectile {
 	}
 
 	public Firebomb(Level level, double x, double y, double z, ItemStack stack) {
-		super(ModEntityTypes.FIREBOMB, x, y, z, level, stack);
+		super(NyctoEntityTypes.FIREBOMB, x, y, z, level, stack);
 	}
 
 	public Firebomb(Level level, LivingEntity owner, ItemStack stack) {
-		super(ModEntityTypes.FIREBOMB, owner, level, stack);
+		super(NyctoEntityTypes.FIREBOMB, owner, level, stack);
 	}
 
 	@Override
 	protected Item getDefaultItem() {
-		return ModItems.FIREBOMB;
+		return NyctoItems.FIREBOMB;
 	}
 
 	@Override
@@ -59,8 +59,8 @@ public class Firebomb extends ThrowableItemProjectile {
 				if (pos.equals(blockPosition()) || (getRandom().nextInt(3) == 0 && pos.closerToCenterThan(position(), 2.5))) {
 					if (!level.isRainingAt(pos)) {
 						BlockState state = level.getBlockState(pos);
-						if (state.canBeReplaced() && state.getFluidState().isEmpty() && ModBlocks.FIREBOMB.defaultBlockState().canSurvive(level, pos)) {
-							level.setBlockAndUpdate(pos, ModBlocks.FIREBOMB.defaultBlockState());
+						if (state.canBeReplaced() && state.getFluidState().isEmpty() && NyctoBlocks.FIREBOMB.defaultBlockState().canSurvive(level, pos)) {
+							level.setBlockAndUpdate(pos, NyctoBlocks.FIREBOMB.defaultBlockState());
 						}
 					}
 				}
@@ -72,7 +72,7 @@ public class Firebomb extends ThrowableItemProjectile {
 			});
 			SLibUtils.addParticles(this, ParticleTypes.FLAME, 32, ParticleAnchor.BODY, PARTICLE_VELOCITY);
 			SLibUtils.addParticles(this, ParticleTypes.SMOKE, 8, ParticleAnchor.BODY, PARTICLE_VELOCITY);
-			SLibUtils.playSound(this, ModSoundEvents.FIREBOMB_IMPACT, 1, Mth.nextFloat(getRandom(), 0.8F, 1.2F));
+			SLibUtils.playSound(this, NyctoSoundEvents.FIREBOMB_IMPACT, 1, Mth.nextFloat(getRandom(), 0.8F, 1.2F));
 			level.levelEvent(LevelEvent.PARTICLES_INSTANT_POTION_SPLASH, blockPosition(), MobEffects.FIRE_RESISTANCE.value().getColor());
 			discard();
 		}

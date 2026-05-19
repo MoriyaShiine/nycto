@@ -5,8 +5,8 @@
 package moriyashiine.nycto.client.payload;
 
 import moriyashiine.nycto.common.Nycto;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModPowers;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoPowers;
 import moriyashiine.strawberrylib.impl.client.sound.AnchoredSoundInstance;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -23,7 +23,8 @@ public record PlayBloodrushSoundPayload(int entityId) implements CustomPacketPay
 	public static final Type<PlayBloodrushSoundPayload> TYPE = new Type<>(Nycto.id("play_bloodrush_sound"));
 	public static final StreamCodec<FriendlyByteBuf, PlayBloodrushSoundPayload> CODEC = StreamCodec.composite(
 			ByteBufCodecs.VAR_INT, PlayBloodrushSoundPayload::entityId,
-			PlayBloodrushSoundPayload::new);
+			PlayBloodrushSoundPayload::new
+	);
 
 	@Override
 	public Type<PlayBloodrushSoundPayload> type() {
@@ -40,7 +41,7 @@ public record PlayBloodrushSoundPayload(int entityId) implements CustomPacketPay
 		public void receive(PlayBloodrushSoundPayload payload, ClientPlayNetworking.Context context) {
 			Entity entity = context.player().level().getEntity(payload.entityId());
 			if (entity instanceof Player player) {
-				Minecraft.getInstance().getSoundManager().play(new AnchoredSoundInstance(player, ModPowers.BLOODRUSH.getUseSound(player), currentEntity -> !ModEntityComponents.BLOODRUSH.get(currentEntity).isActive(false)));
+				Minecraft.getInstance().getSoundManager().play(new AnchoredSoundInstance(player, NyctoPowers.BLOODRUSH.getUseSound(player), currentEntity -> !NyctoEntityComponents.BLOODRUSH.get(currentEntity).isActive(false)));
 			}
 		}
 	}

@@ -5,11 +5,11 @@
 package moriyashiine.nycto.common.event.item;
 
 import moriyashiine.nycto.api.NyctoAPI;
-import moriyashiine.nycto.common.event.entity.VampireEvent;
-import moriyashiine.nycto.common.init.ModComponentTypes;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModItems;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoDataComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoItems;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
+import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.nycto.common.world.item.VampiricDaggerItem;
 import moriyashiine.nycto.common.world.item.crafting.BloodExtractionRecipe;
 import moriyashiine.strawberrylib.api.event.AfterDamageIncludingDeathEvent;
@@ -30,23 +30,28 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 
 public class VampiricDaggerEvent {
-	public static class Damage implements AfterDamageIncludingDeathEvent {
+	public static void init() {
+		AfterDamageIncludingDeathEvent.EVENT.register(new Damage());
+		EnchantmentEvents.ALLOW_ENCHANTING.register(new Enchant());
+	}
+
+	private static class Damage implements AfterDamageIncludingDeathEvent {
 		private static final int DAMAGE_THRESHOLD = 2;
 
 		@Override
 		public void afterDamage(LivingEntity victim, DamageSource source, float originalDamage, float modifiedDamage, boolean blocked) {
 			if (!blocked && modifiedDamage >= DAMAGE_THRESHOLD && NyctoAPI.hasQualityBlood(victim) && source.getDirectEntity() instanceof LivingEntity attacker) {
 				ItemStack stack = attacker.getMainHandItem();
-				if (stack.has(ModComponentTypes.BLOOD_CHARGE)) {
+				if (stack.has(NyctoDataComponents.BLOOD_CHARGE)) {
 					int bloodCharge = VampiricDaggerItem.getBloodCharge(stack);
 					if (!VampiricDaggerItem.isFull(bloodCharge)) {
-						int drainAmount = Mth.ceil(modifiedDamage * VampireEvent.DrinkBlood.getArmorMultiplier(victim));
+						int drainAmount = Mth.ceil(modifiedDamage * NyctoUtil.getArmorMultiplier(victim));
 						int fillAmount = 0;
-						if (drainAmount >= DAMAGE_THRESHOLD && ModEntityComponents.BLOOD.get(victim).drainAttack(drainAmount)) {
+						if (drainAmount >= DAMAGE_THRESHOLD && NyctoEntityComponents.BLOOD.get(victim).drainAttack(drainAmount)) {
 							fillAmount = drainAmount;
 						}
 						if (fillAmount > 0) {
-							boolean player = stack.getOrDefault(ModComponentTypes.PLAYER_BLOOD, false), vampire = stack.getOrDefault(ModComponentTypes.VAMPIRE_BLOOD, false);
+							boolean player = stack.getOrDefault(NyctoDataComponents.PLAYER_BLOOD, false), vampire = stack.getOrDefault(NyctoDataComponents.VAMPIRE_BLOOD, false);
 							if (victim.slib$isPlayer()) {
 								player = true;
 							}
@@ -66,7 +71,7 @@ public class VampiricDaggerEvent {
 									ItemStack filled = ItemUtils.createFilledResult(bottle, playerAttacker, bloodBottle);
 									playerAttacker.setItemInHand(InteractionHand.OFF_HAND, filled);
 									VampiricDaggerItem.extractBlood(attacker, stack, bloodBottle);
-									SLibUtils.playSound(playerAttacker, ModSoundEvents.BLOOD_BOTTLE_DRINK.value(), 0.8F, 1);
+									SLibUtils.playSound(playerAttacker, NyctoSoundEvents.BLOOD_BOTTLE_DRINK.value(), 0.8F, 1);
 								}
 							}
 						}
@@ -76,10 +81,10 @@ public class VampiricDaggerEvent {
 		}
 	}
 
-	public static class Enchant implements EnchantmentEvents.AllowEnchanting {
+	private static class Enchant implements EnchantmentEvents.AllowEnchanting {
 		@Override
 		public TriState allowEnchanting(Holder<Enchantment> enchantment, ItemStack target, EnchantingContext enchantingContext) {
-			if (target.is(ModItems.VAMPIRIC_DAGGER)) {
+			if (target.is(NyctoItems.VAMPIRIC_DAGGER)) {
 				if (enchantment.is(Enchantments.MENDING) || enchantment.is(Enchantments.UNBREAKING)) {
 					return TriState.FALSE;
 				}

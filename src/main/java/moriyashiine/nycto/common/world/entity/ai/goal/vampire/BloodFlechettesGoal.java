@@ -4,8 +4,8 @@
 
 package moriyashiine.nycto.common.world.entity.ai.goal.vampire;
 
-import moriyashiine.nycto.common.init.ModPowers;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoPowers;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import moriyashiine.nycto.common.world.entity.monster.Vampire;
 import moriyashiine.nycto.common.world.power.vampire.BloodFlechettesPower;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
@@ -21,13 +21,13 @@ public class BloodFlechettesGoal extends Goal {
 
 	@Override
 	public boolean canUse() {
-		return mob.canUsePower(ModPowers.BLOOD_FLECHETTES) && mob.getTarget() != null && mob.hasLineOfSight(mob.getTarget());
+		return mob.canUsePower(NyctoPowers.BLOOD_FLECHETTES) && mob.getTarget() != null && mob.hasLineOfSight(mob.getTarget());
 	}
 
 	@Override
 	public void start() {
-		mob.useAbility(ModPowers.BLOOD_FLECHETTES);
-		SLibUtils.playAnchoredSound(mob, ModSoundEvents.BLOOD_FLECHETTES_USE);
+		mob.useAbility(NyctoPowers.BLOOD_FLECHETTES);
+		SLibUtils.playAnchoredSound(mob, NyctoSoundEvents.BLOOD_FLECHETTES_USE);
 		mob.lookAt(EntityAnchorArgument.Anchor.EYES, mob.getTarget().getEyePosition());
 		BloodFlechettesPower.spawnProjectiles(mob.level(), mob);
 	}

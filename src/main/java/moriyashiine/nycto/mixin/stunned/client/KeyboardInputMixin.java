@@ -4,7 +4,7 @@
 
 package moriyashiine.nycto.mixin.stunned.client;
 
-import moriyashiine.nycto.common.init.ModMobEffects;
+import moriyashiine.nycto.common.init.NyctoMobEffects;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.ClientInput;
 import net.minecraft.client.player.KeyboardInput;
@@ -21,7 +21,7 @@ public class KeyboardInputMixin extends ClientInput {
 	@Inject(method = "tick", at = @At("TAIL"))
 	private void nycto$stunned(CallbackInfo ci) {
 		Player player = Minecraft.getInstance().player;
-		if (player != null && player.hasEffect(ModMobEffects.STUNNED)) {
+		if (player != null && player.hasEffect(NyctoMobEffects.STUNNED)) {
 			keyPresses = Input.EMPTY;
 			moveVector = Vec2.ZERO;
 		}

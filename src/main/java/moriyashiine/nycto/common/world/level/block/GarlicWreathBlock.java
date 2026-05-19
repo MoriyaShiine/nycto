@@ -5,7 +5,7 @@
 package moriyashiine.nycto.common.world.level.block;
 
 import moriyashiine.nycto.common.component.level.AuraComponent;
-import moriyashiine.nycto.common.init.ModLevelComponents;
+import moriyashiine.nycto.common.init.NyctoLevelComponents;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -84,17 +84,17 @@ public class GarlicWreathBlock extends Block {
 	@Override
 	protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
 		if (!level.isClientSide()) {
-			AuraComponent auraComponent = ModLevelComponents.AURA.get(level);
-			auraComponent.getGarlicWreaths().add(pos);
-			auraComponent.sync();
+			AuraComponent aura = NyctoLevelComponents.AURA.get(level);
+			aura.getGarlicWreaths().add(pos);
+			aura.sync();
 		}
 	}
 
 	@Override
 	protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
-		AuraComponent auraComponent = ModLevelComponents.AURA.get(level);
-		auraComponent.getGarlicWreaths().remove(pos);
-		auraComponent.sync();
+		AuraComponent aura = NyctoLevelComponents.AURA.get(level);
+		aura.getGarlicWreaths().remove(pos);
+		aura.sync();
 	}
 
 	@Override

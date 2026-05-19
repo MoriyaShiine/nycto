@@ -8,7 +8,7 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -35,6 +35,6 @@ public class MobMixin {
 
 	@ModifyExpressionValue(method = "checkDespawn", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/EntityType;isAllowedInPeaceful()Z"))
 	private boolean nycto$vampiricThrall(boolean original) {
-		return original || ModEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner();
+		return original || NyctoEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner();
 	}
 }

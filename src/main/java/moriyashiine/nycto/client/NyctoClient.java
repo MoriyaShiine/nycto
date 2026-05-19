@@ -5,10 +5,9 @@
 package moriyashiine.nycto.client;
 
 import eu.midnightdust.lib.config.MidnightConfig;
-import moriyashiine.heartymeals.api.event.DisableHudRepositioningEvent;
 import moriyashiine.nycto.api.NyctoClientAPI;
 import moriyashiine.nycto.client.event.*;
-import moriyashiine.nycto.client.event.integration.HeartyMealsEvent;
+import moriyashiine.nycto.client.event.integration.HeartyMealsClientEvent;
 import moriyashiine.nycto.client.event.power.*;
 import moriyashiine.nycto.client.gui.hud.PowerHotbarHudElement;
 import moriyashiine.nycto.client.gui.hud.SunExposureHudElement;
@@ -38,26 +37,15 @@ import moriyashiine.nycto.client.renderer.entity.vampiricthrall.VexVampiricThral
 import moriyashiine.nycto.client.renderer.entity.vampiricthrall.WolfVampiricThrallRenderer;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.init.*;
-import moriyashiine.strawberrylib.api.event.TickEntityEvent;
-import moriyashiine.strawberrylib.api.event.client.AddNightVisionScaleEvent;
-import moriyashiine.strawberrylib.api.event.client.OutlineEntityEvent;
-import moriyashiine.strawberrylib.api.event.client.ReplaceContextualInfoEvent;
-import moriyashiine.strawberrylib.api.event.client.ReplaceHeartTexturesEvent;
 import moriyashiine.strawberrylib.api.registry.client.particle.AnchoredParticle;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
-import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRenderEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
-import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.fabricmc.fabric.api.event.player.UseEntityCallback;
-import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.OptionInstance;
@@ -73,7 +61,7 @@ import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import org.lwjgl.glfw.GLFW;
 
@@ -87,7 +75,7 @@ public class NyctoClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		MidnightConfig.init(Nycto.MOD_ID, ModConfig.class);
+		MidnightConfig.init(Nycto.MOD_ID, NyctoConfig.class);
 		initItems();
 		initEntities();
 		initParticles();
@@ -97,29 +85,28 @@ public class NyctoClient implements ClientModInitializer {
 	}
 
 	private void initItems() {
-		ArmorRenderer.register(context -> new VampireArmorRenderer(context, EquipmentSlot.HEAD), ModItems.VAMPIRE_HELMET);
-		ArmorRenderer.register(context -> new VampireArmorRenderer(context, EquipmentSlot.CHEST), ModItems.VAMPIRE_CHESTPLATE);
-		ArmorRenderer.register(context -> new VampireArmorRenderer(context, EquipmentSlot.LEGS), ModItems.VAMPIRE_LEGGINGS);
-		ArmorRenderer.register(context -> new VampireArmorRenderer(context, EquipmentSlot.FEET), ModItems.VAMPIRE_BOOTS);
+		ArmorRenderer.register(context -> new VampireArmorRenderer(context, EquipmentSlot.HEAD), NyctoItems.VAMPIRE_HELMET);
+		ArmorRenderer.register(context -> new VampireArmorRenderer(context, EquipmentSlot.CHEST), NyctoItems.VAMPIRE_CHESTPLATE);
+		ArmorRenderer.register(context -> new VampireArmorRenderer(context, EquipmentSlot.LEGS), NyctoItems.VAMPIRE_LEGGINGS);
+		ArmorRenderer.register(context -> new VampireArmorRenderer(context, EquipmentSlot.FEET), NyctoItems.VAMPIRE_BOOTS);
 
 		Identifier vampireHunterArmorTexture = Nycto.id("textures/entity/equipment/humanoid/vampire_hunter.png");
-		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.HEAD, vampireHunterArmorTexture), ModItems.VAMPIRE_HUNTER_HELMET);
-		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.CHEST, vampireHunterArmorTexture), ModItems.VAMPIRE_HUNTER_CHESTPLATE);
-		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.LEGS, vampireHunterArmorTexture), ModItems.VAMPIRE_HUNTER_LEGGINGS);
-		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.FEET, vampireHunterArmorTexture), ModItems.VAMPIRE_HUNTER_BOOTS);
+		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.HEAD, vampireHunterArmorTexture), NyctoItems.VAMPIRE_HUNTER_HELMET);
+		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.CHEST, vampireHunterArmorTexture), NyctoItems.VAMPIRE_HUNTER_CHESTPLATE);
+		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.LEGS, vampireHunterArmorTexture), NyctoItems.VAMPIRE_HUNTER_LEGGINGS);
+		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.FEET, vampireHunterArmorTexture), NyctoItems.VAMPIRE_HUNTER_BOOTS);
 
 		Identifier werewolfHunterArmorTexture = Nycto.id("textures/entity/equipment/humanoid/werewolf_hunter.png");
-		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.HEAD, werewolfHunterArmorTexture), ModItems.WEREWOLF_HUNTER_HELMET);
-		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.CHEST, werewolfHunterArmorTexture), ModItems.WEREWOLF_HUNTER_CHESTPLATE);
-		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.LEGS, werewolfHunterArmorTexture), ModItems.WEREWOLF_HUNTER_LEGGINGS);
-		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.FEET, werewolfHunterArmorTexture), ModItems.WEREWOLF_HUNTER_BOOTS);
+		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.HEAD, werewolfHunterArmorTexture), NyctoItems.WEREWOLF_HUNTER_HELMET);
+		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.CHEST, werewolfHunterArmorTexture), NyctoItems.WEREWOLF_HUNTER_CHESTPLATE);
+		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.LEGS, werewolfHunterArmorTexture), NyctoItems.WEREWOLF_HUNTER_LEGGINGS);
+		ArmorRenderer.register(context -> new HunterArmorRenderer(context, EquipmentSlot.FEET, werewolfHunterArmorTexture), NyctoItems.WEREWOLF_HUNTER_BOOTS);
 	}
 
 	private void initEntities() {
-		EntityRenderers.register(ModEntityTypes.WOODEN_STAKE, WoodenStakeRenderer::new);
-		EntityRenderers.register(ModEntityTypes.ACONITE_ARROW, AconiteArrowRenderer::new);
-		EntityRenderers.register(ModEntityTypes.FIREBOMB, ThrownItemRenderer::new);
-		EntityRenderers.register(ModEntityTypes.BLOOD_FLECHETTE, BloodFlechetteRenderer::new);
+		EntityRenderers.register(NyctoEntityTypes.WOODEN_STAKE, WoodenStakeRenderer::new);
+		EntityRenderers.register(NyctoEntityTypes.FIREBOMB, ThrownItemRenderer::new);
+		EntityRenderers.register(NyctoEntityTypes.BLOOD_FLECHETTE, BloodFlechetteRenderer::new);
 		ModelLayerRegistry.registerModelLayer(BloodrushAuraLayer.LAYER, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(1), false), 64, 64));
 		ModelLayerRegistry.registerModelLayer(BloodrushAuraLayer.LAYER_SLIM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(1), true), 64, 64));
 		ModelLayerRegistry.registerModelLayer(BloodBarrierModel.LAYER, BloodBarrierModel::createBodyLayer);
@@ -130,49 +117,49 @@ public class NyctoClient implements ClientModInitializer {
 		ModelLayerRegistry.registerModelLayer(VampireCarnageAuraLayer.LAYER, VampireModel::createBodyLayer);
 
 		ModelLayerRegistry.registerModelLayer(VampireModel.LAYER, VampireModel::createBodyLayer);
-		EntityRenderers.register(ModEntityTypes.VAMPIRE, VampireRenderer::new);
+		EntityRenderers.register(NyctoEntityTypes.VAMPIRE, VampireRenderer::new);
 		ModelLayerRegistry.registerModelLayer(HunterModel.LAYER, HunterModel::createHunterBodyLayer);
-		EntityRenderers.register(ModEntityTypes.HUNTER, HunterRenderer::new);
+		EntityRenderers.register(NyctoEntityTypes.HUNTER, HunterRenderer::new);
 		ModelLayerRegistry.registerModelLayer(DarkFormModel.LAYER, DarkFormModel::createBodyLayer);
-		EntityRenderers.register(ModEntityTypes.DARK_FORM, DarkFormRenderer::new);
+		EntityRenderers.register(NyctoEntityTypes.DARK_FORM, DarkFormRenderer::new);
 
 		ModelLayerRegistry.registerArmorModelLayers(VampireArmorModel.MODEL_LAYERS, VampireArmorModel::createArmorMeshSet);
 		ModelLayerRegistry.registerArmorModelLayers(HunterArmorModel.MODEL_LAYERS, HunterArmorModel::createArmorMeshSet);
 		ModelLayerRegistry.registerModelLayer(ThralledHorseHornsModel.MODEL_LAYER, () -> ThralledHorseHornsModel.createBodyLayer().apply(MeshTransformer.scaling(1.1F)));
 
-		NyctoClientAPI.registerVampiricThrallRenderer(EntityType.HORSE, new HorseVampiricThrallRenderer());
-		NyctoClientAPI.registerVampiricThrallRenderer(EntityType.VEX, new VexVampiricThrallRenderer());
-		NyctoClientAPI.registerVampiricThrallRenderer(EntityType.WOLF, new WolfVampiricThrallRenderer());
+		NyctoClientAPI.registerVampiricThrallRenderer(EntityTypes.HORSE, new HorseVampiricThrallRenderer());
+		NyctoClientAPI.registerVampiricThrallRenderer(EntityTypes.VEX, new VexVampiricThrallRenderer());
+		NyctoClientAPI.registerVampiricThrallRenderer(EntityTypes.WOLF, new WolfVampiricThrallRenderer());
 
 		ModelLayerRegistry.registerModelLayer(WolfHunterArmorModel.VAMPIRE_HUNTER_LAYER, WolfHunterArmorModel::createVampireHunterBodyLayer);
-		NyctoClientAPI.registerHunterTypeWolfArmorModelLayer(ModHunterTypes.VAMPIRE, WolfHunterArmorModel.VAMPIRE_HUNTER_LAYER);
+		NyctoClientAPI.registerHunterTypeWolfArmorModelLayer(NyctoHunterTypes.VAMPIRE, WolfHunterArmorModel.VAMPIRE_HUNTER_LAYER);
 		ModelLayerRegistry.registerModelLayer(WolfHunterArmorModel.WEREWOLF_HUNTER_LAYER, WolfHunterArmorModel::createWerewolfHunterBodyLayer);
-		NyctoClientAPI.registerHunterTypeWolfArmorModelLayer(ModHunterTypes.WEREWOLF, WolfHunterArmorModel.WEREWOLF_HUNTER_LAYER);
+		NyctoClientAPI.registerHunterTypeWolfArmorModelLayer(NyctoHunterTypes.WEREWOLF, WolfHunterArmorModel.WEREWOLF_HUNTER_LAYER);
 	}
 
 	private void initParticles() {
-		ParticleProviderRegistry.getInstance().register(ModParticleTypes.AMBROSIA, BloodParticle.Provider::new);
-		ParticleProviderRegistry.getInstance().register(ModParticleTypes.BLOOD, BloodParticle.Provider::new);
+		ParticleProviderRegistry.getInstance().register(NyctoParticleTypes.AMBROSIA, BloodParticle.Provider::new);
+		ParticleProviderRegistry.getInstance().register(NyctoParticleTypes.BLOOD, BloodParticle.Provider::new);
 
-		ParticleProviderRegistry.getInstance().register(ModParticleTypes.BAT_SWARM_CENTER, BatSwarmParticle.BatSwarmProvider::new);
-		ParticleProviderRegistry.getInstance().register(ModParticleTypes.BAT_SWARM_LEFT, BatSwarmParticle.BatSwarmProvider::new);
-		ParticleProviderRegistry.getInstance().register(ModParticleTypes.BAT_SWARM_RIGHT, BatSwarmParticle.BatSwarmProvider::new);
+		ParticleProviderRegistry.getInstance().register(NyctoParticleTypes.BAT_SWARM_CENTER, BatSwarmParticle.BatSwarmProvider::new);
+		ParticleProviderRegistry.getInstance().register(NyctoParticleTypes.BAT_SWARM_LEFT, BatSwarmParticle.BatSwarmProvider::new);
+		ParticleProviderRegistry.getInstance().register(NyctoParticleTypes.BAT_SWARM_RIGHT, BatSwarmParticle.BatSwarmProvider::new);
 
-		ParticleProviderRegistry.getInstance().register(ModParticleTypes.BATSTEP_CENTER, BatSwarmParticle.BatstepProvider::new);
-		ParticleProviderRegistry.getInstance().register(ModParticleTypes.BATSTEP_LEFT, BatSwarmParticle.BatstepProvider::new);
-		ParticleProviderRegistry.getInstance().register(ModParticleTypes.BATSTEP_RIGHT, BatSwarmParticle.BatstepProvider::new);
+		ParticleProviderRegistry.getInstance().register(NyctoParticleTypes.BATSTEP_CENTER, BatSwarmParticle.BatstepProvider::new);
+		ParticleProviderRegistry.getInstance().register(NyctoParticleTypes.BATSTEP_LEFT, BatSwarmParticle.BatstepProvider::new);
+		ParticleProviderRegistry.getInstance().register(NyctoParticleTypes.BATSTEP_RIGHT, BatSwarmParticle.BatstepProvider::new);
 
-		ParticleProviderRegistry.getInstance().register(ModParticleTypes.HYPNOSIS_INDICATOR, AnchoredParticle.Provider::new);
-		ParticleProviderRegistry.getInstance().register(ModParticleTypes.HYPNOSIS_INDICATOR_INVERSE, AnchoredParticle.Provider::new);
-		ParticleProviderRegistry.getInstance().register(ModParticleTypes.HYPNOSIS_SMALL, SmallSpellParticle.Provider::new);
-		ParticleProviderRegistry.getInstance().register(ModParticleTypes.HYPNOSIS_STAR, SpellParticle.Provider::new);
-		ParticleProviderRegistry.getInstance().register(ModParticleTypes.HYPNOTIZED, HypnotizedParticle.Provider::new);
+		ParticleProviderRegistry.getInstance().register(NyctoParticleTypes.HYPNOSIS_INDICATOR, AnchoredParticle.Provider::new);
+		ParticleProviderRegistry.getInstance().register(NyctoParticleTypes.HYPNOSIS_INDICATOR_INVERSE, AnchoredParticle.Provider::new);
+		ParticleProviderRegistry.getInstance().register(NyctoParticleTypes.HYPNOSIS_SMALL, SmallSpellParticle.Provider::new);
+		ParticleProviderRegistry.getInstance().register(NyctoParticleTypes.HYPNOSIS_STAR, SpellParticle.Provider::new);
+		ParticleProviderRegistry.getInstance().register(NyctoParticleTypes.HYPNOTIZED, HypnotizedParticle.Provider::new);
 
-		ParticleProviderRegistry.getInstance().register(ModParticleTypes.THRALLED, HypnotizedParticle.Provider::new);
+		ParticleProviderRegistry.getInstance().register(NyctoParticleTypes.THRALLED, HypnotizedParticle.Provider::new);
 	}
 
 	private void initScreens() {
-		MenuScreens.register(ModMenuTypes.VAMPIRE_ALTAR, VampireAltarScreen::new);
+		MenuScreens.register(NyctoMenuTypes.VAMPIRE_ALTAR, VampireAltarScreen::new);
 	}
 
 	private void initPayloads() {
@@ -185,36 +172,32 @@ public class NyctoClient implements ClientModInitializer {
 	}
 
 	private void initEvents() {
-		// internal
-		ClientTickEvents.END_LEVEL_TICK.register(new ConfigSyncEvent());
-		ClientTickEvents.END_CLIENT_TICK.register(new FormChangeClientEvent());
-		ReplaceHeartTexturesEvent.EVENT.register(new HealBlockClientEvent());
-		ItemTooltipCallback.EVENT.register(new ItemDescriptionsEvent());
-		UseBlockCallback.EVENT.register(new PowerClientEvent.UseBlock());
-		UseEntityCallback.EVENT.register(new PowerClientEvent.UseEntity());
-		UseItemCallback.EVENT.register(new PowerClientEvent.UseItem());
-		ClientTickEvents.END_LEVEL_TICK.register(new PowerClientEvent.Tick());
-		LivingEntityFeatureRenderEvents.ALLOW_CAPE_RENDER.register(new ShowCapeEvent());
+		// INTERNAL
+		ConfigSyncClientEvent.init();
+		FormChangeClientEvent.init();
+		HealBlockClientEvent.init();
+		ItemDescriptionsClientEvent.init();
+		PowerClientEvent.init();
+		ShowCapeClientEvent.init();
+		// ENTITY
+		// transformation
+		VampireClientEvent.init();
+		// POWER
 		// vampire
-		ReplaceContextualInfoEvent.EVENT.register(new VampireClientEvent());
-		// power
-		AddNightVisionScaleEvent.EVENT.register(new NightVisionEvent());
-		OutlineEntityEvent.EVENT.register(new BloodFlechettesClientEvent());
-		ClientTickEvents.END_LEVEL_TICK.register(new KeenSensesClientEvent.Tick());
-		OutlineEntityEvent.EVENT.register(new KeenSensesClientEvent.Outline());
-		TickEntityEvent.EVENT.register(new HypnotizeClientEvent.Tick());
-		OutlineEntityEvent.EVENT.register(new HypnotizeClientEvent.Outline());
-		TickEntityEvent.EVENT.register(new VampiricThrallClientEvent.Tick());
-		OutlineEntityEvent.EVENT.register(new VampiricThrallClientEvent.Outline());
-		// integration
+		NightVisionClientEvent.init();
+		BloodFlechettesClientEvent.init();
+		HypnotizeClientEvent.init();
+		KeenSensesClientEvent.init();
+		VampiricThrallClientEvent.init();
+		// INTEGRATION
 		if (FabricLoader.getInstance().isModLoaded("heartymeals")) {
-			DisableHudRepositioningEvent.EVENT.register(new HeartyMealsEvent());
+			HeartyMealsClientEvent.init();
 		}
-		// hud elements
+		// HUD ELEMENTS
 		HudElementRegistry.attachElementAfter(VanillaHudElements.HOTBAR, Nycto.id("power_hotbar"), new PowerHotbarHudElement());
 		HudElementRegistry.attachElementAfter(VanillaHudElements.MISC_OVERLAYS, Nycto.id("sun_exposure"), new SunExposureHudElement());
 		HudElementRegistry.attachElementAfter(VanillaHudElements.CROSSHAIR, Nycto.id("vampire"), new VampireHudElement());
-		// power hud elements
+		// power
 		HudElementRegistry.attachElementAfter(VanillaHudElements.MISC_OVERLAYS, Nycto.id("carnage"), new CarnageHudElement());
 		HudElementRegistry.attachElementAfter(VanillaHudElements.MISC_OVERLAYS, Nycto.id("keen_senses"), new KeenSensesHudElement());
 	}

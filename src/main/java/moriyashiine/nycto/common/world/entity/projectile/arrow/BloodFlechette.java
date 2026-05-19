@@ -5,8 +5,8 @@
 package moriyashiine.nycto.common.world.entity.projectile.arrow;
 
 import moriyashiine.nycto.api.NyctoAPI;
-import moriyashiine.nycto.common.init.ModEntityTypes;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoEntityTypes;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
@@ -25,20 +25,20 @@ public class BloodFlechette extends ThrowableProjectile {
 	}
 
 	public BloodFlechette(Level level, LivingEntity mob) {
-		super(ModEntityTypes.BLOOD_FLECHETTE, mob.getX(), mob.getEyeY() - 0.1, mob.getZ(), level);
+		super(NyctoEntityTypes.BLOOD_FLECHETTE, mob.getX(), mob.getEyeY() - 0.1, mob.getZ(), level);
 		setOwner(mob);
 	}
 
 	@Override
 	protected void onHitBlock(BlockHitResult hitResult) {
 		super.onHitBlock(hitResult);
-		playSound(ModSoundEvents.BLOOD_FLECHETTE_HIT_BLOCK);
+		playSound(NyctoSoundEvents.BLOOD_FLECHETTE_HIT_BLOCK);
 	}
 
 	@Override
 	protected void onHitEntity(EntityHitResult hitResult) {
 		super.onHitEntity(hitResult);
-		playSound(ModSoundEvents.BLOOD_FLECHETTE_HIT_ENTITY);
+		playSound(NyctoSoundEvents.BLOOD_FLECHETTE_HIT_ENTITY);
 		Entity entity = hitResult.getEntity();
 		if (level() instanceof ServerLevel level) {
 			entity.invulnerableTime = 0;

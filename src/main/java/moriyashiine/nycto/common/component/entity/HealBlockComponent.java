@@ -4,7 +4,7 @@
 
 package moriyashiine.nycto.common.component.entity;
 
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -45,7 +45,7 @@ public class HealBlockComponent implements AutoSyncedComponent, CommonTickingCom
 	}
 
 	public void sync() {
-		ModEntityComponents.HEAL_BLOCK.sync(obj);
+		NyctoEntityComponents.HEAL_BLOCK.sync(obj);
 	}
 
 	public int getTicksToBlock() {
@@ -60,10 +60,6 @@ public class HealBlockComponent implements AutoSyncedComponent, CommonTickingCom
 		if (lifeStealer != null) {
 			this.lifeStealer = lifeStealer.getUUID();
 		}
-	}
-
-	public boolean isHealingBlocked() {
-		return ticksToBlock > 0;
 	}
 
 	public boolean canStealLife(Entity attacker) {

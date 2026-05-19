@@ -5,7 +5,7 @@
 package moriyashiine.nycto.mixin.power.vampire.vampiricthrall.mobspecific;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Witch;
@@ -23,7 +23,7 @@ public class WitchMixin {
 
 	@ModifyArg(method = "aiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/alchemy/PotionContents;createItemStack(Lnet/minecraft/world/item/Item;Lnet/minecraft/core/Holder;)Lnet/minecraft/world/item/ItemStack;"))
 	private Holder<Potion> nycto$vampiricThrall(Holder<Potion> potion) {
-		if (potion == Potions.HEALING && ModEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner()) {
+		if (potion == Potions.HEALING && NyctoEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner()) {
 			return Potions.HARMING;
 		}
 		return potion;
@@ -31,7 +31,7 @@ public class WitchMixin {
 
 	@WrapWithCondition(method = "performRangedAttack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/monster/Witch;setTarget(Lnet/minecraft/world/entity/LivingEntity;)V"))
 	private boolean nycto$vampiricThrall(Witch instance, LivingEntity entity) {
-		if (ModEntityComponents.VAMPIRIC_THRALL.get(instance).hasOwner()) {
+		if (NyctoEntityComponents.VAMPIRIC_THRALL.get(instance).hasOwner()) {
 			reverseBecauseThrall = true;
 			return false;
 		}

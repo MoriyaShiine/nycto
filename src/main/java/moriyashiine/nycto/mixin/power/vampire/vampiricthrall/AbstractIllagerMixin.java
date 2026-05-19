@@ -5,7 +5,7 @@
 package moriyashiine.nycto.mixin.power.vampire.vampiricthrall;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.monster.illager.AbstractIllager;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,7 +16,7 @@ public class AbstractIllagerMixin {
 	@ModifyExpressionValue(method = "considersEntityAsAlly", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;is(Lnet/minecraft/tags/TagKey;)Z"))
 	private boolean nycto$vampiricThrall(boolean original, Entity other) {
 		if (original) {
-			if (ModEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner() || ModEntityComponents.VAMPIRIC_THRALL.get(other).hasOwner()) {
+			if (NyctoEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner() || NyctoEntityComponents.VAMPIRIC_THRALL.get(other).hasOwner()) {
 				return false;
 			}
 		}

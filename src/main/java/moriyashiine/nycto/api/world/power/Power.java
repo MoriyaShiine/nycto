@@ -4,8 +4,12 @@
 
 package moriyashiine.nycto.api.world.power;
 
+import com.mojang.serialization.Codec;
 import moriyashiine.nycto.api.init.NyctoRegistries;
 import net.minecraft.core.Holder;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
@@ -13,6 +17,9 @@ import net.minecraft.util.Util;
 import org.jspecify.annotations.Nullable;
 
 public class Power {
+	public static final Codec<Power> CODEC = NyctoRegistries.POWER.byNameCodec();
+	public static final StreamCodec<RegistryFriendlyByteBuf, Power> STREAM_CODEC = ByteBufCodecs.registry(NyctoRegistries.POWER_KEY);
+
 	@Nullable
 	protected String descriptionId;
 

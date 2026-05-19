@@ -18,7 +18,7 @@
   "environment": "*",
   "entrypoints": {
 	"fabric-datagen": [
-	  "moriyashiine.nycto.datagen.ModDataGenerator"
+	  "moriyashiine.nycto.datagen.NyctoDataGenerator"
 	],
 	"main": [
 	  "moriyashiine.nycto.common.Nycto"
@@ -27,13 +27,13 @@
 	  "moriyashiine.nycto.client.NyctoClient"
 	],
 	"cardinal-components-chunk": [
-	  "moriyashiine.nycto.common.init.ModChunkComponents"
+	  "moriyashiine.nycto.common.init.NyctoChunkComponents"
 	],
 	"cardinal-components-entity": [
-	  "moriyashiine.nycto.common.init.ModEntityComponents"
+	  "moriyashiine.nycto.common.init.NyctoEntityComponents"
 	],
 	"cardinal-components-level": [
-	  "moriyashiine.nycto.common.init.ModLevelComponents"
+	  "moriyashiine.nycto.common.init.NyctoLevelComponents"
 	]
   },
   "mixins": [
@@ -42,7 +42,7 @@
   "accessWidener": "nycto.classtweaker",
   "depends": {
 	"fabricloader": "*",
-	"minecraft": "~26.1",
+	"minecraft": "~26.2",
 	"java": ">=25",
 	"fabric-api": "*",
 	"strawberrylib": "*"
@@ -57,7 +57,7 @@
 	  "nycto:respawn_leniency",
 	  "nycto:sun_exposure",
 	  "nycto:transformation",
-	  "nycto:vampire_charge_jump",
+	  "nycto:vampire",
 	  "nycto:night_vision",
 	  "nycto:bat_form",
 	  "nycto:blood_barrier",

@@ -5,7 +5,7 @@
 package moriyashiine.nycto.common.world.power.vampire;
 
 import moriyashiine.nycto.api.world.power.ActivePower;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -17,7 +17,7 @@ public abstract class VampireActivePower extends ActivePower {
 
 	@Override
 	public boolean canUse(Player player) {
-		return ModEntityComponents.BLOOD.get(player).getBlood() >= getCost(player);
+		return NyctoEntityComponents.BLOOD.get(player).getBlood() >= getCost(player);
 	}
 
 	public int getCost(LivingEntity entity) {

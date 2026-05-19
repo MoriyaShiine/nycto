@@ -4,7 +4,7 @@
 
 package moriyashiine.nycto.common.world.entity.ai.goal.thrall;
 
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 
@@ -15,6 +15,6 @@ public class ThralledHurtByTargetGoal extends HurtByTargetGoal {
 
 	@Override
 	public boolean canUse() {
-		return ModEntityComponents.VAMPIRIC_THRALL.get(mob).hasOwner() && super.canUse();
+		return NyctoEntityComponents.VAMPIRIC_THRALL.get(mob).hasOwner() && super.canUse();
 	}
 }

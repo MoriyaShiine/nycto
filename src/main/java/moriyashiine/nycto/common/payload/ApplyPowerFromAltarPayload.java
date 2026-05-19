@@ -17,7 +17,8 @@ public record ApplyPowerFromAltarPayload(int id) implements CustomPacketPayload 
 	public static final Type<ApplyPowerFromAltarPayload> TYPE = new Type<>(Nycto.id("apply_power_from_altar"));
 	public static final StreamCodec<FriendlyByteBuf, ApplyPowerFromAltarPayload> CODEC = StreamCodec.composite(
 			ByteBufCodecs.VAR_INT, ApplyPowerFromAltarPayload::id,
-			ApplyPowerFromAltarPayload::new);
+			ApplyPowerFromAltarPayload::new
+	);
 
 	@Override
 	public Type<ApplyPowerFromAltarPayload> type() {

@@ -20,7 +20,7 @@ public class LivingEntityRendererMixin<T extends LivingEntity, S extends LivingE
 	@Inject(method = "extractRenderState(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;F)V", at = @At("TAIL"))
 	private void nycto$keenSenses(T entity, S state, float partialTicks, CallbackInfo ci) {
 		KeenSensesRenderState keenSensesRenderState = new KeenSensesRenderState();
-		if (KeenSensesClientEvent.Outline.shouldApply(entity)) {
+		if (KeenSensesClientEvent.shouldHighlight(entity)) {
 			keenSensesRenderState.position = entity.getAttachments().getNullable(EntityAttachment.NAME_TAG, 0, entity.getYRot(partialTicks));
 			keenSensesRenderState.healthPercentage = entity.getHealth() / entity.getMaxHealth();
 		}

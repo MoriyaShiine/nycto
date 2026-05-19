@@ -5,8 +5,8 @@
 package moriyashiine.nycto.common.world.level.block;
 
 import com.mojang.serialization.MapCodec;
-import moriyashiine.nycto.common.init.ModBlockEntityTypes;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoBlockEntityTypes;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import moriyashiine.nycto.common.world.item.consumeeffects.FillBloodConsumeEffect;
 import moriyashiine.nycto.common.world.level.block.entity.BloodFountainBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -67,7 +67,7 @@ public class BloodFountainBlock extends BaseEntityBlock implements SimpleWaterlo
 
 	@Override
 	public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type) {
-		return createTickerHelper(type, ModBlockEntityTypes.BLOOD_FOUNTAIN, level.isClientSide() || blockState.getValue(BlockStateProperties.LOCKED) ? null : BloodFountainBlockEntity::serverTick);
+		return createTickerHelper(type, NyctoBlockEntityTypes.BLOOD_FOUNTAIN, level.isClientSide() || blockState.getValue(BlockStateProperties.LOCKED) ? null : BloodFountainBlockEntity::serverTick);
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class BloodFountainBlock extends BaseEntityBlock implements SimpleWaterlo
 	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
 		if (player.isShiftKeyDown()) {
 			if (!level.isClientSide()) {
-				level.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, state.getValue(BlockStateProperties.LOCKED) ? ModSoundEvents.BLOOD_FOUNTAIN_UNLOCK : ModSoundEvents.BLOOD_FOUNTAIN_LOCK, SoundSource.BLOCKS, 1, 1);
+				level.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, state.getValue(BlockStateProperties.LOCKED) ? NyctoSoundEvents.BLOOD_FOUNTAIN_UNLOCK : NyctoSoundEvents.BLOOD_FOUNTAIN_LOCK, SoundSource.BLOCKS, 1, 1);
 				level.setBlockAndUpdate(pos, state.cycle(BlockStateProperties.LOCKED));
 			}
 			return InteractionResult.SUCCESS;
@@ -115,7 +115,7 @@ public class BloodFountainBlock extends BaseEntityBlock implements SimpleWaterlo
 			ItemStack copy = itemStack.copyWithCount(1);
 			if (blockEntity.insertBottle(copy)) {
 				if (!level.isClientSide()) {
-					level.playSound(null, pos, ModSoundEvents.BLOOD_BOTTLE_DRINK.value(), SoundSource.BLOCKS, 1, 1);
+					level.playSound(null, pos, NyctoSoundEvents.BLOOD_BOTTLE_DRINK.value(), SoundSource.BLOCKS, 1, 1);
 					itemStack.consume(1, player);
 					if (!player.isCreative() && copy.has(DataComponents.USE_REMAINDER)) {
 						player.handleExtraItemsCreatedOnUse(copy.get(DataComponents.USE_REMAINDER).convertInto().create());

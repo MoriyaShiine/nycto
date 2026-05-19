@@ -8,7 +8,7 @@ import moriyashiine.nycto.api.world.power.ActivePower;
 import moriyashiine.nycto.api.world.power.PowerInstance;
 import moriyashiine.nycto.client.NyctoClient;
 import moriyashiine.nycto.common.component.entity.TransformationComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.nycto.common.payload.SyncPowerIndexPayload;
 import moriyashiine.nycto.common.payload.UsePowerPayload;
 import moriyashiine.nycto.common.util.NyctoUtil;
@@ -31,7 +31,14 @@ import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 public class PowerClientEvent {
-	public static class UseBlock implements UseBlockCallback {
+	public static void init() {
+		UseBlockCallback.EVENT.register(new UseBlock());
+		UseEntityCallback.EVENT.register(new UseEntity());
+		UseItemCallback.EVENT.register(new UseItem());
+		ClientTickEvents.END_LEVEL_TICK.register(new Tick());
+	}
+
+	private static class UseBlock implements UseBlockCallback {
 		@Override
 		public InteractionResult interact(Player player, Level level, InteractionHand interactionHand, BlockHitResult blockHitResult) {
 			if (use(player)) {
@@ -41,7 +48,7 @@ public class PowerClientEvent {
 		}
 	}
 
-	public static class UseEntity implements UseEntityCallback {
+	private static class UseEntity implements UseEntityCallback {
 		@Override
 		public InteractionResult interact(Player player, Level level, InteractionHand interactionHand, Entity entity, @Nullable EntityHitResult entityHitResult) {
 			if (use(player)) {
@@ -51,7 +58,7 @@ public class PowerClientEvent {
 		}
 	}
 
-	public static class UseItem implements UseItemCallback {
+	private static class UseItem implements UseItemCallback {
 		@Override
 		public InteractionResult interact(Player player, Level level, InteractionHand interactionHand) {
 			if (use(player)) {
@@ -61,7 +68,7 @@ public class PowerClientEvent {
 		}
 	}
 
-	public static class Tick implements ClientTickEvents.EndLevelTick {
+	private static class Tick implements ClientTickEvents.EndLevelTick {
 		private static int cooldown = 0;
 
 		@Override
@@ -74,38 +81,38 @@ public class PowerClientEvent {
 
 	public static boolean scrollPowerIndex(Player player, double wheel) {
 		if (wheel != 0) {
-			TransformationComponent transformationComponent = ModEntityComponents.TRANSFORMATION.get(player);
-			List<PowerInstance> powers = transformationComponent.getPowers();
+			TransformationComponent transformation = NyctoEntityComponents.TRANSFORMATION.get(player);
+			List<PowerInstance> powers = transformation.getPowers();
 			if (!powers.isEmpty()) {
 				while (wheel != 0) {
-					int nextIndex = transformationComponent.getPowerIndex() + (int) Math.signum(wheel);
+					int nextIndex = transformation.getPowerIndex() + (int) Math.signum(wheel);
 					if (nextIndex < 0) {
 						nextIndex += powers.size();
 					}
-					transformationComponent.setPowerIndex(nextIndex % powers.size());
-					if (transformationComponent.getPowers().get(transformationComponent.getPowerIndex()).getPower() instanceof ActivePower) {
+					transformation.setPowerIndex(nextIndex % powers.size());
+					if (transformation.getPowers().get(transformation.getPowerIndex()).getPower() instanceof ActivePower) {
 						wheel -= Math.signum(wheel);
 					}
 				}
-				player.sendOverlayMessage(Component.translatable(transformationComponent.getPowers().get(transformationComponent.getPowerIndex()).getPower().getOrCreateDescriptionId()));
-				SyncPowerIndexPayload.send(transformationComponent.getPowerIndex());
+				player.sendOverlayMessage(Component.translatable(transformation.getPowers().get(transformation.getPowerIndex()).getPower().getOrCreateDescriptionId()));
+				SyncPowerIndexPayload.send(transformation.getPowerIndex());
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public static boolean isActive(Player player, TransformationComponent transformationComponent) {
-		return player != null && player.slib$exists() && NyctoClient.POWER_HOTBAR_KEYMAPPING.isDown() && transformationComponent.hasActivePower();
+	public static boolean isActive(Player player, TransformationComponent transformation) {
+		return player != null && player.slib$exists() && NyctoClient.POWER_HOTBAR_KEYMAPPING.isDown() && transformation.hasActivePower();
 	}
 
-	public static int getActivePowersIndex(TransformationComponent transformationComponent) {
+	public static int getActivePowersIndex(TransformationComponent transformation) {
 		int index = 0;
-		for (int i = 0; i < transformationComponent.getPowers().size(); i++) {
-			if (i == transformationComponent.getPowerIndex()) {
+		for (int i = 0; i < transformation.getPowers().size(); i++) {
+			if (i == transformation.getPowerIndex()) {
 				break;
 			}
-			if (transformationComponent.getPowers().get(i).getPower() instanceof ActivePower) {
+			if (transformation.getPowers().get(i).getPower() instanceof ActivePower) {
 				index++;
 			}
 		}
@@ -113,11 +120,11 @@ public class PowerClientEvent {
 	}
 
 	private static boolean use(Player player) {
-		TransformationComponent transformationComponent = ModEntityComponents.TRANSFORMATION.get(player);
-		if (isActive(player, transformationComponent)) {
-			if (Tick.cooldown == 0 && SLibClientUtils.isHost(player) && NyctoUtil.canUsePower(player, transformationComponent.getPowers().get(transformationComponent.getPowerIndex()))) {
+		TransformationComponent transformation = NyctoEntityComponents.TRANSFORMATION.get(player);
+		if (isActive(player, transformation)) {
+			if (Tick.cooldown == 0 && SLibClientUtils.isHost(player) && NyctoUtil.canUsePower(player, transformation.getPowers().get(transformation.getPowerIndex()))) {
 				Tick.cooldown = 5;
-				UsePowerPayload.send(transformationComponent.getPowerIndex());
+				UsePowerPayload.send(transformation.getPowerIndex());
 			}
 			return true;
 		}

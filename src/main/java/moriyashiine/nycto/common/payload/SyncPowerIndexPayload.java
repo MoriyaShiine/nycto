@@ -5,7 +5,7 @@
 package moriyashiine.nycto.common.payload;
 
 import moriyashiine.nycto.common.Nycto;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.FriendlyByteBuf;
@@ -17,7 +17,8 @@ public record SyncPowerIndexPayload(int index) implements CustomPacketPayload {
 	public static final Type<SyncPowerIndexPayload> TYPE = new Type<>(Nycto.id("sync_power_index"));
 	public static final StreamCodec<FriendlyByteBuf, SyncPowerIndexPayload> CODEC = StreamCodec.composite(
 			ByteBufCodecs.VAR_INT, SyncPowerIndexPayload::index,
-			SyncPowerIndexPayload::new);
+			SyncPowerIndexPayload::new
+	);
 
 	@Override
 	public Type<SyncPowerIndexPayload> type() {
@@ -31,7 +32,7 @@ public record SyncPowerIndexPayload(int index) implements CustomPacketPayload {
 	public static class Receiver implements ServerPlayNetworking.PlayPayloadHandler<SyncPowerIndexPayload> {
 		@Override
 		public void receive(SyncPowerIndexPayload payload, ServerPlayNetworking.Context context) {
-			ModEntityComponents.TRANSFORMATION.get(context.player()).setPowerIndex(payload.index());
+			NyctoEntityComponents.TRANSFORMATION.get(context.player()).setPowerIndex(payload.index());
 		}
 	}
 }

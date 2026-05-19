@@ -4,8 +4,8 @@
 
 package moriyashiine.nycto.common.world.entity.ai.goal.vampire;
 
-import moriyashiine.nycto.common.init.ModPowers;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoPowers;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import moriyashiine.nycto.common.world.entity.monster.Vampire;
 import moriyashiine.nycto.common.world.power.vampire.CarnagePower;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
@@ -20,13 +20,13 @@ public class CarnageGoal extends Goal {
 
 	@Override
 	public boolean canUse() {
-		return mob.canUsePower(ModPowers.CARNAGE) && mob.getTarget() != null && mob.getHealth() <= mob.getMaxHealth() * 0.3F;
+		return mob.canUsePower(NyctoPowers.CARNAGE) && mob.getTarget() != null && mob.getHealth() <= mob.getMaxHealth() * 0.3F;
 	}
 
 	@Override
 	public void start() {
-		mob.useAbility(ModPowers.CARNAGE);
-		SLibUtils.playAnchoredSound(mob, ModSoundEvents.CARNAGE_USE);
+		mob.useAbility(NyctoPowers.CARNAGE);
+		SLibUtils.playAnchoredSound(mob, NyctoSoundEvents.CARNAGE_USE);
 		CarnagePower.activate(mob);
 	}
 }

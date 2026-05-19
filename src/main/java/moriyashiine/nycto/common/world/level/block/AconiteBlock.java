@@ -4,7 +4,7 @@
 
 package moriyashiine.nycto.common.world.level.block;
 
-import moriyashiine.nycto.common.init.ModItems;
+import moriyashiine.nycto.common.init.NyctoItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -34,7 +34,7 @@ public class AconiteBlock extends CropBlock {
 
 	@Override
 	protected ItemLike getBaseSeedId() {
-		return ModItems.ACONITE_SEEDS;
+		return NyctoItems.ACONITE_SEEDS;
 	}
 
 	@Override

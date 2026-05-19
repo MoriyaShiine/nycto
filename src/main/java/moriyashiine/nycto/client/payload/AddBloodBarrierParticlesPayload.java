@@ -23,7 +23,8 @@ public record AddBloodBarrierParticlesPayload(int entityId, int barrier) impleme
 	public static final StreamCodec<FriendlyByteBuf, AddBloodBarrierParticlesPayload> CODEC = StreamCodec.composite(
 			ByteBufCodecs.VAR_INT, AddBloodBarrierParticlesPayload::entityId,
 			ByteBufCodecs.VAR_INT, AddBloodBarrierParticlesPayload::barrier,
-			AddBloodBarrierParticlesPayload::new);
+			AddBloodBarrierParticlesPayload::new
+	);
 
 	@Override
 	public Type<AddBloodBarrierParticlesPayload> type() {

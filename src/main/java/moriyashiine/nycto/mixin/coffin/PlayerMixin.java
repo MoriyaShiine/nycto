@@ -5,7 +5,7 @@
 package moriyashiine.nycto.mixin.coffin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import moriyashiine.nycto.common.tag.ModBlockTags;
+import moriyashiine.nycto.common.tag.NyctoBlockTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -21,7 +21,7 @@ public abstract class PlayerMixin extends LivingEntity {
 
 	@ModifyExpressionValue(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/attribute/BedRule;canSleep(Lnet/minecraft/world/level/Level;)Z"))
 	private boolean nycto$coffin(boolean original) {
-		if (getSleepingPos().isPresent() && level().getBlockState(getSleepingPos().get()).is(ModBlockTags.COFFINS)) {
+		if (getSleepingPos().isPresent() && level().getBlockState(getSleepingPos().get()).is(NyctoBlockTags.COFFINS)) {
 			return true;
 		}
 		return original;

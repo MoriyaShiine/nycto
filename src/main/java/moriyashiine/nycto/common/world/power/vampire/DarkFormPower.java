@@ -6,8 +6,8 @@ package moriyashiine.nycto.common.world.power.vampire;
 
 import moriyashiine.nycto.api.world.power.FormChanger;
 import moriyashiine.nycto.common.component.entity.power.vampire.DarkFormComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -23,9 +23,9 @@ public class DarkFormPower extends VampireActivePower implements FormChanger {
 
 	@Override
 	public void onRemoved(ServerPlayer player) {
-		DarkFormComponent darkFormComponent = ModEntityComponents.DARK_FORM.get(player);
-		if (darkFormComponent.isEnabled()) {
-			darkFormComponent.toggle();
+		DarkFormComponent darkForm = NyctoEntityComponents.DARK_FORM.get(player);
+		if (darkForm.isEnabled()) {
+			darkForm.toggle();
 		}
 	}
 
@@ -49,19 +49,19 @@ public class DarkFormPower extends VampireActivePower implements FormChanger {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return ModEntityComponents.DARK_FORM.get(player).isEnabled() ? ModSoundEvents.DARK_FORM_OFF : ModSoundEvents.DARK_FORM_ON;
+		return NyctoEntityComponents.DARK_FORM.get(player).isEnabled() ? NyctoSoundEvents.DARK_FORM_OFF : NyctoSoundEvents.DARK_FORM_ON;
 	}
 
 	@Override
 	public void use(ServerLevel level, ServerPlayer player) {
-		ModEntityComponents.DARK_FORM.get(player).toggle();
+		NyctoEntityComponents.DARK_FORM.get(player).toggle();
 	}
 
 	public static boolean isDarkFormActive(@Nullable Entity entity) {
 		if (entity == null) {
 			return false;
 		}
-		DarkFormComponent darkFormComponent = ModEntityComponents.DARK_FORM.getNullable(entity);
-		return darkFormComponent != null && darkFormComponent.isEnabled();
+		DarkFormComponent darkForm = NyctoEntityComponents.DARK_FORM.getNullable(entity);
+		return darkForm != null && darkForm.isEnabled();
 	}
 }

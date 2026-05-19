@@ -4,7 +4,7 @@
 
 package moriyashiine.nycto.client.renderer.entity.state;
 
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.fabricmc.fabric.api.client.rendering.v1.RenderStateDataKey;
 import net.minecraft.client.Minecraft;
@@ -29,7 +29,7 @@ public class BloodBarrierRenderState {
 				}
 			}
 		}
-		bloodBarrierRenderState.bloodBarriers = ModEntityComponents.BLOOD_BARRIER.get(realEntity).getBarriers();
+		bloodBarrierRenderState.bloodBarriers = NyctoEntityComponents.BLOOD_BARRIER.get(realEntity).getBarriers();
 		state.setData(KEY, bloodBarrierRenderState);
 	}
 }

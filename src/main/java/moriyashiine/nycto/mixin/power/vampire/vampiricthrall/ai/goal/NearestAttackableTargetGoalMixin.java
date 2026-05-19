@@ -4,7 +4,7 @@
 
 package moriyashiine.nycto.mixin.power.vampire.vampiricthrall.ai.goal;
 
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.TargetGoal;
@@ -21,7 +21,7 @@ public abstract class NearestAttackableTargetGoalMixin extends TargetGoal {
 
 	@Inject(method = "canUse", at = @At("HEAD"), cancellable = true)
 	private void nycto$vampiricThrall(CallbackInfoReturnable<Boolean> cir) {
-		if (ModEntityComponents.VAMPIRIC_THRALL.get(mob).hasOwner()) {
+		if (NyctoEntityComponents.VAMPIRIC_THRALL.get(mob).hasOwner()) {
 			cir.setReturnValue(false);
 		}
 	}

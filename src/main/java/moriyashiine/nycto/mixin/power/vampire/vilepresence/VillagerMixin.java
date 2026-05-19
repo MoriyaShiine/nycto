@@ -5,7 +5,7 @@
 package moriyashiine.nycto.mixin.power.vampire.vilepresence;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.nycto.common.world.power.vampire.weakness.VilePresenceWeakness;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,7 +24,7 @@ public abstract class VillagerMixin extends LivingEntity {
 	@ModifyReturnValue(method = "getPlayerReputation", at = @At("RETURN"))
 	private int nycto$vilePresence(int original, Player player) {
 		if (VilePresenceWeakness.isAffected(this, player)) {
-			return original - (ModEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner() ? 128 : 256);
+			return original - (NyctoEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner() ? 128 : 256);
 		}
 		return original;
 	}

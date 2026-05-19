@@ -6,8 +6,8 @@ package moriyashiine.nycto.common.component.entity.power.vampire;
 
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.client.payload.AddBloodBarrierParticlesPayload;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.server.level.ServerPlayer;
@@ -58,7 +58,7 @@ public class BloodBarrierComponent implements AutoSyncedComponent, CommonTicking
 	}
 
 	public void sync() {
-		ModEntityComponents.BLOOD_BARRIER.sync(obj);
+		NyctoEntityComponents.BLOOD_BARRIER.sync(obj);
 	}
 
 	public int getBarriers() {
@@ -66,7 +66,7 @@ public class BloodBarrierComponent implements AutoSyncedComponent, CommonTicking
 	}
 
 	public void breakBarrier() {
-		SLibUtils.playSound(obj, ModSoundEvents.BLOOD_BARRIER_BREAK, 1, Mth.nextFloat(obj.getRandom(), 0.8F, 1.2F));
+		SLibUtils.playSound(obj, NyctoSoundEvents.BLOOD_BARRIER_BREAK, 1, Mth.nextFloat(obj.getRandom(), 0.8F, 1.2F));
 		barriers--;
 		addParticles(barriers);
 		if (barriers == 0) {

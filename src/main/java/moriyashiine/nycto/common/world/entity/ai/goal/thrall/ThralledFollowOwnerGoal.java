@@ -6,8 +6,8 @@ package moriyashiine.nycto.common.world.entity.ai.goal.thrall;
 
 import moriyashiine.nycto.common.component.entity.power.util.HasOwnerComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModMobEffects;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoMobEffects;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.TemptGoal;
@@ -20,7 +20,7 @@ public class ThralledFollowOwnerGoal extends TemptGoal {
 
 	@Override
 	public boolean canUse() {
-		if (mob.hasEffect(ModMobEffects.HYPNOTIZED) || ModEntityComponents.VAMPIRIC_THRALL.get(mob).getFollowMode() == VampiricThrallComponent.FollowMode.FOLLOW) {
+		if (mob.hasEffect(NyctoMobEffects.HYPNOTIZED) || NyctoEntityComponents.VAMPIRIC_THRALL.get(mob).getFollowMode() == VampiricThrallComponent.FollowMode.FOLLOW) {
 			player = getServerLevel(mob).getNearestPlayer(targetingConditions.range(mob.getAttributeValue(Attributes.FOLLOW_RANGE)), mob);
 			return player != null;
 		}

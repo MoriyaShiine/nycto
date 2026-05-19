@@ -8,7 +8,7 @@ import moriyashiine.nycto.api.world.power.ActivePower;
 import moriyashiine.nycto.api.world.power.PowerInstance;
 import moriyashiine.nycto.client.event.PowerClientEvent;
 import moriyashiine.nycto.common.component.entity.TransformationComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElement;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -21,23 +21,23 @@ public class PowerHotbarHudElement implements HudElement {
 	@Override
 	public void extractRenderState(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker) {
 		Minecraft client = Minecraft.getInstance();
-		TransformationComponent transformationComponent = ModEntityComponents.TRANSFORMATION.get(client.player);
-		if (PowerClientEvent.isActive(client.player, transformationComponent)) {
-			extractPowers(graphics, transformationComponent);
-			Identifier hotbarOverlayTexture = transformationComponent.getTransformation().getPowerHotbarTextureSet().powerHotbarOverlayTexture();
+		TransformationComponent transformation = NyctoEntityComponents.TRANSFORMATION.get(client.player);
+		if (PowerClientEvent.isActive(client.player, transformation)) {
+			extractPowers(graphics, transformation);
+			Identifier hotbarOverlayTexture = transformation.getTransformation().getPowerHotbarTextureSet().powerHotbarOverlayTexture();
 			if (hotbarOverlayTexture != null) {
 				graphics.blitSprite(RenderPipelines.GUI_TEXTURED, hotbarOverlayTexture, graphics.guiWidth() / 2 - 91, graphics.guiHeight() - 22, 182, 22);
 			}
-			Identifier selectionOverlayTexture = transformationComponent.getTransformation().getPowerHotbarTextureSet().powerHotbarSelectionOverlayTexture();
+			Identifier selectionOverlayTexture = transformation.getTransformation().getPowerHotbarTextureSet().powerHotbarSelectionOverlayTexture();
 			if (selectionOverlayTexture != null) {
-				graphics.blitSprite(RenderPipelines.GUI_TEXTURED, selectionOverlayTexture, graphics.guiWidth() / 2 - 92 + PowerClientEvent.getActivePowersIndex(transformationComponent) * 20, graphics.guiHeight() - 23, 24, 23);
+				graphics.blitSprite(RenderPipelines.GUI_TEXTURED, selectionOverlayTexture, graphics.guiWidth() / 2 - 92 + PowerClientEvent.getActivePowersIndex(transformation) * 20, graphics.guiHeight() - 23, 24, 23);
 			}
 		}
 	}
 
-	private static void extractPowers(GuiGraphicsExtractor graphics, TransformationComponent transformationComponent) {
+	private static void extractPowers(GuiGraphicsExtractor graphics, TransformationComponent transformation) {
 		int xOffset = 0;
-		for (PowerInstance powerInstance : transformationComponent.getPowers()) {
+		for (PowerInstance powerInstance : transformation.getPowers()) {
 			if (powerInstance.getPower() instanceof ActivePower power) {
 				int x = graphics.guiWidth() / 2 - 88 + xOffset;
 				int y = graphics.guiHeight() - 19;
@@ -49,7 +49,7 @@ public class PowerHotbarHudElement implements HudElement {
 					cooldown = ActivePower.BLOCKED_COOLDOWN;
 					color = 0x7FFFFF7F;
 				}
-				float cooldownProgress = powerInstance.getCooldown() / cooldown;
+				float cooldownProgress = (powerInstance.getCooldown() - 1) / cooldown;
 				if (cooldownProgress > 0) {
 					int y1 = y + Mth.floor(16 * (1 - cooldownProgress));
 					int y2 = y1 + Mth.ceil(16 * cooldownProgress);

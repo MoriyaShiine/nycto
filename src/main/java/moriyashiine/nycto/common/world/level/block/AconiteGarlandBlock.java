@@ -4,11 +4,15 @@
 
 package moriyashiine.nycto.common.world.level.block;
 
+import moriyashiine.nycto.common.component.level.AuraComponent;
+import moriyashiine.nycto.common.init.NyctoLevelComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
@@ -71,6 +75,22 @@ public class AconiteGarlandBlock extends Block {
 		Direction direction = state.getValue(BlockStateProperties.HORIZONTAL_FACING).getOpposite();
 		BlockPos offset = pos.relative(direction);
 		return level.getBlockState(offset).isFaceSturdy(level, offset, direction, SupportType.FULL);
+	}
+
+	@Override
+	protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+		if (!level.isClientSide()) {
+			AuraComponent aura = NyctoLevelComponents.AURA.get(level);
+			aura.getAconiteGarlands().add(pos);
+			aura.sync();
+		}
+	}
+
+	@Override
+	protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+		AuraComponent aura = NyctoLevelComponents.AURA.get(level);
+		aura.getAconiteGarlands().remove(pos);
+		aura.sync();
 	}
 
 	@Override

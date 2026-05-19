@@ -18,7 +18,8 @@ public record UsePowerPayload(int powerIndex) implements CustomPacketPayload {
 	public static final Type<UsePowerPayload> TYPE = new Type<>(Nycto.id("use_power"));
 	public static final StreamCodec<FriendlyByteBuf, UsePowerPayload> CODEC = StreamCodec.composite(
 			ByteBufCodecs.VAR_INT, UsePowerPayload::powerIndex,
-			UsePowerPayload::new);
+			UsePowerPayload::new
+	);
 
 	@Override
 	public Type<UsePowerPayload> type() {

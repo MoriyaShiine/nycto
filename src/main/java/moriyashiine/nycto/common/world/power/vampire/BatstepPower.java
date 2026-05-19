@@ -37,7 +37,7 @@ public class BatstepPower extends VampireActivePower {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return ModSoundEvents.BATSTEP_USE;
+		return NyctoSoundEvents.BATSTEP_USE;
 	}
 
 	@Override
@@ -60,15 +60,15 @@ public class BatstepPower extends VampireActivePower {
 			entity.dismountTo(location.x(), location.y(), location.z());
 			serverLevel.sendParticles(ParticleTypes.SMOKE, entity.getX(), entity.getY() + entity.getBbHeight() / 2, entity.getZ(), 8, entity.getBbWidth() / 4, entity.getBbHeight() / 4, entity.getBbWidth() / 4, 0);
 			serverLevel.sendParticles(switch (entity.getRandom().nextInt(3)) {
-				case 2 -> ModParticleTypes.BATSTEP_LEFT;
-				case 1 -> ModParticleTypes.BATSTEP_RIGHT;
-				default -> ModParticleTypes.BATSTEP_CENTER;
+				case 2 -> NyctoParticleTypes.BATSTEP_LEFT;
+				case 1 -> NyctoParticleTypes.BATSTEP_RIGHT;
+				default -> NyctoParticleTypes.BATSTEP_CENTER;
 			}, entity.getX(), entity.getY() + entity.getBbHeight() / 2, entity.getZ(), 8, entity.getBbWidth() / 4, entity.getBbHeight() / 4, entity.getBbWidth() / 4, 0);
 		}
 		entity.setDeltaMovement(Vec3.ZERO);
 		entity.needsSync = entity.hurtMarked = true;
 		entity.resetFallDistance();
-		ModEntityComponents.BLOOD.get(entity).drain(ModPowers.BATSTEP.getCost(entity));
+		NyctoEntityComponents.BLOOD.get(entity).drain(NyctoPowers.BATSTEP.getCost(entity));
 	}
 
 	private static void attack(ServerLevel level, LivingEntity attacker, LivingEntity target) {
@@ -79,7 +79,7 @@ public class BatstepPower extends VampireActivePower {
 		damage += stack.getItem().getAttackDamageBonus(target, damage, source);
 		if (target.hurtServer(level, source, damage)) {
 			EnchantmentHelper.doPostAttackEffects(level, target, source);
-			target.addEffect(new MobEffectInstance(ModMobEffects.STUNNED, 60));
+			target.addEffect(new MobEffectInstance(NyctoMobEffects.STUNNED, 60));
 		}
 	}
 }

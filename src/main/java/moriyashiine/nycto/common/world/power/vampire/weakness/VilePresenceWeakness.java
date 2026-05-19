@@ -7,13 +7,13 @@ package moriyashiine.nycto.common.world.power.vampire.weakness;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.api.world.power.Weakness;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModMobEffects;
-import moriyashiine.nycto.common.init.ModPowers;
-import moriyashiine.nycto.common.tag.ModEntityTypeTags;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoMobEffects;
+import moriyashiine.nycto.common.init.NyctoPowers;
+import moriyashiine.nycto.common.tag.NyctoEntityTypeTags;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.player.Player;
@@ -22,12 +22,12 @@ public class VilePresenceWeakness extends Weakness {
 	@Override
 	public void tick(ServerPlayer player) {
 		if (!player.isCreative()) {
-			player.level().getEntities(EntityType.CAT, player.getBoundingBox().inflate(16), VilePresenceWeakness::canBeAffected).forEach(cat -> {
+			player.level().getEntities(EntityTypes.CAT, player.getBoundingBox().inflate(16), VilePresenceWeakness::canPanic).forEach(cat -> {
 				if ((cat.tickCount + cat.getId()) % 100 == 0) {
 					cat.hiss();
 				}
 			});
-			player.level().getEntities(EntityType.WOLF, player.getBoundingBox().inflate(16), VilePresenceWeakness::canBeAffected).forEach(wolf -> {
+			player.level().getEntities(EntityTypes.WOLF, player.getBoundingBox().inflate(16), VilePresenceWeakness::canPanic).forEach(wolf -> {
 				if ((wolf.tickCount + wolf.getId()) % 100 == 0) {
 					wolf.startPersistentAngerTimer();
 				}
@@ -36,11 +36,11 @@ public class VilePresenceWeakness extends Weakness {
 	}
 
 	public static boolean isAffected(Entity entity, Player player) {
-		return canBeAffected(entity) && shouldApply(player);
+		return canPanic(entity) && shouldApply(player);
 	}
 
 	public static boolean isAffected(Entity entity, double distance) {
-		if (canBeAffected(entity)) {
+		if (canPanic(entity)) {
 			for (Player player : entity.level().players()) {
 				if (player.distanceTo(entity) <= distance && shouldApply(player)) {
 					return true;
@@ -51,20 +51,20 @@ public class VilePresenceWeakness extends Weakness {
 	}
 
 	public static boolean shouldApply(Player player) {
-		return player.slib$isSurvival() && NyctoAPI.hasPower(player, ModPowers.VILE_PRESENCE);
+		return player.slib$isSurvival() && NyctoAPI.hasPower(player, NyctoPowers.VILE_PRESENCE);
 	}
 
-	private static boolean canBeAffected(Entity entity) {
-		if (entity.is(ModEntityTypeTags.VILE_PRESENCE_IMMUNE)) {
+	public static boolean canPanic(Entity entity) {
+		if (entity.is(NyctoEntityTypeTags.CANNOT_PANIC)) {
 			return false;
 		}
-		if (entity instanceof LivingEntity living && living.hasEffect(ModMobEffects.HYPNOTIZED)) {
+		if (entity instanceof LivingEntity living && living.hasEffect(NyctoMobEffects.HYPNOTIZED)) {
 			return false;
 		}
 		if (entity instanceof TamableAnimal tameable && tameable.isTame()) {
 			return false;
 		}
-		VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
-		return vampiricThrallComponent == null || !vampiricThrallComponent.hasOwner();
+		VampiricThrallComponent vampiricThrall = NyctoEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
+		return vampiricThrall == null || !vampiricThrall.hasOwner();
 	}
 }

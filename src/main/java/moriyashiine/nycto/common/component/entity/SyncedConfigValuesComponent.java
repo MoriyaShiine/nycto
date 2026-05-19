@@ -4,25 +4,12 @@
 
 package moriyashiine.nycto.common.component.entity;
 
-import moriyashiine.nycto.api.NyctoAPI;
-import moriyashiine.nycto.common.init.ModMobEffects;
-import moriyashiine.nycto.common.init.ModPowers;
-import moriyashiine.nycto.common.world.transformation.VampireTransformation;
-import moriyashiine.strawberrylib.api.module.SLibUtils;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
-import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
-public class SyncedConfigValuesComponent implements AutoSyncedComponent, ServerTickingComponent {
-	private final Player obj;
+public class SyncedConfigValuesComponent implements AutoSyncedComponent {
 	private boolean vampireChargeJump = true, vampireStepHeight = true;
-
-	public SyncedConfigValuesComponent(Player obj) {
-		this.obj = obj;
-	}
 
 	@Override
 	public void readData(ValueInput input) {
@@ -34,11 +21,6 @@ public class SyncedConfigValuesComponent implements AutoSyncedComponent, ServerT
 	public void writeData(ValueOutput output) {
 		output.putBoolean("VampireChargeJump", vampireChargeJump);
 		output.putBoolean("VampireStepHeight", vampireStepHeight);
-	}
-
-	@Override
-	public void serverTick() {
-		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.STEP_HEIGHT, VampireTransformation.STEP_HEIGHT_MODIFIER, hasVampireStepHeight() && !obj.hasEffect(ModMobEffects.VAMPIRE_WARD) && !NyctoAPI.hasSunDebuff(obj) && !NyctoAPI.hasPower(obj, ModPowers.HUMANITY) && NyctoAPI.isVampire(obj));
 	}
 
 	public boolean hasVampireChargeJump() {

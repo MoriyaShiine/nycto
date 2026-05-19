@@ -6,8 +6,8 @@ package moriyashiine.nycto.common.world.power.vampire;
 
 import moriyashiine.nycto.api.world.power.FormChanger;
 import moriyashiine.nycto.common.component.entity.power.vampire.MistFormComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -21,9 +21,9 @@ public class MistFormPower extends VampireActivePower implements FormChanger {
 
 	@Override
 	public void onRemoved(ServerPlayer player) {
-		MistFormComponent mistFormComponent = ModEntityComponents.MIST_FORM.get(player);
-		if (mistFormComponent.isEnabled()) {
-			mistFormComponent.toggle();
+		MistFormComponent mistForm = NyctoEntityComponents.MIST_FORM.get(player);
+		if (mistForm.isEnabled()) {
+			mistForm.toggle();
 		}
 	}
 
@@ -37,7 +37,7 @@ public class MistFormPower extends VampireActivePower implements FormChanger {
 
 	@Override
 	public boolean isFormActive(Player player) {
-		return ModEntityComponents.MIST_FORM.get(player).isEnabled();
+		return NyctoEntityComponents.MIST_FORM.get(player).isEnabled();
 	}
 
 	@Override
@@ -47,11 +47,11 @@ public class MistFormPower extends VampireActivePower implements FormChanger {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return ModEntityComponents.MIST_FORM.get(player).isEnabled() ? ModSoundEvents.MIST_FORM_OFF : ModSoundEvents.MIST_FORM_ON;
+		return NyctoEntityComponents.MIST_FORM.get(player).isEnabled() ? NyctoSoundEvents.MIST_FORM_OFF : NyctoSoundEvents.MIST_FORM_ON;
 	}
 
 	@Override
 	public void use(ServerLevel level, ServerPlayer player) {
-		ModEntityComponents.MIST_FORM.get(player).toggle();
+		NyctoEntityComponents.MIST_FORM.get(player).toggle();
 	}
 }

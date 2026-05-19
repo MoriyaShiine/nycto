@@ -7,7 +7,7 @@ package moriyashiine.nycto.mixin.coffin;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.datafixers.util.Pair;
 import moriyashiine.nycto.api.NyctoAPI;
-import moriyashiine.nycto.common.tag.ModBlockTags;
+import moriyashiine.nycto.common.tag.NyctoBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
@@ -26,7 +26,7 @@ public class NearestBedSensorMixin {
 	private Set<Pair<Holder<PoiType>, BlockPos>> nycto$coffin(Set<Pair<Holder<PoiType>, BlockPos>> pois, @Local(argsOnly = true) ServerLevel level, @Local(argsOnly = true) Mob body) {
 		pois.removeIf(pair -> {
 			BlockPos pos = pair.getSecond();
-			boolean isCoffin = level.getBlockState(pos).is(ModBlockTags.COFFINS);
+			boolean isCoffin = level.getBlockState(pos).is(NyctoBlockTags.COFFINS);
 			return NyctoAPI.isVampire(body) != isCoffin;
 		});
 		return pois;

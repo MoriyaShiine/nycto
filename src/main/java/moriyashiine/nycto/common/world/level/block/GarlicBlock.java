@@ -4,7 +4,7 @@
 
 package moriyashiine.nycto.common.world.level.block;
 
-import moriyashiine.nycto.common.init.ModItems;
+import moriyashiine.nycto.common.init.NyctoItems;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -38,7 +38,7 @@ public class GarlicBlock extends CropBlock {
 
 	@Override
 	protected ItemLike getBaseSeedId() {
-		return ModItems.GARLIC;
+		return NyctoItems.GARLIC;
 	}
 
 	@Override

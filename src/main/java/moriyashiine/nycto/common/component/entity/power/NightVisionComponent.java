@@ -4,7 +4,7 @@
 
 package moriyashiine.nycto.common.component.entity.power;
 
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -43,7 +43,7 @@ public class NightVisionComponent implements AutoSyncedComponent, CommonTickingC
 	}
 
 	public void sync() {
-		ModEntityComponents.NIGHT_VISION.sync(obj);
+		NyctoEntityComponents.NIGHT_VISION.sync(obj);
 	}
 
 	public boolean isEnabled() {

@@ -9,7 +9,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import moriyashiine.nycto.client.event.PowerClientEvent;
 import moriyashiine.nycto.common.component.entity.TransformationComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MouseHandler;
 import net.minecraft.world.entity.player.Inventory;
@@ -26,8 +26,8 @@ public class MouseHandlerMixin {
 
 	@WrapOperation(method = "onScroll", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Inventory;setSelectedSlot(I)V"))
 	private void nycto$power(Inventory instance, int selected, Operation<Void> original, @Local(name = "wheel") int wheel) {
-		TransformationComponent transformationComponent = ModEntityComponents.TRANSFORMATION.get(minecraft.player);
-		if (PowerClientEvent.isActive(minecraft.player, transformationComponent) && PowerClientEvent.scrollPowerIndex(minecraft.player, -wheel)) {
+		TransformationComponent transformation = NyctoEntityComponents.TRANSFORMATION.get(minecraft.player);
+		if (PowerClientEvent.isActive(minecraft.player, transformation) && PowerClientEvent.scrollPowerIndex(minecraft.player, -wheel)) {
 			return;
 		}
 		original.call(instance, selected);

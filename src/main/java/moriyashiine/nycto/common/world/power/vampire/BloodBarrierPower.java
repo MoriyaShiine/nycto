@@ -4,9 +4,9 @@
 
 package moriyashiine.nycto.common.world.power.vampire;
 
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModPowers;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoPowers;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -25,7 +25,7 @@ public class BloodBarrierPower extends VampireActivePower {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return ModSoundEvents.BLOOD_BARRIER_USE;
+		return NyctoSoundEvents.BLOOD_BARRIER_USE;
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class BloodBarrierPower extends VampireActivePower {
 	}
 
 	public static void activate(LivingEntity entity) {
-		ModEntityComponents.BLOOD_BARRIER.get(entity).use();
-		ModEntityComponents.BLOOD.get(entity).drain(ModPowers.BLOOD_BARRIER.getCost(entity));
+		NyctoEntityComponents.BLOOD_BARRIER.get(entity).use();
+		NyctoEntityComponents.BLOOD.get(entity).drain(NyctoPowers.BLOOD_BARRIER.getCost(entity));
 	}
 }

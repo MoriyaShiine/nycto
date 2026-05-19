@@ -1,0 +1,27 @@
+/*
+ * Copyright (c) MoriyaShiine. All Rights Reserved.
+ */
+
+package moriyashiine.nycto.datagen.provider;
+
+import moriyashiine.nycto.common.init.NyctoVillagerTrades;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.VillagerTradeTags;
+import net.minecraft.world.item.trading.VillagerTrade;
+
+import java.util.concurrent.CompletableFuture;
+
+public class NyctoVillagerTradesTagsProvider extends FabricTagsProvider<VillagerTrade> {
+	public NyctoVillagerTradesTagsProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registryLookupFuture) {
+		super(output, Registries.VILLAGER_TRADE, registryLookupFuture);
+	}
+
+	@Override
+	protected void addTags(HolderLookup.Provider registries) {
+		builder(VillagerTradeTags.CLERIC_LEVEL_5)
+				.add(NyctoVillagerTrades.CLERIC_5_HUNTER_CONTRACT);
+	}
+}

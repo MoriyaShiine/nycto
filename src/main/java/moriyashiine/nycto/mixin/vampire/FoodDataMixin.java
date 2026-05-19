@@ -7,7 +7,7 @@ package moriyashiine.nycto.mixin.vampire;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.component.entity.BloodComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.nycto.common.world.transformation.VampireTransformation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.food.FoodData;
@@ -43,13 +43,13 @@ public abstract class FoodDataMixin {
 	private void nycto$vampire(ServerPlayer player, CallbackInfo ci) {
 		vampire = NyctoAPI.isVampire(player);
 		if (vampire) {
-			BloodComponent bloodComponent = ModEntityComponents.BLOOD.get(player);
-			if (bloodComponent.getBlood() > 0) {
+			BloodComponent blood = NyctoEntityComponents.BLOOD.get(player);
+			if (blood.getBlood() > 0) {
 				if (needsFood()) {
 					setFoodLevel(20);
 					setSaturation(20);
 					exhaustionLevel = 0;
-					bloodComponent.drain(1);
+					blood.drain(1);
 				}
 				if (player.level().getGameTime() % VampireTransformation.getHealTicks(player) == 0 && player.isHurt() && player.level().getGameRules().get(GameRules.NATURAL_HEALTH_REGENERATION)) {
 					player.heal(1);

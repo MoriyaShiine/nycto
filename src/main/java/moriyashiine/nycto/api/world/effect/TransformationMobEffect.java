@@ -15,8 +15,8 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 
 public class TransformationMobEffect extends MobEffect {
-	private final Transformation to, from;
-	private final SoundEvent sound;
+	protected final Transformation to, from;
+	protected final SoundEvent sound;
 
 	public TransformationMobEffect(MobEffectCategory category, int color, Transformation to, Transformation from, SoundEvent sound) {
 		super(category, color);

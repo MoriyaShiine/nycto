@@ -10,7 +10,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import moriyashiine.nycto.api.world.power.ActivePower;
 import moriyashiine.nycto.client.event.PowerClientEvent;
 import moriyashiine.nycto.common.component.entity.TransformationComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Inventory;
@@ -27,10 +27,10 @@ public class MinecraftMixin {
 
 	@WrapOperation(method = "handleKeybinds", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Inventory;setSelectedSlot(I)V"))
 	private void nycto$power(Inventory instance, int selected, Operation<Void> original) {
-		TransformationComponent transformationComponent = ModEntityComponents.TRANSFORMATION.get(player);
-		if (PowerClientEvent.isActive(player, transformationComponent)) {
-			if (selected < transformationComponent.getPowers().stream().filter(powerInstance -> powerInstance.getPower() instanceof ActivePower).count()) {
-				PowerClientEvent.scrollPowerIndex(player, selected - PowerClientEvent.getActivePowersIndex(transformationComponent));
+		TransformationComponent transformation = NyctoEntityComponents.TRANSFORMATION.get(player);
+		if (PowerClientEvent.isActive(player, transformation)) {
+			if (selected < transformation.getPowers().stream().filter(powerInstance -> powerInstance.getPower() instanceof ActivePower).count()) {
+				PowerClientEvent.scrollPowerIndex(player, selected - PowerClientEvent.getActivePowersIndex(transformation));
 			}
 			return;
 		}
@@ -39,6 +39,6 @@ public class MinecraftMixin {
 
 	@ModifyExpressionValue(method = "startUseItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z", ordinal = 1))
 	private boolean nycto$power(boolean original) {
-		return original && !PowerClientEvent.isActive(player, ModEntityComponents.TRANSFORMATION.get(player));
+		return original && !PowerClientEvent.isActive(player, NyctoEntityComponents.TRANSFORMATION.get(player));
 	}
 }

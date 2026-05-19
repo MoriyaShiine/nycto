@@ -6,11 +6,12 @@ package moriyashiine.nycto.api.world.entity.huntertype;
 
 import com.mojang.serialization.Codec;
 import moriyashiine.nycto.api.init.NyctoRegistries;
-import moriyashiine.nycto.common.init.ModBannerPatterns;
+import moriyashiine.nycto.common.init.NyctoBannerPatterns;
 import moriyashiine.nycto.common.world.entity.monster.Hunter;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -27,10 +28,7 @@ import net.minecraft.world.level.block.entity.BannerPatterns;
 
 public class HunterType {
 	public static final Codec<HunterType> CODEC = NyctoRegistries.HUNTER_TYPE.byNameCodec();
-	public static final StreamCodec<FriendlyByteBuf, HunterType> STREAM_CODEC = StreamCodec.composite(
-			Identifier.STREAM_CODEC, NyctoRegistries.HUNTER_TYPE::getKey,
-			identifier -> NyctoRegistries.HUNTER_TYPE.get(identifier).orElseThrow().value()
-	);
+	public static final StreamCodec<RegistryFriendlyByteBuf, HunterType> STREAM_CODEC = ByteBufCodecs.registry(NyctoRegistries.HUNTER_TYPE_KEY);
 
 	public final Identifier hunterEntityTexture;
 	public final ResourceKey<EquipmentAsset> assetKey;
@@ -51,9 +49,20 @@ public class HunterType {
 			ItemStack shield = Items.SHIELD.getDefaultInstance();
 			shield.set(DataComponents.BANNER_PATTERNS, new BannerPatternLayers.Builder()
 					.add(hunter.registryAccess().lookupOrThrow(Registries.BANNER_PATTERN).getOrThrow(BannerPatterns.BASE), DyeColor.BLACK)
-					.add(hunter.registryAccess().lookupOrThrow(Registries.BANNER_PATTERN).getOrThrow(ModBannerPatterns.HUNTERS_MARK), DyeColor.YELLOW)
+					.add(hunter.registryAccess().lookupOrThrow(Registries.BANNER_PATTERN).getOrThrow(NyctoBannerPatterns.HUNTERS_MARK), DyeColor.YELLOW)
 					.build());
 			hunter.setItemSlot(EquipmentSlot.OFFHAND, shield);
 		}
+	}
+
+	public boolean shouldUseCustomItem(Hunter hunter) {
+		return false;
+	}
+
+	public void useCustomItem(Hunter hunter) {
+	}
+
+	public int getCustomItemCooldown(Hunter hunter) {
+		return 0;
 	}
 }

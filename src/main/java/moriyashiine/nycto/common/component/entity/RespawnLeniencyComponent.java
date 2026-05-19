@@ -4,7 +4,7 @@
 
 package moriyashiine.nycto.common.component.entity;
 
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -39,7 +39,7 @@ public class RespawnLeniencyComponent implements AutoSyncedComponent, CommonTick
 	}
 
 	public void sync() {
-		ModEntityComponents.RESPAWN_LENIENCY.sync(obj);
+		NyctoEntityComponents.RESPAWN_LENIENCY.sync(obj);
 	}
 
 	public boolean hasLeniency() {

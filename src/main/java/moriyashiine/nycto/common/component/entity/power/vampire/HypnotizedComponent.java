@@ -5,10 +5,10 @@
 package moriyashiine.nycto.common.component.entity.power.vampire;
 
 import moriyashiine.nycto.common.component.entity.power.util.HasOwnerComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModMobEffects;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoMobEffects;
 import moriyashiine.nycto.common.world.power.vampire.HypnotizePower;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.Mob;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
@@ -19,8 +19,8 @@ public class HypnotizedComponent extends HasOwnerComponent implements ServerTick
 
 	@Override
 	public void serverTick() {
-		if (obj.hasEffect(ModMobEffects.HYPNOTIZED)) {
-			if (ownerUuid == null && obj.tickCount % 20 == 0 && obj.getType() != EntityType.PLAYER) {
+		if (obj.hasEffect(NyctoMobEffects.HYPNOTIZED)) {
+			if (ownerUuid == null && obj.tickCount % 20 == 0 && obj.getType() != EntityTypes.PLAYER) {
 				setOwner(obj.level().getNearestPlayer(obj, 16));
 			}
 		} else if (ownerUuid != null) {
@@ -31,6 +31,6 @@ public class HypnotizedComponent extends HasOwnerComponent implements ServerTick
 
 	@Override
 	public void sync() {
-		ModEntityComponents.HYPNOTIZED.sync(obj);
+		NyctoEntityComponents.HYPNOTIZED.sync(obj);
 	}
 }

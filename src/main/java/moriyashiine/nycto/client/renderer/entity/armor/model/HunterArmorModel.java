@@ -5,7 +5,7 @@
 package moriyashiine.nycto.client.renderer.entity.armor.model;
 
 import moriyashiine.nycto.common.Nycto;
-import moriyashiine.nycto.common.init.ModComponentTypes;
+import moriyashiine.nycto.common.init.NyctoDataComponents;
 import moriyashiine.nycto.common.world.item.MaskVisibility;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -80,7 +80,7 @@ public class HunterArmorModel<S extends HumanoidRenderState> extends HumanoidMod
 
 	@Override
 	public void setupAnim(S state) {
-		MaskVisibility maskVisibility = state.headEquipment.get(ModComponentTypes.MASK_VISIBILITY);
+		MaskVisibility maskVisibility = state.headEquipment.get(NyctoDataComponents.MASK_VISIBILITY);
 		if (maskVisibility != null) {
 			switch (maskVisibility) {
 				case VISIBLE -> {

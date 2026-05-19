@@ -8,8 +8,8 @@ import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.api.init.NyctoRegistries;
 import moriyashiine.nycto.api.world.power.Power;
 import moriyashiine.nycto.api.world.power.PowerInstance;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerPlayer;
@@ -136,7 +136,7 @@ public abstract class AltarMenu extends AbstractContainerMenu {
 				clearContainer(player, altarSlots);
 				altarSlots.setChanged();
 				slotsChanged(altarSlots);
-				level.playSound(null, pos, ModSoundEvents.ALTAR_USE, SoundSource.BLOCKS, 1, level.getRandom().nextFloat() * 0.1F + 0.9F);
+				level.playSound(null, pos, NyctoSoundEvents.ALTAR_USE, SoundSource.BLOCKS, 1, level.getRandom().nextFloat() * 0.1F + 0.9F);
 			});
 			apply(player, buttonId);
 			return true;
@@ -170,7 +170,7 @@ public abstract class AltarMenu extends AbstractContainerMenu {
 		if (ingredient.isEmpty()) {
 			return ItemStack.EMPTY;
 		} else {
-			return ingredient.get(ModEntityComponents.TRANSFORMATION.get(player).getRandomUpgradeCostIndex(ingredient)).value().getDefaultInstance();
+			return ingredient.get(NyctoEntityComponents.TRANSFORMATION.get(player).getRandomUpgradeCostIndex(ingredient)).value().getDefaultInstance();
 		}
 	}
 
@@ -208,7 +208,7 @@ public abstract class AltarMenu extends AbstractContainerMenu {
 					menu.selectablePowers.remove(i);
 					menu.playerPowers.add(power);
 					menu.sort(menu.playerPowers);
-					ModEntityComponents.TRANSFORMATION.get(player).updateUpgradeCostSeed();
+					NyctoEntityComponents.TRANSFORMATION.get(player).updateUpgradeCostSeed();
 					menu.itemCost = menu.refreshItemCost(player);
 					if (player instanceof ServerPlayer serverPlayer) {
 						NyctoAPI.addPower(serverPlayer, power);

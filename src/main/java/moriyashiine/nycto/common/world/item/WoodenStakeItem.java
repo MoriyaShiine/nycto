@@ -62,7 +62,7 @@ public class WoodenStakeItem extends BlockItem implements ProjectileItem {
 				}
 			}
 			attacker.onEquippedItemBroken(this, EquipmentSlot.MAINHAND);
-			itemStack.shrink(1);
+			itemStack.consume(1, player);
 		}
 	}
 

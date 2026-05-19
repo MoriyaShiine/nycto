@@ -6,7 +6,7 @@ package moriyashiine.nycto.mixin.coffin;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import moriyashiine.nycto.api.NyctoAPI;
-import moriyashiine.nycto.common.tag.ModBlockTags;
+import moriyashiine.nycto.common.tag.NyctoBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
@@ -26,7 +26,7 @@ public class AcquirePoiMixin {
 		return posPredicate.and(pos -> {
 			BlockState state = level.getBlockState(pos);
 			if (state.is(BlockTags.BEDS)) {
-				return NyctoAPI.isVampire(body) == state.is(ModBlockTags.COFFINS);
+				return NyctoAPI.isVampire(body) == state.is(NyctoBlockTags.COFFINS);
 			}
 			return true;
 		});

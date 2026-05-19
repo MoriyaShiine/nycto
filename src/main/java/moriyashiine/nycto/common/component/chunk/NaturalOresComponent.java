@@ -8,7 +8,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
-import moriyashiine.nycto.common.init.ModChunkComponents;
+import moriyashiine.nycto.common.init.NyctoChunkComponents;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -61,7 +61,7 @@ public class NaturalOresComponent implements ServerTickingComponent {
 	}
 
 	public static @Nullable Block getNaturalOre(LevelAccessor level, BlockPos pos) {
-		return ModChunkComponents.NATURAL_ORES.get(level.getChunk(pos)).findNaturalOre(level, pos);
+		return NyctoChunkComponents.NATURAL_ORES.get(level.getChunk(pos)).findNaturalOre(level, pos);
 	}
 
 	public @Nullable Block findNaturalOre(LevelAccessor level, BlockPos pos) {
@@ -74,8 +74,8 @@ public class NaturalOresComponent implements ServerTickingComponent {
 
 	private record NaturalOre(long pos, ResourceKey<Block> blockId) {
 		public static final Codec<NaturalOre> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-						Codec.LONG.fieldOf("pos").forGetter(NaturalOre::pos),
-						ResourceKey.codec(Registries.BLOCK).fieldOf("block").forGetter(NaturalOre::blockId))
-				.apply(instance, NaturalOre::new));
+				Codec.LONG.fieldOf("pos").forGetter(NaturalOre::pos),
+				ResourceKey.codec(Registries.BLOCK).fieldOf("block").forGetter(NaturalOre::blockId)
+		).apply(instance, NaturalOre::new));
 	}
 }

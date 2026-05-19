@@ -16,11 +16,8 @@ import moriyashiine.nycto.common.component.entity.RespawnLeniencyComponent;
 import moriyashiine.nycto.common.component.entity.SunExposureComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.HaemogenesisComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModSoundEvents;
-import moriyashiine.nycto.common.init.ModTransformations;
-import moriyashiine.nycto.common.init.ModTriggers;
-import moriyashiine.nycto.common.tag.ModEntityTypeTags;
+import moriyashiine.nycto.common.init.*;
+import moriyashiine.nycto.common.tag.NyctoEntityTypeTags;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.nycto.common.world.power.vampire.DarkFormPower;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
@@ -38,10 +35,11 @@ import org.jspecify.annotations.Nullable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class NyctoAPI {
 	public static Transformation getTransformation(Player player) {
-		return ModEntityComponents.TRANSFORMATION.get(player).getTransformation();
+		return NyctoEntityComponents.TRANSFORMATION.get(player).getTransformation();
 	}
 
 	public static void setTransformation(ServerPlayer player, Transformation transformation) {
@@ -50,7 +48,7 @@ public class NyctoAPI {
 		transformation.onAdded(player);
 		SetTransformationPayload.send(player, player, transformation);
 		PlayerLookup.tracking(player).forEach(receiver -> SetTransformationPayload.send(receiver, player, transformation));
-		ModTriggers.CHANGE_TRANSFORMATION.trigger(player);
+		NyctoTriggers.CHANGE_TRANSFORMATION.trigger(player);
 	}
 
 	public static void addPower(ServerPlayer player, Power power) {
@@ -60,7 +58,7 @@ public class NyctoAPI {
 		transformation.applyModifiers(player, true);
 		ModifyPowerPayload.send(player, player, power, true);
 		PlayerLookup.tracking(player).forEach(receiver -> ModifyPowerPayload.send(receiver, player, power, true));
-		ModTriggers.CHANGE_POWERS.trigger(player);
+		NyctoTriggers.CHANGE_POWERS.trigger(player);
 	}
 
 	public static void removePower(ServerPlayer player, Power power) {
@@ -70,15 +68,19 @@ public class NyctoAPI {
 		transformation.applyModifiers(player, true);
 		ModifyPowerPayload.send(player, player, power, false);
 		PlayerLookup.tracking(player).forEach(receiver -> ModifyPowerPayload.send(receiver, player, power, false));
-		ModTriggers.CHANGE_POWERS.trigger(player);
+		NyctoTriggers.CHANGE_POWERS.trigger(player);
 	}
 
 	public static List<PowerInstance> getPowers(Player player) {
-		return ModEntityComponents.TRANSFORMATION.get(player).getPowers();
+		return NyctoEntityComponents.TRANSFORMATION.get(player).getPowers();
 	}
 
 	public static boolean hasPower(Player player, Power power) {
-		return ModEntityComponents.TRANSFORMATION.get(player).hasPower(power);
+		return NyctoEntityComponents.TRANSFORMATION.get(player).hasPower(power);
+	}
+
+	public static int getWeaknesses(Player player, TagKey<Power> choosablePowers) {
+		return getPowers(player).stream().filter(instance -> instance.getPower().isWeakness() && instance.is(choosablePowers)).collect(Collectors.toSet()).size();
 	}
 
 	public static void setPowerCooldown(ServerPlayer player, Power power, int cooldown) {
@@ -87,23 +89,27 @@ public class NyctoAPI {
 	}
 
 	public static boolean hasBlood(Entity entity) {
-		return !entity.is(ModEntityTypeTags.HAS_NO_BLOOD);
+		return !entity.is(NyctoEntityTypeTags.HAS_NO_BLOOD);
 	}
 
 	public static boolean hasQualityBlood(Entity entity) {
-		return hasBlood(entity) && entity.is(ModEntityTypeTags.HAS_QUALITY_BLOOD);
+		return hasBlood(entity) && entity.is(NyctoEntityTypeTags.HAS_QUALITY_BLOOD);
+	}
+
+	public static boolean isHealingBlocked(LivingEntity entity) {
+		return NyctoEntityComponents.HEAL_BLOCK.get(entity).getTicksToBlock() > 0;
 	}
 
 	public static void applyHealBlock(LivingEntity entity, int ticks, @Nullable Entity lifeStealer) {
-		HaemogenesisComponent haemogenesisComponent = ModEntityComponents.HAEMOGENESIS.getNullable(entity);
-		if (haemogenesisComponent == null || !haemogenesisComponent.isHealing()) {
+		HaemogenesisComponent haemogenesis = NyctoEntityComponents.HAEMOGENESIS.getNullable(entity);
+		if (haemogenesis == null || !haemogenesis.isHealing()) {
 			if (NyctoUtil.hasHealBlockResistance(entity)) {
 				ticks = (int) (ticks * 2 / 3F);
 			}
-			HealBlockComponent healBlockComponent = ModEntityComponents.HEAL_BLOCK.get(entity);
-			healBlockComponent.setTicksToBlock(ticks);
-			healBlockComponent.setLifeStealer(lifeStealer);
-			healBlockComponent.sync();
+			HealBlockComponent healBlock = NyctoEntityComponents.HEAL_BLOCK.get(entity);
+			healBlock.setTicksToBlock(ticks);
+			healBlock.setLifeStealer(lifeStealer);
+			healBlock.sync();
 		}
 	}
 
@@ -111,19 +117,19 @@ public class NyctoAPI {
 		applyHealBlock(entity, ticks, null);
 	}
 
-	public static boolean isWerewolf(Entity entity) {
-		return NyctoAPIImpl.isPlayerWerewolf(entity);
-	}
-
 	public static boolean isVampire(Entity entity) {
 		if (entity == null) {
 			return false;
 		}
-		VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
-		if (vampiricThrallComponent != null && vampiricThrallComponent.hasOwner()) {
+		VampiricThrallComponent vampiricThrall = NyctoEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
+		if (vampiricThrall != null && vampiricThrall.hasOwner()) {
 			return true;
 		}
-		return entity.is(ModEntityTypeTags.VAMPIRES) || NyctoAPIImpl.isPlayerVampire(entity);
+		return entity.is(NyctoEntityTypes.VAMPIRE) || NyctoAPIImpl.isPlayerVampire(entity);
+	}
+
+	public static boolean isWerewolf(Entity entity) {
+		return NyctoAPIImpl.isPlayerWerewolf(entity);
 	}
 
 	public static boolean isBeastForm(DamageSource source) {
@@ -131,29 +137,32 @@ public class NyctoAPI {
 	}
 
 	public static boolean isBeastForm(Entity entity) {
+		if (entity == null) {
+			return false;
+		}
 		return DarkFormPower.isDarkFormActive(entity);
 	}
 
 	public static boolean hasRespawnLeniency(LivingEntity entity) {
-		RespawnLeniencyComponent respawnLeniencyComponent = ModEntityComponents.RESPAWN_LENIENCY.getNullable(entity);
-		return respawnLeniencyComponent != null && respawnLeniencyComponent.hasLeniency();
+		RespawnLeniencyComponent respawnLeniency = NyctoEntityComponents.RESPAWN_LENIENCY.getNullable(entity);
+		return respawnLeniency != null && respawnLeniency.hasLeniency();
 	}
 
 	public static void giveRespawnLeniency(LivingEntity entity) {
-		RespawnLeniencyComponent respawnLeniencyComponent = ModEntityComponents.RESPAWN_LENIENCY.getNullable(entity);
-		if (respawnLeniencyComponent != null) {
-			respawnLeniencyComponent.giveLeniency();
+		RespawnLeniencyComponent respawnLeniency = NyctoEntityComponents.RESPAWN_LENIENCY.getNullable(entity);
+		if (respawnLeniency != null) {
+			respawnLeniency.giveLeniency();
 		}
 	}
 
 	public static boolean isSunExposed(Entity entity) {
-		SunExposureComponent sunExposureComponent = ModEntityComponents.SUN_EXPOSURE.getNullable(entity);
-		return sunExposureComponent != null && sunExposureComponent.isExposed();
+		SunExposureComponent sunExposure = NyctoEntityComponents.SUN_EXPOSURE.getNullable(entity);
+		return sunExposure != null && sunExposure.isExposed();
 	}
 
 	public static boolean hasSunDebuff(Entity entity) {
-		SunExposureComponent sunExposureComponent = ModEntityComponents.SUN_EXPOSURE.getNullable(entity);
-		return sunExposureComponent != null && sunExposureComponent.hasVampireSunDebuff() && sunExposureComponent.getExposureTime() >= SunExposureComponent.MIN_DEBUFF_EXPOSURE_TIME;
+		SunExposureComponent sunExposure = NyctoEntityComponents.SUN_EXPOSURE.getNullable(entity);
+		return sunExposure != null && sunExposure.hasVampireSunDebuff() && sunExposure.getExposureTime() >= SunExposureComponent.MIN_DEBUFF_EXPOSURE_TIME;
 	}
 
 	public static void removePowerOrCure(ServerPlayer player, TagKey<Power> choosablePowers) {
@@ -171,10 +180,10 @@ public class NyctoAPI {
 		toRemove.forEach(power -> removePower(player, power));
 		SLibUtils.addParticles(player, ParticleTypes.SMOKE, 16, ParticleAnchor.BODY);
 		if (toRemove.isEmpty()) {
-			SLibUtils.playAnchoredSound(player, ModSoundEvents.GENERIC_TRANSFORM_HUMAN);
-			setTransformation(player, ModTransformations.HUMAN);
+			SLibUtils.playAnchoredSound(player, NyctoSoundEvents.GENERIC_TRANSFORM_HUMAN);
+			setTransformation(player, NyctoTransformations.HUMAN);
 		} else {
-			SLibUtils.playAnchoredSound(player, ModSoundEvents.GENERIC_REMOVE_POWER);
+			SLibUtils.playAnchoredSound(player, NyctoSoundEvents.GENERIC_REMOVE_POWER);
 		}
 	}
 }

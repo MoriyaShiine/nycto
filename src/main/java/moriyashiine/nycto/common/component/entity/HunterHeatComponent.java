@@ -8,9 +8,9 @@ import moriyashiine.nycto.api.init.NyctoRegistries;
 import moriyashiine.nycto.api.world.entity.huntertype.HunterType;
 import moriyashiine.nycto.api.world.item.HunterContractItem;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModGameRules;
-import moriyashiine.nycto.common.tag.ModEntityTypeTags;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoGameRules;
+import moriyashiine.nycto.common.tag.NyctoEntityTypeTags;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
@@ -59,7 +59,7 @@ public class HunterHeatComponent implements ServerTickingComponent {
 	}
 
 	public void maybeIncreaseHeat(LivingEntity target, boolean maximize) {
-		if (!obj.isCreative() && obj.level() instanceof ServerLevel level && level.getGameRules().get(ModGameRules.SPAWN_HUNTERS) && canIncreaseHeat(target)) {
+		if (!obj.isCreative() && obj.level() instanceof ServerLevel level && level.getGameRules().get(NyctoGameRules.SPAWN_HUNTERS) && canIncreaseHeat(target)) {
 			if (target instanceof Enemy && target.getRandom().nextBoolean()) {
 				return;
 			}
@@ -96,12 +96,12 @@ public class HunterHeatComponent implements ServerTickingComponent {
 	}
 
 	private static boolean canIncreaseHeat(LivingEntity target) {
-		if (target.is(ModEntityTypeTags.CALLS_HUNTERS)) {
+		if (target.is(NyctoEntityTypeTags.CALLS_HUNTERS)) {
 			if (target instanceof Raider raider && raider.getCurrentRaid() != null) {
 				return false;
 			}
-			VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(target);
-			return vampiricThrallComponent == null || !vampiricThrallComponent.hasOwner();
+			VampiricThrallComponent vampiricThrall = NyctoEntityComponents.VAMPIRIC_THRALL.getNullable(target);
+			return vampiricThrall == null || !vampiricThrall.hasOwner();
 		}
 		return false;
 	}

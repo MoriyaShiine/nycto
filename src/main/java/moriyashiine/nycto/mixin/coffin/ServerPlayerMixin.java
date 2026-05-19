@@ -6,7 +6,7 @@ package moriyashiine.nycto.mixin.coffin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.mojang.authlib.GameProfile;
-import moriyashiine.nycto.common.tag.ModBlockTags;
+import moriyashiine.nycto.common.tag.NyctoBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -22,7 +22,7 @@ public abstract class ServerPlayerMixin extends Player {
 
 	@ModifyExpressionValue(method = "startSleepInBed", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/attribute/BedRule;canSleep(Lnet/minecraft/world/level/Level;)Z"))
 	private boolean nycto$coffin(boolean original, BlockPos pos) {
-		if (level().getBlockState(pos).is(ModBlockTags.COFFINS)) {
+		if (level().getBlockState(pos).is(NyctoBlockTags.COFFINS)) {
 			return true;
 		}
 		return original;

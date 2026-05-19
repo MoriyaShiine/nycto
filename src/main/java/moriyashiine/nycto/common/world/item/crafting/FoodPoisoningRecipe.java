@@ -5,9 +5,9 @@
 package moriyashiine.nycto.common.world.item.crafting;
 
 import com.mojang.serialization.MapCodec;
-import moriyashiine.nycto.common.init.ModComponentTypes;
-import moriyashiine.nycto.common.init.ModItems;
-import moriyashiine.nycto.common.init.ModRecipeSerializers;
+import moriyashiine.nycto.common.init.NyctoDataComponents;
+import moriyashiine.nycto.common.init.NyctoItems;
+import moriyashiine.nycto.common.init.NyctoRecipeSerializers;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -29,10 +29,10 @@ public class FoodPoisoningRecipe extends CustomRecipe {
 		boolean foundFood = false, foundAconite = false;
 		for (int i = 0; i < input.size(); i++) {
 			ItemStack stack = input.getItem(i);
-			if (stack.has(DataComponents.FOOD) && !stack.getOrDefault(ModComponentTypes.POISONED, false)) {
+			if (stack.has(DataComponents.FOOD) && !stack.getOrDefault(NyctoDataComponents.POISONED, false)) {
 				foundFood = true;
 			}
-			if (stack.is(ModItems.ACONITE)) {
+			if (stack.is(NyctoItems.ACONITE)) {
 				foundAconite = true;
 			}
 		}
@@ -44,7 +44,7 @@ public class FoodPoisoningRecipe extends CustomRecipe {
 		for (ItemStack stack : input.items()) {
 			if (stack.has(DataComponents.FOOD)) {
 				ItemStack copy = stack.copyWithCount(1);
-				copy.set(ModComponentTypes.POISONED, true);
+				copy.set(NyctoDataComponents.POISONED, true);
 				return copy;
 			}
 		}
@@ -53,6 +53,6 @@ public class FoodPoisoningRecipe extends CustomRecipe {
 
 	@Override
 	public RecipeSerializer<FoodPoisoningRecipe> getSerializer() {
-		return ModRecipeSerializers.FOOD_POISONING;
+		return NyctoRecipeSerializers.FOOD_POISONING;
 	}
 }

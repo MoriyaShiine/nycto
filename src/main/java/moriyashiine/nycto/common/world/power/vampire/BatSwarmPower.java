@@ -5,10 +5,10 @@
 package moriyashiine.nycto.common.world.power.vampire;
 
 import moriyashiine.nycto.common.component.level.power.BatSwarmComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModLevelComponents;
-import moriyashiine.nycto.common.init.ModPowers;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoLevelComponents;
+import moriyashiine.nycto.common.init.NyctoPowers;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -28,7 +28,7 @@ public class BatSwarmPower extends VampireActivePower {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return ModSoundEvents.BAT_SWARM_USE;
+		return NyctoSoundEvents.BAT_SWARM_USE;
 	}
 
 	@Override
@@ -37,9 +37,9 @@ public class BatSwarmPower extends VampireActivePower {
 	}
 
 	public static void spawnSwarm(Level level, LivingEntity entity) {
-		BatSwarmComponent batSwarmComponent = ModLevelComponents.BAT_SWARM.get(level);
-		batSwarmComponent.addBatSwarm(entity);
-		batSwarmComponent.sync();
-		ModEntityComponents.BLOOD.get(entity).drain(ModPowers.BAT_SWARM.getCost(entity));
+		BatSwarmComponent batSwarm = NyctoLevelComponents.BAT_SWARM.get(level);
+		batSwarm.addBatSwarm(entity);
+		batSwarm.sync();
+		NyctoEntityComponents.BLOOD.get(entity).drain(NyctoPowers.BAT_SWARM.getCost(entity));
 	}
 }

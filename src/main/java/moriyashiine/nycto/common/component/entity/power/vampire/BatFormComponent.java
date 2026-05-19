@@ -9,12 +9,12 @@ import io.github.ladysnake.pal.Pal;
 import io.github.ladysnake.pal.VanillaAbilities;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.component.entity.power.util.VampireFormChangeComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModPowers;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoPowers;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -30,7 +30,7 @@ public class BatFormComponent extends VampireFormChangeComponent {
 	}
 
 	public void sync() {
-		ModEntityComponents.BAT_FORM.sync(obj);
+		NyctoEntityComponents.BAT_FORM.sync(obj);
 	}
 
 	@Override
@@ -43,15 +43,15 @@ public class BatFormComponent extends VampireFormChangeComponent {
 			SOURCE.revokeFrom(obj, VanillaAbilities.FLYING);
 			maxHealth.removeModifier(MAX_HEALTH_MODIFIER);
 			obj.setHealth(obj.getMaxHealth() * percentage);
-			SLibUtils.removeModelReplacementType(obj, EntityType.BAT);
+			SLibUtils.removeModelReplacementType(obj, EntityTypes.BAT);
 			drainTicks = 0;
 		} else {
 			SOURCE.grantTo(obj, VanillaAbilities.ALLOW_FLYING);
 			SOURCE.grantTo(obj, VanillaAbilities.FLYING);
 			maxHealth.addPermanentModifier(MAX_HEALTH_MODIFIER);
 			obj.setHealth(obj.getMaxHealth() * percentage);
-			SLibUtils.addModelReplacementType(obj, EntityType.BAT, 500);
-			ModEntityComponents.BLOOD.get(obj).drain(ModPowers.BAT_FORM.getCost(obj));
+			SLibUtils.addModelReplacementType(obj, EntityTypes.BAT, 500);
+			NyctoEntityComponents.BLOOD.get(obj).drain(NyctoPowers.BAT_FORM.getCost(obj));
 			drainTicks = POWER_DRAIN_TICKS;
 		}
 		enabled = !enabled;

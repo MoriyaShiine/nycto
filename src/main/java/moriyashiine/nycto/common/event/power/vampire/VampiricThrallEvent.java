@@ -8,9 +8,9 @@ import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.component.entity.BloodComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
 import moriyashiine.nycto.common.event.power.util.HasOwnerEvent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModSoundEvents;
-import moriyashiine.nycto.common.tag.ModEntityTypeTags;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
+import moriyashiine.nycto.common.tag.NyctoEntityTypeTags;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.nycto.common.world.item.consumeeffects.FillBloodConsumeEffect;
 import moriyashiine.strawberrylib.api.event.TickEntityEvent;
@@ -41,13 +41,19 @@ import java.util.Locale;
 import java.util.Set;
 
 public class VampiricThrallEvent {
-	public static class Revenge implements ServerLivingEntityEvents.AfterDamage {
+	public static void init() {
+		ServerLivingEntityEvents.AFTER_DAMAGE.register(new Revenge());
+		TickEntityEvent.EVENT.register(new Defend());
+		UseEntityCallback.EVENT.register(new RightClickOverride());
+	}
+
+	private static class Revenge implements ServerLivingEntityEvents.AfterDamage {
 		private static final HasOwnerEvent.RevengeFunction REVENGE = new HasOwnerEvent.RevengeFunction() {
 			@Override
 			public boolean shouldHelp(Mob mob, LivingEntity attacker, LivingEntity victim) {
 				if (SLibUtils.shouldHurt(attacker, victim) && mob.getTarget() == null) {
-					VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.get(mob);
-					return vampiricThrallComponent.isOwner(attacker) && vampiricThrallComponent.hasFollowModes() && vampiricThrallComponent.getFollowMode() != VampiricThrallComponent.FollowMode.STAY;
+					VampiricThrallComponent vampiricThrall = NyctoEntityComponents.VAMPIRIC_THRALL.get(mob);
+					return vampiricThrall.isOwner(attacker) && vampiricThrall.hasFollowModes() && vampiricThrall.getFollowMode() != VampiricThrallComponent.FollowMode.STAY;
 				}
 				return false;
 			}
@@ -64,12 +70,12 @@ public class VampiricThrallEvent {
 		}
 	}
 
-	public static class Defend implements TickEntityEvent {
+	private static class Defend implements TickEntityEvent {
 		@Override
 		public void tick(Level level, Entity entity) {
 			if (!level.isClientSide() && (entity.tickCount + entity.getId()) % 20 == 0 && entity instanceof Mob mob && mob.getTarget() == null) {
-				VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.get(mob);
-				if (vampiricThrallComponent.hasOwner() && vampiricThrallComponent.getFollowMode() == VampiricThrallComponent.FollowMode.DEFEND) {
+				VampiricThrallComponent vampiricThrall = NyctoEntityComponents.VAMPIRIC_THRALL.get(mob);
+				if (vampiricThrall.hasOwner() && vampiricThrall.getFollowMode() == VampiricThrallComponent.FollowMode.DEFEND) {
 					List<LivingEntity> targets = level.getEntitiesOfClass(LivingEntity.class, mob.getBoundingBox().inflate(16), foundEntity -> shouldTarget(mob, foundEntity));
 					LivingEntity closest = null;
 					for (LivingEntity target : targets) {
@@ -85,23 +91,23 @@ public class VampiricThrallEvent {
 		}
 
 		private static boolean shouldTarget(Mob mob, LivingEntity target) {
-			if (target.slib$isSurvival() && SLibUtils.shouldHurt(mob, target) && !NyctoAPI.isVampire(target) && !target.is(ModEntityTypeTags.CANNOT_BE_TARGETED_BY_THRALLS) && mob.hasLineOfSight(target)) {
+			if (target.slib$isSurvival() && SLibUtils.shouldHurt(mob, target) && !NyctoAPI.isVampire(target) && !target.is(NyctoEntityTypeTags.CANNOT_BE_TARGETED_BY_THRALLS) && mob.hasLineOfSight(target)) {
 				if (target.slib$isPlayer() || target instanceof Enemy) {
-					VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.get(mob);
-					return vampiricThrallComponent.getWanderHome() == null || Math.sqrt(vampiricThrallComponent.getWanderHome().distToCenterSqr(target.position())) <= mob.getNavigation().getMaxPathLength();
+					VampiricThrallComponent vampiricThrall = NyctoEntityComponents.VAMPIRIC_THRALL.get(mob);
+					return vampiricThrall.getWanderHome() == null || Math.sqrt(vampiricThrall.getWanderHome().distToCenterSqr(target.position())) <= mob.getNavigation().getMaxPathLength();
 				}
 			}
 			return false;
 		}
 	}
 
-	public static class RightClickOverride implements UseEntityCallback {
+	private static class RightClickOverride implements UseEntityCallback {
 		@Override
 		public InteractionResult interact(Player player, Level level, InteractionHand hand, Entity entity, @Nullable EntityHitResult hitResult) {
 			if (player.isShiftKeyDown() && player.slib$exists()) {
-				VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
-				if (vampiricThrallComponent != null) {
-					if (vampiricThrallComponent.hasOwner()) {
+				VampiricThrallComponent vampiricThrall = NyctoEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
+				if (vampiricThrall != null) {
+					if (vampiricThrall.hasOwner()) {
 						Set<ApplyStatusEffectsConsumeEffect> effects = new HashSet<>();
 						int fillAmount = 0;
 						ItemStack stack = player.getItemInHand(hand);
@@ -116,12 +122,12 @@ public class VampiricThrallEvent {
 							}
 						}
 						if (fillAmount > 0) {
-							BloodComponent bloodComponent = ModEntityComponents.BLOOD.get(entity);
-							if (bloodComponent.canFill()) {
+							BloodComponent blood = NyctoEntityComponents.BLOOD.get(entity);
+							if (blood.canFill()) {
 								if (!level.isClientSide()) {
-									bloodComponent.fill(fillAmount);
+									blood.fill(fillAmount);
 									NyctoUtil.spawnBloodParticles(entity);
-									SLibUtils.playSound(entity, ModSoundEvents.BLOOD_BOTTLE_DRINK.value());
+									SLibUtils.playSound(entity, NyctoSoundEvents.BLOOD_BOTTLE_DRINK.value());
 									entity.gameEvent(GameEvent.DRINK);
 									if (entity instanceof LivingEntity living) {
 										effects.forEach(effect -> effect.apply(level, stack, living));
@@ -134,10 +140,10 @@ public class VampiricThrallEvent {
 								}
 								return InteractionResult.SUCCESS;
 							}
-						} else if (vampiricThrallComponent.isOwner(player) && vampiricThrallComponent.hasFollowModes()) {
+						} else if (vampiricThrall.isOwner(player) && vampiricThrall.hasFollowModes()) {
 							if (!level.isClientSide()) {
-								vampiricThrallComponent.cycleFollowMode();
-								player.sendOverlayMessage(Component.translatable("message.nycto.cycle_follow_mode." + vampiricThrallComponent.getFollowMode().name().toLowerCase(Locale.ROOT), entity.getName()));
+								vampiricThrall.cycleFollowMode();
+								player.sendOverlayMessage(Component.translatable("message.nycto.cycle_follow_mode." + vampiricThrall.getFollowMode().name().toLowerCase(Locale.ROOT), entity.getName()));
 							}
 							return InteractionResult.SUCCESS;
 						}

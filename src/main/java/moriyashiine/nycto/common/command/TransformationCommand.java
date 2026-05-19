@@ -24,6 +24,10 @@ import static net.minecraft.commands.Commands.argument;
 import static net.minecraft.commands.Commands.literal;
 
 public class TransformationCommand implements CommandRegistrationCallback {
+	public static void init() {
+		CommandRegistrationCallback.EVENT.register(new TransformationCommand());
+	}
+
 	@Override
 	public void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext buildContext, Commands.CommandSelection selection) {
 		dispatcher.register(literal("transformation").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))

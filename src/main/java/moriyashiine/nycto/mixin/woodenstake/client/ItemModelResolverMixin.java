@@ -5,7 +5,7 @@
 package moriyashiine.nycto.mixin.woodenstake.client;
 
 import moriyashiine.nycto.common.Nycto;
-import moriyashiine.nycto.common.init.ModItems;
+import moriyashiine.nycto.common.init.NyctoItems;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.core.component.DataComponents;
@@ -25,7 +25,7 @@ public class ItemModelResolverMixin {
 
 	@ModifyVariable(method = "appendItemLayers", at = @At("STORE"), name = "modelId")
 	private Identifier nycto$woodenStake(Identifier modelId, ItemStackRenderState output, ItemStack item) {
-		if (item.is(Items.CROSSBOW) && item.getOrDefault(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.EMPTY).contains(ModItems.WOODEN_STAKE)) {
+		if (item.is(Items.CROSSBOW) && item.getOrDefault(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.EMPTY).contains(NyctoItems.WOODEN_STAKE)) {
 			return CROSSBOW_WOODEN_STAKE;
 		}
 		return modelId;

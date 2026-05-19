@@ -4,7 +4,7 @@
 
 package moriyashiine.nycto.mixin.coffin;
 
-import moriyashiine.nycto.common.tag.ModBlockTags;
+import moriyashiine.nycto.common.tag.NyctoBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
@@ -48,7 +48,7 @@ public abstract class ServerLevelMixin extends Level {
 		boolean allInCoffins = true;
 		for (ServerPlayer player : players()) {
 			Optional<BlockPos> sleepingPos = player.getSleepingPos();
-			if (sleepingPos.isPresent() && !getBlockState(sleepingPos.get()).is(ModBlockTags.COFFINS)) {
+			if (sleepingPos.isPresent() && !getBlockState(sleepingPos.get()).is(NyctoBlockTags.COFFINS)) {
 				allInCoffins = false;
 				break;
 			}

@@ -4,7 +4,7 @@
 
 package moriyashiine.nycto.mixin.woodenstake.client;
 
-import moriyashiine.nycto.common.init.ModItems;
+import moriyashiine.nycto.common.init.NyctoItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import org.jspecify.annotations.Nullable;
@@ -23,14 +23,14 @@ public class MinecraftMixin {
 
 	@Inject(method = "startAttack", at = @At("HEAD"), cancellable = true)
 	private void nycto$woodenStake(CallbackInfoReturnable<Boolean> cir) {
-		if (player != null && player.getMainHandItem().is(ModItems.WOODEN_STAKE) && player.getCooldowns().isOnCooldown(ModItems.WOODEN_STAKE.getDefaultInstance())) {
+		if (player != null && player.getMainHandItem().is(NyctoItems.WOODEN_STAKE) && player.getCooldowns().isOnCooldown(NyctoItems.WOODEN_STAKE.getDefaultInstance())) {
 			cir.setReturnValue(false);
 		}
 	}
 
 	@Inject(method = "continueAttack", at = @At("HEAD"), cancellable = true)
 	private void nycto$woodenStake(boolean down, CallbackInfo ci) {
-		if (player != null && player.getMainHandItem().is(ModItems.WOODEN_STAKE) && player.getCooldowns().isOnCooldown(ModItems.WOODEN_STAKE.getDefaultInstance())) {
+		if (player != null && player.getMainHandItem().is(NyctoItems.WOODEN_STAKE) && player.getCooldowns().isOnCooldown(NyctoItems.WOODEN_STAKE.getDefaultInstance())) {
 			ci.cancel();
 		}
 	}

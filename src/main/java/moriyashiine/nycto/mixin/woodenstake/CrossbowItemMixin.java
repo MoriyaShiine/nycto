@@ -5,7 +5,7 @@
 package moriyashiine.nycto.mixin.woodenstake;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import moriyashiine.nycto.common.init.ModItems;
+import moriyashiine.nycto.common.init.NyctoItems;
 import moriyashiine.nycto.common.world.entity.projectile.arrow.WoodenStake;
 import moriyashiine.nycto.common.world.item.WoodenStakeItem;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class CrossbowItemMixin {
 	@Inject(method = "createProjectile", at = @At("HEAD"), cancellable = true)
 	private void nycto$woodenStake(Level level, LivingEntity shooter, ItemStack heldItem, ItemStack projectile, boolean isCrit, CallbackInfoReturnable<Projectile> cir) {
-		if (projectile.is(ModItems.WOODEN_STAKE)) {
+		if (projectile.is(NyctoItems.WOODEN_STAKE)) {
 			WoodenStake woodenStake = new WoodenStake(level, shooter, projectile, heldItem);
 			woodenStake.setCritArrow(isCrit);
 			woodenStake.setSoundEvent(SoundEvents.CROSSBOW_HIT);
@@ -37,9 +37,9 @@ public class CrossbowItemMixin {
 
 	@Inject(method = "performShooting", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;awardStat(Lnet/minecraft/stats/Stat;)V"))
 	private void nycto$woodenStake(Level level, LivingEntity shooter, InteractionHand hand, ItemStack weapon, float power, float uncertainty, LivingEntity targetOverride, CallbackInfo ci, @Local(name = "charged") ChargedProjectiles charged, @Local(name = "player") ServerPlayer player) {
-		if (!shooter.hasInfiniteMaterials() && charged.contains(ModItems.WOODEN_STAKE)) {
+		if (!shooter.hasInfiniteMaterials() && charged.contains(NyctoItems.WOODEN_STAKE)) {
 			player.getCooldowns().addCooldown(weapon, WoodenStakeItem.getCrossbowCooldown(shooter));
-			player.getCooldowns().addCooldown(ModItems.WOODEN_STAKE.getDefaultInstance(), WoodenStakeItem.getCooldown(shooter));
+			player.getCooldowns().addCooldown(NyctoItems.WOODEN_STAKE.getDefaultInstance(), WoodenStakeItem.getCooldown(shooter));
 		}
 	}
 }

@@ -4,7 +4,7 @@
 
 package moriyashiine.nycto.common.world.item;
 
-import moriyashiine.nycto.common.init.ModComponentTypes;
+import moriyashiine.nycto.common.init.NyctoDataComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -28,9 +28,9 @@ public class MaskItem extends Item {
 	@Override
 	public boolean overrideOtherStackedOnMe(ItemStack self, ItemStack other, Slot slot, ClickAction clickAction, Player player, SlotAccess carriedItem) {
 		if (clickAction == ClickAction.SECONDARY) {
-			MaskVisibility maskVisibility = self.get(ModComponentTypes.MASK_VISIBILITY);
+			MaskVisibility maskVisibility = self.get(NyctoDataComponents.MASK_VISIBILITY);
 			if (maskVisibility != null) {
-				self.set(ModComponentTypes.MASK_VISIBILITY, maskVisibility.cycle());
+				self.set(NyctoDataComponents.MASK_VISIBILITY, maskVisibility.cycle());
 				if (player.level().isClientSide()) {
 					player.playSound(SoundEvents.UI_BUTTON_CLICK.value(), 1, 1);
 				}
@@ -44,7 +44,7 @@ public class MaskItem extends Item {
 	public void appendHoverText(ItemStack itemStack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag tooltipFlag) {
 		MutableComponent icon = Component.literal("× ");
 		ChatFormatting formatting = ChatFormatting.DARK_RED;
-		MaskVisibility maskVisibility = itemStack.get(ModComponentTypes.MASK_VISIBILITY);
+		MaskVisibility maskVisibility = itemStack.get(NyctoDataComponents.MASK_VISIBILITY);
 		if (maskVisibility != null) {
 			switch (maskVisibility) {
 				case VISIBLE -> {

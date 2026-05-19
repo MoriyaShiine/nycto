@@ -7,9 +7,9 @@ package moriyashiine.nycto.common.world.item.consumeeffects;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import moriyashiine.nycto.api.NyctoAPI;
-import moriyashiine.nycto.common.init.ModConsumeEffectTypes;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModPowers;
+import moriyashiine.nycto.common.init.NyctoConsumeEffectTypes;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoPowers;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -26,10 +26,9 @@ import java.util.List;
 
 public record FillBloodConsumeEffect(int fillAmount, ApplyStatusEffectsConsumeEffect nonVampireEffects) implements ConsumeEffect {
 	public static final MapCodec<FillBloodConsumeEffect> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-					ExtraCodecs.POSITIVE_INT.fieldOf("fill_amount").forGetter(FillBloodConsumeEffect::fillAmount),
-					ApplyStatusEffectsConsumeEffect.CODEC.fieldOf("non_vampire_effects").forGetter(FillBloodConsumeEffect::nonVampireEffects))
-			.apply(instance, FillBloodConsumeEffect::new)
-	);
+			ExtraCodecs.POSITIVE_INT.fieldOf("fill_amount").forGetter(FillBloodConsumeEffect::fillAmount),
+			ApplyStatusEffectsConsumeEffect.CODEC.fieldOf("non_vampire_effects").forGetter(FillBloodConsumeEffect::nonVampireEffects)
+	).apply(instance, FillBloodConsumeEffect::new));
 	public static final StreamCodec<RegistryFriendlyByteBuf, FillBloodConsumeEffect> PACKET_CODEC = StreamCodec.composite(
 			ByteBufCodecs.INT, FillBloodConsumeEffect::fillAmount,
 			ApplyStatusEffectsConsumeEffect.STREAM_CODEC, FillBloodConsumeEffect::nonVampireEffects,
@@ -42,17 +41,17 @@ public record FillBloodConsumeEffect(int fillAmount, ApplyStatusEffectsConsumeEf
 
 	@Override
 	public Type<FillBloodConsumeEffect> getType() {
-		return ModConsumeEffectTypes.FILL_BLOOD;
+		return NyctoConsumeEffectTypes.FILL_BLOOD;
 	}
 
 	@Override
 	public boolean apply(Level level, ItemStack stack, LivingEntity user) {
 		if (nonVampireEffects().effects().isEmpty() || NyctoAPI.isVampire(user)) {
 			int fillAmount = fillAmount();
-			if (user instanceof Player player && NyctoAPI.hasPower(player, ModPowers.RICH_TASTES)) {
+			if (user instanceof Player player && NyctoAPI.hasPower(player, NyctoPowers.RICH_TASTES)) {
 				fillAmount = Mth.ceil(fillAmount / 2F);
 			}
-			ModEntityComponents.BLOOD.get(user).fill(fillAmount);
+			NyctoEntityComponents.BLOOD.get(user).fill(fillAmount);
 			return true;
 		}
 		return nonVampireEffects().apply(level, stack, user);

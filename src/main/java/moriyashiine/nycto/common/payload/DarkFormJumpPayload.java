@@ -6,7 +6,7 @@ package moriyashiine.nycto.common.payload;
 
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.component.entity.power.vampire.DarkFormComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.FriendlyByteBuf;
@@ -29,9 +29,9 @@ public record DarkFormJumpPayload() implements CustomPacketPayload {
 	public static class Receiver implements ServerPlayNetworking.PlayPayloadHandler<DarkFormJumpPayload> {
 		@Override
 		public void receive(DarkFormJumpPayload payload, ServerPlayNetworking.Context context) {
-			DarkFormComponent darkFormComponent = ModEntityComponents.DARK_FORM.get(context.player());
-			if (darkFormComponent.canJump()) {
-				darkFormComponent.jump();
+			DarkFormComponent darkForm = NyctoEntityComponents.DARK_FORM.get(context.player());
+			if (darkForm.canJump()) {
+				darkForm.jump();
 			}
 		}
 	}

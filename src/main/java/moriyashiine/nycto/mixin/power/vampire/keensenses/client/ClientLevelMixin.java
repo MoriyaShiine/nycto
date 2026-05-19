@@ -4,8 +4,8 @@
 
 package moriyashiine.nycto.mixin.power.vampire.keensenses.client;
 
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.tag.ModSoundEventTags;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.tag.NyctoSoundEventTags;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.Holder;
@@ -43,9 +43,9 @@ public class ClientLevelMixin {
 
 	@Unique
 	private float getModifiedVolume(float volume, SoundEvent sound) {
-		if (!ModSoundEventTags.is(sound, ModSoundEventTags.NOT_MUFFLED)) {
+		if (!NyctoSoundEventTags.is(sound, NyctoSoundEventTags.NOT_MUFFLED)) {
 			Player player = minecraft.player;
-			if (player != null && !player.isSpectator() && ModEntityComponents.KEEN_SENSES.get(player).isEnabled()) {
+			if (player != null && !player.isSpectator() && NyctoEntityComponents.KEEN_SENSES.get(player).isEnabled()) {
 				return volume / 6F;
 			}
 		}

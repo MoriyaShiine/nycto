@@ -6,7 +6,7 @@ package moriyashiine.nycto.common.component.entity.power.vampire;
 
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.Nycto;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -51,7 +51,7 @@ public class CarnageComponent implements AutoSyncedComponent, CommonTickingCompo
 	}
 
 	public void sync() {
-		ModEntityComponents.CARNAGE.sync(obj);
+		NyctoEntityComponents.CARNAGE.sync(obj);
 	}
 
 	public boolean isActive() {

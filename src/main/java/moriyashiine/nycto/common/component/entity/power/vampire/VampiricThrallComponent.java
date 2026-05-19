@@ -10,10 +10,10 @@ import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.component.entity.BloodComponent;
 import moriyashiine.nycto.common.component.entity.power.util.HasOwnerComponent;
 import moriyashiine.nycto.common.event.power.util.HasOwnerEvent;
-import moriyashiine.nycto.common.init.ModBlocks;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModPowers;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoBlocks;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoPowers;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import moriyashiine.nycto.common.world.level.block.entity.BloodFountainBlockEntity;
 import moriyashiine.nycto.common.world.power.vampire.VampiricThrallPower;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
@@ -38,6 +38,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
@@ -83,11 +84,11 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 	@Override
 	public void serverTick() {
 		if (hasOwner() && obj.isAlive()) {
-			if (obj.getHealth() < obj.getMaxHealth() && obj.tickCount % 15 == 0 && !ModEntityComponents.HEAL_BLOCK.get(obj).isHealingBlocked()) {
-				BloodComponent bloodComponent = ModEntityComponents.BLOOD.get(obj);
-				if (bloodComponent.getBlood() > 0) {
+			if (obj.getHealth() < obj.getMaxHealth() && obj.tickCount % 15 == 0 && !NyctoAPI.isHealingBlocked(obj)) {
+				BloodComponent blood = NyctoEntityComponents.BLOOD.get(obj);
+				if (blood.getBlood() > 0) {
 					if (!alternateDrain) {
-						bloodComponent.drain(1);
+						blood.drain(1);
 					}
 					obj.heal(1);
 					alternateDrain = !alternateDrain;
@@ -95,9 +96,9 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 			}
 			if ((obj.tickCount + obj.getId()) % 20 == 0) {
 				Entity owner = obj.level().getEntityInAnyDimension(ownerUuid);
-				if (owner instanceof Player player && !NyctoAPI.hasPower(player, ModPowers.VAMPIRIC_THRALL)) {
+				if (owner instanceof Player player && !NyctoAPI.hasPower(player, NyctoPowers.VAMPIRIC_THRALL)) {
 					SLibUtils.addParticles(obj, ParticleTypes.SMOKE, 16, ParticleAnchor.BODY);
-					SLibUtils.playSound(obj, ModSoundEvents.GENERIC_TRANSFORM_HUMAN);
+					SLibUtils.playSound(obj, NyctoSoundEvents.GENERIC_TRANSFORM_HUMAN);
 					VampiricThrallPower.setThrall(obj, null);
 					return;
 				}
@@ -119,7 +120,7 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 
 	@Override
 	public void sync() {
-		ModEntityComponents.VAMPIRIC_THRALL.sync(obj);
+		NyctoEntityComponents.VAMPIRIC_THRALL.sync(obj);
 	}
 
 	public void reset(@Nullable Entity owner) {
@@ -171,7 +172,7 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 		for (int i = fountainMemories.size() - 1; i >= 0; i--) {
 			FountainMemory memory = fountainMemories.get(i);
 			if (memory.exists()) {
-				if (memory.isInRange(obj, range) && !obj.level().getBlockState(memory.pos()).is(ModBlocks.BLOOD_FOUNTAIN)) {
+				if (memory.isInRange(obj, range) && !obj.level().getBlockState(memory.pos()).is(NyctoBlocks.BLOOD_FOUNTAIN)) {
 					fountainMemories.set(i, new FountainMemory(memory.pos(), memory.bottles(), memory.timeCreated(), false));
 				}
 			} else if (obj.level().getGameTime() - memory.timeCreated() >= 24000 || !memory.isInRange(obj, 256)) {
@@ -188,15 +189,15 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 		// share with others
 		if (obj.getTarget() == null) {
 			obj.level().getEntities(obj, new AABB(obj.blockPosition()).inflate(range)).forEach(foundEntity -> {
-				VampiricThrallComponent vampiricThrallComponent = ModEntityComponents.VAMPIRIC_THRALL.getNullable(foundEntity);
-				if (vampiricThrallComponent != null && getOwnerUuid().equals(vampiricThrallComponent.getOwnerUuid()) && obj.hasLineOfSight(foundEntity)) {
-					fountainMemories.forEach(memory -> FountainMemory.addMemory(vampiricThrallComponent.fountainMemories, memory));
+				VampiricThrallComponent vampiricThrall = NyctoEntityComponents.VAMPIRIC_THRALL.getNullable(foundEntity);
+				if (vampiricThrall != null && getOwnerUuid().equals(vampiricThrall.getOwnerUuid()) && obj.hasLineOfSight(foundEntity)) {
+					fountainMemories.forEach(memory -> FountainMemory.addMemory(vampiricThrall.fountainMemories, memory));
 				}
 			});
 		}
 		// drink if hungry
 		if (getFollowMode().canWander && obj.getTarget() == null && BloodFountainBlockEntity.isHungryVampire(obj)) {
-			@Nullable Path fountain = getClosestFountain();
+			Path fountain = getClosestFountain();
 			if (fountain != null) {
 				obj.getNavigation().moveTo(fountain, 1);
 			}
@@ -218,7 +219,7 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 				}
 				if (!potentialPoses.isEmpty()) {
 					BlockPos pos = potentialPoses.get(obj.getRandom().nextInt(potentialPoses.size()));
-					@Nullable Path path = obj.getNavigation().createPath(pos, 1);
+					Path path = obj.getNavigation().createPath(pos, 1);
 					if (path != null && Math.sqrt(pos.distToCenterSqr(path.getEndNode().asVec3())) < 8) {
 						return path;
 					}
@@ -248,18 +249,18 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 
 	private record FountainMemory(BlockPos pos, int bottles, long timeCreated, boolean exists) {
 		private static final Codec<FountainMemory> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-						BlockPos.CODEC.fieldOf("pos").forGetter(FountainMemory::pos),
-						Codec.INT.fieldOf("bottles").forGetter(FountainMemory::bottles),
-						Codec.LONG.fieldOf("time_created").forGetter(FountainMemory::timeCreated),
-						Codec.BOOL.fieldOf("exists").forGetter(FountainMemory::exists))
-				.apply(instance, FountainMemory::new));
+				BlockPos.CODEC.fieldOf("pos").forGetter(FountainMemory::pos),
+				Codec.INT.fieldOf("bottles").forGetter(FountainMemory::bottles),
+				Codec.LONG.fieldOf("time_created").forGetter(FountainMemory::timeCreated),
+				Codec.BOOL.fieldOf("exists").forGetter(FountainMemory::exists)
+		).apply(instance, FountainMemory::new));
 
 		private boolean isInRange(Entity entity, double distance) {
 			return Math.sqrt(pos().distToCenterSqr(entity.position())) <= distance;
 		}
 
 		private static boolean canSee(Entity entity, BlockPos pos) {
-			BlockHitResult result = entity.level().clip(new ClipContext(entity.getEyePosition(), pos.getCenter(), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity));
+			BlockHitResult result = entity.level().clip(new ClipContext(entity.getEyePosition(), Vec3.atCenterOf(pos), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity));
 			return result.getType() == HitResult.Type.BLOCK && result.getBlockPos().equals(pos);
 		}
 

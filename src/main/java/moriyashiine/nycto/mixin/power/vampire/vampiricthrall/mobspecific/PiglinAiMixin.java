@@ -9,7 +9,7 @@ import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class PiglinAiMixin {
 	@ModifyReturnValue(method = "isNearZombified", at = @At("RETURN"))
 	private static boolean nycto$vampiricThrall(boolean original, Piglin body) {
-		return original && !ModEntityComponents.VAMPIRIC_THRALL.get(body).hasOwner();
+		return original && !NyctoEntityComponents.VAMPIRIC_THRALL.get(body).hasOwner();
 	}
 
 	@Definition(id = "attacker", local = @Local(type = LivingEntity.class))
@@ -28,6 +28,6 @@ public class PiglinAiMixin {
 	@Expression("attacker instanceof Piglin")
 	@ModifyExpressionValue(method = "wasHurtBy", at = @At(value = "MIXINEXTRAS:EXPRESSION"))
 	private static boolean nycto$vampiricThrallInstanceof(boolean value, @Local(argsOnly = true) Piglin body) {
-		return !ModEntityComponents.VAMPIRIC_THRALL.get(body).hasOwner();
+		return !NyctoEntityComponents.VAMPIRIC_THRALL.get(body).hasOwner();
 	}
 }

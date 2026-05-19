@@ -5,9 +5,9 @@
 package moriyashiine.nycto.common.world.item.crafting;
 
 import com.mojang.serialization.MapCodec;
-import moriyashiine.nycto.common.init.ModComponentTypes;
-import moriyashiine.nycto.common.init.ModItems;
-import moriyashiine.nycto.common.init.ModRecipeSerializers;
+import moriyashiine.nycto.common.init.NyctoDataComponents;
+import moriyashiine.nycto.common.init.NyctoItems;
+import moriyashiine.nycto.common.init.NyctoRecipeSerializers;
 import moriyashiine.nycto.common.world.item.VampiricDaggerItem;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -32,7 +32,7 @@ public class BloodExtractionRecipe extends CustomRecipe {
 		boolean foundDagger = false, foundBottle = false;
 		for (int i = 0; i < input.size(); i++) {
 			ItemStack stack = input.getItem(i);
-			if (stack.is(ModItems.VAMPIRIC_DAGGER) && VampiricDaggerItem.isFull(stack)) {
+			if (stack.is(NyctoItems.VAMPIRIC_DAGGER) && VampiricDaggerItem.isFull(stack)) {
 				foundDagger = true;
 			}
 			if (stack.is(Items.GLASS_BOTTLE)) {
@@ -45,7 +45,7 @@ public class BloodExtractionRecipe extends CustomRecipe {
 	@Override
 	public ItemStack assemble(CraftingInput input) {
 		for (ItemStack stack : input.items()) {
-			if (stack.is(ModItems.VAMPIRIC_DAGGER)) {
+			if (stack.is(NyctoItems.VAMPIRIC_DAGGER)) {
 				return getCraftingResult(stack);
 			}
 		}
@@ -57,7 +57,7 @@ public class BloodExtractionRecipe extends CustomRecipe {
 		NonNullList<ItemStack> remainingItems = super.getRemainingItems(input);
 		for (int i = 0; i < remainingItems.size(); i++) {
 			ItemStack stack = input.getItem(i);
-			if (stack.is(ModItems.VAMPIRIC_DAGGER)) {
+			if (stack.is(NyctoItems.VAMPIRIC_DAGGER)) {
 				VampiricDaggerItem.setBloodTypes(stack, false, false);
 				VampiricDaggerItem.setBloodCharge(stack, 0);
 				remainingItems.set(i, stack.copy());
@@ -68,20 +68,20 @@ public class BloodExtractionRecipe extends CustomRecipe {
 
 	@Override
 	public RecipeSerializer<BloodExtractionRecipe> getSerializer() {
-		return ModRecipeSerializers.BLOOD_EXTRACTION;
+		return NyctoRecipeSerializers.BLOOD_EXTRACTION;
 	}
 
 	public static ItemStack getCraftingResult(ItemStack stack) {
-		Item result = ModItems.BLOOD_BOTTLE;
-		boolean vampire = stack.getOrDefault(ModComponentTypes.VAMPIRE_BLOOD, false);
-		if (stack.getOrDefault(ModComponentTypes.PLAYER_BLOOD, false)) {
+		Item result = NyctoItems.BLOOD_BOTTLE;
+		boolean vampire = stack.getOrDefault(NyctoDataComponents.VAMPIRE_BLOOD, false);
+		if (stack.getOrDefault(NyctoDataComponents.PLAYER_BLOOD, false)) {
 			if (vampire) {
-				result = ModItems.PLAYER_VAMPIRE_BLOOD_BOTTLE;
+				result = NyctoItems.PLAYER_VAMPIRE_BLOOD_BOTTLE;
 			} else {
-				result = ModItems.PLAYER_BLOOD_BOTTLE;
+				result = NyctoItems.PLAYER_BLOOD_BOTTLE;
 			}
 		} else if (vampire) {
-			result = ModItems.VAMPIRE_BLOOD_BOTTLE;
+			result = NyctoItems.VAMPIRE_BLOOD_BOTTLE;
 		}
 		return result.getDefaultInstance();
 	}

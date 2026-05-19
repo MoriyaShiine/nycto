@@ -4,10 +4,10 @@
 
 package moriyashiine.nycto.common.component.entity;
 
-import moriyashiine.nycto.common.init.ModDamageTypes;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModParticleTypes;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoDamageTypes;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoParticleTypes;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
@@ -64,7 +64,7 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 		}
 		if (bleedTicks > 0 && --bleedTicks % 20 == 0) {
 			NyctoUtil.spawnBloodParticles(obj);
-			obj.hurt(obj.damageSources().source(ModDamageTypes.BLEED), 1);
+			obj.hurt(obj.damageSources().source(NyctoDamageTypes.BLEED), 1);
 		}
 		if (regenerationBlockTicks > 0) {
 			regenerationBlockTicks--;
@@ -77,8 +77,8 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 				obj.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 60, 1, true, false));
 				obj.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 60, 0, true, false));
 				if (criticalBlood()) {
-					SLibUtils.addParticles(obj, ModParticleTypes.BLOOD, ModParticleTypes.BLOOD_PARTICLE_COUNT, ParticleAnchor.BODY);
-					obj.hurt(obj.damageSources().source(ModDamageTypes.BLEED), 2);
+					SLibUtils.addParticles(obj, NyctoParticleTypes.BLOOD, NyctoParticleTypes.BLOOD_PARTICLE_COUNT, ParticleAnchor.BODY);
+					obj.hurt(obj.damageSources().source(NyctoDamageTypes.BLEED), 2);
 				}
 			}
 			if (criticalBlood()) {
@@ -91,7 +91,7 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 	}
 
 	public void sync() {
-		ModEntityComponents.BLOOD.sync(obj);
+		NyctoEntityComponents.BLOOD.sync(obj);
 	}
 
 	private void tickUnloaded() {
@@ -159,7 +159,7 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 			return false;
 		}
 		if (obj.getRandom().nextFloat() <= 2 / 3F && NyctoUtil.hasBloodDrainResistance(obj)) {
-			SLibUtils.playSound(obj, ModSoundEvents.GENERIC_BLOOD_DRAIN_BLOCKED, 1, Mth.nextFloat(obj.getRandom(), 0.95F, 1.05F));
+			SLibUtils.playSound(obj, NyctoSoundEvents.GENERIC_BLOOD_DRAIN_BLOCKED, 1, Mth.nextFloat(obj.getRandom(), 0.95F, 1.05F));
 			return false;
 		}
 		boolean drain = drain(amount, true);

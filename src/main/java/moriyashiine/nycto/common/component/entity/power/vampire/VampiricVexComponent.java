@@ -4,11 +4,12 @@
 
 package moriyashiine.nycto.common.component.entity.power.vampire;
 
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.Targeting;
 import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -39,10 +40,12 @@ public class VampiricVexComponent implements AutoSyncedComponent, ServerTickingC
 	@Override
 	public void serverTick() {
 		if (hasOwner) {
-			if (obj.getOwner() == null || obj.getOwner().getTarget() == null || !ModEntityComponents.VAMPIRIC_THRALL.get(obj.getOwner()).hasOwner() || ++despawnTimer == 600) {
-				kill();
+			if (++despawnTimer <= 600 && obj.getOwner() instanceof Targeting owner && owner.getTarget() != null && NyctoEntityComponents.VAMPIRIC_THRALL.get(owner).hasOwner()) {
+				obj.setTarget(owner.getTarget());
 			} else {
-				obj.setTarget(obj.getOwner().getTarget());
+				SLibUtils.addParticles(obj, ParticleTypes.SMOKE, 8, ParticleAnchor.BODY);
+				SLibUtils.playSound(obj, SoundEvents.VEX_DEATH);
+				obj.discard();
 			}
 		}
 	}
@@ -53,12 +56,6 @@ public class VampiricVexComponent implements AutoSyncedComponent, ServerTickingC
 
 	public void setOwned() {
 		hasOwner = true;
-		ModEntityComponents.VAMPIRIC_VEX.sync(obj);
-	}
-
-	private void kill() {
-		SLibUtils.addParticles(obj, ParticleTypes.SMOKE, 8, ParticleAnchor.BODY);
-		SLibUtils.playSound(obj, SoundEvents.VEX_DEATH);
-		obj.discard();
+		NyctoEntityComponents.VAMPIRIC_VEX.sync(obj);
 	}
 }

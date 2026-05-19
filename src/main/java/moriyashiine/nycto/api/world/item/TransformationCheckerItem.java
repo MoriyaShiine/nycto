@@ -4,7 +4,7 @@
 
 package moriyashiine.nycto.api.world.item;
 
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import moriyashiine.strawberrylib.api.module.SLibClientUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
 import net.minecraft.core.particles.ParticleTypes;
@@ -35,7 +35,7 @@ public class TransformationCheckerItem extends Item {
 
 	public static InteractionResult useOnEntity(ItemStack stack, Player player, LivingEntity target, Predicate<LivingEntity> predicate, Supplier<InteractionResult> resultSupplier) {
 		if (predicate.test(target)) {
-			target.playSound(ModSoundEvents.GENERIC_SIZZLE);
+			target.playSound(NyctoSoundEvents.GENERIC_SIZZLE);
 			if (target.level().isClientSide()) {
 				SLibClientUtils.addParticles(target, ParticleTypes.SMOKE, 8, ParticleAnchor.BODY);
 			} else {

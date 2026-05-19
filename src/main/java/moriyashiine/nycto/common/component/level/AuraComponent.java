@@ -5,7 +5,7 @@
 package moriyashiine.nycto.common.component.level;
 
 import moriyashiine.nycto.api.NyctoAPI;
-import moriyashiine.nycto.common.init.ModLevelComponents;
+import moriyashiine.nycto.common.init.NyctoLevelComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -16,6 +16,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
@@ -29,7 +30,7 @@ public class AuraComponent implements AutoSyncedComponent, ServerTickingComponen
 	public static final int RADIUS = 12;
 
 	private final Level obj;
-	private final Set<BlockPos> garlicWreaths = new HashSet<>();
+	private final Set<BlockPos> garlicWreaths = new HashSet<>(), aconiteGarlands = new HashSet<>();
 
 	public AuraComponent(Level obj) {
 		this.obj = obj;
@@ -39,37 +40,53 @@ public class AuraComponent implements AutoSyncedComponent, ServerTickingComponen
 	public void readData(ValueInput input) {
 		garlicWreaths.clear();
 		garlicWreaths.addAll(input.read("GarlicWreaths", BlockPos.CODEC.listOf()).orElse(List.of()));
+		aconiteGarlands.clear();
+		aconiteGarlands.addAll(input.read("AconiteGarlands", BlockPos.CODEC.listOf()).orElse(List.of()));
 	}
 
 	@Override
 	public void writeData(ValueOutput output) {
 		output.store("GarlicWreaths", BlockPos.CODEC.listOf(), new ArrayList<>(garlicWreaths));
+		output.store("AconiteGarlands", BlockPos.CODEC.listOf(), new ArrayList<>(aconiteGarlands));
 	}
 
 	@Override
 	public void serverTick() {
 		if (obj.getGameTime() % 10 == 0) {
-			garlicWreaths.forEach(pos -> applyAura(obj, pos, RADIUS, true, NyctoAPI::isVampire));
+			garlicWreaths.forEach(pos -> applyGarlicAura(obj, pos, RADIUS));
 		}
 	}
 
 	public void sync() {
-		ModLevelComponents.AURA.sync(obj);
+		NyctoLevelComponents.AURA.sync(obj);
 	}
 
 	public Set<BlockPos> getGarlicWreaths() {
 		return garlicWreaths;
 	}
 
-	public static void applyAura(Level level, BlockPos pos, int radius, boolean healBlock, Predicate<LivingEntity> predicate) {
-		level.getEntitiesOfClass(LivingEntity.class, new AABB(pos.getCenter().add(-radius, -radius, -radius), pos.getCenter().add(radius, radius, radius))).forEach(foundEntity -> {
-			if (foundEntity.slib$isSurvival() && predicate.test(foundEntity) && level.clip(new ClipContext(pos.getCenter(), foundEntity.getEyePosition(), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, foundEntity)).getType() == HitResult.Type.MISS) {
-				foundEntity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 30, 1, true, false));
-				foundEntity.addEffect(new MobEffectInstance(MobEffects.MINING_FATIGUE, 30, 1, true, false));
-				if (healBlock) {
-					NyctoAPI.applyHealBlock(foundEntity, 30);
-				}
+	public Set<BlockPos> getAconiteGarlands() {
+		return aconiteGarlands;
+	}
+
+	public static void applyGarlicAura(Level level, BlockPos pos, int radius) {
+		applyAura(level, pos, radius, NyctoAPI::isVampire, entity -> {
+			entity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 30, 1, true, false));
+			entity.addEffect(new MobEffectInstance(MobEffects.MINING_FATIGUE, 30, 1, true, false));
+			NyctoAPI.applyHealBlock(entity, 30);
+		});
+	}
+
+	private static void applyAura(Level level, BlockPos pos, int radius, Predicate<LivingEntity> predicate, AuraEffects effects) {
+		Vec3 center = Vec3.atCenterOf(pos);
+		level.getEntitiesOfClass(LivingEntity.class, new AABB(center.add(-radius, -radius, -radius), center.add(radius, radius, radius))).forEach(foundEntity -> {
+			if (foundEntity.slib$isSurvival() && predicate.test(foundEntity) && level.clip(new ClipContext(center, foundEntity.getEyePosition(), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, foundEntity)).getType() == HitResult.Type.MISS) {
+				effects.apply(foundEntity);
 			}
 		});
+	}
+
+	private interface AuraEffects {
+		void apply(LivingEntity entity);
 	}
 }

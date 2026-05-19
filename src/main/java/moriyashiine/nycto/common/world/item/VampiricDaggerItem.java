@@ -5,9 +5,9 @@
 package moriyashiine.nycto.common.world.item;
 
 import moriyashiine.nycto.common.Nycto;
-import moriyashiine.nycto.common.init.ModComponentTypes;
-import moriyashiine.nycto.common.init.ModSoundEvents;
-import moriyashiine.nycto.common.init.ModTriggers;
+import moriyashiine.nycto.common.init.NyctoDataComponents;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
+import moriyashiine.nycto.common.init.NyctoTriggers;
 import moriyashiine.nycto.common.world.item.crafting.BloodExtractionRecipe;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import moriyashiine.strawberrylib.api.objects.records.ModifierTrio;
@@ -53,9 +53,9 @@ public class VampiricDaggerItem extends Item {
 						.component(DataComponents.DAMAGE, null)
 						.component(DataComponents.MAX_DAMAGE, null)
 						.component(DataComponents.REPAIRABLE, null)
-						.component(ModComponentTypes.PLAYER_BLOOD, false)
-						.component(ModComponentTypes.VAMPIRE_BLOOD, false)
-						.component(ModComponentTypes.BLOOD_CHARGE, 0),
+						.component(NyctoDataComponents.PLAYER_BLOOD, false)
+						.component(NyctoDataComponents.VAMPIRE_BLOOD, false)
+						.component(NyctoDataComponents.BLOOD_CHARGE, 0),
 				MODIFIER);
 	}
 
@@ -78,12 +78,12 @@ public class VampiricDaggerItem extends Item {
 				if (player.getInventory().add(bloodBottle)) {
 					carriedItem.get().consume(1, player);
 				} else {
-					player.playSound(ModSoundEvents.VAMPIRIC_DAGGER_EXTRACT_FAIL, 1, 1);
+					player.playSound(NyctoSoundEvents.VAMPIRIC_DAGGER_EXTRACT_FAIL, 1, 1);
 					return true;
 				}
 			}
 			extractBlood(player, self, bloodBottle);
-			player.playSound(ModSoundEvents.BLOOD_BOTTLE_DRINK.value(), 0.8F, 1);
+			player.playSound(NyctoSoundEvents.BLOOD_BOTTLE_DRINK.value(), 0.8F, 1);
 			player.containerMenu.slotsChanged(player.getInventory());
 			return true;
 		}
@@ -92,10 +92,10 @@ public class VampiricDaggerItem extends Item {
 
 	@Override
 	public void appendHoverText(ItemStack itemStack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag tooltipFlag) {
-		if (itemStack.getOrDefault(ModComponentTypes.PLAYER_BLOOD, false)) {
+		if (itemStack.getOrDefault(NyctoDataComponents.PLAYER_BLOOD, false)) {
 			builder.accept(HOLDING_PLAYER_BLOOD_TEXT);
 		}
-		if (itemStack.getOrDefault(ModComponentTypes.VAMPIRE_BLOOD, false)) {
+		if (itemStack.getOrDefault(NyctoDataComponents.VAMPIRE_BLOOD, false)) {
 			builder.accept(HOLDING_VAMPIRE_BLOOD_TEXT);
 		}
 	}
@@ -124,16 +124,16 @@ public class VampiricDaggerItem extends Item {
 	}
 
 	public static void setBloodTypes(ItemStack stack, boolean player, boolean vampire) {
-		stack.set(ModComponentTypes.PLAYER_BLOOD, player);
-		stack.set(ModComponentTypes.VAMPIRE_BLOOD, vampire);
+		stack.set(NyctoDataComponents.PLAYER_BLOOD, player);
+		stack.set(NyctoDataComponents.VAMPIRE_BLOOD, vampire);
 	}
 
 	public static int getBloodCharge(ItemStack stack) {
-		return stack.getOrDefault(ModComponentTypes.BLOOD_CHARGE, 0);
+		return stack.getOrDefault(NyctoDataComponents.BLOOD_CHARGE, 0);
 	}
 
 	public static void setBloodCharge(ItemStack stack, int charge) {
-		stack.set(ModComponentTypes.BLOOD_CHARGE, charge);
+		stack.set(NyctoDataComponents.BLOOD_CHARGE, charge);
 	}
 
 	public static void extractBlood(LivingEntity living, ItemStack dagger, ItemStack bloodBottle) {
@@ -142,7 +142,7 @@ public class VampiricDaggerItem extends Item {
 			VampiricDaggerItem.setBloodCharge(dagger, 0);
 		}
 		if (living instanceof ServerPlayer player) {
-			ModTriggers.EXTRACT_BLOOD.trigger(player, bloodBottle);
+			NyctoTriggers.EXTRACT_BLOOD.trigger(player, bloodBottle);
 		}
 	}
 }

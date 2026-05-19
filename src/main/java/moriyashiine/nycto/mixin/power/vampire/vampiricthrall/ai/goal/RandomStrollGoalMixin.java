@@ -4,7 +4,7 @@
 
 package moriyashiine.nycto.mixin.power.vampire.vampiricthrall.ai.goal;
 
-import moriyashiine.nycto.common.init.ModEntityComponents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import org.spongepowered.asm.mixin.Final;
@@ -22,7 +22,7 @@ public class RandomStrollGoalMixin {
 
 	@Inject(method = "canUse", at = @At("HEAD"), cancellable = true)
 	private void nycto$vampiricThrall(CallbackInfoReturnable<Boolean> cir) {
-		if (ModEntityComponents.VAMPIRIC_THRALL.get(mob).cannotWanderIfThralled()) {
+		if (NyctoEntityComponents.VAMPIRIC_THRALL.get(mob).cannotWanderIfThralled()) {
 			cir.setReturnValue(false);
 		}
 	}

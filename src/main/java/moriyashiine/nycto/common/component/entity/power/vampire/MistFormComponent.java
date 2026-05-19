@@ -5,8 +5,8 @@
 package moriyashiine.nycto.common.component.entity.power.vampire;
 
 import moriyashiine.nycto.common.component.entity.power.util.VampireFormChangeComponent;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModPowers;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoPowers;
 import moriyashiine.strawberrylib.api.module.SLibClientUtils;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
@@ -35,7 +35,7 @@ public class MistFormComponent extends VampireFormChangeComponent implements Cli
 	}
 
 	public void sync() {
-		ModEntityComponents.MIST_FORM.sync(obj);
+		NyctoEntityComponents.MIST_FORM.sync(obj);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class MistFormComponent extends VampireFormChangeComponent implements Cli
 		if (enabled) {
 			drainTicks = 0;
 		} else {
-			ModEntityComponents.BLOOD.get(obj).drain(ModPowers.MIST_FORM.getCost(obj));
+			NyctoEntityComponents.BLOOD.get(obj).drain(NyctoPowers.MIST_FORM.getCost(obj));
 			drainTicks = POWER_DRAIN_TICKS;
 		}
 		enabled = !enabled;

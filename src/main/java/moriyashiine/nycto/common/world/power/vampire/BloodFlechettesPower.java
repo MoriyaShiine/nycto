@@ -4,9 +4,9 @@
 
 package moriyashiine.nycto.common.world.power.vampire;
 
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModPowers;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoPowers;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import moriyashiine.nycto.common.world.entity.projectile.arrow.BloodFlechette;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,7 +27,7 @@ public class BloodFlechettesPower extends VampireActivePower {
 
 	@Override
 	public SoundEvent getUseSound(Player player) {
-		return ModSoundEvents.BLOOD_FLECHETTES_USE;
+		return NyctoSoundEvents.BLOOD_FLECHETTES_USE;
 	}
 
 	@Override
@@ -41,6 +41,6 @@ public class BloodFlechettesPower extends VampireActivePower {
 			bloodFlechette.shootFromRotation(entity, entity.getXRot(), entity.getYHeadRot(), 0, 1, i == 0 ? 0 : 24);
 			level.addFreshEntity(bloodFlechette);
 		}
-		ModEntityComponents.BLOOD.get(entity).drain(ModPowers.BLOOD_FLECHETTES.getCost(entity));
+		NyctoEntityComponents.BLOOD.get(entity).drain(NyctoPowers.BLOOD_FLECHETTES.getCost(entity));
 	}
 }

@@ -25,7 +25,7 @@ public class HydrophobiaWeakness extends Weakness {
 
 	@Override
 	public void tick(ServerPlayer player) {
-		SLibUtils.conditionallyApplyAttributeModifier(player, Attributes.JUMP_STRENGTH, JUMP_STRENGTH_MODIFIER, player.isInWaterOrRain() && !player.isCreative());
-		SLibUtils.conditionallyApplyAttributeModifier(player, Attributes.STEP_HEIGHT, EMERGENCY_STEP_HEIGHT_MODIFIER, player.isInWaterOrRain() && !player.isCreative() && player.getAttribute(Attributes.STEP_HEIGHT).getValue() < 1);
+		SLibUtils.applyAttributeModifier(player, Attributes.JUMP_STRENGTH, JUMP_STRENGTH_MODIFIER, player.isInWaterOrRain() && !player.isCreative());
+		SLibUtils.applyAttributeModifier(player, Attributes.STEP_HEIGHT, EMERGENCY_STEP_HEIGHT_MODIFIER, player.isInWaterOrRain() && !player.isCreative() && player.getAttribute(Attributes.STEP_HEIGHT).getValue() < 1);
 	}
 }

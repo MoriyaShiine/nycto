@@ -6,9 +6,9 @@ package moriyashiine.nycto.common.component.entity.power.vampire;
 
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.Nycto;
-import moriyashiine.nycto.common.init.ModEntityComponents;
-import moriyashiine.nycto.common.init.ModPowers;
-import moriyashiine.nycto.common.init.ModSoundEvents;
+import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.common.init.NyctoPowers;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -74,10 +74,10 @@ public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingCo
 		tick();
 		if (enabled) {
 			if (NyctoAPI.hasSunDebuff(obj)) {
-				ModPowers.KEEN_SENSES.playUseSound((ServerPlayer) obj);
+				NyctoPowers.KEEN_SENSES.playUseSound((ServerPlayer) obj);
 				toggle();
 			} else if (obj.slib$isSurvival() && --drainTicks == 0) {
-				if (ModEntityComponents.BLOOD.get(obj).drain(1)) {
+				if (NyctoEntityComponents.BLOOD.get(obj).drain(1)) {
 					drainTicks = POWER_DRAIN_TICKS;
 				} else {
 					toggle();
@@ -102,13 +102,13 @@ public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingCo
 				}
 			}
 			if (obj.tickCount % frequency == 0) {
-				obj.makeSound(ModSoundEvents.KEEN_SENSES_HEARTBEAT);
+				obj.makeSound(NyctoSoundEvents.KEEN_SENSES_HEARTBEAT);
 			}
 		}
 	}
 
 	public void sync() {
-		ModEntityComponents.KEEN_SENSES.sync(obj);
+		NyctoEntityComponents.KEEN_SENSES.sync(obj);
 	}
 
 	public boolean isEnabled() {
@@ -127,12 +127,12 @@ public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingCo
 		if (enabled) {
 			drainTicks = 0;
 		} else {
-			ModEntityComponents.BLOOD.get(obj).drain(ModPowers.KEEN_SENSES.getCost(obj));
+			NyctoEntityComponents.BLOOD.get(obj).drain(NyctoPowers.KEEN_SENSES.getCost(obj));
 			drainTicks = POWER_DRAIN_TICKS;
 		}
 		enabled = !enabled;
 		renderTicks = 20;
-		SLibUtils.conditionallyApplyAttributeModifier(obj, Attributes.MOVEMENT_SPEED, SPEED_BONUS, enabled);
+		SLibUtils.applyAttributeModifier(obj, Attributes.MOVEMENT_SPEED, SPEED_BONUS, enabled);
 		sync();
 	}
 }

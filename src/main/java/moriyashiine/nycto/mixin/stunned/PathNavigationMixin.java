@@ -5,7 +5,7 @@
 package moriyashiine.nycto.mixin.stunned;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import moriyashiine.nycto.common.init.ModMobEffects;
+import moriyashiine.nycto.common.init.NyctoMobEffects;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import org.spongepowered.asm.mixin.Final;
@@ -21,6 +21,6 @@ public class PathNavigationMixin {
 
 	@ModifyReturnValue(method = "isDone", at = @At("RETURN"))
 	private boolean nycto$stunned(boolean original) {
-		return original || mob.hasEffect(ModMobEffects.STUNNED);
+		return original || mob.hasEffect(NyctoMobEffects.STUNNED);
 	}
 }

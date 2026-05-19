@@ -5,8 +5,8 @@
 package moriyashiine.nycto.client.event.power;
 
 import moriyashiine.nycto.api.NyctoClientAPI;
-import moriyashiine.nycto.common.init.ModParticleTypes;
-import moriyashiine.nycto.common.init.ModPowers;
+import moriyashiine.nycto.common.init.NyctoParticleTypes;
+import moriyashiine.nycto.common.init.NyctoPowers;
 import moriyashiine.nycto.common.world.power.vampire.HypnotizePower;
 import moriyashiine.strawberrylib.api.event.TickEntityEvent;
 import moriyashiine.strawberrylib.api.event.client.OutlineEntityEvent;
@@ -22,28 +22,33 @@ import net.minecraft.world.level.Level;
 import java.util.OptionalInt;
 
 public class HypnotizeClientEvent {
+	public static void init() {
+		TickEntityEvent.EVENT.register(new Tick());
+		OutlineEntityEvent.EVENT.register(new Outline());
+	}
+
 	private static final Minecraft client = Minecraft.getInstance();
 
 	private static boolean shouldHighlight(Player player, LivingEntity living, int range) {
-		return player != living && player != null && !player.isSpectator() && living.distanceTo(player) <= range && NyctoClientAPI.isHighlightingPower(player, ModPowers.HYPNOTIZE) && HypnotizePower.canUseOn(player, living);
+		return player != living && player != null && !player.isSpectator() && living.distanceTo(player) <= range && NyctoClientAPI.isHighlightingPower(player, NyctoPowers.HYPNOTIZE) && HypnotizePower.canUseOn(player, living);
 	}
 
-	public static class Tick implements TickEntityEvent {
+	private static class Tick implements TickEntityEvent {
 		@Override
 		public void tick(Level level, Entity entity) {
 			if (level.isClientSide() && entity instanceof LivingEntity living && shouldHighlight(client.player, living, HypnotizePower.RANGE * 2)) {
-				SLibClientUtils.addAnchoredParticle(living, client.player.isShiftKeyDown() ? ModParticleTypes.HYPNOSIS_INDICATOR_INVERSE : ModParticleTypes.HYPNOSIS_INDICATOR, living.getBbHeight() + 0.5, 1 / 6F, 1 / 24F);
+				SLibClientUtils.addAnchoredParticle(living, client.player.isShiftKeyDown() ? NyctoParticleTypes.HYPNOSIS_INDICATOR_INVERSE : NyctoParticleTypes.HYPNOSIS_INDICATOR, living.getBbHeight() + 0.5, 1 / 6F, 1 / 24F);
 				if (living.tickCount % 4 == 0) {
-					SLibClientUtils.addParticles(living, ModParticleTypes.HYPNOSIS_STAR, 1, ParticleAnchor.BODY);
+					SLibClientUtils.addParticles(living, NyctoParticleTypes.HYPNOSIS_STAR, 1, ParticleAnchor.BODY);
 					if (living.tickCount % 12 == 0) {
-						SLibClientUtils.addParticles(living, ModParticleTypes.HYPNOSIS_SMALL, 1, ParticleAnchor.BODY);
+						SLibClientUtils.addParticles(living, NyctoParticleTypes.HYPNOSIS_SMALL, 1, ParticleAnchor.BODY);
 					}
 				}
 			}
 		}
 	}
 
-	public static class Outline implements OutlineEntityEvent {
+	private static class Outline implements OutlineEntityEvent {
 		private static final OutlineData DATA = new OutlineData(TriState.TRUE, OptionalInt.of(0x7F00FF));
 
 		@Override

@@ -1,0 +1,145 @@
+/*
+ * Copyright (c) MoriyaShiine. All Rights Reserved.
+ */
+
+package moriyashiine.nycto.datagen.provider;
+
+import moriyashiine.nycto.common.Nycto;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
+import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricSoundsProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
+import net.minecraft.sounds.SoundEvents;
+
+import java.util.concurrent.CompletableFuture;
+
+import static moriyashiine.nycto.common.Nycto.id;
+import static net.fabricmc.fabric.api.client.datagen.v1.builder.SoundTypeBuilder.RegistrationBuilder.ofEvent;
+import static net.fabricmc.fabric.api.client.datagen.v1.builder.SoundTypeBuilder.RegistrationBuilder.ofFile;
+import static net.fabricmc.fabric.api.client.datagen.v1.builder.SoundTypeBuilder.of;
+
+public class NyctoSoundsProvider extends FabricSoundsProvider {
+	public NyctoSoundsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+		super(output, registriesFuture);
+	}
+
+	@Override
+	protected void configure(HolderLookup.Provider registries, SoundExporter exporter) {
+		exporter.add(NyctoSoundEvents.ALTAR_USE, of().subtitle("subtitles.nycto.block.altar.use")
+				.sound(ofFile(id("block/altar/use"))));
+		exporter.add(NyctoSoundEvents.BLOOD_FOUNTAIN_LOCK, of().subtitle("subtitles.nycto.block.blood_fountain.lock")
+				.sound(ofEvent(SoundEvents.STONE_BUTTON_CLICK_ON)));
+		exporter.add(NyctoSoundEvents.BLOOD_FOUNTAIN_UNLOCK, of().subtitle("subtitles.nycto.block.blood_fountain.unlock")
+				.sound(ofEvent(SoundEvents.STONE_BUTTON_CLICK_OFF)));
+
+		exporter.add(NyctoSoundEvents.BLOOD_BOTTLE_DRINK, of().subtitle("subtitles.item.honey_bottle.drink")
+				.sound(ofEvent(SoundEvents.HONEY_DRINK)));
+		exporter.add(NyctoSoundEvents.VAMPIRIC_DAGGER_EXTRACT_FAIL, of().subtitle("subtitles.nycto.item.vampiric_dagger.extract_fail")
+				.sound(ofEvent(SoundEvents.BUNDLE_INSERT_FAIL)));
+
+		exporter.add(NyctoSoundEvents.GENERIC_REMOVE_POWER, of().subtitle("subtitles.nycto.entity.generic.remove_power")
+				.sound(ofFile(id("entity/remove_power"))));
+		exporter.add(NyctoSoundEvents.GENERIC_TRANSFORM_HUMAN, of().subtitle("subtitles.nycto.entity.generic.transform")
+				.sound(ofFile(id("entity/transform_human"))));
+		exporter.add(NyctoSoundEvents.GENERIC_TRANSFORM_VAMPIRE, of().subtitle("subtitles.nycto.entity.generic.transform")
+				.sound(ofFile(id("entity/transform_vampire"))));
+		exporter.add(NyctoSoundEvents.GENERIC_BLOOD_DRAIN_BLOCKED, of().subtitle("subtitles.nycto.entity.generic.blood_drain_blocked")
+				.sound(ofFile(id("entity/blood_drain_blocked"))));
+		exporter.add(NyctoSoundEvents.GENERIC_SIZZLE, of().subtitle("subtitles.nycto.entity.generic.sizzle")
+				.sound(ofEvent(SoundEvents.CANDLE_EXTINGUISH)));
+
+		exporter.add(NyctoSoundEvents.VAMPIRE_AMBIENT, of().subtitle("subtitles.nycto.entity.vampire.ambient")
+				.sound(ofEvent(SoundEvents.VINDICATOR_AMBIENT)));
+		exporter.add(NyctoSoundEvents.VAMPIRE_HURT, of().subtitle("subtitles.nycto.entity.vampire.hurt")
+				.sound(ofEvent(SoundEvents.VINDICATOR_HURT)));
+		exporter.add(NyctoSoundEvents.VAMPIRE_DEATH, of().subtitle("subtitles.nycto.entity.vampire.death")
+				.sound(ofEvent(SoundEvents.VINDICATOR_DEATH)));
+
+		exporter.add(NyctoSoundEvents.HUNTER_AMBIENT, of().subtitle("subtitles.nycto.entity.hunter.ambient")
+				.sound(ofEvent(SoundEvents.VILLAGER_AMBIENT)));
+		exporter.add(NyctoSoundEvents.HUNTER_HURT, of().subtitle("subtitles.nycto.entity.hunter.hurt")
+				.sound(ofEvent(SoundEvents.VILLAGER_HURT)));
+		exporter.add(NyctoSoundEvents.HUNTER_DEATH, of().subtitle("subtitles.nycto.entity.hunter.death")
+				.sound(ofEvent(SoundEvents.VILLAGER_DEATH)));
+
+		exporter.add(NyctoSoundEvents.DARK_FORM_FLAP, of().subtitle("subtitles.nycto.entity.dark_form.flap")
+				.sound(ofEvent(SoundEvents.PHANTOM_FLAP)));
+
+		exporter.add(NyctoSoundEvents.BLOOD_FLECHETTE_HIT_BLOCK, of().subtitle("subtitles.nycto.entity.blood_flechette.impact")
+				.sound(ofFile(id("entity/blood_flechette/hit_block")).volume(0.5F)));
+		exporter.add(NyctoSoundEvents.BLOOD_FLECHETTE_HIT_ENTITY, of().subtitle("subtitles.nycto.entity.blood_flechette.impact")
+				.sound(ofFile(id("entity/blood_flechette/hit_block")).volume(0.15F)));
+
+		exporter.add(NyctoSoundEvents.FIREBOMB_IMPACT, of().subtitle("subtitles.nycto.entity.firebomb.impact")
+				.sound(ofEvent(SoundEvents.FIRE_EXTINGUISH)));
+
+		exporter.add(NyctoSoundEvents.NIGHT_VISION_ON, of()
+				.sound(ofFile(id("power/night_vision/on"))));
+		exporter.add(NyctoSoundEvents.NIGHT_VISION_OFF, of()
+				.sound(ofFile(id("power/night_vision/off"))));
+
+		exporter.add(NyctoSoundEvents.BAT_FORM_ON, of()
+				.sound(ofFile(id("power/bat_form/on"))));
+		exporter.add(NyctoSoundEvents.BAT_FORM_OFF, of()
+				.sound(ofFile(id("power/vampire_form_change_off"))));
+
+		exporter.add(NyctoSoundEvents.BAT_SWARM_USE, of()
+				.sound(ofFile(id("power/bat_swarm/use"))));
+
+		exporter.add(NyctoSoundEvents.BATSTEP_USE, of()
+				.sound(ofFile(id("power/batstep/use"))));
+
+		exporter.add(NyctoSoundEvents.BLOOD_BARRIER_USE, of()
+				.sound(ofFile(id("power/blood_barrier/use"))));
+		exporter.add(NyctoSoundEvents.BLOOD_BARRIER_HIT, of()
+				.sound(ofFile(id("power/blood_barrier/hit"))));
+		exporter.add(NyctoSoundEvents.BLOOD_BARRIER_BREAK, of()
+				.sound(ofFile(id("power/blood_barrier/break"))));
+
+		exporter.add(NyctoSoundEvents.BLOOD_FLECHETTES_USE, of()
+				.sound(ofFile(id("power/blood_flechettes/use"))));
+		exporter.add(NyctoSoundEvents.BLOOD_FLECHETTES_LIFE_DRAIN, of()
+				.sound(ofFile(id("power/blood_flechettes/life_drain"))));
+
+		exporter.add(NyctoSoundEvents.BLOODRUSH_USE, of()
+				.sound(ofFile(id("power/bloodrush/use"))));
+
+		exporter.add(NyctoSoundEvents.CARNAGE_USE, of()
+				.sound(ofFile(id("power/carnage/use"))));
+		exporter.add(NyctoSoundEvents.CARNAGE_HIT, of()
+				.sound(ofFile(id("power/carnage/hit"))));
+
+		exporter.add(NyctoSoundEvents.DARK_FORM_ON, of()
+				.sound(ofFile(id("power/dark_form/on"))));
+		exporter.add(NyctoSoundEvents.DARK_FORM_OFF, of()
+				.sound(ofFile(id("power/vampire_form_change_off"))));
+
+		exporter.add(NyctoSoundEvents.HAEMOGENESIS_USE, of()
+				.sound(ofFile(id("power/haemogenesis/use"))));
+
+		exporter.add(NyctoSoundEvents.HYPNOTIZE_USE, of()
+				.sound(ofFile(id("power/hypnotize/use"))));
+		exporter.add(NyctoSoundEvents.HYPNOTIZE_USE_INVERSE, of()
+				.sound(ofFile(id("power/hypnotize/use_inverse"))));
+
+		exporter.add(NyctoSoundEvents.KEEN_SENSES_ON, of()
+				.sound(ofFile(id("power/keen_senses/on"))));
+		exporter.add(NyctoSoundEvents.KEEN_SENSES_OFF, of()
+				.sound(ofFile(id("power/night_vision/off"))));
+		exporter.add(NyctoSoundEvents.KEEN_SENSES_HEARTBEAT, of()
+				.sound(ofEvent(SoundEvents.WARDEN_HEARTBEAT)));
+
+		exporter.add(NyctoSoundEvents.MIST_FORM_ON, of()
+				.sound(ofFile(id("power/mist_form/on"))));
+		exporter.add(NyctoSoundEvents.MIST_FORM_OFF, of()
+				.sound(ofFile(id("power/vampire_form_change_off"))));
+
+		exporter.add(NyctoSoundEvents.VAMPIRIC_THRALL_CONVERT, of()
+				.sound(ofFile(id("power/vampiric_thrall/convert"))));
+	}
+
+	@Override
+	public String getName() {
+		return Nycto.MOD_ID + "_sounds";
+	}
+}

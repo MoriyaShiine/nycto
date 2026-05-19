@@ -6,7 +6,7 @@ package moriyashiine.nycto.client.gui.screens.inventory;
 
 import moriyashiine.nycto.api.client.gui.screens.inventory.AltarScreen;
 import moriyashiine.nycto.common.Nycto;
-import moriyashiine.nycto.common.init.ModItems;
+import moriyashiine.nycto.common.init.NyctoItems;
 import moriyashiine.nycto.common.world.inventory.VampireAltarMenu;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -70,6 +70,6 @@ public class VampireAltarScreen extends AltarScreen<VampireAltarMenu> {
 
 	@Override
 	protected Component getSecondCostText() {
-		return Component.translatable(ModItems.BLOOD_BOTTLE.getDescriptionId());
+		return Component.translatable(NyctoItems.BLOOD_BOTTLE.getDescriptionId());
 	}
 }

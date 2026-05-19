@@ -5,7 +5,7 @@
 package moriyashiine.nycto.mixin.misc;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import moriyashiine.nycto.common.init.ModItems;
+import moriyashiine.nycto.common.init.NyctoItems;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,7 +20,7 @@ public class PowderSnowBlockMixin {
 	private static boolean nycto$powderSnowBoots(boolean original, Entity entity) {
 		if (!original && entity instanceof LivingEntity living) {
 			ItemStack feetStack = living.getItemBySlot(EquipmentSlot.FEET);
-			if (feetStack.is(ModItems.VAMPIRE_BOOTS) || feetStack.is(ModItems.VAMPIRE_HUNTER_BOOTS) || feetStack.is(ModItems.WEREWOLF_HUNTER_BOOTS)) {
+			if (feetStack.is(NyctoItems.VAMPIRE_BOOTS) || feetStack.is(NyctoItems.VAMPIRE_HUNTER_BOOTS) || feetStack.is(NyctoItems.WEREWOLF_HUNTER_BOOTS)) {
 				return true;
 			}
 		}
