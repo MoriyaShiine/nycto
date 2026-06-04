@@ -6,12 +6,10 @@ package moriyashiine.nycto.common.component.entity.power;
 
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
-import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
+import moriyashiine.nycto.common.component.NyctoValueInput;
+import moriyashiine.nycto.common.component.NyctoValueOutput;
 
-public class NightVisionComponent implements AutoSyncedComponent, CommonTickingComponent {
+public class NightVisionComponent implements moriyashiine.nycto.common.component.NyctoCommonTickingComponent {
 	private final Player obj;
 	private boolean enabled = false;
 	private int strength = 0;
@@ -21,13 +19,13 @@ public class NightVisionComponent implements AutoSyncedComponent, CommonTickingC
 	}
 
 	@Override
-	public void readData(ValueInput input) {
+	public void readData(NyctoValueInput input) {
 		enabled = input.getBooleanOr("Enabled", false);
 		strength = input.getIntOr("Strength", 0);
 	}
 
 	@Override
-	public void writeData(ValueOutput output) {
+	public void writeData(NyctoValueOutput output) {
 		output.putBoolean("Enabled", enabled);
 		output.putInt("Strength", strength);
 	}

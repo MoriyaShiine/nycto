@@ -2,11 +2,17 @@
   "type": "minecraft:crafting_shapeless",
   "category": "equipment",
   "ingredients": [
-	"minecraft:glass_bottle",
-	"minecraft:blaze_powder",
-	"#c:gunpowders"
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "tag": "c:gunpowders"
+    }
   ],
   "result": {
-	"id": "nycto:firebomb"
+    "id": "nycto:firebomb"
   }
 }

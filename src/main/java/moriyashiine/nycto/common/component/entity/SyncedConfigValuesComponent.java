@@ -11,12 +11,10 @@ import moriyashiine.nycto.common.world.transformation.VampireTransformation;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
-import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
+import moriyashiine.nycto.common.component.NyctoValueInput;
+import moriyashiine.nycto.common.component.NyctoValueOutput;
 
-public class SyncedConfigValuesComponent implements AutoSyncedComponent, ServerTickingComponent {
+public class SyncedConfigValuesComponent implements moriyashiine.nycto.common.component.NyctoServerTickingComponent {
 	private final Player obj;
 	private boolean vampireChargeJump = true, vampireStepHeight = true;
 
@@ -25,13 +23,13 @@ public class SyncedConfigValuesComponent implements AutoSyncedComponent, ServerT
 	}
 
 	@Override
-	public void readData(ValueInput input) {
+	public void readData(NyctoValueInput input) {
 		vampireChargeJump = input.getBooleanOr("VampireChargeJump", true);
 		vampireStepHeight = input.getBooleanOr("VampireStepHeight", true);
 	}
 
 	@Override
-	public void writeData(ValueOutput output) {
+	public void writeData(NyctoValueOutput output) {
 		output.putBoolean("VampireChargeJump", vampireChargeJump);
 		output.putBoolean("VampireStepHeight", vampireStepHeight);
 	}

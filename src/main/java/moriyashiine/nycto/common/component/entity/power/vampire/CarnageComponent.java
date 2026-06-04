@@ -11,12 +11,10 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
-import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
+import moriyashiine.nycto.common.component.NyctoValueInput;
+import moriyashiine.nycto.common.component.NyctoValueOutput;
 
-public class CarnageComponent implements AutoSyncedComponent, CommonTickingComponent {
+public class CarnageComponent implements moriyashiine.nycto.common.component.NyctoCommonTickingComponent {
 	private static final AttributeModifier ATTACK_DAMAGE_MODIFIER = new AttributeModifier(Nycto.id("carnage_damage"), 2, AttributeModifier.Operation.ADD_VALUE);
 
 	private static final int MAX_TICKS = 300;
@@ -29,12 +27,12 @@ public class CarnageComponent implements AutoSyncedComponent, CommonTickingCompo
 	}
 
 	@Override
-	public void readData(ValueInput input) {
+	public void readData(NyctoValueInput input) {
 		ticks = input.getIntOr("Ticks", 0);
 	}
 
 	@Override
-	public void writeData(ValueOutput output) {
+	public void writeData(NyctoValueOutput output) {
 		output.putInt("Ticks", ticks);
 	}
 

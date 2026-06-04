@@ -1,14 +1,13 @@
 {
-  "values": [
-	"#minecraft:illager",
-	"minecraft:mannequin",
-	"minecraft:piglin",
-	"minecraft:piglin_brute",
-	"minecraft:player",
-	"minecraft:villager",
-	"minecraft:wandering_trader",
-	"minecraft:witch",
-	"nycto:hunter",
-	"nycto:vampire"
-  ]
+    "values":  [
+                   "minecraft:player",
+                   "minecraft:villager",
+                   "minecraft:wandering_trader",
+                   "minecraft:witch",
+                   "minecraft:pillager",
+                   "minecraft:vindicator",
+                   "minecraft:evoker",
+                   "nycto:hunter",
+                   "nycto:vampire"
+               ]
 }

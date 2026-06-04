@@ -2,15 +2,19 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-	"B": "#minecraft:beds",
-	"P": "minecraft:jungle_planks"
+    "B": {
+      "tag": "minecraft:beds"
+    },
+    "P": {
+      "item": "minecraft:jungle_planks"
+    }
   },
   "pattern": [
-	"PPP",
-	"PBP",
-	"PPP"
+    "PPP",
+    "PBP",
+    "PPP"
   ],
   "result": {
-	"id": "nycto:jungle_coffin"
+    "id": "nycto:jungle_coffin"
   }
 }

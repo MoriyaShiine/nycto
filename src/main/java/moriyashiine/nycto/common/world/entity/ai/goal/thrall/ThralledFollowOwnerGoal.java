@@ -14,8 +14,8 @@ import net.minecraft.world.entity.ai.goal.TemptGoal;
 
 public class ThralledFollowOwnerGoal extends TemptGoal {
 	public ThralledFollowOwnerGoal(PathfinderMob mob, double speedModifier) {
-		super(mob, speedModifier, _ -> false, false);
-		targetingConditions = TemptGoal.TEMPT_TARGETING.copy().selector((target, _) -> mob.getTarget() == null && HasOwnerComponent.isOwner(mob, target));
+		super(mob, speedModifier, stack -> false, false);
+		targetingConditions = TemptGoal.TEMPT_TARGETING.copy().selector((target, level) -> mob.getTarget() == null && HasOwnerComponent.isOwner(mob, target));
 	}
 
 	@Override

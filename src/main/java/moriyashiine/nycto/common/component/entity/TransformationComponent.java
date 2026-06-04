@@ -17,16 +17,14 @@ import net.minecraft.core.Registry;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
-import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
+import moriyashiine.nycto.common.component.NyctoValueInput;
+import moriyashiine.nycto.common.component.NyctoValueOutput;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TransformationComponent implements AutoSyncedComponent, CommonTickingComponent {
+public class TransformationComponent implements moriyashiine.nycto.common.component.NyctoCommonTickingComponent {
 	private final Player obj;
 	private Transformation transformation = ModTransformations.HUMAN;
 	private final List<PowerInstance> powers = new ArrayList<>();
@@ -38,13 +36,16 @@ public class TransformationComponent implements AutoSyncedComponent, CommonTicki
 	}
 
 	@Override
-	public void readData(ValueInput input) {
+	public void readData(NyctoValueInput input) {
 		transformation = input.read("Transformation", NyctoRegistries.TRANSFORMATION.byNameCodec()).orElse(ModTransformations.HUMAN);
 		powers.clear();
 		powers.addAll(input.read("Powers", PowerInstance.CODEC.listOf()).orElse(List.of()));
+		powers.removeIf(power -> power.getPower().isWeakness() && power.is(ModPowerTags.VAMPIRE_CHOOSABLE));
 		powerIndex = input.getIntOr("PowerIndex", 0);
+		if (powerIndex >= powers.size()) {
+			powerIndex = 0;
+		}
 		upgradeCostSeed = input.getIntOr("UpgradeCostSeed", 0);
-		photoFix();
 	}
 
 	// todo remove in 26.2
@@ -72,7 +73,7 @@ public class TransformationComponent implements AutoSyncedComponent, CommonTicki
 	}
 
 	@Override
-	public void writeData(ValueOutput output) {
+	public void writeData(NyctoValueOutput output) {
 		output.store("Transformation", NyctoRegistries.TRANSFORMATION.byNameCodec(), transformation);
 		output.store("Powers", PowerInstance.CODEC.listOf(), powers);
 		output.putInt("PowerIndex", powerIndex);
@@ -109,6 +110,9 @@ public class TransformationComponent implements AutoSyncedComponent, CommonTicki
 	}
 
 	public void addPower(PowerInstance instance) {
+		if (instance.getPower().isWeakness()) {
+			return;
+		}
 		powers.add(instance);
 		if (obj instanceof ServerPlayer player) {
 			instance.getPower().onAdded(player);

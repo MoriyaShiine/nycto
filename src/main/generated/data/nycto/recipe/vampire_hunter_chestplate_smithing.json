@@ -1,9 +1,23 @@
 {
-  "type": "minecraft:smithing_transform",
-  "addition": "#c:ingots/gold",
-  "base": "minecraft:leather_chestplate",
-  "result": {
-	"id": "nycto:vampire_hunter_chestplate"
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "item": "minecraft:iron_chestplate"
+    },
+    "M": {
+      "item": "nycto:garlic_wreath"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    }
   },
-  "template": "nycto:vampire_hunter_upgrade_smithing_template"
+  "pattern": [
+    "IMI",
+    " A ",
+    " I "
+  ],
+  "result": {
+    "id": "nycto:vampire_hunter_chestplate"
+  }
 }

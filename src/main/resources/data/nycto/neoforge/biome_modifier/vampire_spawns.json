@@ -1,0 +1,12 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#nycto:vampire_spawn_biomes",
+  "spawners": [
+    {
+      "type": "nycto:vampire",
+      "weight": 18,
+      "minCount": 1,
+      "maxCount": 1
+    }
+  ]
+}

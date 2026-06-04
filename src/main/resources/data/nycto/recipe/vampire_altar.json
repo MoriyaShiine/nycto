@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "nycto:vampire_blood_bottle"
+    },
+    "C": {
+      "item": "minecraft:candle"
+    },
+    "I": {
+      "item": "minecraft:copper_ingot"
+    },
+    "P": {
+      "item": "minecraft:oak_planks"
+    }
+  },
+  "pattern": [
+    "C C",
+    "PBP",
+    "IPI"
+  ],
+  "result": {
+    "id": "nycto:vampire_altar"
+  }
+}

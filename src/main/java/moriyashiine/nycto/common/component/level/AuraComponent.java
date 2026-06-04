@@ -12,12 +12,10 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import moriyashiine.nycto.common.component.NyctoValueInput;
+import moriyashiine.nycto.common.component.NyctoValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
-import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
-import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -25,7 +23,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
-public class AuraComponent implements AutoSyncedComponent, ServerTickingComponent {
+public class AuraComponent implements moriyashiine.nycto.common.component.NyctoServerTickingComponent {
 	public static final int RADIUS = 12;
 
 	private final Level obj;
@@ -36,13 +34,13 @@ public class AuraComponent implements AutoSyncedComponent, ServerTickingComponen
 	}
 
 	@Override
-	public void readData(ValueInput input) {
+	public void readData(NyctoValueInput input) {
 		garlicWreaths.clear();
 		garlicWreaths.addAll(input.read("GarlicWreaths", BlockPos.CODEC.listOf()).orElse(List.of()));
 	}
 
 	@Override
-	public void writeData(ValueOutput output) {
+	public void writeData(NyctoValueOutput output) {
 		output.store("GarlicWreaths", BlockPos.CODEC.listOf(), new ArrayList<>(garlicWreaths));
 	}
 

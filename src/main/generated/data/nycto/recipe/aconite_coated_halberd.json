@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:crafting_transmute",
-  "category": "equipment",
-  "input": "nycto:halberd",
-  "material": "nycto:aconite_garland",
-  "result": {
-	"id": "nycto:aconite_coated_halberd"
-  }
-}

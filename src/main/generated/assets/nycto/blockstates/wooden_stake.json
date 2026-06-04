@@ -1,19 +1,39 @@
 {
-  "variants": {
-	"facing=east": {
-	  "model": "nycto:block/wooden_stake",
-	  "y": 90
+  "multipart": [
+	{
+	  "when": {
+		"facing": "north"
+	  },
+	  "apply": {
+		"model": "nycto:block/wooden_stake"
+	  }
 	},
-	"facing=north": {
-	  "model": "nycto:block/wooden_stake"
+	{
+	  "when": {
+		"facing": "east"
+	  },
+	  "apply": {
+		"model": "nycto:block/wooden_stake",
+		"y": 90
+	  }
 	},
-	"facing=south": {
-	  "model": "nycto:block/wooden_stake",
-	  "y": 180
+	{
+	  "when": {
+		"facing": "south"
+	  },
+	  "apply": {
+		"model": "nycto:block/wooden_stake",
+		"y": 180
+	  }
 	},
-	"facing=west": {
-	  "model": "nycto:block/wooden_stake",
-	  "y": 270
+	{
+	  "when": {
+		"facing": "west"
+	  },
+	  "apply": {
+		"model": "nycto:block/wooden_stake",
+		"y": 270
+	  }
 	}
-  }
+  ]
 }

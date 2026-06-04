@@ -1,11 +1,14 @@
 {
-  "values": [
-	"#nycto:vampire_hunter_armor",
-	"nycto:garlic_wreath",
-	"nycto:wild_garlic",
-	"nycto:garlic_coated_halberd",
-	"nycto:garlic",
-	"nycto:grilled_garlic",
-	"nycto:garlic_bread"
-  ]
+    "values":  [
+                   "#nycto:vampire_hunter_armor",
+                   "nycto:garlic_wreath",
+                   "nycto:wild_garlic",
+                   "nycto:garlic",
+                   "nycto:garlic_brew",
+                   "nycto:splash_garlic_brew",
+                   "nycto:lingering_garlic_brew",
+                   "nycto:garlic_coated_halberd",
+                   "nycto:wooden_stake",
+                   "nycto:firebomb"
+               ]
 }

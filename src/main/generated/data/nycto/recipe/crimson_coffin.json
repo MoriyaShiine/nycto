@@ -2,15 +2,19 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-	"B": "#minecraft:beds",
-	"P": "minecraft:crimson_planks"
+    "B": {
+      "tag": "minecraft:beds"
+    },
+    "P": {
+      "item": "minecraft:crimson_planks"
+    }
   },
   "pattern": [
-	"PPP",
-	"PBP",
-	"PPP"
+    "PPP",
+    "PBP",
+    "PPP"
   ],
   "result": {
-	"id": "nycto:crimson_coffin"
+    "id": "nycto:crimson_coffin"
   }
 }

@@ -13,9 +13,8 @@ import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
 import moriyashiine.strawberrylib.api.objects.records.ParticleVelocity;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.player.Player;
-import org.ladysnake.cca.api.v3.component.tick.ClientTickingComponent;
 
-public class MistFormComponent extends VampireFormChangeComponent implements ClientTickingComponent {
+public class MistFormComponent extends VampireFormChangeComponent implements moriyashiine.nycto.common.component.NyctoClientTickingComponent {
 	private static final ParticleVelocity PARTICLE_VELOCITY = ParticleVelocity.of(0.2);
 
 	public MistFormComponent(Player obj) {

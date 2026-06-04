@@ -6,17 +6,15 @@ package moriyashiine.nycto.common.init;
 
 import moriyashiine.nycto.api.world.level.block.WildVegetationBlock;
 import moriyashiine.nycto.common.world.level.block.*;
-import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 
-import static moriyashiine.strawberrylib.api.module.SLibRegistries.registerBlock;
-import static moriyashiine.strawberrylib.api.module.SLibRegistries.registerBlockType;
 import static net.minecraft.world.level.block.state.BlockBehaviour.Properties.of;
 import static net.minecraft.world.level.block.state.BlockBehaviour.Properties.ofFullCopy;
 
@@ -80,15 +78,23 @@ public class ModBlocks {
 				.noOcclusion());
 	}
 
+	private static <T extends Block> T registerBlock(String name, BlockFactory<T> factory, BlockBehaviour.Properties properties) {
+		T block = factory.create(properties);
+		ModRegistration.register(ModRegistration.BLOCKS, name, block);
+		return block;
+	}
+
 	public static void init() {
-		registerBlockType("vampire_altar", VampireAltarBlock.CODEC);
-		registerBlockType("blood_fountain", BloodFountainBlock.CODEC);
-		registerBlockType("wooden_stake", WoodenStakeBlock.CODEC);
-		registerBlockType("firebomb", FirebombBlock.CODEC);
-		FlammableBlockRegistry.getDefaultInstance().add(WILD_GARLIC, 60, 100);
-		FlammableBlockRegistry.getDefaultInstance().add(WILD_ACONITE, 60, 100);
-		FlammableBlockRegistry.getDefaultInstance().add(GARLIC_WREATH, 60, 100);
-		FlammableBlockRegistry.getDefaultInstance().add(ACONITE_GARLAND, 60, 100);
-		FlammableBlockRegistry.getDefaultInstance().add(WOODEN_STAKE, 5, 5);
+		FireBlock fire = (FireBlock) Blocks.FIRE;
+		fire.setFlammable(WILD_GARLIC, 60, 100);
+		fire.setFlammable(WILD_ACONITE, 60, 100);
+		fire.setFlammable(GARLIC_WREATH, 60, 100);
+		fire.setFlammable(ACONITE_GARLAND, 60, 100);
+		fire.setFlammable(WOODEN_STAKE, 5, 5);
+	}
+
+	@FunctionalInterface
+	private interface BlockFactory<T extends Block> {
+		T create(BlockBehaviour.Properties properties);
 	}
 }

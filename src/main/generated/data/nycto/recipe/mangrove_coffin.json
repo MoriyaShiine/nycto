@@ -2,15 +2,19 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-	"B": "#minecraft:beds",
-	"P": "minecraft:mangrove_planks"
+    "B": {
+      "tag": "minecraft:beds"
+    },
+    "P": {
+      "item": "minecraft:mangrove_planks"
+    }
   },
   "pattern": [
-	"PPP",
-	"PBP",
-	"PPP"
+    "PPP",
+    "PBP",
+    "PPP"
   ],
   "result": {
-	"id": "nycto:mangrove_coffin"
+    "id": "nycto:mangrove_coffin"
   }
 }

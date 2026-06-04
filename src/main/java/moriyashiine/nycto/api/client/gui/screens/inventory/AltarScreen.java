@@ -7,7 +7,6 @@ package moriyashiine.nycto.api.client.gui.screens.inventory;
 import moriyashiine.nycto.api.init.NyctoRegistries;
 import moriyashiine.nycto.api.world.inventory.AltarMenu;
 import moriyashiine.nycto.api.world.power.Power;
-import moriyashiine.nycto.common.payload.ApplyPowerFromAltarPayload;
 import moriyashiine.nycto.common.payload.SwapPowersFromAltarPayload;
 import moriyashiine.strawberrylib.api.module.SLibClientUtils;
 import net.minecraft.ChatFormatting;
@@ -27,7 +26,6 @@ import net.minecraft.world.entity.player.Inventory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class AltarScreen<T extends AltarMenu> extends AbstractContainerScreen<T> {
 	private static final int MAX_PLAYER_POWERS = 6;
@@ -36,7 +34,7 @@ public abstract class AltarScreen<T extends AltarMenu> extends AbstractContainer
 
 	private final CyclingSlotBackground itemCostBackground = new CyclingSlotBackground(1);
 
-	private int selectedPowerIndex = -1, selectedWeaknessIndex = -1, selectedPlayerPowerIndex = -1;
+	private int selectedPowerIndex = -1, selectedPlayerPowerIndex = -1;
 
 	private List<Component> infoTexts = null;
 
@@ -77,35 +75,21 @@ public abstract class AltarScreen<T extends AltarMenu> extends AbstractContainer
 		int posY = (height - imageHeight) / 2;
 		// selectable powers
 		if (menu.getPlayerPowers() < MAX_PLAYER_POWERS) {
-			boolean needsWeakness = needsWeakness();
-			if (selectedPowerIndex != -1 && (!needsWeakness || selectedWeaknessIndex != -1) && menu.canUpgrade(minecraft.player) && isCheckmarkInBounds(posX, posY, (int) event.x(), (int) event.y())) {
+			if (selectedPowerIndex != -1 && menu.canUpgrade(minecraft.player) && isCheckmarkInBounds(posX, posY, (int) event.x(), (int) event.y())) {
 				int id = NyctoRegistries.POWER.getId(menu.selectablePowers.get(selectedPowerIndex));
 				if (menu.clickMenuButton(minecraft.player, id)) {
 					minecraft.gameMode.handleInventoryButtonClick(menu.containerId, id);
-					if (selectedWeaknessIndex != -1) {
-						id = NyctoRegistries.POWER.getId(menu.selectablePowers.get(selectedWeaknessIndex - 1));
-						AltarMenu.apply(minecraft.player, id);
-						ApplyPowerFromAltarPayload.send(id);
-					}
 					minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
-					selectedPowerIndex = selectedWeaknessIndex = -1;
+					selectedPowerIndex = -1;
 					return true;
 				}
 			}
 			Tuple<Integer, Boolean> clicked = clickPower(posX + 13, posY + 17, (int) event.x(), (int) event.y(), true);
 			int clickedIndex = clicked.getA();
-			if (clickedIndex != -1) {
-				if (clicked.getB()) {
-					if (needsWeakness) {
-						selectedWeaknessIndex = clickedIndex;
-					}
-				} else {
-					selectedPowerIndex = clickedIndex;
-				}
-				if ((selectedPowerIndex != -1 && !clicked.getB()) || (selectedWeaknessIndex != -1 && clicked.getB())) {
-					minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
-					return true;
-				}
+			if (clickedIndex != -1 && !clicked.getB()) {
+				selectedPowerIndex = clickedIndex;
+				minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
+				return true;
 			}
 		}
 		// player powers
@@ -113,7 +97,7 @@ public abstract class AltarScreen<T extends AltarMenu> extends AbstractContainer
 			Tuple<Integer, Boolean> clicked = clickPower(posX + 13, posY + 17, (int) event.x(), (int) event.y(), false);
 			int clickedIndex = clicked.getA();
 			if (clickedIndex != -1) {
-				if (!clicked.getB() || menu.playerPowers.stream().filter(Power::isWeakness).collect(Collectors.toSet()).size() >= 2) {
+				if (!clicked.getB()) {
 					minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1));
 					Power first = null;
 					if (selectedPlayerPowerIndex != -1) {
@@ -168,15 +152,7 @@ public abstract class AltarScreen<T extends AltarMenu> extends AbstractContainer
 					if (selectedPowerIndex == -1) {
 						powerRequired.withStyle(ChatFormatting.RED);
 					}
-					if (needsWeakness()) {
-						MutableComponent weaknessRequired = Component.translatable("tooltip.nycto.weakness_required").withStyle(ChatFormatting.GREEN);
-						if (selectedWeaknessIndex == -1) {
-							weaknessRequired.withStyle(ChatFormatting.RED);
-						}
-						infoTexts = List.of(expCost, materialCost, secondCost, CommonComponents.EMPTY, powerRequired, weaknessRequired);
-					} else {
-						infoTexts = List.of(expCost, materialCost, secondCost, CommonComponents.EMPTY, powerRequired);
-					}
+					infoTexts = List.of(expCost, materialCost, secondCost, CommonComponents.EMPTY, powerRequired);
 				}
 				graphics.setComponentTooltipForNextFrame(font, infoTexts, mouseX, mouseY);
 			}
@@ -204,7 +180,7 @@ public abstract class AltarScreen<T extends AltarMenu> extends AbstractContainer
 			extractPowerInfo(power, graphics, posX + offsetX, posY + offsetY, mouseX, mouseY);
 			boolean transparent = (power.isWeakness() && !needsWeakness) || menu.getPlayerPowers() >= MAX_PLAYER_POWERS;
 			graphics.blit(RenderPipelines.GUI_TEXTURED, power.getOrCreateTextureLocation(), posX + offsetX, posY + offsetY, 0, 0, 16, 16, 16, 16, 16, 16, transparent ? 0X7FFFFFFF : -1);
-			if (selectedPowerIndex == i || selectedWeaknessIndex == i) {
+			if (selectedPowerIndex == i) {
 				graphics.fill(posX + offsetX, posY + offsetY, posX + offsetX + 16, posY + offsetY + 16, Integer.MAX_VALUE);
 			}
 		}
@@ -279,7 +255,7 @@ public abstract class AltarScreen<T extends AltarMenu> extends AbstractContainer
 	}
 
 	private boolean needsWeakness() {
-		return menu.getPlayerPowers() % 2 == 0;
+		return false;
 	}
 
 	private static boolean isInBounds(int posX, int posY, int mouseX, int mouseY, int startX, int endX, int startY, int endY) {

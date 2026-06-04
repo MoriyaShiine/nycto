@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "brewing",
+  "ingredients": [
+    {
+      "item": "nycto:garlic_brew"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    }
+  ],
+  "result": {
+    "id": "nycto:splash_garlic_brew"
+  }
+}

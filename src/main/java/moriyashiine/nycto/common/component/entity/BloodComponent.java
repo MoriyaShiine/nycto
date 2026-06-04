@@ -16,12 +16,10 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
-import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
+import moriyashiine.nycto.common.component.NyctoValueInput;
+import moriyashiine.nycto.common.component.NyctoValueOutput;
 
-public class BloodComponent implements AutoSyncedComponent, ServerTickingComponent {
+public class BloodComponent implements moriyashiine.nycto.common.component.NyctoServerTickingComponent {
 	public static final int MAX_BLOOD = 100;
 	// keep as a multiple of 20
 	public static final int REGEN_TIME = 100;
@@ -36,7 +34,7 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 	}
 
 	@Override
-	public void readData(ValueInput input) {
+	public void readData(NyctoValueInput input) {
 		regeneratesNaturally = input.getBooleanOr("RegeneratesNaturally", true);
 		blood = input.getIntOr("Blood", MAX_BLOOD);
 		bleedTicks = input.getIntOr("BleedTicks", 0);
@@ -46,7 +44,7 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 	}
 
 	@Override
-	public void writeData(ValueOutput output) {
+	public void writeData(NyctoValueOutput output) {
 		output.putBoolean("RegeneratesNaturally", regeneratesNaturally);
 		output.putInt("Blood", blood);
 		output.putInt("BleedTicks", bleedTicks);

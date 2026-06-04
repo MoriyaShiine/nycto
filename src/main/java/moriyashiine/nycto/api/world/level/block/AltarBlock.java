@@ -61,7 +61,7 @@ public abstract class AltarBlock extends Block implements SimpleWaterloggedBlock
 	@Override
 	protected @Nullable MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
 		Component component = Component.translatable(getDescriptionId());
-		return new SimpleMenuProvider((containerId, inventory, _) -> getScreenHandler(level, pos, inventory, containerId), component);
+		return new SimpleMenuProvider((containerId, inventory, player) -> getScreenHandler(level, pos, inventory, containerId), component);
 	}
 
 	@Override

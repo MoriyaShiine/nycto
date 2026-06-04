@@ -23,19 +23,17 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import moriyashiine.nycto.common.component.NyctoValueInput;
+import moriyashiine.nycto.common.component.NyctoValueOutput;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
-import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
-import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComponent {
+public class BatSwarmComponent implements moriyashiine.nycto.common.component.NyctoCommonTickingComponent {
 	private final Level obj;
 	private final List<BatSwarm> batSwarms = new ArrayList<>();
 
@@ -44,7 +42,7 @@ public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComp
 	}
 
 	@Override
-	public void readData(ValueInput input) {
+	public void readData(NyctoValueInput input) {
 		batSwarms.clear();
 		for (BatSwarm batSwarm : input.read("BatSwarms", BatSwarm.CODEC.listOf()).orElse(List.of())) {
 			batSwarms.add(new BatSwarm(batSwarm.getOwnerId(), new ArrayList<>(batSwarm.getTargets()), batSwarm.getPos(), batSwarm.getAge(), batSwarm.getBlood()));
@@ -52,7 +50,7 @@ public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComp
 	}
 
 	@Override
-	public void writeData(ValueOutput output) {
+	public void writeData(NyctoValueOutput output) {
 		output.store("BatSwarms", BatSwarm.CODEC.listOf(), batSwarms);
 	}
 

@@ -13,12 +13,10 @@ import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
-import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
+import moriyashiine.nycto.common.component.NyctoValueInput;
+import moriyashiine.nycto.common.component.NyctoValueOutput;
 
-public class BloodBarrierComponent implements AutoSyncedComponent, CommonTickingComponent {
+public class BloodBarrierComponent implements moriyashiine.nycto.common.component.NyctoCommonTickingComponent {
 	private static final int MAX_BARRIERS = 3, MAX_TICKS = 300;
 
 	private final LivingEntity obj;
@@ -29,13 +27,13 @@ public class BloodBarrierComponent implements AutoSyncedComponent, CommonTicking
 	}
 
 	@Override
-	public void readData(ValueInput input) {
+	public void readData(NyctoValueInput input) {
 		barriers = input.getIntOr("Barriers", 0);
 		ticks = input.getIntOr("Ticks", 0);
 	}
 
 	@Override
-	public void writeData(ValueOutput output) {
+	public void writeData(NyctoValueOutput output) {
 		output.putInt("Barriers", barriers);
 		output.putInt("Ticks", ticks);
 	}

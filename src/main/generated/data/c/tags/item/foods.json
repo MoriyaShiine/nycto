@@ -1,7 +1,5 @@
 {
-  "values": [
-	"nycto:garlic",
-	"nycto:grilled_garlic",
-	"nycto:garlic_bread"
-  ]
+    "values":  [
+                   "nycto:garlic"
+               ]
 }

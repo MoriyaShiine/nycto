@@ -6,12 +6,10 @@ package moriyashiine.nycto.common.component.entity;
 
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
-import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
+import moriyashiine.nycto.common.component.NyctoValueInput;
+import moriyashiine.nycto.common.component.NyctoValueOutput;
 
-public class RespawnLeniencyComponent implements AutoSyncedComponent, CommonTickingComponent {
+public class RespawnLeniencyComponent implements moriyashiine.nycto.common.component.NyctoCommonTickingComponent {
 	private static final int MAX_TICKS = 600;
 
 	private final Player obj;
@@ -22,12 +20,12 @@ public class RespawnLeniencyComponent implements AutoSyncedComponent, CommonTick
 	}
 
 	@Override
-	public void readData(ValueInput input) {
+	public void readData(NyctoValueInput input) {
 		ticks = input.getIntOr("Ticks", MAX_TICKS);
 	}
 
 	@Override
-	public void writeData(ValueOutput output) {
+	public void writeData(NyctoValueOutput output) {
 		output.putInt("Ticks", ticks);
 	}
 

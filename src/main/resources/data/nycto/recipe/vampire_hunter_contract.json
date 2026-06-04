@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "nycto:hunter_contract"
+    },
+    {
+      "item": "nycto:garlic"
+    }
+  ],
+  "result": {
+    "id": "nycto:vampire_hunter_contract"
+  }
+}

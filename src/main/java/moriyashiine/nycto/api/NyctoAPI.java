@@ -11,9 +11,11 @@ import moriyashiine.nycto.client.payload.ModifyPowerPayload;
 import moriyashiine.nycto.client.payload.SetPowerCooldownPayload;
 import moriyashiine.nycto.client.payload.SetTransformationPayload;
 import moriyashiine.nycto.common.NyctoAPIImpl;
+import moriyashiine.nycto.common.component.entity.BloodComponent;
 import moriyashiine.nycto.common.component.entity.HealBlockComponent;
 import moriyashiine.nycto.common.component.entity.RespawnLeniencyComponent;
 import moriyashiine.nycto.common.component.entity.SunExposureComponent;
+import moriyashiine.nycto.common.component.entity.TransformationComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.HaemogenesisComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
@@ -54,6 +56,9 @@ public class NyctoAPI {
 	}
 
 	public static void addPower(ServerPlayer player, Power power) {
+		if (power.isWeakness()) {
+			return;
+		}
 		Transformation transformation = getTransformation(player);
 		transformation.applyModifiers(player, false);
 		NyctoAPIImpl.addPower(player, power);
@@ -75,6 +80,26 @@ public class NyctoAPI {
 
 	public static List<PowerInstance> getPowers(Player player) {
 		return ModEntityComponents.TRANSFORMATION.get(player).getPowers();
+	}
+
+	public static BloodComponent getBloodComponent(LivingEntity entity) {
+		return ModEntityComponents.BLOOD.get(entity);
+	}
+
+	public static TransformationComponent getTransformationComponent(Player player) {
+		return ModEntityComponents.TRANSFORMATION.get(player);
+	}
+
+	public static HealBlockComponent getHealBlockComponent(LivingEntity entity) {
+		return ModEntityComponents.HEAL_BLOCK.get(entity);
+	}
+
+	public static RespawnLeniencyComponent getRespawnLeniencyComponent(Player player) {
+		return ModEntityComponents.RESPAWN_LENIENCY.get(player);
+	}
+
+	public static SunExposureComponent getSunExposureComponent(LivingEntity entity) {
+		return ModEntityComponents.SUN_EXPOSURE.get(entity);
 	}
 
 	public static boolean hasPower(Player player, Power power) {
@@ -152,6 +177,9 @@ public class NyctoAPI {
 	}
 
 	public static boolean hasSunDebuff(Entity entity) {
+		if (isVampire(entity)) {
+			return false;
+		}
 		SunExposureComponent sunExposureComponent = ModEntityComponents.SUN_EXPOSURE.getNullable(entity);
 		return sunExposureComponent != null && sunExposureComponent.hasVampireSunDebuff() && sunExposureComponent.getExposureTime() >= SunExposureComponent.MIN_DEBUFF_EXPOSURE_TIME;
 	}

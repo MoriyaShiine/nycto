@@ -120,7 +120,6 @@ public class Vampire extends Monster {
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(0, new FloatGoal(this));
-		goalSelector.addGoal(1, new VampireFleeSunGoal(this, 1));
 		// power start
 		goalSelector.addGoal(2, new BloodBarrierGoal(this));
 		goalSelector.addGoal(2, new HaemogenesisGoal(this));
@@ -135,7 +134,7 @@ public class Vampire extends Monster {
 		goalSelector.addGoal(7, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(0, new HurtByTargetGoal(this));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, LivingEntity.class, false, (target, _) -> !target.slib$isPlayer() && NyctoAPI.hasQualityBlood(target) && !NyctoAPI.isVampire(target)));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, LivingEntity.class, false, (target, level) -> !target.slib$isPlayer() && NyctoAPI.hasQualityBlood(target) && !NyctoAPI.isVampire(target)));
 	}
 
 	@Override

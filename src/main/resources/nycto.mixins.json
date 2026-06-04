@@ -2,7 +2,7 @@
   "required": true,
   "package": "moriyashiine.nycto.mixin",
   "plugin": "moriyashiine.nycto.common.ModMixinPlugin",
-  "compatibilityLevel": "JAVA_25",
+  "compatibilityLevel": "JAVA_21",
   "mixins": [
 	"api.statuseffect.LivingEntityMixin",
 	"beastform.LivingEntityMixin",

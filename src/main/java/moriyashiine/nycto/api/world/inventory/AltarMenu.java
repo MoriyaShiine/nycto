@@ -63,12 +63,12 @@ public abstract class AltarMenu extends AbstractContainerMenu {
 		});
 		addStandardInventorySlots(inventory, 8, 141);
 		for (Power power : NyctoRegistries.POWER) {
-			if (power.is(allowedPowers) && !NyctoAPI.hasPower(inventory.player, power)) {
+			if (power.is(allowedPowers) && !power.isWeakness() && !NyctoAPI.hasPower(inventory.player, power)) {
 				selectablePowers.add(power);
 			}
 		}
 		for (PowerInstance instance : NyctoAPI.getPowers(inventory.player)) {
-			if (instance.is(allowedPowers)) {
+			if (instance.is(allowedPowers) && !instance.getPower().isWeakness()) {
 				playerPowers.add(instance.getPower());
 			}
 		}
@@ -118,7 +118,7 @@ public abstract class AltarMenu extends AbstractContainerMenu {
 	@Override
 	public void removed(Player player) {
 		super.removed(player);
-		access.execute((_, _) -> clearContainer(player, altarSlots));
+		access.execute((level, pos) -> clearContainer(player, altarSlots));
 	}
 
 	@Override
@@ -197,7 +197,6 @@ public abstract class AltarMenu extends AbstractContainerMenu {
 		if (powers == selectablePowers) {
 			powers.sort(Comparator.comparing(p -> p.getHolder().unwrapKey().orElseThrow().identifier()));
 		}
-		powers.sort(Comparator.comparing(Power::isWeakness));
 	}
 
 	public static void apply(Player player, int id) {

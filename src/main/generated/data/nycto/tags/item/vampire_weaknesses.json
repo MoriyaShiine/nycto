@@ -1,6 +1,11 @@
 {
-  "values": [
-	"nycto:garlic_coated_halberd",
-	"nycto:wooden_stake"
-  ]
+    "values":  [
+                   "nycto:garlic_coated_halberd",
+                   "nycto:wooden_stake",
+                   "nycto:garlic",
+                   "nycto:garlic_wreath",
+                   "nycto:garlic_brew",
+                   "nycto:splash_garlic_brew",
+                   "nycto:lingering_garlic_brew"
+               ]
 }

@@ -35,7 +35,7 @@
   "entity.blood_flechette.hit_entity": {
 	"sounds": [
 	  {
-		"name": "nycto:entity/blood_flechette/hit_block",
+		"name": "nycto:entity/blood_flechette/hit_entity",
 		"volume": 0.15
 	  }
 	],

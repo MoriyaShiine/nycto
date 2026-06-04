@@ -5,7 +5,6 @@
 package moriyashiine.nycto.mixin.power.hasowner;
 
 import moriyashiine.nycto.common.util.NyctoUtil;
-import moriyashiine.nycto.common.world.entity.ai.goal.thrall.ThralledFleeSunGoal;
 import moriyashiine.nycto.common.world.entity.ai.goal.thrall.ThralledFollowOwnerGoal;
 import moriyashiine.nycto.common.world.entity.ai.goal.thrall.ThralledHurtByTargetGoal;
 import moriyashiine.nycto.common.world.entity.ai.goal.thrall.ThralledMeleeAttackGoal;
@@ -34,7 +33,6 @@ public class MobMixin {
 	@Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Mob;registerGoals()V"))
 	private void nycto$hasOwner(EntityType<?> type, Level level, CallbackInfo ci) {
 		if ((Object) this instanceof PathfinderMob mob) {
-			goalSelector.addGoal(0, new ThralledFleeSunGoal(mob, 1));
 			goalSelector.addGoal(1, new ThralledFollowOwnerGoal(mob, 1));
 			if (NyctoUtil.isVillager(mob)) {
 				goalSelector.addGoal(9, new ThralledMeleeAttackGoal(mob, 1, false));

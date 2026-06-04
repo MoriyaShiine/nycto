@@ -14,12 +14,10 @@ import moriyashiine.strawberrylib.api.event.ModifyMovementEvents;
 import moriyashiine.strawberrylib.api.module.SLibClientUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
-import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
+import moriyashiine.nycto.common.component.NyctoValueInput;
+import moriyashiine.nycto.common.component.NyctoValueOutput;
 
-public class BloodrushComponent implements AutoSyncedComponent, CommonTickingComponent {
+public class BloodrushComponent implements moriyashiine.nycto.common.component.NyctoCommonTickingComponent {
 	private final Player obj;
 	private int ticks = 0, leniencyTicks = 0;
 
@@ -28,13 +26,13 @@ public class BloodrushComponent implements AutoSyncedComponent, CommonTickingCom
 	}
 
 	@Override
-	public void readData(ValueInput input) {
+	public void readData(NyctoValueInput input) {
 		ticks = input.getIntOr("Ticks", 0);
 		leniencyTicks = input.getIntOr("LeniencyTicks", 0);
 	}
 
 	@Override
-	public void writeData(ValueOutput output) {
+	public void writeData(NyctoValueOutput output) {
 		output.putInt("Ticks", ticks);
 		output.putInt("LeniencyTicks", leniencyTicks);
 	}

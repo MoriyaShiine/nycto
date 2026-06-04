@@ -6,12 +6,12 @@ package moriyashiine.nycto.common.payload;
 
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.init.ModEntityComponents;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record SyncPowerIndexPayload(int index) implements CustomPacketPayload {
 	public static final Type<SyncPowerIndexPayload> TYPE = new Type<>(Nycto.id("sync_power_index"));
@@ -25,13 +25,10 @@ public record SyncPowerIndexPayload(int index) implements CustomPacketPayload {
 	}
 
 	public static void send(int index) {
-		ClientPlayNetworking.send(new SyncPowerIndexPayload(index));
+		PacketDistributor.sendToServer(new SyncPowerIndexPayload(index));
 	}
 
-	public static class Receiver implements ServerPlayNetworking.PlayPayloadHandler<SyncPowerIndexPayload> {
-		@Override
-		public void receive(SyncPowerIndexPayload payload, ServerPlayNetworking.Context context) {
-			ModEntityComponents.TRANSFORMATION.get(context.player()).setPowerIndex(payload.index());
-		}
+	public static void handle(SyncPowerIndexPayload payload, IPayloadContext context) {
+		ModEntityComponents.TRANSFORMATION.get(context.player()).setPowerIndex(payload.index());
 	}
 }

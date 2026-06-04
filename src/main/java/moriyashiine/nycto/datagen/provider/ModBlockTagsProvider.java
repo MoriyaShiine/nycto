@@ -47,16 +47,16 @@ public class ModBlockTagsProvider extends FabricTagsProvider.BlockTagsProvider {
 				.forceAddTag(BlockTags.CLIMBABLE)
 				.forceAddTag(BlockTags.DOORS)
 				.forceAddTag(BlockTags.SLABS)
-				.forceAddTag(BlockTags.SNOW)
 				.forceAddTag(BlockTags.STAIRS)
-				.forceAddTag(BlockTags.SUPPORT_OVERRIDE_SNOW_LAYER)
-				.forceAddTag(BlockTags.SUPPORTS_DRY_VEGETATION)
 				.forceAddTag(BlockTags.TRAPDOORS)
 				.forceAddTag(BlockTags.WITHER_IMMUNE)
 				.add(Blocks.CALIBRATED_SCULK_SENSOR)
 				.add(Blocks.DIRT_PATH)
+				.add(Blocks.POWDER_SNOW)
 				.add(Blocks.SCULK_SENSOR)
-				.add(Blocks.SCULK_SHRIEKER);
+				.add(Blocks.SCULK_SHRIEKER)
+				.add(Blocks.SNOW)
+				.add(Blocks.SNOW_BLOCK);
 
 		valueLookupBuilder(BlockTags.MINEABLE_WITH_AXE)
 				.addTag(ModBlockTags.COFFINS)

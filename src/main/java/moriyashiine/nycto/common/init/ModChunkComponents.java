@@ -5,17 +5,19 @@
 package moriyashiine.nycto.common.init;
 
 import moriyashiine.nycto.common.Nycto;
+import moriyashiine.nycto.common.component.NyctoChunkComponentKey;
 import moriyashiine.nycto.common.component.chunk.NaturalOresComponent;
-import org.ladysnake.cca.api.v3.chunk.ChunkComponentFactoryRegistry;
-import org.ladysnake.cca.api.v3.chunk.ChunkComponentInitializer;
-import org.ladysnake.cca.api.v3.component.ComponentKey;
-import org.ladysnake.cca.api.v3.component.ComponentRegistry;
 
-public class ModChunkComponents implements ChunkComponentInitializer {
-	public static final ComponentKey<NaturalOresComponent> NATURAL_ORES = ComponentRegistry.getOrCreate(Nycto.id("natural_ores"), NaturalOresComponent.class);
+public final class ModChunkComponents {
+	public static final NyctoChunkComponentKey<NaturalOresComponent> NATURAL_ORES = new NyctoChunkComponentKey<>(Nycto.id("natural_ores"), NaturalOresComponent.class, NaturalOresComponent::new);
 
-	@Override
-	public void registerChunkComponentFactories(ChunkComponentFactoryRegistry registry) {
-		registry.register(NATURAL_ORES, NaturalOresComponent::new);
+	private ModChunkComponents() {
+	}
+
+	public static void init() {
+	}
+
+	public static Iterable<NyctoChunkComponentKey<?>> components() {
+		return java.util.List.of(NATURAL_ORES);
 	}
 }

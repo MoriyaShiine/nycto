@@ -24,14 +24,16 @@ public abstract class EntityMixin {
 
 	@Inject(method = "clearFire", at = @At("HEAD"), cancellable = true)
 	private void nycto$sunExposure(CallbackInfo ci) {
-		if (!level.isClientSide() && isAlive() && NyctoAPI.isSunExposed((Entity) (Object) this)) {
+		Entity entity = (Entity) (Object) this;
+		if (!level.isClientSide() && isAlive() && !NyctoAPI.isVampire(entity) && NyctoAPI.isSunExposed(entity)) {
 			ci.cancel();
 		}
 	}
 
 	@Inject(method = "playEntityOnFireExtinguishedSound", at = @At("HEAD"), cancellable = true)
 	private void nycto$sunExposureSound(CallbackInfo ci) {
-		if (isAlive() && NyctoAPI.isSunExposed((Entity) (Object) this)) {
+		Entity entity = (Entity) (Object) this;
+		if (isAlive() && !NyctoAPI.isVampire(entity) && NyctoAPI.isSunExposed(entity)) {
 			ci.cancel();
 		}
 	}

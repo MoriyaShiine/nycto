@@ -2,15 +2,19 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-	"B": "#minecraft:beds",
-	"P": "minecraft:acacia_planks"
+    "B": {
+      "tag": "minecraft:beds"
+    },
+    "P": {
+      "item": "minecraft:acacia_planks"
+    }
   },
   "pattern": [
-	"PPP",
-	"PBP",
-	"PPP"
+    "PPP",
+    "PBP",
+    "PPP"
   ],
   "result": {
-	"id": "nycto:acacia_coffin"
+    "id": "nycto:acacia_coffin"
   }
 }

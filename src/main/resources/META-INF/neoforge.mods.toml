@@ -1,0 +1,33 @@
+modLoader = "javafml"
+loaderVersion = "${loader_version_range}"
+license = "${mod_license}"
+issueTrackerURL = "https://github.com/MoriyaShiine/nycto/issues"
+
+[[mods]]
+modId = "${mod_id}"
+version = "${mod_version}"
+displayName = "${mod_name}"
+displayURL = "https://modrinth.com/project/nycto"
+logoFile = "assets/nycto/icon.png"
+authors = "${mod_authors}"
+description = '''${mod_description}
+
+NeoForge rewrite bootstrap for Minecraft ${minecraft_version}. Gameplay registries, events,
+components, payloads, client setup, and mixins are intentionally left for follow-up workers.'''
+
+[[mixins]]
+config = "${mod_id}-neoforge.mixins.json"
+
+[[dependencies.${mod_id}]]
+modId = "neoforge"
+type = "required"
+versionRange = "[${neo_version},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "minecraft"
+type = "required"
+versionRange = "${minecraft_version_range}"
+ordering = "NONE"
+side = "BOTH"

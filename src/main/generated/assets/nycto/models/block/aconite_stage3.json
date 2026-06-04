@@ -1,5 +1,5 @@
 {
-  "parent": "strawberrylib:block/crop_cross",
+  "parent": "minecraft:block/crop",
   "textures": {
 	"crop": "nycto:block/aconite_stage3"
   }

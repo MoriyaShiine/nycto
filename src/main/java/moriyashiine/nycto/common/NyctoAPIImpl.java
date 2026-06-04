@@ -8,12 +8,15 @@ import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.api.world.power.Power;
 import moriyashiine.nycto.api.world.power.PowerInstance;
 import moriyashiine.nycto.api.world.transformation.Transformation;
+import moriyashiine.nycto.common.component.NyctoComponentTicker;
 import moriyashiine.nycto.common.component.entity.TransformationComponent;
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModTransformations;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.chunk.ChunkAccess;
 
 public class NyctoAPIImpl {
 	public static void setTransformation(Player player, Transformation transformation) {
@@ -23,6 +26,9 @@ public class NyctoAPIImpl {
 	}
 
 	public static void addPower(Player player, Power power) {
+		if (power.isWeakness()) {
+			return;
+		}
 		ModEntityComponents.TRANSFORMATION.get(player).addPower(new PowerInstance(power));
 	}
 
@@ -36,6 +42,26 @@ public class NyctoAPIImpl {
 				powerInstance.setCooldown(cooldown);
 			}
 		});
+	}
+
+	public static void serverTickState(Entity entity) {
+		NyctoComponentTicker.serverTick(entity);
+	}
+
+	public static void clientTickState(Entity entity) {
+		NyctoComponentTicker.clientTick(entity);
+	}
+
+	public static void serverTickState(Level level) {
+		NyctoComponentTicker.serverTick(level);
+	}
+
+	public static void clientTickState(Level level) {
+		NyctoComponentTicker.clientTick(level);
+	}
+
+	public static void serverTickState(ChunkAccess chunk) {
+		NyctoComponentTicker.serverTick(chunk);
 	}
 
 	public static boolean isPlayerWerewolf(Entity entity) {

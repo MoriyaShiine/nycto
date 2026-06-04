@@ -9,12 +9,10 @@ import moriyashiine.nycto.common.init.ModEntityComponents;
 import moriyashiine.nycto.common.init.ModPowers;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
-import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
+import moriyashiine.nycto.common.component.NyctoValueInput;
+import moriyashiine.nycto.common.component.NyctoValueOutput;
 
-public class VampireChargeJumpComponent implements AutoSyncedComponent, CommonTickingComponent {
+public class VampireChargeJumpComponent implements moriyashiine.nycto.common.component.NyctoCommonTickingComponent {
 	private final Player obj;
 	private boolean enabled = false;
 	private int jumpStrength = 0;
@@ -24,13 +22,13 @@ public class VampireChargeJumpComponent implements AutoSyncedComponent, CommonTi
 	}
 
 	@Override
-	public void readData(ValueInput input) {
+	public void readData(NyctoValueInput input) {
 		enabled = input.getBooleanOr("Enabled", false);
 		jumpStrength = input.getIntOr("JumpStrength", 0);
 	}
 
 	@Override
-	public void writeData(ValueOutput output) {
+	public void writeData(NyctoValueOutput output) {
 		output.putBoolean("Enabled", enabled);
 		output.putInt("JumpStrength", jumpStrength);
 	}

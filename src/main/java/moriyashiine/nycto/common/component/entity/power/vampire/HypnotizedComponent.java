@@ -10,9 +10,8 @@ import moriyashiine.nycto.common.init.ModMobEffects;
 import moriyashiine.nycto.common.world.power.vampire.HypnotizePower;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
-public class HypnotizedComponent extends HasOwnerComponent implements ServerTickingComponent {
+public class HypnotizedComponent extends HasOwnerComponent implements moriyashiine.nycto.common.component.NyctoServerTickingComponent {
 	public HypnotizedComponent(Mob obj) {
 		super(obj);
 	}

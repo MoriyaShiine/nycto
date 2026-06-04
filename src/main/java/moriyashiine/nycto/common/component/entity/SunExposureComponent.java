@@ -25,14 +25,12 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
-import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
+import moriyashiine.nycto.common.component.NyctoValueInput;
+import moriyashiine.nycto.common.component.NyctoValueOutput;
 
 import static moriyashiine.nycto.api.world.power.ActivePower.BLOCKED_COOLDOWN;
 
-public class SunExposureComponent implements AutoSyncedComponent, CommonTickingComponent {
+public class SunExposureComponent implements moriyashiine.nycto.common.component.NyctoCommonTickingComponent {
 	public static final int MAX_EXPOSURE_TIME = 320, MIN_DEBUFF_EXPOSURE_TIME = 40;
 
 	private final LivingEntity obj;
@@ -46,7 +44,7 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 	}
 
 	@Override
-	public void readData(ValueInput input) {
+	public void readData(NyctoValueInput input) {
 		vampireSunExposureMode = input.read("VampireSunExposureMode", VampireSunExposureMode.CODEC).orElse(VampireSunExposureMode.NORMAL);
 		shouldTick = input.getBooleanOr("ShouldTick", false);
 		exposed = input.getBooleanOr("Exposed", false);
@@ -54,7 +52,7 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 	}
 
 	@Override
-	public void writeData(ValueOutput output) {
+	public void writeData(NyctoValueOutput output) {
 		output.store("VampireSunExposureMode", VampireSunExposureMode.CODEC, vampireSunExposureMode);
 		output.putBoolean("ShouldTick", shouldTick);
 		output.putBoolean("Exposed", exposed);
@@ -63,6 +61,10 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 
 	@Override
 	public void tick() {
+		if (NyctoAPI.isVampire(obj)) {
+			reset();
+			return;
+		}
 		if (shouldTick) {
 			int max = 0;
 			if (exposed) {
@@ -179,6 +181,9 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 	}
 
 	private boolean updateExposed() {
+		if (NyctoAPI.isVampire(obj)) {
+			return false;
+		}
 		if (NyctoAPI.hasRespawnLeniency(obj) || !obj.level().isBrightOutside() || !obj.slib$isSurvival() || obj.isInRain()) {
 			return false;
 		}

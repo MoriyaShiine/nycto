@@ -8,14 +8,14 @@ import moriyashiine.nycto.api.init.NyctoRegistries;
 import moriyashiine.nycto.api.world.power.Power;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.NyctoAPIImpl;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record SetPowerCooldownPayload(Power power, int cooldown) implements CustomPacketPayload {
 	public static final Type<SetPowerCooldownPayload> TYPE = new Type<>(Nycto.id("set_power_cooldown"));
@@ -30,13 +30,10 @@ public record SetPowerCooldownPayload(Power power, int cooldown) implements Cust
 	}
 
 	public static void send(ServerPlayer player, Power power, int cooldown) {
-		ServerPlayNetworking.send(player, new SetPowerCooldownPayload(power, cooldown));
+		PacketDistributor.sendToPlayer(player, new SetPowerCooldownPayload(power, cooldown));
 	}
 
-	public static class Receiver implements ClientPlayNetworking.PlayPayloadHandler<SetPowerCooldownPayload> {
-		@Override
-		public void receive(SetPowerCooldownPayload payload, ClientPlayNetworking.Context context) {
-			NyctoAPIImpl.setPowerCooldown(context.player(), payload.power(), payload.cooldown());
-		}
+	public static void handle(SetPowerCooldownPayload payload, IPayloadContext context) {
+		NyctoAPIImpl.setPowerCooldown(context.player(), payload.power(), payload.cooldown());
 	}
 }

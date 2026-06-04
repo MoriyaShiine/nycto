@@ -1,6 +1,6 @@
 {
-  "values": [
-	"nycto:werewolf_altar",
-	"nycto:blood_fountain"
-  ]
+    "values":  [
+                   "nycto:vampire_altar",
+                   "nycto:blood_fountain"
+               ]
 }

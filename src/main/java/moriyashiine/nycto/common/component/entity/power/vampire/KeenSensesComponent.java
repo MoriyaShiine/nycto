@@ -18,12 +18,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
-import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
+import moriyashiine.nycto.common.component.NyctoValueInput;
+import moriyashiine.nycto.common.component.NyctoValueOutput;
 
-public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingComponent {
+public class KeenSensesComponent implements moriyashiine.nycto.common.component.NyctoCommonTickingComponent {
 	private static final int POWER_DRAIN_TICKS = 200;
 
 	private static final AttributeModifier SPEED_BONUS = new AttributeModifier(Nycto.id("keen_senses_speed"), 0.15, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
@@ -38,7 +36,7 @@ public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingCo
 	}
 
 	@Override
-	public void readData(ValueInput input) {
+	public void readData(NyctoValueInput input) {
 		enabled = input.getBooleanOr("Enabled", false);
 		drainTicks = input.getIntOr("DrainTicks", drainTicks);
 		distance = input.getIntOr("Distance", 0);
@@ -46,7 +44,7 @@ public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingCo
 	}
 
 	@Override
-	public void writeData(ValueOutput output) {
+	public void writeData(NyctoValueOutput output) {
 		output.putBoolean("Enabled", enabled);
 		output.putInt("DrainTicks", drainTicks);
 		output.putInt("Distance", distance);

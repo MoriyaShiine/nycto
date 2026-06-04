@@ -1,86 +1,135 @@
 plugins {
-    id 'net.fabricmc.fabric-loom' version "${loom_version}"
-    id 'io.github.ladysnake.chenille' version "${chenille_version}"
+    id 'java-library'
+    id 'maven-publish'
+    id 'net.neoforged.gradle.userdev' version '7.1.36'
 }
 
-version = project.mod_version
-group = project.maven_group
+version = mod_version
+group = mod_group_id
 
-chenille {
-    customLicense = rootProject.file("LICENSE")
-    github = new URL("https://github.com/MoriyaShiine/nycto")
-    javaVersion = 25
-    configurePublishing {
-        withLadysnakeMaven()
-        withGithubRelease()
-        withModrinthRelease()
-        withCurseforgeRelease()
-    }
-}
-
-loom {
-    accessWidenerPath = file("src/main/resources/nycto.classtweaker")
-}
-
-fabricApi {
-    configureDataGeneration() {
-        client = true
-        modId = project.archives_base_name
-    }
-}
-
-repositories {
-    chenille.repositories.ladysnake()
-    chenille.repositories.up()
-    chenille.repositories.terraformers()
-    chenille.repositories.modrinth()
-    chenille.repositories.jitpack()
-}
-
-dependencies {
-    minecraft "com.mojang:minecraft:${minecraft_version}"
-    implementation "net.fabricmc:fabric-loader:${loader_version}"
-
-    includeApi "org.ladysnake.cardinal-components-api:cardinal-components-chunk:${cardinal_components_version}"
-    includeApi "org.ladysnake.cardinal-components-api:cardinal-components-level:${cardinal_components_version}"
-    includeApi "maven.modrinth:midnightlib:${midnightlib_version}"
-    includeApi "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
-
-    implementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
-    implementation "moriyashiine:strawberrylib:${strawberrylib_version}"
-
-    implementation "moriyashiine:anthropophagy:${anthropophagy_version}"
-    compileOnly "moriyashiine:hearty-meals:${hearty_meals_version}"
-    compileOnly "moriyashiine:superb-steeds:${superb_steeds_version}"
-
-    localRuntime "com.terraformersmc:modmenu:${mod_menu_version}"
-}
-
-processResources {
-    def version = project.version
-    inputs.property "version", version
-
-    filesMatching("fabric.mod.json") {
-        expand "version": version
-    }
-}
-
-tasks.withType(JavaCompile).configureEach {
-    it.options.release = 25
+base {
+    archivesName = mod_id
 }
 
 java {
     withSourcesJar()
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
 
-    sourceCompatibility = JavaVersion.VERSION_25
-    targetCompatibility = JavaVersion.VERSION_25
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+            include 'moriyashiine/nycto/common/NyctoNeoForge.java'
+            include 'moriyashiine/nycto/neoforge/**'
+        }
+        resources {
+            srcDir 'src/main/resources'
+            srcDir 'src/main/generated'
+            exclude 'data/c/**'
+            exclude 'data/enchancement/**'
+            exclude 'data/minecraft/tags/timeline/**'
+            exclude 'data/nycto/anthropophagy/**'
+            exclude 'data/nycto/tags/enchantment/**'
+            exclude 'data/nycto/tags/nycto/**'
+            exclude 'data/nycto/tags/worldgen/biome/spawns_vampires.json'
+            exclude 'data/nycto/timeline/**'
+        }
+    }
+}
+
+repositories {
+    maven {
+        name = 'NeoForge'
+        url = 'https://maven.neoforged.net/releases'
+    }
+    mavenCentral()
+}
+
+runs {
+    configureEach {
+        systemProperty 'forge.logging.markers', 'REGISTRIES'
+        systemProperty 'forge.logging.console.level', 'debug'
+        workingDirectory project.layout.projectDirectory.dir('run').dir(name)
+        modSource project.sourceSets.main
+    }
+
+    client {
+        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+    }
+
+    server {
+        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        argument '--nogui'
+    }
+
+    data {
+        arguments.addAll '--mod', project.mod_id,
+                '--all',
+                '--output', file('src/main/generated').getAbsolutePath(),
+                '--existing', file('src/main/resources').getAbsolutePath()
+    }
+}
+
+configurations {
+    localRuntime
+    runtimeClasspath.extendsFrom localRuntime
+}
+
+dependencies {
+    implementation "net.neoforged:neoforge:${neo_version}"
+}
+
+tasks.withType(ProcessResources).configureEach {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    includeEmptyDirs = false
+    exclude 'nycto.mixins.json'
+
+    def replaceProperties = [
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            neo_version            : neo_version,
+            loader_version_range   : loader_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : mod_version,
+            mod_authors            : mod_authors,
+            mod_description        : mod_description
+    ]
+
+    inputs.properties replaceProperties
+
+    filesMatching(['META-INF/neoforge.mods.toml']) {
+        expand replaceProperties
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 21
 }
 
 jar {
-    def projectName = project.name
-    inputs.property "projectName", projectName
+    from('LICENSE') {
+        rename { "${it}_${project.name}" }
+    }
+}
 
-    from("LICENSE") {
-        rename { "${it}_$projectName"}
+tasks.withType(Jar).configureEach {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.matching { it.name.endsWith('DownloadAssets') }.configureEach {
+    enabled = false
+}
+
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            from components.java
+        }
     }
 }

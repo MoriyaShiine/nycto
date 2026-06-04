@@ -16,12 +16,11 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import moriyashiine.nycto.common.component.NyctoValueInput;
+import moriyashiine.nycto.common.component.NyctoValueOutput;
 import net.minecraft.world.phys.AABB;
-import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
-public class HunterHeatComponent implements ServerTickingComponent {
+public class HunterHeatComponent implements moriyashiine.nycto.common.component.NyctoServerTickingComponent {
 	private static final int DECAY_TIMER = 6000, MAXIMUM_HEAT = 5, MAXIMUM_SPAWNS = 3;
 
 	private final Player obj;
@@ -33,7 +32,7 @@ public class HunterHeatComponent implements ServerTickingComponent {
 	}
 
 	@Override
-	public void readData(ValueInput input) {
+	public void readData(NyctoValueInput input) {
 		heatLevel = input.getIntOr("HeatLevel", 0);
 		decayTicks = input.getIntOr("DecayTicks", 0);
 		timesSpawned = input.getIntOr("TimesSpawned", 0);
@@ -41,7 +40,7 @@ public class HunterHeatComponent implements ServerTickingComponent {
 	}
 
 	@Override
-	public void writeData(ValueOutput output) {
+	public void writeData(NyctoValueOutput output) {
 		output.putInt("HeatLevel", heatLevel);
 		output.putInt("DecayTicks", decayTicks);
 		output.putInt("TimesSpawned", timesSpawned);

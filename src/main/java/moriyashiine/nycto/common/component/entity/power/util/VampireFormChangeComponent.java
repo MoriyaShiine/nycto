@@ -6,12 +6,10 @@ package moriyashiine.nycto.common.component.entity.power.util;
 
 import moriyashiine.nycto.common.init.ModEntityComponents;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
-import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
+import moriyashiine.nycto.common.component.NyctoValueInput;
+import moriyashiine.nycto.common.component.NyctoValueOutput;
 
-public abstract class VampireFormChangeComponent implements AutoSyncedComponent, ServerTickingComponent {
+public abstract class VampireFormChangeComponent implements moriyashiine.nycto.common.component.NyctoServerTickingComponent {
 	protected static final int POWER_DRAIN_TICKS = 300;
 
 	protected final Player obj;
@@ -23,13 +21,13 @@ public abstract class VampireFormChangeComponent implements AutoSyncedComponent,
 	}
 
 	@Override
-	public void readData(ValueInput input) {
+	public void readData(NyctoValueInput input) {
 		enabled = input.getBooleanOr("Enabled", false);
 		drainTicks = input.getIntOr("DrainTicks", drainTicks);
 	}
 
 	@Override
-	public void writeData(ValueOutput output) {
+	public void writeData(NyctoValueOutput output) {
 		output.putBoolean("Enabled", enabled);
 		output.putInt("DrainTicks", drainTicks);
 	}

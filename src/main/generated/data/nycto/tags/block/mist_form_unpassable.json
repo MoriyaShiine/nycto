@@ -3,15 +3,15 @@
 	"#minecraft:climbable",
 	"#minecraft:doors",
 	"#minecraft:slabs",
-	"#minecraft:snow",
 	"#minecraft:stairs",
-	"#minecraft:support_override_snow_layer",
-	"#minecraft:supports_dry_vegetation",
 	"#minecraft:trapdoors",
 	"#minecraft:wither_immune",
 	"minecraft:calibrated_sculk_sensor",
 	"minecraft:dirt_path",
+	"minecraft:powder_snow",
 	"minecraft:sculk_sensor",
-	"minecraft:sculk_shrieker"
+	"minecraft:sculk_shrieker",
+	"minecraft:snow",
+	"minecraft:snow_block"
   ]
 }

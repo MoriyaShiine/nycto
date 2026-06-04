@@ -2,15 +2,19 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-	"B": "#minecraft:beds",
-	"P": "minecraft:spruce_planks"
+    "B": {
+      "tag": "minecraft:beds"
+    },
+    "P": {
+      "item": "minecraft:spruce_planks"
+    }
   },
   "pattern": [
-	"PPP",
-	"PBP",
-	"PPP"
+    "PPP",
+    "PBP",
+    "PPP"
   ],
   "result": {
-	"id": "nycto:spruce_coffin"
+    "id": "nycto:spruce_coffin"
   }
 }

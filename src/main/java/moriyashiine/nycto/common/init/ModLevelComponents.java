@@ -5,20 +5,21 @@
 package moriyashiine.nycto.common.init;
 
 import moriyashiine.nycto.common.Nycto;
+import moriyashiine.nycto.common.component.NyctoLevelComponentKey;
 import moriyashiine.nycto.common.component.level.AuraComponent;
 import moriyashiine.nycto.common.component.level.power.BatSwarmComponent;
-import org.ladysnake.cca.api.v3.component.ComponentKey;
-import org.ladysnake.cca.api.v3.component.ComponentRegistry;
-import org.ladysnake.cca.api.v8.level.LevelComponentFactoryRegistry;
-import org.ladysnake.cca.api.v8.level.LevelComponentInitializer;
 
-public class ModLevelComponents implements LevelComponentInitializer {
-	public static final ComponentKey<AuraComponent> AURA = ComponentRegistry.getOrCreate(Nycto.id("aura"), AuraComponent.class);
-	public static final ComponentKey<BatSwarmComponent> BAT_SWARM = ComponentRegistry.getOrCreate(Nycto.id("bat_swarm"), BatSwarmComponent.class);
+public final class ModLevelComponents {
+	public static final NyctoLevelComponentKey<AuraComponent> AURA = new NyctoLevelComponentKey<>(Nycto.id("aura"), AuraComponent.class, AuraComponent::new);
+	public static final NyctoLevelComponentKey<BatSwarmComponent> BAT_SWARM = new NyctoLevelComponentKey<>(Nycto.id("bat_swarm"), BatSwarmComponent.class, BatSwarmComponent::new);
 
-	@Override
-	public void registerLevelComponentFactories(LevelComponentFactoryRegistry registry) {
-		registry.register(AURA, AuraComponent::new);
-		registry.register(BAT_SWARM, BatSwarmComponent::new);
+	private ModLevelComponents() {
+	}
+
+	public static void init() {
+	}
+
+	public static Iterable<NyctoLevelComponentKey<?>> components() {
+		return java.util.List.of(AURA, BAT_SWARM);
 	}
 }

@@ -1,9 +1,8 @@
 {
-  "values": [
-	"#nycto:coffins",
-	"nycto:vampire_altar",
-	"nycto:garlic",
-	"nycto:aconite",
-	"nycto:wooden_stake"
-  ]
+    "values":  [
+                   "#nycto:coffins",
+                   "nycto:garlic",
+                   "nycto:wild_garlic",
+                   "nycto:garlic_wreath"
+               ]
 }

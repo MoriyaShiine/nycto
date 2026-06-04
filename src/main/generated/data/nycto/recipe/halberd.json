@@ -2,17 +2,25 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-	"A": "minecraft:diamond_axe",
-	"G": "#c:ingots/gold",
-	"I": "#c:ingots/iron",
-	"S": "minecraft:stick"
+    "A": {
+      "item": "minecraft:diamond_axe"
+    },
+    "G": {
+      "tag": "c:ingots/gold"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
   },
   "pattern": [
-	" GI",
-	" AI",
-	"S  "
+    " GI",
+    " AI",
+    "S  "
   ],
   "result": {
-	"id": "nycto:halberd"
+    "id": "nycto:halberd"
   }
 }

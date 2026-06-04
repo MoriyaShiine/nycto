@@ -54,7 +54,7 @@ public class WolfHunterArmorLayer extends RenderLayer<WolfRenderState, WolfModel
 		NyctoRegistries.HUNTER_TYPE.forEach(type -> {
 			ItemStack armorItem = state.bodyArmorItem;
 			if (!state.isBaby && armorItem.is(type.armorTagKey)) {
-				WolfHunterArmorModel model = MODELS.computeIfAbsent(type, _ -> new WolfHunterArmorModel(modelSet.bakeLayer(MODEL_LAYERS.get(type))));
+				WolfHunterArmorModel model = MODELS.computeIfAbsent(type, hunterType -> new WolfHunterArmorModel(modelSet.bakeLayer(MODEL_LAYERS.get(hunterType))));
 				equipmentRenderer.renderLayers(
 						EquipmentClientInfo.LayerType.WOLF_BODY,
 						type.assetKey,

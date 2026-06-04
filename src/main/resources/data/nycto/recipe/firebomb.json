@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "combat",
+  "ingredients": [
+    {
+      "item": "minecraft:fire_charge"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "nycto:firebomb"
+  }
+}

@@ -7,15 +7,12 @@ package moriyashiine.nycto.common.init;
 import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvent;
 
-import static moriyashiine.strawberrylib.api.module.SLibRegistries.registerSoundEvent;
-import static moriyashiine.strawberrylib.api.module.SLibRegistries.registerSoundEventHolder;
-
 public class ModSoundEvents {
 	public static final SoundEvent ALTAR_USE = registerSoundEvent("block.altar.use");
 	public static final SoundEvent BLOOD_FOUNTAIN_LOCK = registerSoundEvent("block.blood_fountain.lock");
 	public static final SoundEvent BLOOD_FOUNTAIN_UNLOCK = registerSoundEvent("block.blood_fountain.unlock");
 
-	public static final Holder<SoundEvent> BLOOD_BOTTLE_DRINK = registerSoundEventHolder("item.blood_bottle.drink");
+	public static final Holder<SoundEvent> BLOOD_BOTTLE_DRINK = ModRegistration.SOUND_EVENTS.register("item.blood_bottle.drink", () -> SoundEvent.createVariableRangeEvent(ModRegistration.id("item.blood_bottle.drink")));
 	public static final SoundEvent VAMPIRIC_DAGGER_EXTRACT_FAIL = registerSoundEvent("item.vampiric_dagger.extract_fail");
 
 	public static final SoundEvent GENERIC_REMOVE_POWER = registerSoundEvent("entity.generic.remove_power");
@@ -77,6 +74,12 @@ public class ModSoundEvents {
 	public static final SoundEvent MIST_FORM_OFF = registerSoundEvent("power.mist_form.off");
 
 	public static final SoundEvent VAMPIRIC_THRALL_CONVERT = registerSoundEvent("power.vampiric_thrall.convert");
+
+	private static SoundEvent registerSoundEvent(String name) {
+		SoundEvent event = SoundEvent.createVariableRangeEvent(ModRegistration.id(name));
+		ModRegistration.register(ModRegistration.SOUND_EVENTS, name, event);
+		return event;
+	}
 
 	public static void init() {
 	}

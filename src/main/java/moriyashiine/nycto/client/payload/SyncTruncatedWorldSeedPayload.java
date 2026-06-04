@@ -6,13 +6,13 @@ package moriyashiine.nycto.client.payload;
 
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.util.NyctoUtil;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record SyncTruncatedWorldSeedPayload(int seed) implements CustomPacketPayload {
 	public static final Type<SyncTruncatedWorldSeedPayload> TYPE = new Type<>(Nycto.id("sync_truncated_world_seed"));
@@ -26,13 +26,10 @@ public record SyncTruncatedWorldSeedPayload(int seed) implements CustomPacketPay
 	}
 
 	public static void send(ServerPlayer player, int seed) {
-		ServerPlayNetworking.send(player, new SyncTruncatedWorldSeedPayload(seed));
+		PacketDistributor.sendToPlayer(player, new SyncTruncatedWorldSeedPayload(seed));
 	}
 
-	public static class Receiver implements ClientPlayNetworking.PlayPayloadHandler<SyncTruncatedWorldSeedPayload> {
-		@Override
-		public void receive(SyncTruncatedWorldSeedPayload payload, ClientPlayNetworking.Context context) {
-			NyctoUtil.truncatedWorldSeed = payload.seed();
-		}
+	public static void handle(SyncTruncatedWorldSeedPayload payload, IPayloadContext context) {
+		NyctoUtil.truncatedWorldSeed = payload.seed();
 	}
 }

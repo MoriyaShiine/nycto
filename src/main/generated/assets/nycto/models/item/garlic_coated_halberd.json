@@ -2,5 +2,13 @@
   "parent": "minecraft:item/handheld",
   "textures": {
 	"layer0": "nycto:item/garlic_coated_halberd"
-  }
+  },
+  "overrides": [
+	{
+	  "predicate": {
+		"nycto:held_halberd": 1
+	  },
+	  "model": "nycto:item/garlic_coated_halberd_in_hand"
+	}
+  ]
 }

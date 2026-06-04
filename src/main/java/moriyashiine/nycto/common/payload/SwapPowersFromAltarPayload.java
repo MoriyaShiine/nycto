@@ -8,12 +8,12 @@ import moriyashiine.nycto.api.init.NyctoRegistries;
 import moriyashiine.nycto.api.world.inventory.AltarMenu;
 import moriyashiine.nycto.api.world.power.Power;
 import moriyashiine.nycto.common.Nycto;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record SwapPowersFromAltarPayload(Power first, Power second) implements CustomPacketPayload {
 	public static final Type<SwapPowersFromAltarPayload> TYPE = new Type<>(Nycto.id("swap_powers_from_altar"));
@@ -28,13 +28,10 @@ public record SwapPowersFromAltarPayload(Power first, Power second) implements C
 	}
 
 	public static void send(Power first, Power second) {
-		ClientPlayNetworking.send(new SwapPowersFromAltarPayload(first, second));
+		PacketDistributor.sendToServer(new SwapPowersFromAltarPayload(first, second));
 	}
 
-	public static class Receiver implements ServerPlayNetworking.PlayPayloadHandler<SwapPowersFromAltarPayload> {
-		@Override
-		public void receive(SwapPowersFromAltarPayload payload, ServerPlayNetworking.Context context) {
-			AltarMenu.swapPowers(context.player(), payload.first(), payload.second());
-		}
+	public static void handle(SwapPowersFromAltarPayload payload, IPayloadContext context) {
+		AltarMenu.swapPowers(context.player(), payload.first(), payload.second());
 	}
 }

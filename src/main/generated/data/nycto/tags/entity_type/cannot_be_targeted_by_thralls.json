@@ -1,6 +1,5 @@
 {
-  "values": [
-	"minecraft:creaking",
-	"minecraft:creeper"
-  ]
+    "values":  [
+                   "minecraft:creeper"
+               ]
 }

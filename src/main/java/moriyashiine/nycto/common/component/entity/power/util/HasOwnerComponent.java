@@ -4,18 +4,18 @@
 
 package moriyashiine.nycto.common.component.entity.power.util;
 
+import moriyashiine.nycto.common.component.NyctoEntityComponentKey;
+import moriyashiine.nycto.common.init.ModEntityComponents;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import moriyashiine.nycto.common.component.NyctoValueInput;
+import moriyashiine.nycto.common.component.NyctoValueOutput;
 import org.jspecify.annotations.Nullable;
-import org.ladysnake.cca.api.v3.component.ComponentKey;
-import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 
 import java.util.UUID;
 
-public abstract class HasOwnerComponent implements AutoSyncedComponent {
+public abstract class HasOwnerComponent implements moriyashiine.nycto.common.component.NyctoPersistedComponent {
 	protected final Mob obj;
 	@Nullable
 	protected UUID ownerUuid = null;
@@ -25,12 +25,12 @@ public abstract class HasOwnerComponent implements AutoSyncedComponent {
 	}
 
 	@Override
-	public void readData(ValueInput input) {
+	public void readData(NyctoValueInput input) {
 		ownerUuid = input.read("Owner", UUIDUtil.AUTHLIB_CODEC).orElse(null);
 	}
 
 	@Override
-	public void writeData(ValueOutput output) {
+	public void writeData(NyctoValueOutput output) {
 		output.storeNullable("Owner", UUIDUtil.AUTHLIB_CODEC, ownerUuid);
 	}
 
@@ -52,8 +52,9 @@ public abstract class HasOwnerComponent implements AutoSyncedComponent {
 	}
 
 	public static boolean isOwner(Entity entity, Entity potentialOwner) {
-		for (ComponentKey<?> key : entity.asComponentProvider().getComponentContainer().keys()) {
-			if (entity.getComponent(key) instanceof HasOwnerComponent hasOwnerComponent && hasOwnerComponent.isOwner(potentialOwner)) {
+		for (NyctoEntityComponentKey<? extends HasOwnerComponent> key : ModEntityComponents.ownerComponents()) {
+			HasOwnerComponent hasOwnerComponent = key.getNullable(entity);
+			if (hasOwnerComponent != null && hasOwnerComponent.isOwner(potentialOwner)) {
 				return true;
 			}
 		}

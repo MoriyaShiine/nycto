@@ -8,8 +8,6 @@ import moriyashiine.nycto.api.init.NyctoRegistries;
 import moriyashiine.nycto.api.world.transformation.Transformation;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.NyctoAPIImpl;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -18,6 +16,8 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record SetTransformationPayload(int entityId, Transformation transformation) implements CustomPacketPayload {
 	public static final Type<SetTransformationPayload> TYPE = new Type<>(Nycto.id("set_transformation"));
@@ -32,16 +32,13 @@ public record SetTransformationPayload(int entityId, Transformation transformati
 	}
 
 	public static void send(ServerPlayer player, Entity entity, Transformation transformation) {
-		ServerPlayNetworking.send(player, new SetTransformationPayload(entity.getId(), transformation));
+		PacketDistributor.sendToPlayer(player, new SetTransformationPayload(entity.getId(), transformation));
 	}
 
-	public static class Receiver implements ClientPlayNetworking.PlayPayloadHandler<SetTransformationPayload> {
-		@Override
-		public void receive(SetTransformationPayload payload, ClientPlayNetworking.Context context) {
-			Entity entity = context.player().level().getEntity(payload.entityId());
-			if (entity instanceof Player player) {
-				NyctoAPIImpl.setTransformation(player, payload.transformation());
-			}
+	public static void handle(SetTransformationPayload payload, IPayloadContext context) {
+		Entity entity = context.player().level().getEntity(payload.entityId());
+		if (entity instanceof Player player) {
+			NyctoAPIImpl.setTransformation(player, payload.transformation());
 		}
 	}
 }

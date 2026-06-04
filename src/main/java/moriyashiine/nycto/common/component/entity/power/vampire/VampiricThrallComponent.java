@@ -33,19 +33,18 @@ import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.pathfinder.Path;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import moriyashiine.nycto.common.component.NyctoValueInput;
+import moriyashiine.nycto.common.component.NyctoValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jspecify.annotations.Nullable;
-import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class VampiricThrallComponent extends HasOwnerComponent implements ServerTickingComponent {
+public class VampiricThrallComponent extends HasOwnerComponent implements moriyashiine.nycto.common.component.NyctoServerTickingComponent {
 	private final List<FountainMemory> fountainMemories = new ArrayList<>();
 	private FollowMode followMode = FollowMode.FOLLOW;
 	@Nullable
@@ -59,7 +58,7 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 	}
 
 	@Override
-	public void readData(ValueInput input) {
+	public void readData(NyctoValueInput input) {
 		super.readData(input);
 		fountainMemories.clear();
 		fountainMemories.addAll(input.read("FountainMemories", FountainMemory.CODEC.listOf()).orElse(List.of()));
@@ -72,7 +71,7 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 	}
 
 	@Override
-	public void writeData(ValueOutput output) {
+	public void writeData(NyctoValueOutput output) {
 		super.writeData(output);
 		output.store("FountainMemories", FountainMemory.CODEC.listOf(), fountainMemories);
 		output.putString("FollowMode", followMode.name());

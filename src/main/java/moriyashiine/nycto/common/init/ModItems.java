@@ -11,14 +11,11 @@ import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.tag.ModBannerPatternTags;
 import moriyashiine.nycto.common.world.item.*;
 import moriyashiine.strawberrylib.api.objects.records.ModifierTrio;
-import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
-import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
-import net.fabricmc.fabric.api.registry.CompostableRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -31,10 +28,13 @@ import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.item.equipment.ArmorMaterials;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ComposterBlock;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 
 import java.util.List;
+import java.util.function.Function;
 
-import static moriyashiine.strawberrylib.api.module.SLibRegistries.*;
+import static moriyashiine.strawberrylib.api.module.SLibRegistries.editModifiers;
 
 public class ModItems {
 	public static CreativeModeTab TAB;
@@ -68,7 +68,7 @@ public class ModItems {
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.vampire_upgrade.ingredients"))).withStyle(ChatFormatting.BLUE),
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.generic_upgrade.base_slot_description"))),
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.vampire_upgrade.additions_slot_description"))),
-			List.of(Identifier.withDefaultNamespace("container/slot/helmet"), Identifier.withDefaultNamespace("container/slot/chestplate"), Identifier.withDefaultNamespace("container/slot/leggings"), Identifier.withDefaultNamespace("container/slot/boots")),
+			List.of(ResourceLocation.withDefaultNamespace("container/slot/helmet"), ResourceLocation.withDefaultNamespace("container/slot/chestplate"), ResourceLocation.withDefaultNamespace("container/slot/leggings"), ResourceLocation.withDefaultNamespace("container/slot/boots")),
 			List.of(Nycto.id("container/slot/blood_bottle"), Nycto.id("container/slot/vampire_blood_bottle")),
 			settings));
 	public static final Item VAMPIRE_HUNTER_UPGRADE_SMITHING_TEMPLATE = registerItem("vampire_hunter_upgrade_smithing_template", settings -> new SmithingTemplateItem(
@@ -76,16 +76,16 @@ public class ModItems {
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.hunter_upgrade.ingredients"))).withStyle(ChatFormatting.BLUE),
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.generic_upgrade.base_slot_description"))),
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.hunter_upgrade.additions_slot_description"))),
-			List.of(Identifier.withDefaultNamespace("container/slot/helmet"), Identifier.withDefaultNamespace("container/slot/chestplate"), Identifier.withDefaultNamespace("container/slot/leggings"), Identifier.withDefaultNamespace("container/slot/boots")),
-			List.of(Identifier.withDefaultNamespace("container/slot/ingot")),
+			List.of(ResourceLocation.withDefaultNamespace("container/slot/helmet"), ResourceLocation.withDefaultNamespace("container/slot/chestplate"), ResourceLocation.withDefaultNamespace("container/slot/leggings"), ResourceLocation.withDefaultNamespace("container/slot/boots")),
+			List.of(ResourceLocation.withDefaultNamespace("container/slot/ingot")),
 			settings));
 	public static final Item WEREWOLF_HUNTER_UPGRADE_SMITHING_TEMPLATE = registerItem("werewolf_hunter_upgrade_smithing_template", settings -> new SmithingTemplateItem(
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.generic_upgrade.applies_to"))).withStyle(ChatFormatting.BLUE),
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.hunter_upgrade.ingredients"))).withStyle(ChatFormatting.BLUE),
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.generic_upgrade.base_slot_description"))),
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.hunter_upgrade.additions_slot_description"))),
-			List.of(Identifier.withDefaultNamespace("container/slot/helmet"), Identifier.withDefaultNamespace("container/slot/chestplate"), Identifier.withDefaultNamespace("container/slot/leggings"), Identifier.withDefaultNamespace("container/slot/boots")),
-			List.of(Identifier.withDefaultNamespace("container/slot/ingot")),
+			List.of(ResourceLocation.withDefaultNamespace("container/slot/helmet"), ResourceLocation.withDefaultNamespace("container/slot/chestplate"), ResourceLocation.withDefaultNamespace("container/slot/leggings"), ResourceLocation.withDefaultNamespace("container/slot/boots")),
+			List.of(ResourceLocation.withDefaultNamespace("container/slot/ingot")),
 			settings));
 
 	public static final Item VAMPIRE_HELMET = registerItem("vampire_helmet", properties()
@@ -166,9 +166,44 @@ public class ModItems {
 	public static final Item HUNTER_SPAWN_EGG = registerItem("hunter_spawn_egg", SpawnEggItem::new, properties()
 			.spawnEgg(ModEntityTypes.HUNTER));
 
+	static {
+		TAB = registerCreativeModeTab(Nycto.MOD_ID, CreativeModeTab.builder().title(Component.translatable("itemGroup." + Nycto.MOD_ID)).icon(VAMPIRE_BLOOD_BOTTLE::getDefaultInstance).displayItems((parameters, output) -> fillMainTab(output)).build());
+	}
+
 	public static Item registerCoffin(String name, Block block) {
 		return registerBlockItem(name, block, properties()
 				.stacksTo(1));
+	}
+
+	private static Item registerBlockItem(String name, Block block) {
+		return registerBlockItem(name, block, properties());
+	}
+
+	private static Item registerBlockItem(String name, Block block, Item.Properties properties) {
+		return registerItem(name, settings -> new BlockItem(block, settings), properties);
+	}
+
+	private static Item registerItem(String name) {
+		return registerItem(name, Item::new, properties());
+	}
+
+	private static Item registerItem(String name, Item.Properties properties) {
+		return registerItem(name, Item::new, properties);
+	}
+
+	private static Item registerItem(String name, Function<Item.Properties, ? extends Item> factory) {
+		return registerItem(name, factory, properties());
+	}
+
+	private static Item registerItem(String name, Function<Item.Properties, ? extends Item> factory, Item.Properties properties) {
+		Item item = factory.apply(properties);
+		ModRegistration.register(ModRegistration.ITEMS, name, item);
+		return item;
+	}
+
+	private static CreativeModeTab registerCreativeModeTab(String name, CreativeModeTab tab) {
+		ModRegistration.register(ModRegistration.CREATIVE_MODE_TABS, name, tab);
+		return tab;
 	}
 
 	public static Item registerHunterArmor(String name, ArmorType type, Holder<Attribute> attribute) {
@@ -207,96 +242,99 @@ public class ModItems {
 		return new Item.Properties();
 	}
 
+	public static void addCreativeTabContents(BuildCreativeModeTabContentsEvent event) {
+		if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
+			event.accept(VAMPIRE_SPAWN_EGG);
+			event.accept(HUNTER_SPAWN_EGG);
+		}
+	}
+
 	public static void init() {
-		TAB = registerCreativeModeTab(FabricCreativeModeTab.builder().title(Component.translatable("itemGroup." + Nycto.MOD_ID)).icon(VAMPIRE_BLOOD_BOTTLE::getDefaultInstance).displayItems((_, output) -> {
-			output.accept(VAMPIRE_ALTAR);
-			output.accept(WEREWOLF_ALTAR);
+		ComposterBlock.COMPOSTABLES.put(WILD_GARLIC, 0.65F);
+		ComposterBlock.COMPOSTABLES.put(WILD_ACONITE, 0.65F);
+		ComposterBlock.COMPOSTABLES.put(GARLIC, 0.65F);
+		ComposterBlock.COMPOSTABLES.put(GRILLED_GARLIC, 0.85F);
+		ComposterBlock.COMPOSTABLES.put(GARLIC_BREAD, 1F);
+		ComposterBlock.COMPOSTABLES.put(ACONITE_SEEDS, 0.3F);
+		ComposterBlock.COMPOSTABLES.put(ACONITE, 0.65F);
+	}
 
-			output.accept(OAK_COFFIN);
-			output.accept(SPRUCE_COFFIN);
-			output.accept(BIRCH_COFFIN);
-			output.accept(JUNGLE_COFFIN);
-			output.accept(ACACIA_COFFIN);
-			output.accept(DARK_OAK_COFFIN);
-			output.accept(PALE_OAK_COFFIN);
-			output.accept(MANGROVE_COFFIN);
-			output.accept(CHERRY_COFFIN);
-			output.accept(BAMBOO_COFFIN);
-			output.accept(CRIMSON_COFFIN);
-			output.accept(WARPED_COFFIN);
+	private static void fillMainTab(CreativeModeTab.Output output) {
+		output.accept(VAMPIRE_ALTAR);
+		output.accept(WEREWOLF_ALTAR);
 
-			output.accept(BLOOD_FOUNTAIN);
+		output.accept(OAK_COFFIN);
+		output.accept(SPRUCE_COFFIN);
+		output.accept(BIRCH_COFFIN);
+		output.accept(JUNGLE_COFFIN);
+		output.accept(ACACIA_COFFIN);
+		output.accept(DARK_OAK_COFFIN);
+		output.accept(PALE_OAK_COFFIN);
+		output.accept(MANGROVE_COFFIN);
+		output.accept(CHERRY_COFFIN);
+		output.accept(BAMBOO_COFFIN);
+		output.accept(CRIMSON_COFFIN);
+		output.accept(WARPED_COFFIN);
 
-			output.accept(GARLIC_WREATH);
-			output.accept(ACONITE_GARLAND);
+		output.accept(BLOOD_FOUNTAIN);
 
-			output.accept(WILD_GARLIC);
-			output.accept(WILD_ACONITE);
+		output.accept(GARLIC_WREATH);
+		output.accept(ACONITE_GARLAND);
 
-			output.accept(VAMPIRE_UPGRADE_SMITHING_TEMPLATE);
-			output.accept(VAMPIRE_HUNTER_UPGRADE_SMITHING_TEMPLATE);
-			output.accept(WEREWOLF_HUNTER_UPGRADE_SMITHING_TEMPLATE);
+		output.accept(WILD_GARLIC);
+		output.accept(WILD_ACONITE);
 
-			output.accept(VAMPIRE_HELMET);
-			output.accept(VAMPIRE_CHESTPLATE);
-			output.accept(VAMPIRE_LEGGINGS);
-			output.accept(VAMPIRE_BOOTS);
-			output.accept(VAMPIRE_HUNTER_HELMET);
-			output.accept(VAMPIRE_HUNTER_CHESTPLATE);
-			output.accept(VAMPIRE_HUNTER_LEGGINGS);
-			output.accept(VAMPIRE_HUNTER_BOOTS);
-			output.accept(VAMPIRE_HUNTER_WOLF_ARMOR);
-			output.accept(WEREWOLF_HUNTER_HELMET);
-			output.accept(WEREWOLF_HUNTER_CHESTPLATE);
-			output.accept(WEREWOLF_HUNTER_LEGGINGS);
-			output.accept(WEREWOLF_HUNTER_BOOTS);
-			output.accept(WEREWOLF_HUNTER_WOLF_ARMOR);
+		output.accept(VAMPIRE_UPGRADE_SMITHING_TEMPLATE);
+		output.accept(VAMPIRE_HUNTER_UPGRADE_SMITHING_TEMPLATE);
+		output.accept(WEREWOLF_HUNTER_UPGRADE_SMITHING_TEMPLATE);
 
-			output.accept(VAMPIRIC_DAGGER);
-			output.accept(HALBERD);
-			output.accept(GARLIC_COATED_HALBERD);
-			output.accept(ACONITE_COATED_HALBERD);
-			output.accept(WOODEN_STAKE);
-			output.accept(ACONITE_ARROW);
-			output.accept(FIREBOMB);
+		output.accept(VAMPIRE_HELMET);
+		output.accept(VAMPIRE_CHESTPLATE);
+		output.accept(VAMPIRE_LEGGINGS);
+		output.accept(VAMPIRE_BOOTS);
+		output.accept(VAMPIRE_HUNTER_HELMET);
+		output.accept(VAMPIRE_HUNTER_CHESTPLATE);
+		output.accept(VAMPIRE_HUNTER_LEGGINGS);
+		output.accept(VAMPIRE_HUNTER_BOOTS);
+		output.accept(VAMPIRE_HUNTER_WOLF_ARMOR);
+		output.accept(WEREWOLF_HUNTER_HELMET);
+		output.accept(WEREWOLF_HUNTER_CHESTPLATE);
+		output.accept(WEREWOLF_HUNTER_LEGGINGS);
+		output.accept(WEREWOLF_HUNTER_BOOTS);
+		output.accept(WEREWOLF_HUNTER_WOLF_ARMOR);
 
-			output.accept(BLOOD_BOTTLE);
-			output.accept(VAMPIRE_BLOOD_BOTTLE);
-			output.accept(AMBROSIA_BOTTLE);
+		output.accept(VAMPIRIC_DAGGER);
+		output.accept(HALBERD);
+		output.accept(GARLIC_COATED_HALBERD);
+		output.accept(ACONITE_COATED_HALBERD);
+		output.accept(WOODEN_STAKE);
+		output.accept(ACONITE_ARROW);
+		output.accept(FIREBOMB);
 
-			output.accept(GARLIC);
-			output.accept(GRILLED_GARLIC);
-			output.accept(GARLIC_BREAD);
+		output.accept(BLOOD_BOTTLE);
+		output.accept(VAMPIRE_BLOOD_BOTTLE);
+		output.accept(AMBROSIA_BOTTLE);
 
-			output.accept(ACONITE_SEEDS);
-			output.accept(ACONITE);
+		output.accept(GARLIC);
+		output.accept(GRILLED_GARLIC);
+		output.accept(GARLIC_BREAD);
 
-			output.accept(HUNTER_CONTRACT);
-			output.accept(VAMPIRE_HUNTER_CONTRACT);
-			output.accept(WEREWOLF_HUNTER_CONTRACT);
+		output.accept(ACONITE_SEEDS);
+		output.accept(ACONITE);
 
-			output.accept(VAMPIRE_BAT_BANNER_PATTERN);
-			output.accept(WOLF_SKULL_BANNER_PATTERN);
-			output.accept(HUNTERS_MARK_BANNER_PATTERN);
+		output.accept(HUNTER_CONTRACT);
+		output.accept(VAMPIRE_HUNTER_CONTRACT);
+		output.accept(WEREWOLF_HUNTER_CONTRACT);
 
-			output.accept(VAMPIRE_SPAWN_EGG);
-			output.accept(HUNTER_SPAWN_EGG);
+		output.accept(VAMPIRE_BAT_BANNER_PATTERN);
+		output.accept(WOLF_SKULL_BANNER_PATTERN);
+		output.accept(HUNTERS_MARK_BANNER_PATTERN);
 
-			addPotions(output, ModPotions.GARLIC, ModPotions.LONG_GARLIC, ModPotions.STRONG_GARLIC);
-			addPotions(output, ModPotions.WITHER, ModPotions.LONG_WITHER, ModPotions.STRONG_WITHER);
-		}).build());
-		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.SPAWN_EGGS).register(output -> {
-			output.accept(VAMPIRE_SPAWN_EGG);
-			output.accept(HUNTER_SPAWN_EGG);
-		});
+		output.accept(VAMPIRE_SPAWN_EGG);
+		output.accept(HUNTER_SPAWN_EGG);
 
-		CompostableRegistry.INSTANCE.add(WILD_GARLIC, 0.65F);
-		CompostableRegistry.INSTANCE.add(WILD_ACONITE, 0.65F);
-		CompostableRegistry.INSTANCE.add(GARLIC, 0.65F);
-		CompostableRegistry.INSTANCE.add(GRILLED_GARLIC, 0.85F);
-		CompostableRegistry.INSTANCE.add(GARLIC_BREAD, 1F);
-		CompostableRegistry.INSTANCE.add(ACONITE_SEEDS, 0.3F);
-		CompostableRegistry.INSTANCE.add(ACONITE, 0.65F);
+		addPotions(output, ModPotions.GARLIC, ModPotions.LONG_GARLIC, ModPotions.STRONG_GARLIC);
+		addPotions(output, ModPotions.WITHER, ModPotions.LONG_WITHER, ModPotions.STRONG_WITHER);
 	}
 
 	@SafeVarargs

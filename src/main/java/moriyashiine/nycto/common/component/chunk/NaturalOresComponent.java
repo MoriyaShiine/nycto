@@ -17,15 +17,14 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import moriyashiine.nycto.common.component.NyctoValueInput;
+import moriyashiine.nycto.common.component.NyctoValueOutput;
 import org.jspecify.annotations.Nullable;
-import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NaturalOresComponent implements ServerTickingComponent {
+public class NaturalOresComponent implements moriyashiine.nycto.common.component.NyctoServerTickingComponent {
 	private final ChunkAccess obj;
 	private final Long2ObjectMap<ResourceKey<Block>> naturalOres = new Long2ObjectOpenHashMap<>();
 
@@ -36,7 +35,7 @@ public class NaturalOresComponent implements ServerTickingComponent {
 	}
 
 	@Override
-	public void readData(ValueInput input) {
+	public void readData(NyctoValueInput input) {
 		naturalOres.clear();
 		for (NaturalOre ores : input.read("NaturalOres", NaturalOre.CODEC.listOf()).orElse(List.of())) {
 			naturalOres.put(ores.pos(), ores.blockId());
@@ -45,7 +44,7 @@ public class NaturalOresComponent implements ServerTickingComponent {
 	}
 
 	@Override
-	public void writeData(ValueOutput output) {
+	public void writeData(NyctoValueOutput output) {
 		List<NaturalOre> ores = new ArrayList<>();
 		naturalOres.forEach((pos, block) -> ores.add(new NaturalOre(pos, block)));
 		output.store("NaturalOres", NaturalOre.CODEC.listOf(), ores);

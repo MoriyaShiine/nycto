@@ -1,7 +1,6 @@
 {
-  "values": [
-	"#nycto:vampire_armor",
-	"#nycto:vampire_hunter_armor",
-	"#nycto:werewolf_hunter_armor"
-  ]
+    "values":  [
+                   "#nycto:vampire_armor",
+                   "#nycto:vampire_hunter_armor"
+               ]
 }

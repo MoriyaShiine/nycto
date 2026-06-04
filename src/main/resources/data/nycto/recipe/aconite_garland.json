@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "decorations",
+  "key": {
+    "A": {
+      "item": "nycto:aconite"
+    },
+    "C": {
+      "item": "minecraft:cocoa_beans"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "SCS",
+    "ASA",
+    " A "
+  ],
+  "result": {
+    "id": "nycto:aconite_garland"
+  }
+}

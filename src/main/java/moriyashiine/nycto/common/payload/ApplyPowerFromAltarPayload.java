@@ -6,12 +6,12 @@ package moriyashiine.nycto.common.payload;
 
 import moriyashiine.nycto.api.world.inventory.AltarMenu;
 import moriyashiine.nycto.common.Nycto;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record ApplyPowerFromAltarPayload(int id) implements CustomPacketPayload {
 	public static final Type<ApplyPowerFromAltarPayload> TYPE = new Type<>(Nycto.id("apply_power_from_altar"));
@@ -25,13 +25,10 @@ public record ApplyPowerFromAltarPayload(int id) implements CustomPacketPayload 
 	}
 
 	public static void send(int id) {
-		ClientPlayNetworking.send(new ApplyPowerFromAltarPayload(id));
+		PacketDistributor.sendToServer(new ApplyPowerFromAltarPayload(id));
 	}
 
-	public static class Receiver implements ServerPlayNetworking.PlayPayloadHandler<ApplyPowerFromAltarPayload> {
-		@Override
-		public void receive(ApplyPowerFromAltarPayload payload, ServerPlayNetworking.Context context) {
-			AltarMenu.apply(context.player(), payload.id());
-		}
+	public static void handle(ApplyPowerFromAltarPayload payload, IPayloadContext context) {
+		AltarMenu.apply(context.player(), payload.id());
 	}
 }

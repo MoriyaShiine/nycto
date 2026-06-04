@@ -6,13 +6,10 @@ package moriyashiine.nycto.common.init;
 
 import moriyashiine.nycto.common.world.level.block.entity.BloodFountainBlockEntity;
 import moriyashiine.nycto.common.world.level.block.entity.CoffinBlockEntity;
-import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
-import static moriyashiine.strawberrylib.api.module.SLibRegistries.registerBlockEntityType;
-
 public class ModBlockEntityTypes {
-	public static final BlockEntityType<CoffinBlockEntity> COFFIN = registerBlockEntityType("coffin", FabricBlockEntityTypeBuilder.create(CoffinBlockEntity::new,
+	public static final BlockEntityType<CoffinBlockEntity> COFFIN = registerBlockEntityType("coffin", BlockEntityType.Builder.of(CoffinBlockEntity::new,
 			ModBlocks.OAK_COFFIN,
 			ModBlocks.SPRUCE_COFFIN,
 			ModBlocks.BIRCH_COFFIN,
@@ -25,10 +22,15 @@ public class ModBlockEntityTypes {
 			ModBlocks.BAMBOO_COFFIN,
 			ModBlocks.CRIMSON_COFFIN,
 			ModBlocks.WARPED_COFFIN
-	));
-	public static final BlockEntityType<BloodFountainBlockEntity> BLOOD_FOUNTAIN = registerBlockEntityType("blood_fountain", FabricBlockEntityTypeBuilder.create(BloodFountainBlockEntity::new,
+	).build(null));
+	public static final BlockEntityType<BloodFountainBlockEntity> BLOOD_FOUNTAIN = registerBlockEntityType("blood_fountain", BlockEntityType.Builder.of(BloodFountainBlockEntity::new,
 			ModBlocks.BLOOD_FOUNTAIN
-	));
+	).build(null));
+
+	private static <T extends BlockEntityType<?>> T registerBlockEntityType(String name, T type) {
+		ModRegistration.register(ModRegistration.BLOCK_ENTITY_TYPES, name, type);
+		return type;
+	}
 
 	public static void init() {
 	}

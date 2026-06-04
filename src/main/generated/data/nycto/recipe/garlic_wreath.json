@@ -2,16 +2,22 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-	"A": "minecraft:allium",
-	"G": "nycto:garlic",
-	"S": "minecraft:string"
+    "A": {
+      "item": "minecraft:allium"
+    },
+    "G": {
+      "item": "nycto:garlic"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
   },
   "pattern": [
-	"SAS",
-	"GSG",
-	" G "
+    "SAS",
+    "GSG",
+    " G "
   ],
   "result": {
-	"id": "nycto:garlic_wreath"
+    "id": "nycto:garlic_wreath"
   }
 }

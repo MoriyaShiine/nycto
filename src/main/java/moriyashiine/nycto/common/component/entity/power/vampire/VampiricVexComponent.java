@@ -10,12 +10,10 @@ import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.monster.Vex;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
-import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
+import moriyashiine.nycto.common.component.NyctoValueInput;
+import moriyashiine.nycto.common.component.NyctoValueOutput;
 
-public class VampiricVexComponent implements AutoSyncedComponent, ServerTickingComponent {
+public class VampiricVexComponent implements moriyashiine.nycto.common.component.NyctoServerTickingComponent {
 	private final Vex obj;
 	private boolean hasOwner = false;
 	private int despawnTimer = 0;
@@ -25,13 +23,13 @@ public class VampiricVexComponent implements AutoSyncedComponent, ServerTickingC
 	}
 
 	@Override
-	public void readData(ValueInput input) {
+	public void readData(NyctoValueInput input) {
 		hasOwner = input.getBooleanOr("HasOwner", false);
 		despawnTimer = input.getIntOr("DespawnTimer", 0);
 	}
 
 	@Override
-	public void writeData(ValueOutput output) {
+	public void writeData(NyctoValueOutput output) {
 		output.putBoolean("HasOwner", hasOwner);
 		output.putInt("DespawnTimer", despawnTimer);
 	}

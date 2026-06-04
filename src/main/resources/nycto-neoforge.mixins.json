@@ -1,0 +1,26 @@
+{
+  "required": true,
+  "package": "moriyashiine.nycto.neoforge.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "BatFormLivingEntityMixin",
+    "MistFormBlockStateMixin"
+  ],
+  "client": [
+    "client.BloodBarrierArmorHudMixin",
+    "client.KeenSensesEntityColorMixin",
+    "client.KeenSensesGameRendererMixin",
+    "client.KeenSensesClientLevelMixin",
+    "client.MistFormLivingEntityRendererMixin",
+    "client.PowerHotbarGuiMixin",
+    "client.PowerHotbarMinecraftMixin",
+    "client.ThrallLivingEntityRendererMixin",
+    "client.VampireFoodHudMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

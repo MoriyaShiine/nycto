@@ -1,9 +1,23 @@
 {
-  "type": "minecraft:smithing_transform",
-  "addition": "#nycto:usable_blood_bottles",
-  "base": "minecraft:leather_leggings",
-  "result": {
-	"id": "nycto:vampire_leggings"
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "item": "minecraft:leather_leggings"
+    },
+    "M": {
+      "tag": "nycto:usable_blood_bottles"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    }
   },
-  "template": "nycto:vampire_upgrade_smithing_template"
+  "pattern": [
+    "IMI",
+    " A ",
+    " I "
+  ],
+  "result": {
+    "id": "nycto:vampire_leggings"
+  }
 }

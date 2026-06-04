@@ -76,6 +76,7 @@ public class ModEntityTypeTagsProvider extends FabricTagsProvider.EntityTypeTags
 				.add(EntityType.PIGLIN)
 				.add(EntityType.PIGLIN_BRUTE)
 				.add(EntityType.PILLAGER)
+				.add(EntityType.VEX)
 				.add(EntityType.VILLAGER)
 				.add(EntityType.VINDICATOR)
 				.add(EntityType.WANDERING_TRADER)

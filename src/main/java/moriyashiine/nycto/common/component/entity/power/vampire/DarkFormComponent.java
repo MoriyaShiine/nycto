@@ -23,13 +23,12 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.schedule.Activity;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
+import moriyashiine.nycto.common.component.NyctoValueInput;
+import moriyashiine.nycto.common.component.NyctoValueOutput;
 
 import java.util.stream.Collectors;
 
-public class DarkFormComponent extends VampireFormChangeComponent implements CommonTickingComponent {
+public class DarkFormComponent extends VampireFormChangeComponent implements moriyashiine.nycto.common.component.NyctoCommonTickingComponent {
 	private static final AttributeModifier ARMOR_MODIFIER = new AttributeModifier(Nycto.id("dark_form_armor"), 20, AttributeModifier.Operation.ADD_VALUE);
 	private static final AttributeModifier ARMOR_TOUGHNESS_MODIFIER = new AttributeModifier(Nycto.id("dark_form_armor_toughness"), 8, AttributeModifier.Operation.ADD_VALUE);
 	private static final AttributeModifier ATTACK_DAMAGE_MODIFIER = new AttributeModifier(Nycto.id("dark_form_attack_damage"), 10, AttributeModifier.Operation.ADD_VALUE);
@@ -45,13 +44,13 @@ public class DarkFormComponent extends VampireFormChangeComponent implements Com
 	}
 
 	@Override
-	public void readData(ValueInput input) {
+	public void readData(NyctoValueInput input) {
 		super.readData(input);
 		jumpCooldown = input.getIntOr("JumpCooldown", 0);
 	}
 
 	@Override
-	public void writeData(ValueOutput output) {
+	public void writeData(NyctoValueOutput output) {
 		super.writeData(output);
 		output.putInt("JumpCooldown", jumpCooldown);
 	}

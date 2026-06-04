@@ -6,12 +6,12 @@ package moriyashiine.nycto.common.payload;
 
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.init.ModEntityComponents;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record SyncVampireChargeJumpStatusPayload(boolean enabled) implements CustomPacketPayload {
 	public static final Type<SyncVampireChargeJumpStatusPayload> TYPE = new Type<>(Nycto.id("sync_vampire_charge_jump_status"));
@@ -26,13 +26,10 @@ public record SyncVampireChargeJumpStatusPayload(boolean enabled) implements Cus
 	}
 
 	public static void send(boolean enabled) {
-		ClientPlayNetworking.send(new SyncVampireChargeJumpStatusPayload(enabled));
+		PacketDistributor.sendToServer(new SyncVampireChargeJumpStatusPayload(enabled));
 	}
 
-	public static class Receiver implements ServerPlayNetworking.PlayPayloadHandler<SyncVampireChargeJumpStatusPayload> {
-		@Override
-		public void receive(SyncVampireChargeJumpStatusPayload payload, ServerPlayNetworking.Context context) {
-			ModEntityComponents.SYNCED_CONFIG_VALUES.get(context.player()).setVampireChargeJump(payload.enabled());
-		}
+	public static void handle(SyncVampireChargeJumpStatusPayload payload, IPayloadContext context) {
+		ModEntityComponents.SYNCED_CONFIG_VALUES.get(context.player()).setVampireChargeJump(payload.enabled());
 	}
 }

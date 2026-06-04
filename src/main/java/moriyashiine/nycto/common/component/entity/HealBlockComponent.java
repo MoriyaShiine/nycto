@@ -8,15 +8,13 @@ import moriyashiine.nycto.common.init.ModEntityComponents;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import moriyashiine.nycto.common.component.NyctoValueInput;
+import moriyashiine.nycto.common.component.NyctoValueOutput;
 import org.jspecify.annotations.Nullable;
-import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
-import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
 
 import java.util.UUID;
 
-public class HealBlockComponent implements AutoSyncedComponent, CommonTickingComponent {
+public class HealBlockComponent implements moriyashiine.nycto.common.component.NyctoCommonTickingComponent {
 	private final LivingEntity obj;
 	private UUID lifeStealer = null;
 	private int ticksToBlock = 0;
@@ -26,13 +24,13 @@ public class HealBlockComponent implements AutoSyncedComponent, CommonTickingCom
 	}
 
 	@Override
-	public void readData(ValueInput input) {
+	public void readData(NyctoValueInput input) {
 		lifeStealer = input.read("LifeStealer", UUIDUtil.AUTHLIB_CODEC).orElse(null);
 		ticksToBlock = input.getIntOr("TicksToBlock", 0);
 	}
 
 	@Override
-	public void writeData(ValueOutput output) {
+	public void writeData(NyctoValueOutput output) {
 		output.storeNullable("LifeStealer", UUIDUtil.AUTHLIB_CODEC, lifeStealer);
 		output.putInt("TicksToBlock", ticksToBlock);
 	}
