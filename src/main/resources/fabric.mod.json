@@ -26,9 +26,6 @@
 	"client": [
 	  "moriyashiine.nycto.client.NyctoClient"
 	],
-	"cardinal-components-chunk": [
-	  "moriyashiine.nycto.common.init.NyctoChunkComponents"
-	],
 	"cardinal-components-entity": [
 	  "moriyashiine.nycto.common.init.NyctoEntityComponents"
 	],
@@ -49,7 +46,6 @@
   },
   "custom": {
 	"cardinal-components": [
-	  "nycto:natural_ores",
 	  "nycto:synced_config_values",
 	  "nycto:blood",
 	  "nycto:heal_block",
