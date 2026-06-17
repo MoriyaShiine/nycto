@@ -139,6 +139,12 @@ public class BloodFountainBlockEntity extends BlockEntity {
 			int slot = findEmptySlot();
 			if (slot != -1) {
 				if (!level.isClientSide()) {
+					if (stack.is(NyctoItems.PLAYER_BLOOD_BOTTLE)) {
+						stack = NyctoItems.BLOOD_BOTTLE.getDefaultInstance();
+					}
+					if (stack.is(NyctoItems.PLAYER_VAMPIRE_BLOOD_BOTTLE)) {
+						stack = NyctoItems.VAMPIRE_BLOOD_BOTTLE.getDefaultInstance();
+					}
 					bottles.set(slot, stack);
 					updateFillState();
 					setChanged();

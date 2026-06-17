@@ -6,8 +6,11 @@ package moriyashiine.nycto.common.world.level.block;
 
 import com.mojang.serialization.MapCodec;
 import moriyashiine.nycto.common.init.NyctoBlockEntityTypes;
+import moriyashiine.nycto.common.init.NyctoItems;
 import moriyashiine.nycto.common.init.NyctoSoundEvents;
+import moriyashiine.nycto.common.world.item.VampiricDaggerItem;
 import moriyashiine.nycto.common.world.item.consumeeffects.FillBloodConsumeEffect;
+import moriyashiine.nycto.common.world.item.crafting.BloodExtractionRecipe;
 import moriyashiine.nycto.common.world.level.block.entity.BloodFountainBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
@@ -111,17 +114,32 @@ public class BloodFountainBlock extends BaseEntityBlock implements SimpleWaterlo
 
 	@Override
 	protected InteractionResult useItemOn(ItemStack itemStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-		if (itemStack.has(DataComponents.CONSUMABLE) && itemStack.get(DataComponents.CONSUMABLE).onConsumeEffects().stream().anyMatch(effect -> effect instanceof FillBloodConsumeEffect) && level.getBlockEntity(pos) instanceof BloodFountainBlockEntity blockEntity) {
-			ItemStack copy = itemStack.copyWithCount(1);
-			if (blockEntity.insertBottle(copy)) {
-				if (!level.isClientSide()) {
-					level.playSound(null, pos, NyctoSoundEvents.BLOOD_BOTTLE_DRINK.value(), SoundSource.BLOCKS, 1, 1);
-					itemStack.consume(1, player);
-					if (!player.isCreative() && copy.has(DataComponents.USE_REMAINDER)) {
-						player.handleExtraItemsCreatedOnUse(copy.get(DataComponents.USE_REMAINDER).convertInto().create());
+		if (level.getBlockEntity(pos) instanceof BloodFountainBlockEntity blockEntity) {
+			if (itemStack.is(NyctoItems.VAMPIRIC_DAGGER) && VampiricDaggerItem.isFull(itemStack)) {
+				ItemStack bottle = BloodExtractionRecipe.getCraftingResult(itemStack);
+				if (blockEntity.insertBottle(bottle)) {
+					if (!level.isClientSide()) {
+						level.playSound(null, pos, NyctoSoundEvents.BLOOD_BOTTLE_DRINK.value(), SoundSource.BLOCKS, 1, 1);
 					}
+					if (!player.hasInfiniteMaterials()) {
+						VampiricDaggerItem.setBloodTypes(itemStack, false, false);
+						VampiricDaggerItem.setBloodCharge(itemStack, 0);
+					}
+					return InteractionResult.SUCCESS;
 				}
-				return InteractionResult.SUCCESS;
+			}
+			if (itemStack.has(DataComponents.CONSUMABLE) && itemStack.get(DataComponents.CONSUMABLE).onConsumeEffects().stream().anyMatch(effect -> effect instanceof FillBloodConsumeEffect)) {
+				ItemStack copy = itemStack.copyWithCount(1);
+				if (blockEntity.insertBottle(copy)) {
+					if (!level.isClientSide()) {
+						level.playSound(null, pos, NyctoSoundEvents.BLOOD_BOTTLE_DRINK.value(), SoundSource.BLOCKS, 1, 1);
+						itemStack.consume(1, player);
+						if (!player.isCreative() && copy.has(DataComponents.USE_REMAINDER)) {
+							player.handleExtraItemsCreatedOnUse(copy.get(DataComponents.USE_REMAINDER).convertInto().create());
+						}
+					}
+					return InteractionResult.SUCCESS;
+				}
 			}
 		}
 		return super.useItemOn(itemStack, state, level, pos, player, hand, hitResult);
