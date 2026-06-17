@@ -1,4 +1,16 @@
 ------------------------------------------------------
+Version 26.2-b1
+------------------------------------------------------
+- update to 26.2
+- being stunned now also prevents attacking and using items, blocks, and entities
+- losing all of your blood no longer removes regeneration and instead applies heal block
+- filled vampiric daggers can now directly put blood into blood fountains
+- blood flechettes now shoots more projectiles and are more condensed
+- mist form now hides you from the player locator bar
+- remove aconite arrows (they will be replaced with a new item once werewolves are done)
+- fix sizes of some mob effect icons
+
+------------------------------------------------------
 Version 26.1-b11
 ------------------------------------------------------
 - fix https://github.com/MoriyaShiine/nycto/issues/14
