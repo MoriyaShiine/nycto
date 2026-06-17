@@ -36,9 +36,9 @@ public class BloodFlechettesPower extends VampireActivePower {
 	}
 
 	public static void spawnProjectiles(Level level, LivingEntity entity) {
-		for (int i = 0; i < entity.getRandom().nextIntBetweenInclusive(6, 8); i++) {
+		for (int i = 0; i < entity.getRandom().nextIntBetweenInclusive(12, 16); i++) {
 			BloodFlechette bloodFlechette = new BloodFlechette(level, entity);
-			bloodFlechette.shootFromRotation(entity, entity.getXRot(), entity.getYHeadRot(), 0, 1, i == 0 ? 0 : 24);
+			bloodFlechette.shootFromRotation(entity, entity.getXRot(), entity.getYHeadRot(), 0, 1, 12);
 			level.addFreshEntity(bloodFlechette);
 		}
 		NyctoEntityComponents.BLOOD.get(entity).drain(NyctoPowers.BLOOD_FLECHETTES.getCost(entity));
