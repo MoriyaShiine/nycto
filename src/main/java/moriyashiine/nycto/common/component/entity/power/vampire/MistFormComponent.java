@@ -4,6 +4,7 @@
 
 package moriyashiine.nycto.common.component.entity.power.vampire;
 
+import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.component.entity.power.util.VampireFormChangeComponent;
 import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.nycto.common.init.NyctoPowers;
@@ -12,10 +13,14 @@ import moriyashiine.strawberrylib.api.module.SLibUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
 import moriyashiine.strawberrylib.api.objects.records.ParticleVelocity;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import org.ladysnake.cca.api.v3.component.tick.ClientTickingComponent;
 
 public class MistFormComponent extends VampireFormChangeComponent implements ClientTickingComponent {
+	private static final AttributeModifier WAYPOINT_TRANSMIT_RANGE_MODIFIER = new AttributeModifier(Nycto.id("mist_form_waypoint_transmit_range"), -1, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+
 	private static final ParticleVelocity PARTICLE_VELOCITY = ParticleVelocity.of(0.2);
 
 	public MistFormComponent(Player obj) {
@@ -49,6 +54,7 @@ public class MistFormComponent extends VampireFormChangeComponent implements Cli
 			drainTicks = POWER_DRAIN_TICKS;
 		}
 		enabled = !enabled;
+		SLibUtils.applyAttributeModifier(obj, Attributes.WAYPOINT_TRANSMIT_RANGE, WAYPOINT_TRANSMIT_RANGE_MODIFIER, enabled);
 		sync();
 	}
 }
