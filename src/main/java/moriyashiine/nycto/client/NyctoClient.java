@@ -7,6 +7,7 @@ package moriyashiine.nycto.client;
 import eu.midnightdust.lib.config.MidnightConfig;
 import moriyashiine.nycto.api.NyctoClientAPI;
 import moriyashiine.nycto.client.event.*;
+import moriyashiine.nycto.client.event.entity.MobEffectClientEvent;
 import moriyashiine.nycto.client.event.integration.HeartyMealsClientEvent;
 import moriyashiine.nycto.client.event.power.*;
 import moriyashiine.nycto.client.gui.hud.PowerHotbarHudElement;
@@ -180,6 +181,7 @@ public class NyctoClient implements ClientModInitializer {
 		PowerClientEvent.init();
 		ShowCapeClientEvent.init();
 		// ENTITY
+		MobEffectClientEvent.init();
 		// transformation
 		VampireClientEvent.init();
 		// POWER
