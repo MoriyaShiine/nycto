@@ -4,6 +4,7 @@
 
 package moriyashiine.nycto.common.component.entity;
 
+import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.init.NyctoDamageTypes;
 import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.nycto.common.init.NyctoParticleTypes;
@@ -78,11 +79,9 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 				obj.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 60, 0, true, false));
 				if (criticalBlood()) {
 					SLibUtils.addParticles(obj, NyctoParticleTypes.BLOOD, NyctoParticleTypes.BLOOD_PARTICLE_COUNT, ParticleAnchor.BODY);
+					NyctoAPI.applyHealBlock(obj, 30);
 					obj.hurt(obj.damageSources().source(NyctoDamageTypes.BLEED), 2);
 				}
-			}
-			if (criticalBlood()) {
-				obj.removeEffect(MobEffects.REGENERATION);
 			}
 			if (regenerationBlockTicks <= 0 && obj.level().getGameTime() % REGEN_TIME == 0) {
 				fill(obj.isSleeping() ? 5 : 1);
