@@ -23,7 +23,8 @@ public abstract class HurtByTargetGoalMixin extends TargetGoal {
 
 	@ModifyExpressionValue(method = "canUse", at = @At(value = "INVOKE", target = "Ljava/lang/Class;isAssignableFrom(Ljava/lang/Class;)Z"))
 	private boolean nycto$vampiricThrall(boolean original, @Local(name = "lastHurtByMob") LivingEntity lastHurtByMob) {
-		return original && !NyctoEntityComponents.VAMPIRIC_THRALL.get(mob).hasOwner() && !NyctoEntityComponents.VAMPIRIC_THRALL.get(lastHurtByMob).hasOwner();
+		var thrallComponent = NyctoEntityComponents.VAMPIRIC_THRALL.getNullable(lastHurtByMob);
+		return original && !NyctoEntityComponents.VAMPIRIC_THRALL.get(mob).hasOwner() && (thrallComponent == null || !thrallComponent.hasOwner());
 	}
 
 	@WrapWithCondition(method = "alertOthers", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/goal/target/HurtByTargetGoal;alertOther(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/entity/LivingEntity;)V"))
