@@ -32,7 +32,10 @@ fabricApi {
 repositories {
     chenille.repositories.ladysnake()
     chenille.repositories.up()
-    chenille.repositories.terraformers()
+	maven {
+		name = "TerraformersMC"
+		url = "https://maven.gnomecraft.net/releases"
+	}
     chenille.repositories.modrinth()
     chenille.repositories.jitpack()
 }
@@ -46,11 +49,11 @@ dependencies {
     includeApi "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
 
     implementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
-    implementation "moriyashiine:strawberrylib:${strawberrylib_version}"
+    implementation "moriyashiine.strawberrylib:strawberrylib-fabric:${strawberrylib_version}"
 
-    implementation "moriyashiine:anthropophagy:${anthropophagy_version}"
-    compileOnly "moriyashiine:hearty-meals:${hearty_meals_version}"
-    compileOnly "moriyashiine:superb-steeds:${superb_steeds_version}"
+    implementation "moriyashiine.anthropophagy:anthropophagy-fabric:${anthropophagy_version}"
+    compileOnly "moriyashiine.hearty-meals:hearty-meals-fabric:${hearty_meals_version}"
+    compileOnly "moriyashiine.superb-steeds:superb-steeds-fabric:${superb_steeds_version}"
 
     localRuntime "com.terraformersmc:modmenu:${mod_menu_version}"
 }
