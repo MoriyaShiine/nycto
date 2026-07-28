@@ -192,7 +192,7 @@ public class NyctoClient implements ClientModInitializer {
 		KeenSensesClientEvent.init();
 		VampiricThrallClientEvent.init();
 		// INTEGRATION
-		if (FabricLoader.getInstance().isModLoaded("heartymeals")) {
+		if (FabricLoader.getInstance().isModLoaded("hearty_meals")) {
 			HeartyMealsClientEvent.init();
 		}
 		// HUD ELEMENTS

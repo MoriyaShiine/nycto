@@ -34,7 +34,7 @@ public class Nycto implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		superbSteedsLoaded = FabricLoader.getInstance().isModLoaded("superbsteeds");
+		superbSteedsLoaded = FabricLoader.getInstance().isModLoaded("superb_steeds");
 		SLib.init(MOD_ID);
 		initRegistries();
 		initPayloads();
