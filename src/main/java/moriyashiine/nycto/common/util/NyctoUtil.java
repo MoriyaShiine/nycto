@@ -50,7 +50,7 @@ public class NyctoUtil {
 	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	public static boolean bypassesBloodVeil(DamageSource source) {
 		if (source.getDirectEntity() instanceof LivingEntity attacker) {
-			if (attacker.is(NyctoEntityTypeTags.BYPASSES_BLOOD_VEIL) || EnchantmentHelper.hasTag(attacker.getMainHandItem(), NyctoEnchantmentTags.BYPASSES_BLOOD_VEIL) || DarkFormPower.isDarkFormActive(attacker)) {
+			if (attacker.is(NyctoEntityTypeTags.BYPASSES_BLOOD_VEIL) || EnchantmentHelper.hasTag(attacker.getMainHandItem(), NyctoEnchantmentTags.BYPASSES_BLOOD_VEIL)) {
 				return true;
 			}
 		}

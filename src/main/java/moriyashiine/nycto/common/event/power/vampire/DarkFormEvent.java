@@ -21,7 +21,7 @@ public class DarkFormEvent implements ModifyDamageTakenEvent {
 
 	@Override
 	public float modify(Phase phase, LivingEntity victim, ServerLevel level, DamageSource source) {
-		if (phase == Phase.FINAL && !NyctoUtil.bypassesBloodVeil(source) && !NyctoUtil.haltsVampireRegeneration(source) && DarkFormPower.isDarkFormActive(victim)) {
+		if (phase == Phase.FINAL && DarkFormPower.isDarkFormActive(victim) && !NyctoUtil.bypassesBloodVeil(source) && !NyctoUtil.haltsVampireRegeneration(source)) {
 			int weaknesses = victim instanceof Player player ? NyctoAPI.getWeaknesses(player, NyctoPowerTags.VAMPIRE_CHOOSABLE) : 3;
 			return 1 - (0.32F / 3) * weaknesses;
 		}
