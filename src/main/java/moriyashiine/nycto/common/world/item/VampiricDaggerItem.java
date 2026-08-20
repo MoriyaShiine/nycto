@@ -44,10 +44,10 @@ public class VampiricDaggerItem extends Item {
 	private static final Component HOLDING_VAMPIRE_BLOOD_TEXT = Component.translatable("tooltip.nycto.holding_vampire_blood").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY);
 
 	public VampiricDaggerItem(Properties properties) {
-		super(applyVampiricDaggerProperties(properties, 2, -2));
+		super(vampiricDaggerProperties(properties, 2, -2));
 	}
 
-	public static Item.Properties applyVampiricDaggerProperties(Item.Properties properties, float attackDamageBaseline, float attackSpeedBaseline) {
+	public static Item.Properties vampiricDaggerProperties(Item.Properties properties, float attackDamageBaseline, float attackSpeedBaseline) {
 		return editModifiers(() -> properties.sword(ToolMaterial.IRON, attackDamageBaseline, attackSpeedBaseline)
 						.enchantable(20)
 						.component(DataComponents.DAMAGE, null)

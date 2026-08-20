@@ -1,4 +1,4 @@
-classTweaker v1 official
+classTweaker v2 official
 accessible class net/minecraft/world/effect/HungerMobEffect
 accessible class net/minecraft/world/effect/RegenerationMobEffect
 accessible class net/minecraft/world/effect/SaturationMobEffect

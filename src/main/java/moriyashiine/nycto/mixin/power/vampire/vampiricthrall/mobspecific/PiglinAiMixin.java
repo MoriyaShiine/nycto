@@ -27,7 +27,7 @@ public class PiglinAiMixin {
 	@Definition(id = "Piglin", type = Piglin.class)
 	@Expression("attacker instanceof Piglin")
 	@ModifyExpressionValue(method = "wasHurtBy", at = @At(value = "MIXINEXTRAS:EXPRESSION"))
-	private static boolean nycto$vampiricThrallInstanceof(boolean value, @Local(argsOnly = true) Piglin body) {
-		return !NyctoEntityComponents.VAMPIRIC_THRALL.get(body).hasOwner();
+	private static boolean nycto$vampiricThrallInstanceof(boolean original, @Local(argsOnly = true) Piglin body) {
+		return original && !NyctoEntityComponents.VAMPIRIC_THRALL.get(body).hasOwner();
 	}
 }

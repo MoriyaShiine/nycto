@@ -14,6 +14,7 @@ import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.nycto.common.init.NyctoPowers;
 import moriyashiine.nycto.common.tag.NyctoPowerTags;
 import moriyashiine.nycto.common.world.power.vampire.DarkFormPower;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -22,6 +23,8 @@ import net.minecraft.world.entity.player.Player;
 
 public class VampireTransformation extends Transformation {
 	public static final float VAMPIRE_EXHAUSTION_MULTIPLIER = 3.25F;
+
+	private static final Identifier ATTRIBUTE_ID = Nycto.id("vampire_bonus");
 
 	public static boolean ignoreIsCalls = false;
 
@@ -49,10 +52,10 @@ public class VampireTransformation extends Transformation {
 		AttributeModifierSet set = super.getAttributeModifiers(player);
 		if (!NyctoAPI.hasPower(player, NyctoPowers.HUMANITY)) {
 			int weaknesses = NyctoAPI.getWeaknesses(player, NyctoPowerTags.VAMPIRE_CHOOSABLE);
-			set.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(Nycto.id("vampire_bonus"), 1 + (2 / 3D * weaknesses), AttributeModifier.Operation.ADD_VALUE));
-			set.addModifier(Attributes.MOVEMENT_SPEED, new AttributeModifier(Nycto.id("vampire_bonus"), 0.15 + (0.1 * weaknesses), AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
-			set.addModifier(Attributes.JUMP_STRENGTH, new AttributeModifier(Nycto.id("vampire_bonus"), 0.06 * weaknesses, AttributeModifier.Operation.ADD_VALUE));
-			set.addModifier(Attributes.SAFE_FALL_DISTANCE, new AttributeModifier(Nycto.id("vampire_bonus"), 1 + weaknesses, AttributeModifier.Operation.ADD_VALUE));
+			set.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTRIBUTE_ID, 1 + (2 / 3D * weaknesses), AttributeModifier.Operation.ADD_VALUE));
+			set.addModifier(Attributes.MOVEMENT_SPEED, new AttributeModifier(ATTRIBUTE_ID, 0.15 + (0.1 * weaknesses), AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+			set.addModifier(Attributes.JUMP_STRENGTH, new AttributeModifier(ATTRIBUTE_ID, 0.06 * weaknesses, AttributeModifier.Operation.ADD_VALUE));
+			set.addModifier(Attributes.SAFE_FALL_DISTANCE, new AttributeModifier(ATTRIBUTE_ID, 1 + weaknesses, AttributeModifier.Operation.ADD_VALUE));
 		}
 		return set;
 	}

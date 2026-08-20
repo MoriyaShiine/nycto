@@ -67,30 +67,30 @@ public class NyctoItems {
 	public static final Item WILD_GARLIC = registerBlockItem(NyctoBlockItemIds.WILD_GARLIC, NyctoBlocks.WILD_GARLIC);
 	public static final Item WILD_ACONITE = registerBlockItem(NyctoBlockItemIds.WILD_ACONITE, NyctoBlocks.WILD_ACONITE);
 
-	public static final Item VAMPIRE_UPGRADE_SMITHING_TEMPLATE = registerItem(NyctoItemIds.VAMPIRE_UPGRADE_SMITHING_TEMPLATE, settings -> new SmithingTemplateItem(
+	public static final Item VAMPIRE_UPGRADE_SMITHING_TEMPLATE = registerItem(NyctoItemIds.VAMPIRE_UPGRADE_SMITHING_TEMPLATE, properties -> new SmithingTemplateItem(
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.generic_upgrade.applies_to"))).withStyle(ChatFormatting.BLUE),
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.vampire_upgrade.ingredients"))).withStyle(ChatFormatting.BLUE),
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.generic_upgrade.base_slot_description"))),
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.vampire_upgrade.additions_slot_description"))),
 			List.of(Identifier.withDefaultNamespace("container/slot/helmet"), Identifier.withDefaultNamespace("container/slot/chestplate"), Identifier.withDefaultNamespace("container/slot/leggings"), Identifier.withDefaultNamespace("container/slot/boots")),
 			List.of(Nycto.id("container/slot/blood_bottle"), Nycto.id("container/slot/vampire_blood_bottle")),
-			settings));
-	public static final Item VAMPIRE_HUNTER_UPGRADE_SMITHING_TEMPLATE = registerItem(NyctoItemIds.VAMPIRE_HUNTER_UPGRADE_SMITHING_TEMPLATE, settings -> new SmithingTemplateItem(
+			properties));
+	public static final Item VAMPIRE_HUNTER_UPGRADE_SMITHING_TEMPLATE = registerItem(NyctoItemIds.VAMPIRE_HUNTER_UPGRADE_SMITHING_TEMPLATE, properties -> new SmithingTemplateItem(
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.generic_upgrade.applies_to"))).withStyle(ChatFormatting.BLUE),
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.hunter_upgrade.ingredients"))).withStyle(ChatFormatting.BLUE),
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.generic_upgrade.base_slot_description"))),
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.hunter_upgrade.additions_slot_description"))),
 			List.of(Identifier.withDefaultNamespace("container/slot/helmet"), Identifier.withDefaultNamespace("container/slot/chestplate"), Identifier.withDefaultNamespace("container/slot/leggings"), Identifier.withDefaultNamespace("container/slot/boots")),
 			List.of(Identifier.withDefaultNamespace("container/slot/ingot")),
-			settings));
-	public static final Item WEREWOLF_HUNTER_UPGRADE_SMITHING_TEMPLATE = registerItem(NyctoItemIds.WEREWOLF_HUNTER_UPGRADE_SMITHING_TEMPLATE, settings -> new SmithingTemplateItem(
+			properties));
+	public static final Item WEREWOLF_HUNTER_UPGRADE_SMITHING_TEMPLATE = registerItem(NyctoItemIds.WEREWOLF_HUNTER_UPGRADE_SMITHING_TEMPLATE, properties -> new SmithingTemplateItem(
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.generic_upgrade.applies_to"))).withStyle(ChatFormatting.BLUE),
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.hunter_upgrade.ingredients"))).withStyle(ChatFormatting.BLUE),
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.generic_upgrade.base_slot_description"))),
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.hunter_upgrade.additions_slot_description"))),
 			List.of(Identifier.withDefaultNamespace("container/slot/helmet"), Identifier.withDefaultNamespace("container/slot/chestplate"), Identifier.withDefaultNamespace("container/slot/leggings"), Identifier.withDefaultNamespace("container/slot/boots")),
 			List.of(Identifier.withDefaultNamespace("container/slot/ingot")),
-			settings));
+			properties));
 
 	public static final Item VAMPIRE_HELMET = registerItem(NyctoItemIds.VAMPIRE_HELMET, properties()
 			.humanoidArmor(NyctoArmorMaterials.VAMPIRE, ArmorType.HELMET));
@@ -140,19 +140,19 @@ public class NyctoItems {
 			.usingConvertsTo(Items.GLASS_BOTTLE)
 			.stacksTo(16));
 
-	public static final Item GARLIC = registerItem(NyctoBlockItemIds.GARLIC.item(), settings -> new TransformationCheckerBlockItem(NyctoBlocks.GARLIC, settings, NyctoAPI::isVampire), properties()
+	public static final Item GARLIC = registerItem(NyctoBlockItemIds.GARLIC.item(), properties -> new TransformationCheckerBlockItem(NyctoBlocks.GARLIC, properties, NyctoAPI::isVampire), properties()
 			.food(NyctoFoods.GARLIC));
 	public static final Item GRILLED_GARLIC = registerItem(NyctoItemIds.GRILLED_GARLIC, properties()
 			.food(NyctoFoods.GRILLED_GARLIC));
 	public static final Item GARLIC_BREAD = registerItem(NyctoItemIds.GARLIC_BREAD, properties()
 			.food(NyctoFoods.GARLIC_BREAD));
 
-	public static final Item ACONITE_SEEDS = registerItem(NyctoBlockItemIds.ACONITE.item(), settings -> new BlockItem(NyctoBlocks.ACONITE, settings));
-	public static final Item ACONITE = registerItem(NyctoItemIds.ACONITE, settings -> new TransformationCheckerBlockItem(NyctoBlocks.ACONITE, settings, NyctoAPI::isWerewolf));
+	public static final Item ACONITE_SEEDS = registerItem(NyctoBlockItemIds.ACONITE.item(), properties -> new BlockItem(NyctoBlocks.ACONITE, properties));
+	public static final Item ACONITE = registerItem(NyctoItemIds.ACONITE, properties -> new TransformationCheckerBlockItem(NyctoBlocks.ACONITE, properties, NyctoAPI::isWerewolf));
 
 	public static final Item HUNTER_CONTRACT = registerItem(NyctoItemIds.HUNTER_CONTRACT);
-	public static final Item VAMPIRE_HUNTER_CONTRACT = registerItem(NyctoItemIds.VAMPIRE_HUNTER_CONTRACT, settings -> new HunterContractItem(settings, NyctoHunterTypes.VAMPIRE));
-	public static final Item WEREWOLF_HUNTER_CONTRACT = registerItem(NyctoItemIds.WEREWOLF_HUNTER_CONTRACT, settings -> new HunterContractItem(settings, NyctoHunterTypes.WEREWOLF));
+	public static final Item VAMPIRE_HUNTER_CONTRACT = registerItem(NyctoItemIds.VAMPIRE_HUNTER_CONTRACT, properties -> new HunterContractItem(properties, NyctoHunterTypes.VAMPIRE));
+	public static final Item WEREWOLF_HUNTER_CONTRACT = registerItem(NyctoItemIds.WEREWOLF_HUNTER_CONTRACT, properties -> new HunterContractItem(properties, NyctoHunterTypes.WEREWOLF));
 
 	public static final Item VAMPIRE_BAT_BANNER_PATTERN = registerItem(NyctoItemIds.VAMPIRE_BAT_BANNER_PATTERN, properties()
 			.stacksTo(1)
@@ -193,8 +193,8 @@ public class NyctoItems {
 	}
 
 	public static Item registerHalberd(ResourceKey<Item> key) {
-		AttributeModifier rangeModifier = new AttributeModifier(Nycto.id("halberd_entity_interaction_range"), 0.5, AttributeModifier.Operation.ADD_VALUE);
-		ModifierTrio modifier = new ModifierTrio(Attributes.ENTITY_INTERACTION_RANGE, rangeModifier, EquipmentSlotGroup.MAINHAND);
+		AttributeModifier entityInteractionRangeModifier = new AttributeModifier(Nycto.id("halberd_entity_interaction_range"), 0.5, AttributeModifier.Operation.ADD_VALUE);
+		ModifierTrio modifier = new ModifierTrio(Attributes.ENTITY_INTERACTION_RANGE, entityInteractionRangeModifier, EquipmentSlotGroup.MAINHAND);
 		return registerItem(key, settings -> new AxeItem(ToolMaterial.DIAMOND, 5, -3.2F, settings), editModifiers(NyctoItems::properties, modifier));
 	}
 

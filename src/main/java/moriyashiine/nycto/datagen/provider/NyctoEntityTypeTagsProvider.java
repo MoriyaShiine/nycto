@@ -34,8 +34,8 @@ public class NyctoEntityTypeTagsProvider extends FabricTagsProvider.EntityTypeTa
 				.add(EntityTypeIds.VILLAGER)
 				.add(EntityTypeIds.WANDERING_TRADER)
 				.add(EntityTypeIds.WITCH)
-				.add(NyctoEntityTypeIds.HUNTER)
-				.add(NyctoEntityTypeIds.VAMPIRE);
+				.add(NyctoEntityTypeIds.VAMPIRE)
+				.add(NyctoEntityTypeIds.HUNTER);
 		builder(NyctoEntityTypeTags.HAS_NO_BLOOD)
 				.forceAddTag(ConventionalEntityTypeTags.BOSSES)
 				.forceAddTag(EntityTypeTags.ARTHROPOD)

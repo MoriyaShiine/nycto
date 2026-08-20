@@ -11,7 +11,6 @@ import moriyashiine.nycto.common.init.NyctoMobEffects;
 import moriyashiine.nycto.common.init.NyctoPowers;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -69,6 +68,6 @@ public class VampireComponent implements AutoSyncedComponent, CommonTickingCompo
 	}
 
 	public float getChargeJumpBoostProgress() {
-		return Mth.lerp(jumpStrength / 20F, 0F, 1);
+		return jumpStrength / 20F;
 	}
 }

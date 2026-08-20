@@ -175,7 +175,7 @@ public class VampireEvent {
 				user.addEffect(new MobEffectInstance(MobEffects.WITHER, 200, 1));
 				user.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 1));
 				if (stack.is(NyctoItemTags.HURTS_VAMPIRES)) {
-					user.hurtServer(serverLevel, level.damageSources().source(NyctoDamageTypes.TOXIC_TOUCH), Float.MAX_VALUE);
+					user.hurtServer(serverLevel, level.damageSources().source(NyctoDamageTypes.TOXIC_TOUCH), Integer.MAX_VALUE);
 				}
 			}
 		}

@@ -107,14 +107,13 @@ public class Vampire extends Monster {
 
 	@Override
 	public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason spawnReason, @Nullable SpawnGroupData groupData) {
-		SpawnGroupData data = super.finalizeSpawn(level, difficulty, spawnReason, groupData);
 		VampireTransformation.setComponents(this, true);
 		List<Power> selectablePowers = new ArrayList<>(USABLE_POWERS.keySet());
 		for (int i = 0; i < 3; i++) {
 			Power selectablePower = selectablePowers.remove(getRandom().nextInt(selectablePowers.size()));
 			usablePowers.add(new UsablePower(selectablePower, USABLE_POWERS.getInt(selectablePower), 0));
 		}
-		return data;
+		return super.finalizeSpawn(level, difficulty, spawnReason, groupData);
 	}
 
 	@Override
