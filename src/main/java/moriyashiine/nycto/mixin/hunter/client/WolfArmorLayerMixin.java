@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.mixin.hunter.client;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;

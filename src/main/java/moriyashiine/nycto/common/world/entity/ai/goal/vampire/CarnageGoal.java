@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.common.world.entity.ai.goal.vampire;
 
 import moriyashiine.nycto.common.init.NyctoPowers;

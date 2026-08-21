@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.common.world.transformation;
 
 import moriyashiine.nycto.api.NyctoAPI;

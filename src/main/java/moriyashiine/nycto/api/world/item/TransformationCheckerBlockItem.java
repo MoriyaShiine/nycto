@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.api.world.item;
 
 import net.minecraft.world.InteractionHand;

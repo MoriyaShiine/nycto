@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.mixin.api.power.client;
 
 import moriyashiine.nycto.client.NyctoClient;

@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.client.renderer.entity.state;
 
 import moriyashiine.nycto.common.component.entity.power.vampire.CarnageComponent;

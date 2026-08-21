@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.client.renderer.entity.armor.model;
 
 import moriyashiine.nycto.common.Nycto;

@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.common.event.block;
 
 import moriyashiine.nycto.common.Nycto;

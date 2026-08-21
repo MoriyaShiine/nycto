@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.datagen.provider;
 
 import moriyashiine.nycto.client.renderer.item.properties.conditional.FullDaggerProperty;

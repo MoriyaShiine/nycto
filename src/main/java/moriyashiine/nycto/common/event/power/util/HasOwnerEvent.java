@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.common.event.power.util;
 
 import moriyashiine.nycto.common.component.entity.power.util.HasOwnerComponent;

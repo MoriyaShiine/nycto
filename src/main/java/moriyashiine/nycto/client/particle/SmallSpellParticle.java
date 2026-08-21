@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.client.particle;
 
 import net.minecraft.client.multiplayer.ClientLevel;

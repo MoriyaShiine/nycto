@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.client.renderer.item.properties.conditional;
 
 import com.mojang.serialization.MapCodec;

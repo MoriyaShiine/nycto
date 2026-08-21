@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.mixin.stunned.client;
 
 import moriyashiine.nycto.common.init.NyctoMobEffects;

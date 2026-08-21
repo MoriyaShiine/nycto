@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.mixin.sunexposure;
 
 import moriyashiine.nycto.api.NyctoAPI;

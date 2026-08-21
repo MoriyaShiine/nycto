@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.client.particle;
 
 import moriyashiine.strawberrylib.api.registry.client.particle.AnchoredParticle;

@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.mixin.power.vampire.bloodrush.client;
 
 import com.llamalad7.mixinextras.sugar.Local;

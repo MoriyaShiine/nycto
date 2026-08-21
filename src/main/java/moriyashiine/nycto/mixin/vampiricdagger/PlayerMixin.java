@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.mixin.vampiricdagger;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;

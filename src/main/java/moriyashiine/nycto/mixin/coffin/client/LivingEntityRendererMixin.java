@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.mixin.coffin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;

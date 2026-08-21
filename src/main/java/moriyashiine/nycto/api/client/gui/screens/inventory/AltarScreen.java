@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.api.client.gui.screens.inventory;
 
 import com.mojang.datafixers.util.Pair;

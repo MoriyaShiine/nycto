@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.common.event.power.vampire;
 
 import moriyashiine.nycto.common.component.entity.power.vampire.BloodBarrierComponent;

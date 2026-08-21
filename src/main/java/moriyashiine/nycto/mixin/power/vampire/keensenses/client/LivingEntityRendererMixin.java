@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.mixin.power.vampire.keensenses.client;
 
 import moriyashiine.nycto.client.event.power.KeenSensesClientEvent;

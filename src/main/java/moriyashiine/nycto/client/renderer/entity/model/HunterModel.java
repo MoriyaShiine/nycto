@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.client.renderer.entity.model;
 
 import moriyashiine.nycto.client.renderer.entity.state.HunterRenderState;

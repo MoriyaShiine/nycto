@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.mixin.power.vampire.bloodbarrier.client;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;

@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.common.event.internal;
 
 import moriyashiine.nycto.client.payload.SyncTruncatedWorldSeedPayload;

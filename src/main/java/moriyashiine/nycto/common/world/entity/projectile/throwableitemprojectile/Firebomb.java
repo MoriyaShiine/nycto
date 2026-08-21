@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.common.world.entity.projectile.throwableitemprojectile;
 
 import it.unimi.dsi.fastutil.doubles.DoubleDoubleImmutablePair;

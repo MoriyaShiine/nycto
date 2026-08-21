@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.mixin.power.vampire.vampiricthrall.mobspecific;
 
 import com.llamalad7.mixinextras.sugar.Local;

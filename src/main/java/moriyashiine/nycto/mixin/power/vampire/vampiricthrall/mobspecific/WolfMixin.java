@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.mixin.power.vampire.vampiricthrall.mobspecific;
 
 import moriyashiine.nycto.common.init.NyctoEntityComponents;

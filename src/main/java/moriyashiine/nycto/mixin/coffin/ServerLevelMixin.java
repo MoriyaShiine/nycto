@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.mixin.coffin;
 
 import moriyashiine.nycto.common.tag.NyctoBlockTags;

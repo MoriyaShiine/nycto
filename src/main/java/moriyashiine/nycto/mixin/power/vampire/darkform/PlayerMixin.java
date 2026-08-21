@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.mixin.power.vampire.darkform;
 
 import moriyashiine.nycto.common.world.power.vampire.DarkFormPower;

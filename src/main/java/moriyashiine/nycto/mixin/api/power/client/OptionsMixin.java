@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.mixin.api.power.client;
 
 import com.llamalad7.mixinextras.sugar.Local;

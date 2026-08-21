@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.mixin.power.vampire.carnage.client;
 
 import moriyashiine.nycto.client.renderer.entity.layers.carnage.PlayerCarnageAuraLayer;

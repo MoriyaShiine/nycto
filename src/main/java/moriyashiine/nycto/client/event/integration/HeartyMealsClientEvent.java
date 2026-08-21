@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.client.event.integration;
 
 import moriyashiine.heartymeals.api.event.DisableHudRepositioningEvent;

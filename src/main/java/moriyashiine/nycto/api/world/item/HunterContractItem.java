@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.api.world.item;
 
 import moriyashiine.nycto.api.world.entity.huntertype.HunterType;

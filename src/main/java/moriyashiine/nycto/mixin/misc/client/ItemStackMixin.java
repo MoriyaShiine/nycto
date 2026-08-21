@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.mixin.misc.client;
 
 import moriyashiine.nycto.client.event.ItemDescriptionsClientEvent;

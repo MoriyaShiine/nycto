@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.mixin.power.vampire.bloodflechettes;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;

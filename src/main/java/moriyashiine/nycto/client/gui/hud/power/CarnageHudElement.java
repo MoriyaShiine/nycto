@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.client.gui.hud.power;
 
 import moriyashiine.nycto.common.Nycto;

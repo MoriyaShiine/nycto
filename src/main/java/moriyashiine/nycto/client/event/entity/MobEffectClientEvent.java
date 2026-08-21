@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.client.event.entity;
 
 import moriyashiine.nycto.common.init.NyctoMobEffects;

@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.common.world.level.block;
 
 import moriyashiine.nycto.api.world.level.block.WildVegetationBlock;

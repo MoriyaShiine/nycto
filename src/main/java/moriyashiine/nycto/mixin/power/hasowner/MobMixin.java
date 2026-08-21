@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.mixin.power.hasowner;
 
 import moriyashiine.nycto.common.util.NyctoUtil;

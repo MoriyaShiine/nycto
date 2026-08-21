@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.mixin.woodenstake;
 
 import moriyashiine.nycto.common.init.NyctoItems;

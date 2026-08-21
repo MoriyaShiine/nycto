@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.client.gui.screens.inventory;
 
 import moriyashiine.nycto.api.client.gui.screens.inventory.AltarScreen;

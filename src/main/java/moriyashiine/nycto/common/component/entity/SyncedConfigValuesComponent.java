@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.common.component.entity;
 
 import net.minecraft.world.level.storage.ValueInput;

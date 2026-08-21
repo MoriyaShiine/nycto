@@ -1,7 +1,3 @@
-/*
- * Copyright (c) MoriyaShiine. All Rights Reserved.
- */
-
 package moriyashiine.nycto.api.renderer.entity.vampiricthrall;
 
 import net.minecraft.resources.Identifier;
