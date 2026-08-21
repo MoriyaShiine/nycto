@@ -11,6 +11,6 @@ public class TransformationEvent implements ServerPlayerEvents.CopyFrom {
 
 	@Override
 	public void copyFromPlayer(ServerPlayer oldPlayer, ServerPlayer newPlayer, boolean alive) {
-		NyctoAPI.getTransformation(oldPlayer).getAttributeModifiers(oldPlayer).attributeModifiers().forEach(pair -> newPlayer.getAttribute(pair.getFirst()).addPermanentModifier(pair.getSecond()));
+		NyctoAPI.getTransformation(oldPlayer).getAttributeModifiers(oldPlayer).modifiers().forEach((attribute, modifier) -> newPlayer.getAttribute(attribute).addPermanentModifier(modifier));
 	}
 }

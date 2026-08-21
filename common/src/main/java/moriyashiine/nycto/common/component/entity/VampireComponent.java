@@ -16,7 +16,7 @@ import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
 
 public class VampireComponent implements AutoSyncedComponent, CommonTickingComponent {
-	private static final AttributeModifier STEP_HEIGHT_MODIFIER = new AttributeModifier(Nycto.id("vampire_bonus"), 1, AttributeModifier.Operation.ADD_VALUE);
+	private static final AttributeModifier STEP_HEIGHT_MODIFIER = new AttributeModifier(Nycto.id("vampire"), 1, AttributeModifier.Operation.ADD_VALUE);
 
 	private final Player obj;
 	private int jumpStrength = 0;

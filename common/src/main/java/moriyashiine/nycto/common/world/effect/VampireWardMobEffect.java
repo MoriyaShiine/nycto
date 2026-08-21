@@ -51,7 +51,7 @@ public class VampireWardMobEffect extends MobEffect {
 			boolean fallback = true;
 			if (entity instanceof ServerPlayer player) {
 				Transformation transformation = NyctoAPI.getTransformation(player);
-				if (!transformation.getAttributeModifiers(player).attributeModifiers().isEmpty()) {
+				if (!transformation.getAttributeModifiers(player).isEmpty()) {
 					fallback = false;
 					transformation.applyModifiers(player, !shouldRemove);
 				}

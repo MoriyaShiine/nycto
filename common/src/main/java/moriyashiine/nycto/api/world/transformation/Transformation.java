@@ -3,7 +3,7 @@ package moriyashiine.nycto.api.world.transformation;
 import com.mojang.serialization.Codec;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.api.init.NyctoRegistries;
-import moriyashiine.nycto.api.misc.AttributeModifierSet;
+import moriyashiine.nycto.api.misc.AttributeModifierMap;
 import moriyashiine.nycto.api.misc.PowerHotbarTextureSet;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -12,8 +12,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Util;
 import org.jspecify.annotations.Nullable;
-
-import java.util.HashSet;
 
 public class Transformation {
 	public static final Codec<Transformation> CODEC = NyctoRegistries.TRANSFORMATION.byNameCodec();
@@ -31,8 +29,8 @@ public class Transformation {
 		applyModifiers(player, false);
 	}
 
-	public AttributeModifierSet getAttributeModifiers(ServerPlayer player) {
-		return new AttributeModifierSet(new HashSet<>());
+	public AttributeModifierMap getAttributeModifiers(ServerPlayer player) {
+		return new AttributeModifierMap();
 	}
 
 	public PowerHotbarTextureSet getPowerHotbarTextureSet() {
@@ -47,6 +45,6 @@ public class Transformation {
 	}
 
 	public void applyModifiers(ServerPlayer player, boolean shouldHave) {
-		getAttributeModifiers(player).attributeModifiers().forEach(tuple -> SLibUtils.applyAttributeModifier(player, tuple.getFirst(), tuple.getSecond(), shouldHave));
+		getAttributeModifiers(player).modifiers().forEach((attribute, modifier) -> SLibUtils.applyAttributeModifier(player, attribute, modifier, shouldHave));
 	}
 }
