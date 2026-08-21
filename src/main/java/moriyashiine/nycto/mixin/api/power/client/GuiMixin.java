@@ -8,8 +8,8 @@ import moriyashiine.nycto.client.event.PowerClientEvent;
 import moriyashiine.nycto.common.component.entity.TransformationComponent;
 import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.Hud;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -20,8 +20,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(Hud.class)
-public abstract class HudMixin {
+@Mixin(Gui.class)
+public abstract class GuiMixin {
 	@Shadow
 	protected abstract Player getCameraPlayer();
 

@@ -9,6 +9,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.tags.TagAppender;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
 
@@ -29,7 +30,7 @@ public class NyctoMobEffectTagsProvider extends FabricTagsProvider<MobEffect> {
 
 	@SafeVarargs
 	private void add(TagKey<MobEffect> tagKey, Holder<MobEffect>... effects) {
-		TagAppender<MobEffect> builder = builder(tagKey);
+		TagAppender<ResourceKey<MobEffect>, MobEffect> builder = builder(tagKey);
 		for (Holder<MobEffect> effect : effects) {
 			builder.add(effect.unwrapKey().orElseThrow());
 		}

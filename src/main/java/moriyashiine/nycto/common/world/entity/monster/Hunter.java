@@ -237,7 +237,7 @@ public class Hunter extends Pillager {
 	}
 
 	public static void mountHorse(ServerLevel level, LivingEntity entity) {
-		Horse horse = EntityTypes.HORSE.create(level, EntitySpawnReason.TRIGGERED);
+		Horse horse = EntityType.HORSE.create(level, EntitySpawnReason.TRIGGERED);
 		if (horse.randomTeleport(entity.getX(), entity.getY(), entity.getZ(), false)) {
 			horse.finalizeSpawn(level, level.getCurrentDifficultyAt(entity.blockPosition()), EntitySpawnReason.TRIGGERED, null);
 			horse.setOwner(entity);

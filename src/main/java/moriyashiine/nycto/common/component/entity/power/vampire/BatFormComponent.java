@@ -10,7 +10,7 @@ import moriyashiine.nycto.common.init.NyctoPowers;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -39,14 +39,14 @@ public class BatFormComponent extends VampireFormChangeComponent {
 			SOURCE.revokeFrom(obj, VanillaAbilities.FLYING);
 			maxHealth.removeModifier(MAX_HEALTH_MODIFIER);
 			obj.setHealth(obj.getMaxHealth() * percentage);
-			SLibUtils.removeModelReplacementType(obj, EntityTypes.BAT);
+			SLibUtils.removeModelReplacementType(obj, EntityType.BAT);
 			drainTicks = 0;
 		} else {
 			SOURCE.grantTo(obj, VanillaAbilities.ALLOW_FLYING);
 			SOURCE.grantTo(obj, VanillaAbilities.FLYING);
 			maxHealth.addPermanentModifier(MAX_HEALTH_MODIFIER);
 			obj.setHealth(obj.getMaxHealth() * percentage);
-			SLibUtils.addModelReplacementType(obj, EntityTypes.BAT, 500);
+			SLibUtils.addModelReplacementType(obj, EntityType.BAT, 500);
 			NyctoEntityComponents.BLOOD.get(obj).drain(NyctoPowers.BAT_FORM.getCost(obj));
 			drainTicks = POWER_DRAIN_TICKS;
 		}

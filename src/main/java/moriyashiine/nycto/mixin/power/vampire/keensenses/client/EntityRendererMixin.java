@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class EntityRendererMixin<S extends EntityRenderState> {
 	@Inject(method = "submitNameDisplay(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/level/CameraRenderState;I)V", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;popPose()V"))
 	private void nycto$keenSenses(S state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera, int offset, CallbackInfo ci) {
-		if (!Minecraft.getInstance().gui.hud.isHidden()) {
+		if (!Minecraft.getInstance().options.hideGui) {
 			KeenSensesRenderState keenSensesRenderState = state.getData(KeenSensesRenderState.KEY);
 			if (keenSensesRenderState != null && keenSensesRenderState.position != null) {
 				Vec3 position = keenSensesRenderState.position;
@@ -31,7 +31,7 @@ public class EntityRendererMixin<S extends EntityRenderState> {
 				for (int i = 0; i < 8; i++) {
 					health.append(Component.literal("❤").withStyle(i / 8F < keenSensesRenderState.healthPercentage ? ChatFormatting.GRAY : ChatFormatting.DARK_GRAY));
 				}
-				submitNodeCollector.submitNameTag(poseStack, position, offset, health, true, state.lightCoords, camera);
+				submitNodeCollector.submitNameTag(poseStack, position, offset, health, true, state.lightCoords, state.distanceToCameraSq, camera);
 			}
 		}
 	}

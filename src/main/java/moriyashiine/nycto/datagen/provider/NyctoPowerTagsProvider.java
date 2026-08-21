@@ -43,7 +43,7 @@ public class NyctoPowerTagsProvider extends FabricTagsProvider<Power> {
 	}
 
 	private void add(TagKey<Power> tagKey, Power... powers) {
-		TagAppender<Power> builder = builder(tagKey);
+		TagAppender<ResourceKey<Power>, Power> builder = builder(tagKey);
 		for (Power power : powers) {
 			builder.add(key(power));
 		}

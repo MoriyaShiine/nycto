@@ -58,7 +58,7 @@ import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import org.lwjgl.glfw.GLFW;
 
@@ -124,9 +124,9 @@ public class NyctoClient implements ClientModInitializer {
 		ModelLayerRegistry.registerArmorModelLayers(HunterArmorModel.MODEL_LAYERS, HunterArmorModel::createArmorMeshSet);
 		ModelLayerRegistry.registerModelLayer(ThralledHorseHornsModel.MODEL_LAYER, () -> ThralledHorseHornsModel.createBodyLayer().apply(MeshTransformer.scaling(1.1F)));
 
-		NyctoClientAPI.registerVampiricThrallRenderer(EntityTypes.HORSE, new HorseVampiricThrallRenderer());
-		NyctoClientAPI.registerVampiricThrallRenderer(EntityTypes.VEX, new VexVampiricThrallRenderer());
-		NyctoClientAPI.registerVampiricThrallRenderer(EntityTypes.WOLF, new WolfVampiricThrallRenderer());
+		NyctoClientAPI.registerVampiricThrallRenderer(EntityType.HORSE, new HorseVampiricThrallRenderer());
+		NyctoClientAPI.registerVampiricThrallRenderer(EntityType.VEX, new VexVampiricThrallRenderer());
+		NyctoClientAPI.registerVampiricThrallRenderer(EntityType.WOLF, new WolfVampiricThrallRenderer());
 
 		ModelLayerRegistry.registerModelLayer(WolfHunterArmorModel.VAMPIRE_HUNTER_LAYER, WolfHunterArmorModel::createVampireHunterBodyLayer);
 		NyctoClientAPI.registerHunterTypeWolfArmorModelLayer(NyctoHunterTypes.VAMPIRE, WolfHunterArmorModel.VAMPIRE_HUNTER_LAYER);

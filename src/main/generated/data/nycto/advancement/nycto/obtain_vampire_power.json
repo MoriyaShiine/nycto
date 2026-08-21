@@ -8,7 +8,8 @@
 			"condition": "minecraft:entity_properties",
 			"entity": "this",
 			"predicate": {
-			  "nycto:vampire": {
+			  "type_specific": {
+				"type": "nycto:vampire",
 				"count": {
 				  "powers": "#nycto:vampire_choosable",
 				  "range": {

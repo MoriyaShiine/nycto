@@ -42,7 +42,7 @@ public class NyctoSoundEventTagsProvider extends FabricTagsProvider<SoundEvent> 
 	}
 
 	private void add(TagKey<SoundEvent> tagKey, SoundEvent... sounds) {
-		TagAppender<SoundEvent> builder = builder(tagKey);
+		TagAppender<ResourceKey<SoundEvent>, SoundEvent> builder = builder(tagKey);
 		for (SoundEvent soundEvent : sounds) {
 			builder.add(key(soundEvent));
 		}

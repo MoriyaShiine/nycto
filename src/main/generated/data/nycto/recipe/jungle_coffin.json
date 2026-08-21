@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
 	"B": "#minecraft:beds",
 	"P": "minecraft:jungle_planks"

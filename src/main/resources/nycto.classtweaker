@@ -17,7 +17,7 @@ accessible field net/minecraft/world/entity/ai/goal/TemptGoal calmDown I
 accessible field net/minecraft/world/entity/ai/goal/TemptGoal targetingConditions Lnet/minecraft/world/entity/ai/targeting/TargetingConditions;
 mutable field net/minecraft/world/entity/ai/goal/TemptGoal targetingConditions Lnet/minecraft/world/entity/ai/targeting/TargetingConditions;
 
-accessible method net/minecraft/client/gui/Hud extractTextureOverlay (Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/resources/Identifier;F)V
+accessible method net/minecraft/client/gui/Gui extractTextureOverlay (Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/resources/Identifier;F)V
 accessible method net/minecraft/client/particle/SpellParticle <init> (Lnet/minecraft/client/multiplayer/ClientLevel;DDDDDDLnet/minecraft/client/particle/SpriteSet;)V
 
 accessible field net/minecraft/client/data/models/BlockModelGenerators ROTATION_HORIZONTAL_FACING Lnet/minecraft/client/data/models/blockstates/PropertyDispatch;

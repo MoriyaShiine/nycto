@@ -7,16 +7,16 @@ import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.Hud;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(Hud.class)
-public class HudMixin {
+@Mixin(Gui.class)
+public class GuiMixin {
 	@Unique
 	private static final Identifier BLOOD_BARRIER = Nycto.id("hud/blood_barrier");
 

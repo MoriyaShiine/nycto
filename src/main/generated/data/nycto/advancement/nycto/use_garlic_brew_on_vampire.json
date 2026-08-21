@@ -18,7 +18,8 @@
 			"condition": "minecraft:entity_properties",
 			"entity": "this",
 			"predicate": {
-			  "nycto:vampire": {
+			  "type_specific": {
+				"type": "nycto:vampire",
 				"vampire": true
 			  }
 			}
@@ -37,7 +38,8 @@
 			"condition": "minecraft:entity_properties",
 			"entity": "this",
 			"predicate": {
-			  "nycto:vampire": {
+			  "type_specific": {
+				"type": "nycto:vampire",
 				"vampire": true
 			  }
 			}

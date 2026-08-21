@@ -1,6 +1,7 @@
 package moriyashiine.nycto.common.world.entity.subpredicate;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.api.init.NyctoRegistries;
@@ -8,8 +9,8 @@ import moriyashiine.nycto.api.world.power.Power;
 import moriyashiine.nycto.api.world.power.PowerInstance;
 import moriyashiine.nycto.common.component.entity.TransformationComponent;
 import moriyashiine.nycto.common.init.NyctoEntityComponents;
-import net.minecraft.advancements.predicates.MinMaxBounds;
-import net.minecraft.advancements.predicates.entity.EntitySubPredicate;
+import net.minecraft.advancements.criterion.EntitySubPredicate;
+import net.minecraft.advancements.criterion.MinMaxBounds;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.RegistryCodecs;
 import net.minecraft.server.level.ServerLevel;
@@ -20,10 +21,15 @@ import org.jspecify.annotations.Nullable;
 import java.util.Optional;
 
 public record VampirePredicate(Optional<Boolean> vampire, Optional<PowerCountPredicate> count) implements EntitySubPredicate {
-	public static final Codec<VampirePredicate> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+	public static final MapCodec<VampirePredicate> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
 			Codec.BOOL.optionalFieldOf("vampire").forGetter(VampirePredicate::vampire),
 			PowerCountPredicate.CODEC.optionalFieldOf("count").forGetter(VampirePredicate::count)
 	).apply(instance, VampirePredicate::new));
+
+	@Override
+	public MapCodec<VampirePredicate> codec() {
+		return CODEC;
+	}
 
 	@Override
 	public boolean matches(Entity entity, ServerLevel level, @Nullable Vec3 position) {

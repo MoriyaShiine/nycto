@@ -8,7 +8,8 @@
 			"condition": "minecraft:entity_properties",
 			"entity": "this",
 			"predicate": {
-			  "nycto:vampire": {
+			  "type_specific": {
+				"type": "nycto:vampire",
 				"vampire": true
 			  }
 			}
@@ -19,7 +20,7 @@
 			"condition": "minecraft:entity_properties",
 			"entity": "this",
 			"predicate": {
-			  "minecraft:equipment": {
+			  "equipment": {
 				"mainhand": {
 				  "items": "nycto:wooden_stake"
 				}
@@ -37,7 +38,8 @@
 			"condition": "minecraft:entity_properties",
 			"entity": "this",
 			"predicate": {
-			  "nycto:vampire": {
+			  "type_specific": {
+				"type": "nycto:vampire",
 				"vampire": true
 			  }
 			}
@@ -45,7 +47,7 @@
 		],
 		"killing_blow": {
 		  "direct_entity": {
-			"minecraft:entity_type": "nycto:wooden_stake"
+			"type": "nycto:wooden_stake"
 		  }
 		}
 	  },

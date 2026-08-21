@@ -9,7 +9,7 @@ import moriyashiine.nycto.common.init.NyctoPowers;
 import moriyashiine.nycto.common.tag.NyctoEntityTypeTags;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.player.Player;
@@ -18,12 +18,12 @@ public class VilePresenceWeakness extends Weakness {
 	@Override
 	public void tick(ServerPlayer player) {
 		if (!player.isCreative()) {
-			player.level().getEntities(EntityTypes.CAT, player.getBoundingBox().inflate(16), VilePresenceWeakness::canPanic).forEach(cat -> {
+			player.level().getEntities(EntityType.CAT, player.getBoundingBox().inflate(16), VilePresenceWeakness::canPanic).forEach(cat -> {
 				if ((cat.tickCount + cat.getId()) % 100 == 0) {
 					cat.hiss();
 				}
 			});
-			player.level().getEntities(EntityTypes.WOLF, player.getBoundingBox().inflate(16), VilePresenceWeakness::canPanic).forEach(wolf -> {
+			player.level().getEntities(EntityType.WOLF, player.getBoundingBox().inflate(16), VilePresenceWeakness::canPanic).forEach(wolf -> {
 				if ((wolf.tickCount + wolf.getId()) % 100 == 0) {
 					wolf.startPersistentAngerTimer();
 				}

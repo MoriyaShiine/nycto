@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
 	"B": "#nycto:usable_blood_bottles",
 	"C": "#minecraft:candles",
