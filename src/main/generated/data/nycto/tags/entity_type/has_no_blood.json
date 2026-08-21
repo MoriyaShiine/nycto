@@ -18,6 +18,18 @@
 	"minecraft:shulker",
 	"minecraft:snow_golem",
 	"minecraft:vex",
-	"minecraft:warden"
+	"minecraft:warden",
+	{
+	  "id": "mca:female_zombie_villager",
+	  "required": false
+	},
+	{
+	  "id": "mca:male_zombie_villager",
+	  "required": false
+	},
+	{
+	  "id": "mca:grim_reaper",
+	  "required": false
+	}
   ]
 }

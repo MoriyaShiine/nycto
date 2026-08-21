@@ -9,6 +9,14 @@
 	"minecraft:wandering_trader",
 	"minecraft:witch",
 	"nycto:vampire",
-	"nycto:hunter"
+	"nycto:hunter",
+	{
+	  "id": "mca:female_villager",
+	  "required": false
+	},
+	{
+	  "id": "mca:male_villager",
+	  "required": false
+	}
   ]
 }

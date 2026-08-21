@@ -12,8 +12,10 @@ import net.fabricmc.fabric.api.tag.convention.v2.ConventionalEntityTypeTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityTypeIds;
 
 import java.util.concurrent.CompletableFuture;
@@ -35,7 +37,9 @@ public class NyctoEntityTypeTagsProvider extends FabricTagsProvider.EntityTypeTa
 				.add(EntityTypeIds.WANDERING_TRADER)
 				.add(EntityTypeIds.WITCH)
 				.add(NyctoEntityTypeIds.VAMPIRE)
-				.add(NyctoEntityTypeIds.HUNTER);
+				.add(NyctoEntityTypeIds.HUNTER)
+				.addOptional(key("mca:female_villager"))
+				.addOptional(key("mca:male_villager"));
 		builder(NyctoEntityTypeTags.HAS_NO_BLOOD)
 				.forceAddTag(ConventionalEntityTypeTags.BOSSES)
 				.forceAddTag(EntityTypeTags.ARTHROPOD)
@@ -55,7 +59,10 @@ public class NyctoEntityTypeTagsProvider extends FabricTagsProvider.EntityTypeTa
 				.add(EntityTypeIds.SHULKER)
 				.add(EntityTypeIds.SNOW_GOLEM)
 				.add(EntityTypeIds.VEX)
-				.add(EntityTypeIds.WARDEN);
+				.add(EntityTypeIds.WARDEN)
+				.addOptional(key("mca:female_zombie_villager"))
+				.addOptional(key("mca:male_zombie_villager"))
+				.addOptional(key("mca:grim_reaper"));
 
 		builder(NyctoEntityTypeTags.BYPASSES_BLOOD_VEIL)
 				.forceAddTag(ConventionalEntityTypeTags.BOSSES)
@@ -90,5 +97,9 @@ public class NyctoEntityTypeTagsProvider extends FabricTagsProvider.EntityTypeTa
 
 		builder(TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath("enchancement", "cannot_disarm")))
 				.add(NyctoEntityTypeIds.HUNTER);
+	}
+
+	private static ResourceKey<EntityType<?>> key(String id) {
+		return ResourceKey.create(Registries.ENTITY_TYPE, Identifier.parse(id));
 	}
 }
