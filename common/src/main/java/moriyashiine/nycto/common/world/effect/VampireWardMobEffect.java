@@ -48,18 +48,29 @@ public class VampireWardMobEffect extends MobEffect {
 
 	public static void applyAttributes(LivingEntity entity, boolean shouldRemove) {
 		if (NyctoAPI.isVampire(entity)) {
-			boolean fallback = true;
-			if (entity instanceof ServerPlayer player) {
-				Transformation transformation = NyctoAPI.getTransformation(player);
-				if (!transformation.getAttributeModifiers(player).isEmpty()) {
-					fallback = false;
-					transformation.applyModifiers(player, !shouldRemove);
+			if (shouldRemove) {
+				if (!applyTransformationModifiers(entity, true)) {
+					applyFallbackModifiers(entity, true);
 				}
-			}
-			if (fallback) {
-				SLibUtils.applyAttributeModifier(entity, Attributes.ATTACK_DAMAGE, NON_PLAYER_ATTACK_MODIFIER, shouldRemove);
-				SLibUtils.applyAttributeModifier(entity, Attributes.MOVEMENT_SPEED, NON_PLAYER_SPEED_MODIFIER, shouldRemove);
+			} else if (!applyFallbackModifiers(entity, false)) {
+				applyTransformationModifiers(entity, false);
 			}
 		}
+	}
+
+	private static boolean applyTransformationModifiers(LivingEntity entity, boolean shouldRemove) {
+		if (entity instanceof ServerPlayer player) {
+			Transformation transformation = NyctoAPI.getTransformation(player);
+			if (transformation.getAttributeModifiers(player).isEmpty()) {
+				return false;
+			}
+			transformation.applyModifiers(player, !shouldRemove);
+			return true;
+		}
+		return false;
+	}
+
+	private static boolean applyFallbackModifiers(LivingEntity entity, boolean shouldRemove) {
+		return SLibUtils.applyAttributeModifier(entity, Attributes.ATTACK_DAMAGE, NON_PLAYER_ATTACK_MODIFIER, shouldRemove) && SLibUtils.applyAttributeModifier(entity, Attributes.MOVEMENT_SPEED, NON_PLAYER_SPEED_MODIFIER, shouldRemove);
 	}
 }
