@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+	"MoriyaShiine",
+	"cybercat5555"
+  ],
+  "contact": {
+	"homepage": "https://modrinth.com/mod/${project_name}",
+	"sources": "https://github.com/MoriyaShiine/${project_name}",
+	"issues": "https://github.com/MoriyaShiine/${project_name}/issues"
+  },
+  "license": "All Rights Reserved",
+  "icon": "assets/${mod_id}/icon.png",
+  "environment": "*",
+  "entrypoints": {
+	"fabric-datagen": [
+	  "moriyashiine.nycto.datagen.NyctoDataGenerator"
+	],
+	"main": [
+	  "moriyashiine.nycto.common.Nycto"
+	],
+	"client": [
+	  "moriyashiine.nycto.client.NyctoClient"
+	],
+	"cardinal-components-entity": [
+	  "moriyashiine.nycto.common.init.NyctoEntityComponents"
+	],
+	"cardinal-components-level": [
+	  "moriyashiine.nycto.common.init.NyctoLevelComponents"
+	]
+  },
+  "mixins": [
+	"${mod_id}.mixins.json",
+	"${mod_id}_fabric.mixins.json"
+  ],
+  "accessWidener": "${mod_id}.classtweaker",
+  "depends": {
+	"fabricloader": "*",
+	"minecraft": "~26.1",
+	"java": ">=25",
+	"fabric-api": "*",
+	"strawberrylib": "*"
+  },
+  "custom": {
+	"launchpad:compatible": true,
+	"launchpad:overrides": {
+	  "mixins": [
+		"${mod_id}.mixins.json",
+		"${mod_id}_neoforge.mixins.json"
+	  ]
+	},
+	"cardinal-components": [
+	  "${mod_id}:synced_config_values",
+	  "${mod_id}:blood",
+	  "${mod_id}:heal_block",
+	  "${mod_id}:hunter_heat",
+	  "${mod_id}:respawn_leniency",
+	  "${mod_id}:sun_exposure",
+	  "${mod_id}:transformation",
+	  "${mod_id}:vampire",
+	  "${mod_id}:night_vision",
+	  "${mod_id}:bat_form",
+	  "${mod_id}:blood_barrier",
+	  "${mod_id}:bloodrush",
+	  "${mod_id}:carnage",
+	  "${mod_id}:dark_form",
+	  "${mod_id}:haemogenesis",
+	  "${mod_id}:hypnotized",
+	  "${mod_id}:keen_senses",
+	  "${mod_id}:mist_form",
+	  "${mod_id}:vampiric_thrall",
+	  "${mod_id}:vampiric_vex",
+	  "${mod_id}:aura",
+	  "${mod_id}:bat_swarm"
+	]
+  }
+}

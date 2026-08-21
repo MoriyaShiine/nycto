@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "package": "moriyashiine.nycto.neoforge.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+	"coffin.ServerPlayerMixin"
+  ],
+  "client": [
+	"api.power.client.MinecraftMixin"
+  ],
+  "injectors": {
+	"defaultRequire": 1
+  },
+  "overwrites": {
+	"requireAnnotations": true
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "package": "moriyashiine.nycto.fabric.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+	"coffin.ServerLevelMixin",
+	"coffin.ServerPlayerMixin"
+  ],
+  "client": [
+	"api.power.client.MinecraftMixin"
+  ],
+  "injectors": {
+	"defaultRequire": 1
+  },
+  "overwrites": {
+	"requireAnnotations": true
+  }
+}

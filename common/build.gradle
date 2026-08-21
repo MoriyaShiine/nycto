@@ -1,0 +1,36 @@
+plugins {
+	id("org.relativitymc.neo-loom")
+	id("multiloader-common")
+}
+
+loom {
+	def classTweaker = file("src/main/resources/${mod_id}.classtweaker")
+	if (classTweaker.exists()) {
+		accessWidenerPath = classTweaker
+	}
+}
+
+dependencies {
+	minecraft("com.mojang:minecraft:${minecraft_version}")
+	compileOnly("net.fabricmc:fabric-loader:${loader_version}")
+
+	compileOnlyApi("org.ladysnake.cardinal-components-api:cardinal-components-level:${cardinal_components_version}")
+	compileOnlyApi("maven.modrinth:midnightlib:${midnightlib_version}-fabric")
+
+	localImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}")
+	localImplementation("moriyashiine.strawberrylib:strawberrylib-fabric:${strawberrylib_version}")
+
+	localImplementation("moriyashiine.anthropophagy:anthropophagy-fabric:${anthropophagy_version}")
+	compileOnly("moriyashiine.hearty-meals:hearty-meals-fabric:${hearty_meals_version}")
+	compileOnly("moriyashiine.superb-steeds:superb-steeds-fabric:${superb_steeds_version}")
+}
+
+def commonJava = configurations.consumable("commonJava")
+def commonResources = configurations.consumable("commonResources")
+sourceSets.main.resources.srcDir("src/main/generated")
+artifacts {
+	add(commonJava.name, sourceSets.main.java.sourceDirectories.singleFile)
+	sourceSets.main.resources.sourceDirectories.each {
+		add(commonResources.name, it)
+	}
+}
