@@ -16,6 +16,7 @@
 	"healblock.LivingEntityMixin",
 	"hunter.ProjectileWeaponItemMixin",
 	"hunter.WolfMixin",
+	"hypnotized.ai.goal.NearestAttackableTargetGoalMixin",
 	"misc.LivingEntityMixin",
 	"misc.PowderSnowBlockMixin",
 	"misc.SunDamageMixin",
