@@ -67,6 +67,7 @@
 	"power.vampire.vampiricthrall.mobspecific.WanderingTraderMixin",
 	"power.vampire.vampiricthrall.mobspecific.WitchMixin",
 	"power.vampire.vampiricthrall.mobspecific.WolfMixin",
+	"power.vampire.vampiricthrall.mobspecific.ZombieMixin",
 	"power.vampire.vilepresence.AnimalMixin",
 	"power.vampire.vilepresence.NeutralMobMixin",
 	"power.vampire.vilepresence.PanicGoalMixin",
