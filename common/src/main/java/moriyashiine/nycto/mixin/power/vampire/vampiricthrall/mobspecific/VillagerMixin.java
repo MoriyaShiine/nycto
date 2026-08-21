@@ -1,8 +1,10 @@
 package moriyashiine.nycto.mixin.power.vampire.vampiricthrall.mobspecific;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.nycto.common.init.NyctoEnvironmentAttributes;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.attribute.EnvironmentAttribute;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.villager.AbstractVillager;
@@ -48,5 +50,13 @@ public abstract class VillagerMixin extends AbstractVillager {
 	@ModifyReturnValue(method = "wantsToSpawnGolem", at = @At("RETURN"))
 	private boolean nycto$vampiricThrallGolem(boolean original) {
 		return original && !NyctoEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner();
+	}
+
+	@ModifyExpressionValue(method = "thunderHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;getDifficulty()Lnet/minecraft/world/Difficulty;"))
+	private Difficulty nycto$vampiricThrall(Difficulty original) {
+		if (NyctoEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner()) {
+			return Difficulty.PEACEFUL;
+		}
+		return original;
 	}
 }
