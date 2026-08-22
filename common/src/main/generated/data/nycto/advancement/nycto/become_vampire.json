@@ -1,5 +1,5 @@
 {
-  "parent": "nycto:moriyashiine/nycto/nycto/kill_vampire",
+  "parent": "nycto:nycto/kill_vampire",
   "criteria": {
 	"become_vampire": {
 	  "conditions": {

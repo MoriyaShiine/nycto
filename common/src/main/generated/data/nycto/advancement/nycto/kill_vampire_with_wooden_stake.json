@@ -1,5 +1,5 @@
 {
-  "parent": "nycto:moriyashiine/nycto/nycto/kill_vampire",
+  "parent": "nycto:nycto/kill_vampire",
   "criteria": {
 	"kill_vampire_with_wooden_stake_melee": {
 	  "conditions": {

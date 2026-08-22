@@ -1,5 +1,5 @@
 {
-  "parent": "nycto:moriyashiine/nycto/nycto/obtain_garlic_wreath",
+  "parent": "nycto:nycto/obtain_garlic_wreath",
   "criteria": {
 	"wear_vampire_hunter_armor": {
 	  "conditions": {

@@ -1,5 +1,5 @@
 {
-  "parent": "nycto:moriyashiine/nycto/nycto/brew_garlic_brew",
+  "parent": "nycto:nycto/brew_garlic_brew",
   "criteria": {
 	"drink_garlic_brew_as_vampire": {
 	  "conditions": {

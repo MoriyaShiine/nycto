@@ -1,5 +1,5 @@
 {
-  "parent": "nycto:moriyashiine/nycto/nycto/become_vampire",
+  "parent": "nycto:nycto/become_vampire",
   "criteria": {
 	"obtain_vampire_power": {
 	  "conditions": {
