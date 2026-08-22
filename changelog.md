@@ -1,4 +1,25 @@
 ------------------------------------------------------
+Version 26.1-b14
+------------------------------------------------------
+- merge https://github.com/MoriyaShiine/nycto/pull/16
+- fix HurtByTargetGoal crash
+- fix vampire ward attribute modifiers applying incorrectly when removing humanity
+- dark form no longer bypasses blood veil
+- zombies can no longer convert villager thralls
+- keen senses now gives a stronger speed boost
+- villager thralls no longer turn into witches when struck by lightning
+- mobs no longer automatically target entities while hypnotized
+- add MCA: Reborn blood support
+#### From 26.2-b3
+- being stunned now also prevents attacking and using items, blocks, and entities
+- losing all of your blood no longer removes regeneration and instead applies heal block
+- filled vampiric daggers can now directly put blood into blood fountains
+- blood flechettes now shoots more projectiles and are more condensed
+- mist form now hides you from the player locator bar
+- remove aconite arrows (they will be replaced with a new item once werewolves are done)
+- fix sizes of some mob effect icons
+
+------------------------------------------------------
 Version 26.2-b3
 ------------------------------------------------------
 - fix hearty meals and superb steeds compat
