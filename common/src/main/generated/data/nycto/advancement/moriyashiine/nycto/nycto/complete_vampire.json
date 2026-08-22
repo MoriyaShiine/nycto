@@ -8,7 +8,7 @@
 			"condition": "minecraft:entity_properties",
 			"entity": "this",
 			"predicate": {
-			  "equipment": {
+			  "minecraft:equipment": {
 				"chest": {
 				  "items": "nycto:vampire_chestplate"
 				},
@@ -22,8 +22,7 @@
 				  "items": "nycto:vampire_leggings"
 				}
 			  },
-			  "type_specific": {
-				"type": "nycto:vampire",
+			  "nycto:vampire": {
 				"count": {
 				  "powers": "#nycto:vampire_choosable",
 				  "range": {
@@ -45,7 +44,7 @@
 			"condition": "minecraft:entity_properties",
 			"entity": "this",
 			"predicate": {
-			  "equipment": {
+			  "minecraft:equipment": {
 				"chest": {
 				  "items": "nycto:vampire_chestplate"
 				},
@@ -59,8 +58,7 @@
 				  "items": "nycto:vampire_leggings"
 				}
 			  },
-			  "type_specific": {
-				"type": "nycto:vampire",
+			  "nycto:vampire": {
 				"count": {
 				  "powers": "#nycto:vampire_choosable",
 				  "range": {

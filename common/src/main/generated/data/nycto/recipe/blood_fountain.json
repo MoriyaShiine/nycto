@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
 	"B": "minecraft:glass_bottle",
 	"S": "minecraft:stone_brick_slab"

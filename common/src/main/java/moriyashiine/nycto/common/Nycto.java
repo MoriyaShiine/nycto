@@ -4,7 +4,6 @@ import moriyashiine.nycto.api.init.NyctoRegistries;
 import moriyashiine.nycto.client.payload.*;
 import moriyashiine.nycto.common.command.TransformationCommand;
 import moriyashiine.nycto.common.event.block.CoffinEvent;
-import moriyashiine.nycto.common.event.block.ShearsEvent;
 import moriyashiine.nycto.common.event.entity.*;
 import moriyashiine.nycto.common.event.internal.GenerateLootEvent;
 import moriyashiine.nycto.common.event.internal.SyncTruncatedWorldSeedEvent;
@@ -99,7 +98,6 @@ public class Nycto implements ModInitializer {
 		SyncTruncatedWorldSeedEvent.init();
 		// BLOCK
 		CoffinEvent.init();
-		ShearsEvent.init();
 		// ENTITY
 		AttributeEvent.init();
 		BeastFormEvent.init();

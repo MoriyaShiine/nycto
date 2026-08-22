@@ -26,11 +26,11 @@ public class SunExposureHudElement implements HudElement {
 				float progress = sunExposure.getExposureTime() / (float) SunExposureComponent.MAX_EXPOSURE_TIME;
 				float alpha = Math.min(1, progress * 2);
 				if (alpha > 0) {
-					client.gui.extractTextureOverlay(graphics, SUN_EXPOSURE_GRADIENT, alpha);
-					client.gui.extractTextureOverlay(graphics, SUN_EXPOSURE_RAYS, alpha);
+					client.gui.hud.extractTextureOverlay(graphics, SUN_EXPOSURE_GRADIENT, alpha);
+					client.gui.hud.extractTextureOverlay(graphics, SUN_EXPOSURE_RAYS, alpha);
 					float veinAlpha = Mth.lerp(progress, -0.5F, 0.5F);
 					if (veinAlpha > 0) {
-						client.gui.extractTextureOverlay(graphics, SUN_EXPOSURE_VEINS, veinAlpha);
+						client.gui.hud.extractTextureOverlay(graphics, SUN_EXPOSURE_VEINS, veinAlpha);
 					}
 				}
 			}

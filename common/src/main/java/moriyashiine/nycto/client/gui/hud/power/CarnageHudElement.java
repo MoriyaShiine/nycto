@@ -20,7 +20,7 @@ public class CarnageHudElement implements HudElement {
 		if (player != null) {
 			CarnageComponent carnage = NyctoEntityComponents.CARNAGE.get(player);
 			if (carnage.isActive()) {
-				client.gui.extractTextureOverlay(graphics, CARNAGE_OVERLAY, carnage.getOverlayOpacity(2 / 3F));
+				client.gui.hud.extractTextureOverlay(graphics, CARNAGE_OVERLAY, carnage.getOverlayOpacity(2 / 3F));
 			}
 		}
 	}

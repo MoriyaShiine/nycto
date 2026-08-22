@@ -1,6 +1,6 @@
 package moriyashiine.nycto.datagen.provider;
 
-import moriyashiine.nycto.common.init.NyctoEntityTypes;
+import moriyashiine.nycto.common.references.NyctoEntityTypeIds;
 import moriyashiine.nycto.common.tag.NyctoEntityTypeTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
@@ -12,6 +12,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypeIds;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -22,78 +23,76 @@ public class NyctoEntityTypeTagsProvider extends FabricTagsProvider.EntityTypeTa
 
 	@Override
 	protected void addTags(HolderLookup.Provider registries) {
-		valueLookupBuilder(NyctoEntityTypeTags.HAS_QUALITY_BLOOD)
-				.forceAddTag(EntityTypeTags.ILLAGER)
-				.add(EntityType.MANNEQUIN)
-				.add(EntityType.PIGLIN)
-				.add(EntityType.PIGLIN_BRUTE)
-				.add(EntityType.PLAYER)
-				.add(EntityType.VILLAGER)
-				.add(EntityType.WANDERING_TRADER)
-				.add(EntityType.WITCH)
-				.add(NyctoEntityTypes.VAMPIRE)
-				.add(NyctoEntityTypes.HUNTER);
 		builder(NyctoEntityTypeTags.HAS_QUALITY_BLOOD)
+				.forceAddTag(EntityTypeTags.ILLAGER)
+				.add(EntityTypeIds.MANNEQUIN)
+				.add(EntityTypeIds.PIGLIN)
+				.add(EntityTypeIds.PIGLIN_BRUTE)
+				.add(EntityTypeIds.PLAYER)
+				.add(EntityTypeIds.VILLAGER)
+				.add(EntityTypeIds.WANDERING_TRADER)
+				.add(EntityTypeIds.WITCH)
+				.add(NyctoEntityTypeIds.VAMPIRE)
+				.add(NyctoEntityTypeIds.HUNTER)
 				.addOptional(key("mca:female_villager"))
 				.addOptional(key("mca:male_villager"));
-		valueLookupBuilder(NyctoEntityTypeTags.HAS_NO_BLOOD)
+		builder(NyctoEntityTypeTags.HAS_NO_BLOOD)
 				.forceAddTag(ConventionalEntityTypeTags.BOSSES)
 				.forceAddTag(EntityTypeTags.ARTHROPOD)
 				.forceAddTag(EntityTypeTags.FROG_FOOD)
 				.forceAddTag(EntityTypeTags.UNDEAD)
-				.add(EntityType.ALLAY)
-				.add(EntityType.ARMOR_STAND)
-				.add(EntityType.BLAZE)
-				.add(EntityType.BREEZE)
-				.add(EntityType.COPPER_GOLEM)
-				.add(EntityType.CREAKING)
-				.add(EntityType.CREEPER)
-				.add(EntityType.ENDERMAN)
-				.add(EntityType.GHAST)
-				.add(EntityType.HAPPY_GHAST)
-				.add(EntityType.IRON_GOLEM)
-				.add(EntityType.SHULKER)
-				.add(EntityType.SNOW_GOLEM)
-				.add(EntityType.VEX)
-				.add(EntityType.WARDEN);
-		builder(NyctoEntityTypeTags.HAS_NO_BLOOD)
+				.add(EntityTypeIds.ALLAY)
+				.add(EntityTypeIds.ARMOR_STAND)
+				.add(EntityTypeIds.BLAZE)
+				.add(EntityTypeIds.BREEZE)
+				.add(EntityTypeIds.COPPER_GOLEM)
+				.add(EntityTypeIds.CREAKING)
+				.add(EntityTypeIds.CREEPER)
+				.add(EntityTypeIds.ENDERMAN)
+				.add(EntityTypeIds.GHAST)
+				.add(EntityTypeIds.HAPPY_GHAST)
+				.add(EntityTypeIds.IRON_GOLEM)
+				.add(EntityTypeIds.SHULKER)
+				.add(EntityTypeIds.SNOW_GOLEM)
+				.add(EntityTypeIds.VEX)
+				.add(EntityTypeIds.WARDEN)
 				.addOptional(key("mca:female_zombie_villager"))
 				.addOptional(key("mca:male_zombie_villager"))
 				.addOptional(key("mca:grim_reaper"));
 
-		valueLookupBuilder(NyctoEntityTypeTags.BYPASSES_BLOOD_VEIL)
+		builder(NyctoEntityTypeTags.BYPASSES_BLOOD_VEIL)
 				.forceAddTag(ConventionalEntityTypeTags.BOSSES)
-				.add(EntityType.WARDEN);
-		valueLookupBuilder(NyctoEntityTypeTags.CALLS_HUNTERS)
+				.add(EntityTypeIds.WARDEN);
+		builder(NyctoEntityTypeTags.CALLS_HUNTERS)
 				.forceAddTag(EntityTypeTags.ILLAGER)
-				.add(EntityType.IRON_GOLEM)
-				.add(EntityType.VILLAGER)
-				.add(EntityType.WANDERING_TRADER)
-				.add(EntityType.WITCH);
-		valueLookupBuilder(NyctoEntityTypeTags.CAN_BE_THRALLED)
-				.add(EntityType.EVOKER)
-				.add(EntityType.HORSE)
-				.add(EntityType.ILLUSIONER)
-				.add(EntityType.PIGLIN)
-				.add(EntityType.PIGLIN_BRUTE)
-				.add(EntityType.PILLAGER)
-				.add(EntityType.VILLAGER)
-				.add(EntityType.VINDICATOR)
-				.add(EntityType.WANDERING_TRADER)
-				.add(EntityType.WITCH)
-				.add(EntityType.WOLF);
-		valueLookupBuilder(NyctoEntityTypeTags.CANNOT_BE_HYPNOTIZED)
+				.add(EntityTypeIds.IRON_GOLEM)
+				.add(EntityTypeIds.VILLAGER)
+				.add(EntityTypeIds.WANDERING_TRADER)
+				.add(EntityTypeIds.WITCH);
+		builder(NyctoEntityTypeTags.CAN_BE_THRALLED)
+				.add(EntityTypeIds.EVOKER)
+				.add(EntityTypeIds.HORSE)
+				.add(EntityTypeIds.ILLUSIONER)
+				.add(EntityTypeIds.PIGLIN)
+				.add(EntityTypeIds.PIGLIN_BRUTE)
+				.add(EntityTypeIds.PILLAGER)
+				.add(EntityTypeIds.VILLAGER)
+				.add(EntityTypeIds.VINDICATOR)
+				.add(EntityTypeIds.WANDERING_TRADER)
+				.add(EntityTypeIds.WITCH)
+				.add(EntityTypeIds.WOLF);
+		builder(NyctoEntityTypeTags.CANNOT_BE_HYPNOTIZED)
 				.forceAddTag(ConventionalEntityTypeTags.BOSSES)
-				.add(EntityType.WARDEN);
-		valueLookupBuilder(NyctoEntityTypeTags.CANNOT_BE_TARGETED_BY_THRALLS)
-				.add(EntityType.CREAKING)
-				.add(EntityType.CREEPER);
-		valueLookupBuilder(NyctoEntityTypeTags.CANNOT_PANIC)
+				.add(EntityTypeIds.WARDEN);
+		builder(NyctoEntityTypeTags.CANNOT_BE_TARGETED_BY_THRALLS)
+				.add(EntityTypeIds.CREAKING)
+				.add(EntityTypeIds.CREEPER);
+		builder(NyctoEntityTypeTags.CANNOT_PANIC)
 				.forceAddTag(ConventionalEntityTypeTags.BOSSES)
 				.forceAddTag(EntityTypeTags.UNDEAD);
 
-		valueLookupBuilder(TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath("enchancement", "cannot_disarm")))
-				.add(NyctoEntityTypes.HUNTER);
+		builder(TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath("enchancement", "cannot_disarm")))
+				.add(NyctoEntityTypeIds.HUNTER);
 	}
 
 	private static ResourceKey<EntityType<?>> key(String id) {

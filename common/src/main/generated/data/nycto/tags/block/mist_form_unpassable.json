@@ -1,5 +1,9 @@
 {
   "values": [
+	"minecraft:calibrated_sculk_sensor",
+	"minecraft:dirt_path",
+	"minecraft:sculk_sensor",
+	"minecraft:sculk_shrieker",
 	"#minecraft:climbable",
 	"#minecraft:doors",
 	"#minecraft:slabs",
@@ -8,10 +12,6 @@
 	"#minecraft:support_override_snow_layer",
 	"#minecraft:supports_dry_vegetation",
 	"#minecraft:trapdoors",
-	"#minecraft:wither_immune",
-	"minecraft:calibrated_sculk_sensor",
-	"minecraft:dirt_path",
-	"minecraft:sculk_sensor",
-	"minecraft:sculk_shrieker"
+	"#minecraft:wither_immune"
   ]
 }

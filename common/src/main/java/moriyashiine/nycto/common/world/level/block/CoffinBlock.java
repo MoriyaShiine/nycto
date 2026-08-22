@@ -1,12 +1,10 @@
 package moriyashiine.nycto.common.world.level.block;
 
 import moriyashiine.nycto.common.init.NyctoItems;
-import moriyashiine.nycto.common.world.level.block.entity.CoffinBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
@@ -14,9 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BedBlock;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.phys.AABB;
@@ -32,11 +28,6 @@ public class CoffinBlock extends BedBlock {
 	}
 
 	@Override
-	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return new CoffinBlockEntity(pos, state);
-	}
-
-	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}
@@ -44,11 +35,6 @@ public class CoffinBlock extends BedBlock {
 	@Override
 	protected RenderShape getRenderShape(BlockState state) {
 		return state.getValue(BedBlock.PART) == BedPart.HEAD ? RenderShape.INVISIBLE : super.getRenderShape(state);
-	}
-
-	@Override
-	public void updateEntityMovementAfterFallOn(BlockGetter level, Entity entity) {
-		Blocks.OAK_PLANKS.updateEntityMovementAfterFallOn(level, entity);
 	}
 
 	@Override

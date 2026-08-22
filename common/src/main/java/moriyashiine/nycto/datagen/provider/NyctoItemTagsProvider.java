@@ -1,6 +1,7 @@
 package moriyashiine.nycto.datagen.provider;
 
-import moriyashiine.nycto.common.init.NyctoItems;
+import moriyashiine.nycto.common.references.NyctoBlockItemIds;
+import moriyashiine.nycto.common.references.NyctoItemIds;
 import moriyashiine.nycto.common.tag.NyctoBlockTags;
 import moriyashiine.nycto.common.tag.NyctoItemTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
@@ -8,10 +9,10 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.references.ItemIds;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Items;
 import org.jspecify.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
@@ -25,104 +26,104 @@ public class NyctoItemTagsProvider extends FabricTagsProvider.ItemTagsProvider {
 	protected void addTags(HolderLookup.Provider registries) {
 		copy(NyctoBlockTags.COFFINS, NyctoItemTags.COFFINS);
 
-		valueLookupBuilder(NyctoItemTags.BEAST_UNEQUIPPABLE)
-				.forceAddTag(ItemTags.DURABILITY_ENCHANTABLE)
-				.add(NyctoItems.WOODEN_STAKE);
-		valueLookupBuilder(NyctoItemTags.HURTS_VAMPIRES)
+		builder(NyctoItemTags.BEAST_UNEQUIPPABLE)
+				.add(NyctoBlockItemIds.WOODEN_STAKE)
+				.forceAddTag(ItemTags.DURABILITY_ENCHANTABLE);
+		builder(NyctoItemTags.HURTS_VAMPIRES)
 				.addTag(NyctoItemTags.VAMPIRE_HUNTER_ARMOR)
-				.add(NyctoItems.GARLIC_WREATH)
-				.add(NyctoItems.WILD_GARLIC)
-				.add(NyctoItems.GARLIC_COATED_HALBERD)
-				.add(NyctoItems.GARLIC)
-				.add(NyctoItems.GRILLED_GARLIC)
-				.add(NyctoItems.GARLIC_BREAD);
-		valueLookupBuilder(NyctoItemTags.USABLE_BLOOD_BOTTLES)
-				.add(NyctoItems.BLOOD_BOTTLE)
-				.add(NyctoItems.VAMPIRE_BLOOD_BOTTLE);
-		valueLookupBuilder(NyctoItemTags.VAMPIRE_WEAKNESSES)
-				.add(NyctoItems.GARLIC_COATED_HALBERD)
-				.add(NyctoItems.WOODEN_STAKE);
+				.add(NyctoBlockItemIds.GARLIC_WREATH)
+				.add(NyctoBlockItemIds.WILD_GARLIC)
+				.add(NyctoItemIds.GARLIC_COATED_HALBERD)
+				.add(NyctoBlockItemIds.GARLIC)
+				.add(NyctoItemIds.GRILLED_GARLIC)
+				.add(NyctoItemIds.GARLIC_BREAD);
+		builder(NyctoItemTags.USABLE_BLOOD_BOTTLES)
+				.add(NyctoItemIds.BLOOD_BOTTLE)
+				.add(NyctoItemIds.VAMPIRE_BLOOD_BOTTLE);
+		builder(NyctoItemTags.VAMPIRE_WEAKNESSES)
+				.add(NyctoItemIds.GARLIC_COATED_HALBERD)
+				.add(NyctoBlockItemIds.WOODEN_STAKE);
 
-		valueLookupBuilder(NyctoItemTags.VAMPIRE_ARMOR)
-				.add(NyctoItems.VAMPIRE_HELMET)
-				.add(NyctoItems.VAMPIRE_CHESTPLATE)
-				.add(NyctoItems.VAMPIRE_LEGGINGS)
-				.add(NyctoItems.VAMPIRE_BOOTS);
-		valueLookupBuilder(NyctoItemTags.VAMPIRE_HUNTER_ARMOR)
-				.add(NyctoItems.VAMPIRE_HUNTER_HELMET)
-				.add(NyctoItems.VAMPIRE_HUNTER_CHESTPLATE)
-				.add(NyctoItems.VAMPIRE_HUNTER_LEGGINGS)
-				.add(NyctoItems.VAMPIRE_HUNTER_BOOTS)
-				.add(NyctoItems.VAMPIRE_HUNTER_WOLF_ARMOR);
-		valueLookupBuilder(NyctoItemTags.WEREWOLF_HUNTER_ARMOR)
-				.add(NyctoItems.WEREWOLF_HUNTER_HELMET)
-				.add(NyctoItems.WEREWOLF_HUNTER_CHESTPLATE)
-				.add(NyctoItems.WEREWOLF_HUNTER_LEGGINGS)
-				.add(NyctoItems.WEREWOLF_HUNTER_BOOTS)
-				.add(NyctoItems.WEREWOLF_HUNTER_WOLF_ARMOR);
-		valueLookupBuilder(NyctoItemTags.REPAIRS_VAMPIRE_ARMOR)
+		builder(NyctoItemTags.VAMPIRE_ARMOR)
+				.add(NyctoItemIds.VAMPIRE_HELMET)
+				.add(NyctoItemIds.VAMPIRE_CHESTPLATE)
+				.add(NyctoItemIds.VAMPIRE_LEGGINGS)
+				.add(NyctoItemIds.VAMPIRE_BOOTS);
+		builder(NyctoItemTags.VAMPIRE_HUNTER_ARMOR)
+				.add(NyctoItemIds.VAMPIRE_HUNTER_HELMET)
+				.add(NyctoItemIds.VAMPIRE_HUNTER_CHESTPLATE)
+				.add(NyctoItemIds.VAMPIRE_HUNTER_LEGGINGS)
+				.add(NyctoItemIds.VAMPIRE_HUNTER_BOOTS)
+				.add(NyctoItemIds.VAMPIRE_HUNTER_WOLF_ARMOR);
+		builder(NyctoItemTags.WEREWOLF_HUNTER_ARMOR)
+				.add(NyctoItemIds.WEREWOLF_HUNTER_HELMET)
+				.add(NyctoItemIds.WEREWOLF_HUNTER_CHESTPLATE)
+				.add(NyctoItemIds.WEREWOLF_HUNTER_LEGGINGS)
+				.add(NyctoItemIds.WEREWOLF_HUNTER_BOOTS)
+				.add(NyctoItemIds.WEREWOLF_HUNTER_WOLF_ARMOR);
+		builder(NyctoItemTags.REPAIRS_VAMPIRE_ARMOR)
 				.forceAddTag(ItemTags.REPAIRS_IRON_ARMOR);
-		valueLookupBuilder(NyctoItemTags.REPAIRS_HUNTER_ARMOR)
+		builder(NyctoItemTags.REPAIRS_HUNTER_ARMOR)
 				.forceAddTag(ItemTags.REPAIRS_IRON_ARMOR);
 
-		valueLookupBuilder(NyctoItemTags.WEAK_VAMPIRE_ALTAR_UPGRADES)
+		builder(NyctoItemTags.WEAK_VAMPIRE_ALTAR_UPGRADES)
 				.forceAddTag(ConventionalItemTags.AMETHYST_GEMS)
 				.forceAddTag(ConventionalItemTags.GOLD_INGOTS)
 				.forceAddTag(ConventionalItemTags.LAPIS_GEMS);
-		valueLookupBuilder(NyctoItemTags.AVERAGE_VAMPIRE_ALTAR_UPGRADES)
+		builder(NyctoItemTags.AVERAGE_VAMPIRE_ALTAR_UPGRADES)
 				.forceAddTag(ConventionalItemTags.DIAMOND_GEMS)
 				.forceAddTag(ConventionalItemTags.ENDER_PEARLS)
-				.add(Items.GOLDEN_APPLE);
-		valueLookupBuilder(NyctoItemTags.STRONG_VAMPIRE_ALTAR_UPGRADES)
-				.add(Items.ENDER_EYE)
-				.add(Items.GHAST_TEAR)
-				.add(Items.NETHERITE_SCRAP);
+				.add(ItemIds.GOLDEN_APPLE);
+		builder(NyctoItemTags.STRONG_VAMPIRE_ALTAR_UPGRADES)
+				.add(ItemIds.ENDER_EYE)
+				.add(ItemIds.GHAST_TEAR)
+				.add(ItemIds.NETHERITE_SCRAP);
 
-		valueLookupBuilder(ConventionalItemTags.FOODS)
-				.add(NyctoItems.GARLIC)
-				.add(NyctoItems.GRILLED_GARLIC)
-				.add(NyctoItems.GARLIC_BREAD);
-		valueLookupBuilder(ConventionalItemTags.WOLF_ARMORS)
-				.add(NyctoItems.VAMPIRE_HUNTER_WOLF_ARMOR)
-				.add(NyctoItems.WEREWOLF_HUNTER_WOLF_ARMOR);
+		builder(ConventionalItemTags.FOODS)
+				.add(NyctoBlockItemIds.GARLIC)
+				.add(NyctoItemIds.GRILLED_GARLIC)
+				.add(NyctoItemIds.GARLIC_BREAD);
+		builder(ConventionalItemTags.WOLF_ARMORS)
+				.add(NyctoItemIds.VAMPIRE_HUNTER_WOLF_ARMOR)
+				.add(NyctoItemIds.WEREWOLF_HUNTER_WOLF_ARMOR);
 
-		valueLookupBuilder(ItemTags.BEDS)
+		builder(ItemTags.BEDS)
 				.addTag(NyctoItemTags.COFFINS);
-		valueLookupBuilder(ItemTags.HEAD_ARMOR)
-				.add(NyctoItems.VAMPIRE_HELMET)
-				.add(NyctoItems.VAMPIRE_HUNTER_HELMET)
-				.add(NyctoItems.WEREWOLF_HUNTER_HELMET);
-		valueLookupBuilder(ItemTags.CHEST_ARMOR)
-				.add(NyctoItems.VAMPIRE_CHESTPLATE)
-				.add(NyctoItems.VAMPIRE_HUNTER_CHESTPLATE)
-				.add(NyctoItems.WEREWOLF_HUNTER_CHESTPLATE);
-		valueLookupBuilder(ItemTags.LEG_ARMOR)
-				.add(NyctoItems.VAMPIRE_LEGGINGS)
-				.add(NyctoItems.VAMPIRE_HUNTER_LEGGINGS)
-				.add(NyctoItems.WEREWOLF_HUNTER_LEGGINGS);
-		valueLookupBuilder(ItemTags.FOOT_ARMOR)
-				.add(NyctoItems.VAMPIRE_BOOTS)
-				.add(NyctoItems.VAMPIRE_HUNTER_BOOTS)
-				.add(NyctoItems.WEREWOLF_HUNTER_BOOTS);
-		valueLookupBuilder(ItemTags.FREEZE_IMMUNE_WEARABLES)
+		builder(ItemTags.HEAD_ARMOR)
+				.add(NyctoItemIds.VAMPIRE_HELMET)
+				.add(NyctoItemIds.VAMPIRE_HUNTER_HELMET)
+				.add(NyctoItemIds.WEREWOLF_HUNTER_HELMET);
+		builder(ItemTags.CHEST_ARMOR)
+				.add(NyctoItemIds.VAMPIRE_CHESTPLATE)
+				.add(NyctoItemIds.VAMPIRE_HUNTER_CHESTPLATE)
+				.add(NyctoItemIds.WEREWOLF_HUNTER_CHESTPLATE);
+		builder(ItemTags.LEG_ARMOR)
+				.add(NyctoItemIds.VAMPIRE_LEGGINGS)
+				.add(NyctoItemIds.VAMPIRE_HUNTER_LEGGINGS)
+				.add(NyctoItemIds.WEREWOLF_HUNTER_LEGGINGS);
+		builder(ItemTags.FOOT_ARMOR)
+				.add(NyctoItemIds.VAMPIRE_BOOTS)
+				.add(NyctoItemIds.VAMPIRE_HUNTER_BOOTS)
+				.add(NyctoItemIds.WEREWOLF_HUNTER_BOOTS);
+		builder(ItemTags.FREEZE_IMMUNE_WEARABLES)
 				.addTag(NyctoItemTags.VAMPIRE_ARMOR)
 				.addTag(NyctoItemTags.VAMPIRE_HUNTER_ARMOR)
 				.addTag(NyctoItemTags.WEREWOLF_HUNTER_ARMOR);
-		valueLookupBuilder(ItemTags.SWORDS)
-				.add(NyctoItems.VAMPIRIC_DAGGER);
-		valueLookupBuilder(ItemTags.AXES)
-				.add(NyctoItems.HALBERD)
-				.add(NyctoItems.GARLIC_COATED_HALBERD)
-				.add(NyctoItems.ACONITE_COATED_HALBERD);
-		valueLookupBuilder(ItemTags.LOOM_PATTERNS)
-				.add(NyctoItems.VAMPIRE_BAT_BANNER_PATTERN)
-				.add(NyctoItems.WOLF_SKULL_BANNER_PATTERN)
-				.add(NyctoItems.HUNTERS_MARK_BANNER_PATTERN);
+		builder(ItemTags.SWORDS)
+				.add(NyctoItemIds.VAMPIRIC_DAGGER);
+		builder(ItemTags.AXES)
+				.add(NyctoItemIds.HALBERD)
+				.add(NyctoItemIds.GARLIC_COATED_HALBERD)
+				.add(NyctoItemIds.ACONITE_COATED_HALBERD);
+		builder(ItemTags.LOOM_PATTERNS)
+				.add(NyctoItemIds.VAMPIRE_BAT_BANNER_PATTERN)
+				.add(NyctoItemIds.WOLF_SKULL_BANNER_PATTERN)
+				.add(NyctoItemIds.HUNTERS_MARK_BANNER_PATTERN);
 
-		valueLookupBuilder(TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("enchancement", "cannot_automatically_consume")))
-				.add(NyctoItems.AMBROSIA_BOTTLE);
+		builder(TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("enchancement", "cannot_automatically_consume")))
+				.add(NyctoItemIds.AMBROSIA_BOTTLE);
 
-		valueLookupBuilder(ItemTags.TRIMMABLE_ARMOR)
+		builder(ItemTags.TRIMMABLE_ARMOR)
 				.removeTag(NyctoItemTags.VAMPIRE_ARMOR)
 				.removeTag(NyctoItemTags.VAMPIRE_HUNTER_ARMOR)
 				.removeTag(NyctoItemTags.WEREWOLF_HUNTER_ARMOR);

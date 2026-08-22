@@ -11,7 +11,11 @@ import moriyashiine.nycto.common.world.entity.subpredicate.VampirePredicate;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancements.*;
-import net.minecraft.advancements.criterion.*;
+import net.minecraft.advancements.predicates.*;
+import net.minecraft.advancements.predicates.entity.EntityEquipmentPredicate;
+import net.minecraft.advancements.predicates.entity.EntityPredicate;
+import net.minecraft.advancements.predicates.entity.EntityTypePredicate;
+import net.minecraft.advancements.triggers.*;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
@@ -56,17 +60,19 @@ public class NyctoAdvancementProvider extends FabricAdvancementProvider {
 				LootItemEntityPropertyCondition.hasProperties(
 						LootContext.EntityTarget.THIS,
 						EntityPredicate.Builder.entity()
-								.subPredicate(new VampirePredicate(
-										Optional.of(true),
-										Optional.empty()))
+								.put(VampirePredicate.CODEC,
+										new VampirePredicate(
+												Optional.of(true),
+												Optional.empty()))
 				).build()));
 		Optional<ContextAwarePredicate> completeVampirePredicate = Optional.of(ContextAwarePredicate.create(
 				LootItemEntityPropertyCondition.hasProperties(
 						LootContext.EntityTarget.THIS,
 						EntityPredicate.Builder.entity()
-								.subPredicate(new VampirePredicate(
-										Optional.of(true),
-										Optional.of(new VampirePredicate.PowerCountPredicate(powerGetter.getOrThrow(NyctoPowerTags.VAMPIRE_CHOOSABLE), MinMaxBounds.Ints.atLeast(6)))))
+								.put(VampirePredicate.CODEC,
+										new VampirePredicate(
+												Optional.of(true),
+												Optional.of(new VampirePredicate.PowerCountPredicate(powerGetter.getOrThrow(NyctoPowerTags.VAMPIRE_CHOOSABLE), MinMaxBounds.Ints.atLeast(6)))))
 								.equipment(new EntityEquipmentPredicate.Builder()
 										.head(new ItemPredicate.Builder().of(itemGetter, NyctoItems.VAMPIRE_HELMET))
 										.chest(new ItemPredicate.Builder().of(itemGetter, NyctoItems.VAMPIRE_CHESTPLATE))
@@ -207,9 +213,10 @@ public class NyctoAdvancementProvider extends FabricAdvancementProvider {
 								LootItemEntityPropertyCondition.hasProperties(
 										LootContext.EntityTarget.THIS,
 										EntityPredicate.Builder.entity()
-												.subPredicate(new VampirePredicate(
-														Optional.of(true),
-														Optional.of(new VampirePredicate.PowerCountPredicate(powerGetter.getOrThrow(NyctoPowerTags.VAMPIRE_CHOOSABLE), MinMaxBounds.Ints.atLeast(1)))))
+												.put(VampirePredicate.CODEC,
+														new VampirePredicate(
+																Optional.of(true),
+																Optional.of(new VampirePredicate.PowerCountPredicate(powerGetter.getOrThrow(NyctoPowerTags.VAMPIRE_CHOOSABLE), MinMaxBounds.Ints.atLeast(1)))))
 								).build()))
 				)))
 				.save(consumer, Nycto.id("moriyashiine/nycto/nycto/obtain_vampire_power").toString());
@@ -277,9 +284,9 @@ public class NyctoAdvancementProvider extends FabricAdvancementProvider {
 				.requirements(AdvancementRequirements.Strategy.OR)
 				.addCriterion("use_garlic_brew_on_vampire", NyctoTriggers.PLAYER_APPLIES_EFFECTS.createCriterion(new PlayerAppliesEffectsTrigger.TriggerInstance(
 						Optional.empty(),
-						MobEffectsPredicate.Builder.effects()
+						Optional.of(MobEffectsPredicate.Builder.effects()
 								.and(NyctoMobEffects.VAMPIRE_WARD)
-								.build(),
+								.build()),
 						vampirePredicate
 				)))
 				.addCriterion("drink_garlic_brew_as_vampire", CriteriaTriggers.CONSUME_ITEM.createCriterion(new ConsumeItemTrigger.TriggerInstance(

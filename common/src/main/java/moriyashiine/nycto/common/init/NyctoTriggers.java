@@ -1,8 +1,8 @@
 package moriyashiine.nycto.common.init;
 
 import moriyashiine.nycto.common.advancements.criterion.PlayerAppliesEffectsTrigger;
-import net.minecraft.advancements.criterion.ConsumeItemTrigger;
-import net.minecraft.advancements.criterion.PlayerTrigger;
+import net.minecraft.advancements.triggers.ConsumeItemTrigger;
+import net.minecraft.advancements.triggers.PlayerTrigger;
 
 import static moriyashiine.strawberrylib.api.module.SLibRegistries.registerTrigger;
 

@@ -94,7 +94,7 @@
   ],
   "client": [
 	"api.power.client.ControlsOptionScreenMixin",
-	"api.power.client.GuiMixin",
+	"api.power.client.HudMixin",
 	"api.power.client.MinecraftMixin",
 	"api.power.client.MouseHandlerMixin",
 	"api.power.client.OptionsMixin",
@@ -108,7 +108,7 @@
 	"power.vampire.batform.client.LocalPlayerMixin",
 	"power.vampire.bloodbarrier.client.AvatarRendererMixin",
 	"power.vampire.bloodbarrier.client.BatRendererMixin",
-	"power.vampire.bloodbarrier.client.GuiMixin",
+	"power.vampire.bloodbarrier.client.HudMixin",
 	"power.vampire.bloodrush.client.AvatarRendererMixin",
 	"power.vampire.bloodrush.client.SpinAttackEffectLayerMixin",
 	"power.vampire.carnage.client.AvatarRendererMixin",
@@ -123,7 +123,7 @@
 	"power.vampire.vampiricthrall.mobspecific.client.HorseRendererMixin",
 	"stunned.client.KeyboardInputMixin",
 	"vampire.client.EntityRendererMixin",
-	"vampire.client.GuiMixin",
+	"vampire.client.HudMixin",
 	"vampiricdagger.client.ConditionalItemModelPropertiesMixin",
 	"woodenstake.client.ItemModelResolverMixin",
 	"woodenstake.client.MinecraftMixin"

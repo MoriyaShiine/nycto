@@ -8,7 +8,7 @@
 			"condition": "minecraft:entity_properties",
 			"entity": "this",
 			"predicate": {
-			  "equipment": {
+			  "minecraft:equipment": {
 				"chest": {
 				  "items": "nycto:vampire_hunter_chestplate"
 				},

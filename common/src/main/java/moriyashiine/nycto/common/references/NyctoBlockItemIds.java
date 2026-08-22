@@ -1,6 +1,6 @@
 package moriyashiine.nycto.common.references;
 
-import moriyashiine.strawberrylib.api.objects.records.BlockItemId;
+import net.minecraft.references.BlockItemId;
 
 import static moriyashiine.strawberrylib.api.module.SLibRegistries.blockItemId;
 
