@@ -1,4 +1,17 @@
 ------------------------------------------------------
+Version 26.2-b4
+------------------------------------------------------
+- merge https://github.com/MoriyaShiine/nycto/pull/16
+- fix HurtByTargetGoal crash
+- fix vampire ward attribute modifiers applying incorrectly when removing humanity
+- dark form no longer bypasses blood veil
+- zombies can no longer convert villager thralls
+- keen senses now gives a stronger speed boost
+- villager thralls no longer turn into witches when struck by lightning
+- mobs no longer automatically target entities while hypnotized
+- add MCA: Reborn blood support
+
+------------------------------------------------------
 Version 26.1-b14
 ------------------------------------------------------
 - merge https://github.com/MoriyaShiine/nycto/pull/16
