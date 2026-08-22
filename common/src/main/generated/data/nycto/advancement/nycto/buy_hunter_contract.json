@@ -1,5 +1,5 @@
 {
-  "parent": "nycto:moriyashiine/nycto/nycto/root",
+  "parent": "nycto:nycto/root",
   "criteria": {
 	"buy_hunter_contract": {
 	  "conditions": {

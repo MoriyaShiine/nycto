@@ -1,5 +1,5 @@
 {
-  "parent": "nycto:moriyashiine/nycto/nycto/obtain_vampire_power",
+  "parent": "nycto:nycto/obtain_vampire_power",
   "criteria": {
 	"complete_vampire_armor": {
 	  "conditions": {

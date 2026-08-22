@@ -95,7 +95,7 @@ public class NyctoAdvancementProvider extends FabricAdvancementProvider {
 								TimeCheck.time(worldClockGetter.getOrThrow(WorldClocks.OVERWORLD), IntRange.range(12500, 23500))
 										.setPeriod(24000)
 										.build())))))
-				.save(consumer, Nycto.id("moriyashiine/nycto/nycto/root").toString());
+				.save(consumer, Nycto.id("nycto/root").toString());
 		Advancement.Builder.advancement()
 				.parent(root)
 				.display(NyctoItems.OAK_COFFIN,
@@ -116,7 +116,7 @@ public class NyctoAdvancementProvider extends FabricAdvancementProvider {
 																		.of(blockGetter, NyctoBlockTags.COFFINS))))
 										.build()))
 				)))
-				.save(consumer, Nycto.id("moriyashiine/nycto/nycto/sleep_in_coffin").toString());
+				.save(consumer, Nycto.id("nycto/sleep_in_coffin").toString());
 		AdvancementHolder craftVampiricDagger = Advancement.Builder.advancement()
 				.parent(root)
 				.display(NyctoItems.VAMPIRIC_DAGGER,
@@ -128,7 +128,7 @@ public class NyctoAdvancementProvider extends FabricAdvancementProvider {
 						true,
 						false)
 				.addCriterion("obtain_vampiric_dagger", InventoryChangeTrigger.TriggerInstance.hasItems(NyctoItems.VAMPIRIC_DAGGER))
-				.save(consumer, Nycto.id("moriyashiine/nycto/nycto/obtain_vampiric_dagger").toString());
+				.save(consumer, Nycto.id("nycto/obtain_vampiric_dagger").toString());
 		Advancement.Builder.advancement()
 				.parent(craftVampiricDagger)
 				.display(NyctoItems.BLOOD_BOTTLE,
@@ -142,7 +142,7 @@ public class NyctoAdvancementProvider extends FabricAdvancementProvider {
 				.requirements(AdvancementRequirements.Strategy.OR)
 				.addCriterion("extract_blood_bottle_crafting", RecipeCraftedTrigger.TriggerInstance.craftedItem(NyctoRecipeProvider.BLOOD_EXTRACTION))
 				.addCriterion("extract_blood_bottle_inventory", NyctoTriggers.EXTRACT_BLOOD.createCriterion(new ConsumeItemTrigger.TriggerInstance(Optional.empty(), Optional.empty())))
-				.save(consumer, Nycto.id("moriyashiine/nycto/nycto/extract_blood_bottle").toString());
+				.save(consumer, Nycto.id("nycto/extract_blood_bottle").toString());
 		AdvancementHolder killVampire = Advancement.Builder.advancement()
 				.parent(root)
 				.display(NyctoItems.VAMPIRE_CHESTPLATE,
@@ -154,7 +154,7 @@ public class NyctoAdvancementProvider extends FabricAdvancementProvider {
 						true,
 						false)
 				.addCriterion("kill_vampire", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(entityTypeGetter, NyctoEntityTypes.VAMPIRE))))
-				.save(consumer, Nycto.id("moriyashiine/nycto/nycto/kill_vampire").toString());
+				.save(consumer, Nycto.id("nycto/kill_vampire").toString());
 		Advancement.Builder.advancement()
 				.parent(killVampire)
 				.display(NyctoItems.WOODEN_STAKE,
@@ -185,7 +185,7 @@ public class NyctoAdvancementProvider extends FabricAdvancementProvider {
 										.of(entityTypeGetter, NyctoEntityTypes.WOODEN_STAKE))
 								.build())
 				)))
-				.save(consumer, Nycto.id("moriyashiine/nycto/nycto/kill_vampire_with_wooden_stake").toString());
+				.save(consumer, Nycto.id("nycto/kill_vampire_with_wooden_stake").toString());
 		AdvancementHolder becomeVampire = Advancement.Builder.advancement()
 				.parent(killVampire)
 				.display(NyctoItems.VAMPIRE_BLOOD_BOTTLE,
@@ -197,7 +197,7 @@ public class NyctoAdvancementProvider extends FabricAdvancementProvider {
 						true,
 						false)
 				.addCriterion("become_vampire", NyctoTriggers.CHANGE_TRANSFORMATION.createCriterion(new PlayerTrigger.TriggerInstance(vampirePredicate)))
-				.save(consumer, Nycto.id("moriyashiine/nycto/nycto/become_vampire").toString());
+				.save(consumer, Nycto.id("nycto/become_vampire").toString());
 		AdvancementHolder obtainVampirePower = Advancement.Builder.advancement()
 				.parent(becomeVampire)
 				.display(NyctoItems.VAMPIRE_ALTAR,
@@ -219,7 +219,7 @@ public class NyctoAdvancementProvider extends FabricAdvancementProvider {
 																Optional.of(new VampirePredicate.PowerCountPredicate(powerGetter.getOrThrow(NyctoPowerTags.VAMPIRE_CHOOSABLE), MinMaxBounds.Ints.atLeast(1)))))
 								).build()))
 				)))
-				.save(consumer, Nycto.id("moriyashiine/nycto/nycto/obtain_vampire_power").toString());
+				.save(consumer, Nycto.id("nycto/obtain_vampire_power").toString());
 		Advancement.Builder.advancement()
 				.parent(obtainVampirePower)
 				.display(NyctoItems.VAMPIRE_UPGRADE_SMITHING_TEMPLATE,
@@ -234,7 +234,7 @@ public class NyctoAdvancementProvider extends FabricAdvancementProvider {
 				.addCriterion("complete_vampire_powers", NyctoTriggers.CHANGE_POWERS.createCriterion(new PlayerTrigger.TriggerInstance(completeVampirePredicate)))
 				.addCriterion("complete_vampire_armor", CriteriaTriggers.INVENTORY_CHANGED.createCriterion(new InventoryChangeTrigger.TriggerInstance(completeVampirePredicate, InventoryChangeTrigger.TriggerInstance.Slots.ANY, List.of())))
 				.rewards(new AdvancementRewards.Builder().addExperience(200))
-				.save(consumer, Nycto.id("moriyashiine/nycto/nycto/complete_vampire").toString());
+				.save(consumer, Nycto.id("nycto/complete_vampire").toString());
 		AdvancementHolder obtainGarlic = Advancement.Builder.advancement()
 				.parent(root)
 				.display(NyctoItems.GARLIC,
@@ -246,7 +246,7 @@ public class NyctoAdvancementProvider extends FabricAdvancementProvider {
 						true,
 						false)
 				.addCriterion("obtain_garlic", InventoryChangeTrigger.TriggerInstance.hasItems(NyctoItems.GARLIC))
-				.save(consumer, Nycto.id("moriyashiine/nycto/nycto/obtain_garlic").toString());
+				.save(consumer, Nycto.id("nycto/obtain_garlic").toString());
 		AdvancementHolder brewGarlicBrew = Advancement.Builder.advancement()
 				.parent(obtainGarlic)
 				.display(new ItemStackTemplate(Items.POTION, DataComponentPatch.builder().set(DataComponents.POTION_CONTENTS, new PotionContents(NyctoPotions.GARLIC)).build()),
@@ -270,7 +270,7 @@ public class NyctoAdvancementProvider extends FabricAdvancementProvider {
 						Optional.empty(),
 						Optional.of(NyctoPotions.STRONG_GARLIC)
 				)))
-				.save(consumer, Nycto.id("moriyashiine/nycto/nycto/brew_garlic_brew").toString());
+				.save(consumer, Nycto.id("nycto/brew_garlic_brew").toString());
 		Advancement.Builder.advancement()
 				.parent(brewGarlicBrew)
 				.display(new ItemStackTemplate(Items.SPLASH_POTION, DataComponentPatch.builder().set(DataComponents.POTION_CONTENTS, new PotionContents(NyctoPotions.GARLIC)).build()),
@@ -300,7 +300,7 @@ public class NyctoAdvancementProvider extends FabricAdvancementProvider {
 										.build()
 						)
 				)))
-				.save(consumer, Nycto.id("moriyashiine/nycto/nycto/use_garlic_brew_on_vampire").toString());
+				.save(consumer, Nycto.id("nycto/use_garlic_brew_on_vampire").toString());
 		AdvancementHolder craftGarlicWreath = Advancement.Builder.advancement()
 				.parent(obtainGarlic)
 				.display(NyctoItems.GARLIC_WREATH,
@@ -312,7 +312,7 @@ public class NyctoAdvancementProvider extends FabricAdvancementProvider {
 						true,
 						false)
 				.addCriterion("obtain_garlic_wreath", InventoryChangeTrigger.TriggerInstance.hasItems(NyctoItems.GARLIC_WREATH))
-				.save(consumer, Nycto.id("moriyashiine/nycto/nycto/obtain_garlic_wreath").toString());
+				.save(consumer, Nycto.id("nycto/obtain_garlic_wreath").toString());
 		Advancement.Builder.advancement()
 				.parent(craftGarlicWreath)
 				.display(NyctoItems.GARLIC_COATED_HALBERD,
@@ -324,7 +324,7 @@ public class NyctoAdvancementProvider extends FabricAdvancementProvider {
 						true,
 						false)
 				.addCriterion("obtain_garlic_coated_halberd", InventoryChangeTrigger.TriggerInstance.hasItems(NyctoItems.GARLIC_COATED_HALBERD))
-				.save(consumer, Nycto.id("moriyashiine/nycto/nycto/obtain_garlic_coated_halberd").toString());
+				.save(consumer, Nycto.id("nycto/obtain_garlic_coated_halberd").toString());
 		Advancement.Builder.advancement()
 				.parent(craftGarlicWreath)
 				.display(NyctoItems.VAMPIRE_HUNTER_UPGRADE_SMITHING_TEMPLATE,
@@ -348,7 +348,7 @@ public class NyctoAdvancementProvider extends FabricAdvancementProvider {
 												)
 								).build())),
 						InventoryChangeTrigger.TriggerInstance.Slots.ANY, List.of())))
-				.save(consumer, Nycto.id("moriyashiine/nycto/nycto/wear_vampire_hunter_armor").toString());
+				.save(consumer, Nycto.id("nycto/wear_vampire_hunter_armor").toString());
 		Advancement.Builder.advancement()
 				.parent(root)
 				.display(NyctoItems.HUNTER_CONTRACT,
@@ -366,6 +366,6 @@ public class NyctoAdvancementProvider extends FabricAdvancementProvider {
 								ItemPredicate.Builder.item()
 										.of(itemGetter, NyctoItems.HUNTER_CONTRACT)
 										.build()))))
-				.save(consumer, Nycto.id("moriyashiine/nycto/nycto/buy_hunter_contract").toString());
+				.save(consumer, Nycto.id("nycto/buy_hunter_contract").toString());
 	}
 }

@@ -1,5 +1,5 @@
 {
-  "parent": "nycto:moriyashiine/nycto/nycto/obtain_vampiric_dagger",
+  "parent": "nycto:nycto/obtain_vampiric_dagger",
   "criteria": {
 	"extract_blood_bottle_crafting": {
 	  "conditions": {

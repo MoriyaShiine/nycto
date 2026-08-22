@@ -1,5 +1,5 @@
 {
-  "parent": "nycto:moriyashiine/nycto/nycto/obtain_garlic",
+  "parent": "nycto:nycto/obtain_garlic",
   "criteria": {
 	"obtain_garlic_wreath": {
 	  "conditions": {
