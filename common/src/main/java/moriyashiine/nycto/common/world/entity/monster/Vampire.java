@@ -74,8 +74,11 @@ public class Vampire extends Monster {
 	}
 
 	public static boolean checkVampireSpawnRules(EntityType<Vampire> type, ServerLevelAccessor level, EntitySpawnReason spawnReason, BlockPos pos, RandomSource random) {
+		if (!level.getLevel().getGameRules().get(NyctoGameRules.SPAWN_VAMPIRES)) {
+			return false;
+		}
 		MoonPhase moonPhase = level.getLevel().environmentAttributes().getValue(EnvironmentAttributes.MOON_PHASE, pos);
-		return Monster.checkMonsterSpawnRules(type, level, spawnReason, pos, random) && moonPhase == MoonPhase.NEW_MOON && level.getLevel().getGameRules().get(NyctoGameRules.SPAWN_VAMPIRES);
+		return moonPhase == MoonPhase.NEW_MOON && Monster.checkMonsterSpawnRules(type, level, spawnReason, pos, random);
 	}
 
 	@Override

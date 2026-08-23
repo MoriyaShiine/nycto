@@ -33,7 +33,7 @@ import static moriyashiine.strawberrylib.api.module.SLibRegistries.editModifiers
 public class VampiricDaggerItem extends Item {
 	public static final int MAX_CHARGE = 20;
 
-	private static final AttributeModifier ENTITY_INTERACTION_RANGE_MODIFIER = new AttributeModifier(Nycto.id("vampiric_dagger_entity_interaction_range"), -0.5, AttributeModifier.Operation.ADD_VALUE);
+	private static final AttributeModifier ENTITY_INTERACTION_RANGE_MODIFIER = new AttributeModifier(Nycto.id("vampiric_dagger"), -0.5, AttributeModifier.Operation.ADD_VALUE);
 	private static final ModifierTrio MODIFIER = new ModifierTrio(Attributes.ENTITY_INTERACTION_RANGE, ENTITY_INTERACTION_RANGE_MODIFIER, EquipmentSlotGroup.MAINHAND);
 
 	private static final Component HOLDING_PLAYER_BLOOD_TEXT = Component.translatable("tooltip.nycto.holding_player_blood").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY);

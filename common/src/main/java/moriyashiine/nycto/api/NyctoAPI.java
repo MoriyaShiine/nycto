@@ -75,8 +75,11 @@ public class NyctoAPI {
 		return NyctoEntityComponents.TRANSFORMATION.get(player).hasPower(power);
 	}
 
-	public static int getWeaknesses(Player player, TagKey<Power> choosablePowers) {
-		return getPowers(player).stream().filter(instance -> instance.getPower().isWeakness() && instance.is(choosablePowers)).collect(Collectors.toSet()).size();
+	public static int getWeaknesses(LivingEntity entity, TagKey<Power> choosablePowers) {
+		if (entity instanceof Player player) {
+			return getPowers(player).stream().filter(instance -> instance.getPower().isWeakness() && instance.is(choosablePowers)).collect(Collectors.toSet()).size();
+		}
+		return 3;
 	}
 
 	public static void setPowerCooldown(ServerPlayer player, Power power, int cooldown) {
@@ -93,7 +96,7 @@ public class NyctoAPI {
 	}
 
 	public static boolean isHealingBlocked(LivingEntity entity) {
-		return NyctoEntityComponents.HEAL_BLOCK.get(entity).getTicksToBlock() > 0;
+		return NyctoEntityComponents.HEAL_BLOCK.get(entity).getTicks() > 0;
 	}
 
 	public static void applyHealBlock(LivingEntity entity, int ticks, @Nullable Entity lifeStealer) {
@@ -103,7 +106,7 @@ public class NyctoAPI {
 				ticks = (int) (ticks * 2 / 3F);
 			}
 			HealBlockComponent healBlock = NyctoEntityComponents.HEAL_BLOCK.get(entity);
-			healBlock.setTicksToBlock(ticks);
+			healBlock.setTicks(ticks);
 			healBlock.setLifeStealer(lifeStealer);
 			healBlock.sync();
 		}

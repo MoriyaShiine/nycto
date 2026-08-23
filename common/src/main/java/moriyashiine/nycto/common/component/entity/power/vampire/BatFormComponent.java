@@ -15,7 +15,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 
 public class BatFormComponent extends VampireFormChangeComponent {
-	private static final AttributeModifier MAX_HEALTH_MODIFIER = new AttributeModifier(Nycto.id("bat_form_max_health"), -0.7, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+	private static final AttributeModifier MAX_HEALTH_MODIFIER = new AttributeModifier(Nycto.id("bat_form"), -0.7, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 
 	public BatFormComponent(Player obj) {
 		super(obj);

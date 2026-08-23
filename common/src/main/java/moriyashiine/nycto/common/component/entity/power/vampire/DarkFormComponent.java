@@ -13,6 +13,7 @@ import moriyashiine.nycto.common.world.entity.monster.DarkForm;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import moriyashiine.strawberrylib.api.objects.enums.ParticleAnchor;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -24,13 +25,14 @@ import net.minecraft.world.level.storage.ValueOutput;
 import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
 
 public class DarkFormComponent extends VampireFormChangeComponent implements CommonTickingComponent {
-	private static final AttributeModifier ARMOR_MODIFIER = new AttributeModifier(Nycto.id("dark_form_armor"), 20, AttributeModifier.Operation.ADD_VALUE);
-	private static final AttributeModifier ARMOR_TOUGHNESS_MODIFIER = new AttributeModifier(Nycto.id("dark_form_armor_toughness"), 8, AttributeModifier.Operation.ADD_VALUE);
-	private static final AttributeModifier ATTACK_DAMAGE_MODIFIER = new AttributeModifier(Nycto.id("dark_form_attack_damage"), 10, AttributeModifier.Operation.ADD_VALUE);
-	private static final AttributeModifier ATTACK_SPEED_MODIFIER = new AttributeModifier(Nycto.id("dark_form_attack_speed"), -0.5, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
-	private static final AttributeModifier BLOCK_INTERACTION_RANGE_MODIFIER = new AttributeModifier(Nycto.id("dark_form_block_interaction_range"), 1, AttributeModifier.Operation.ADD_VALUE);
-	private static final AttributeModifier ENTITY_INTERACTION_RANGE_MODIFIER = new AttributeModifier(Nycto.id("dark_form_entity_interaction_range"), 1, AttributeModifier.Operation.ADD_VALUE);
-	private static final AttributeModifier KNOCKBACK_RESISTANCE_MODIFIER = new AttributeModifier(Nycto.id("dark_form_knockback_resistance"), 0.7, AttributeModifier.Operation.ADD_VALUE);
+	private static final Identifier MODIFIER_ID = Nycto.id("dark_form");
+	private static final AttributeModifier ARMOR_MODIFIER = new AttributeModifier(MODIFIER_ID, 20, AttributeModifier.Operation.ADD_VALUE);
+	private static final AttributeModifier ARMOR_TOUGHNESS_MODIFIER = new AttributeModifier(MODIFIER_ID, 8, AttributeModifier.Operation.ADD_VALUE);
+	private static final AttributeModifier ATTACK_DAMAGE_MODIFIER = new AttributeModifier(MODIFIER_ID, 10, AttributeModifier.Operation.ADD_VALUE);
+	private static final AttributeModifier ATTACK_SPEED_MODIFIER = new AttributeModifier(MODIFIER_ID, -0.5, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+	private static final AttributeModifier BLOCK_INTERACTION_RANGE_MODIFIER = new AttributeModifier(MODIFIER_ID, 1, AttributeModifier.Operation.ADD_VALUE);
+	private static final AttributeModifier ENTITY_INTERACTION_RANGE_MODIFIER = new AttributeModifier(MODIFIER_ID, 1, AttributeModifier.Operation.ADD_VALUE);
+	private static final AttributeModifier KNOCKBACK_RESISTANCE_MODIFIER = new AttributeModifier(MODIFIER_ID, 0.7, AttributeModifier.Operation.ADD_VALUE);
 
 	private int jumpCooldown = 0;
 

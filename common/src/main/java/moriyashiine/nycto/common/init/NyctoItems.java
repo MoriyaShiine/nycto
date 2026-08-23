@@ -173,7 +173,7 @@ public class NyctoItems {
 	public static Item registerHunterArmor(ResourceKey<Item> key, ArmorType type, Holder<Attribute> attribute) {
 		boolean body = type == ArmorType.BODY;
 		boolean mask = type == ArmorType.HELMET;
-		AttributeModifier resistanceModifier = new AttributeModifier(Nycto.id("hunter_armor_resistance_" + type.getName()), body ? 4 : 1, AttributeModifier.Operation.ADD_VALUE);
+		AttributeModifier resistanceModifier = new AttributeModifier(Nycto.id("hunter_armor_" + type.getName()), body ? 4 : 1, AttributeModifier.Operation.ADD_VALUE);
 		Item.Properties properties = properties();
 		if (body) {
 			properties.wolfArmor(ArmorMaterials.ARMADILLO_SCUTE);
@@ -189,7 +189,7 @@ public class NyctoItems {
 	}
 
 	public static Item registerHalberd(ResourceKey<Item> key) {
-		AttributeModifier entityInteractionRangeModifier = new AttributeModifier(Nycto.id("halberd_entity_interaction_range"), 0.5, AttributeModifier.Operation.ADD_VALUE);
+		AttributeModifier entityInteractionRangeModifier = new AttributeModifier(Nycto.id("halberd"), 0.5, AttributeModifier.Operation.ADD_VALUE);
 		ModifierTrio modifier = new ModifierTrio(Attributes.ENTITY_INTERACTION_RANGE, entityInteractionRangeModifier, EquipmentSlotGroup.MAINHAND);
 		return registerItem(key, settings -> new AxeItem(ToolMaterial.DIAMOND, 5, -3.2F, settings), editModifiers(NyctoItems::properties, modifier));
 	}

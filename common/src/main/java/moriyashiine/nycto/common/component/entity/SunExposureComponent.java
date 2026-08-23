@@ -159,7 +159,7 @@ public class SunExposureComponent implements AutoSyncedComponent, CommonTickingC
 				if (obj instanceof ServerPlayer player) {
 					NyctoUtil.disableFormChangePowers(player.level(), player, null);
 				}
-				if (NyctoEntityComponents.HEAL_BLOCK.get(obj).getTicksToBlock() < -BLOCKED_COOLDOWN) {
+				if (NyctoEntityComponents.HEAL_BLOCK.get(obj).getTicks() < -BLOCKED_COOLDOWN) {
 					NyctoAPI.applyHealBlock(obj, -BLOCKED_COOLDOWN);
 				}
 			}

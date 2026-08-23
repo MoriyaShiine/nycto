@@ -15,7 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import org.ladysnake.cca.api.v3.component.tick.ClientTickingComponent;
 
 public class MistFormComponent extends VampireFormChangeComponent implements ClientTickingComponent {
-	private static final AttributeModifier WAYPOINT_TRANSMIT_RANGE_MODIFIER = new AttributeModifier(Nycto.id("mist_form_waypoint_transmit_range"), -1, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+	private static final AttributeModifier WAYPOINT_TRANSMIT_RANGE_MODIFIER = new AttributeModifier(Nycto.id("mist_form"), -1, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 
 	private static final ParticleVelocity PARTICLE_VELOCITY = ParticleVelocity.of(0.2);
 
