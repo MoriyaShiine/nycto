@@ -9,7 +9,7 @@ import moriyashiine.nycto.common.tag.NyctoItemTags;
 import moriyashiine.nycto.common.tag.NyctoMobEffectTags;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.strawberrylib.api.event.AfterDamageIncludingDeathEvent;
-import moriyashiine.strawberrylib.api.event.EatFoodEvent;
+import moriyashiine.strawberrylib.api.event.FoodEvents;
 import moriyashiine.strawberrylib.api.event.ModifyMovementEvents;
 import moriyashiine.strawberrylib.api.event.TickEntityEvent;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
@@ -36,7 +36,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.gossip.GossipType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -51,7 +50,7 @@ public class VampireEvent {
 		ServerLivingEntityEvents.ALLOW_DEATH.register(new BloodVeil());
 		ModifyMovementEvents.JUMP_DELTA.register(new ChargeJump());
 		UseEntityCallback.EVENT.register(new DrinkBlood());
-		EatFoodEvent.EVENT.register(new EatFood());
+		FoodEvents.EAT.register(new EatFood());
 		ServerMobEffectEvents.ALLOW_ADD.register(new EffectImmunity());
 		ServerLivingEntityEvents.ALLOW_DAMAGE.register(new FreezeImmunity());
 		ServerLivingEntityEvents.AFTER_DAMAGE.register(new HealBlock());
@@ -162,9 +161,9 @@ public class VampireEvent {
 		}
 	}
 
-	private static class EatFood implements EatFoodEvent {
+	private static class EatFood implements FoodEvents.Eat {
 		@Override
-		public void eat(Level level, LivingEntity user, ItemStack stack, FoodProperties properties) {
+		public void eat(Level level, LivingEntity user, ItemStack stack) {
 			if (level instanceof ServerLevel serverLevel && NyctoAPI.isVampire(user) && !stack.is(NyctoItemTags.SAFE_EDIBLES)) {
 				user.addEffect(new MobEffectInstance(MobEffects.HUNGER, 200, 2));
 				user.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 200, 1));
