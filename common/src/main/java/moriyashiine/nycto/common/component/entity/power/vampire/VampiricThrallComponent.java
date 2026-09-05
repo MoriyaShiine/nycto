@@ -3,7 +3,6 @@ package moriyashiine.nycto.common.component.entity.power.vampire;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import moriyashiine.nycto.api.NyctoAPI;
-import moriyashiine.nycto.common.component.entity.BloodComponent;
 import moriyashiine.nycto.common.component.entity.power.util.HasOwnerComponent;
 import moriyashiine.nycto.common.event.power.util.HasOwnerEvent;
 import moriyashiine.nycto.common.init.NyctoBlocks;
@@ -81,10 +80,9 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 	public void serverTick() {
 		if (hasOwner() && obj.isAlive()) {
 			if (obj.getHealth() < obj.getMaxHealth() && obj.tickCount % 15 == 0 && !NyctoAPI.isHealingBlocked(obj)) {
-				BloodComponent blood = NyctoEntityComponents.BLOOD.get(obj);
-				if (blood.getBlood() > 0) {
+				if (NyctoAPI.getBlood(obj) > 0) {
 					if (!alternateDrain) {
-						blood.drain(1);
+						NyctoAPI.drainBlood(obj, 1);
 					}
 					obj.heal(1);
 					alternateDrain = !alternateDrain;

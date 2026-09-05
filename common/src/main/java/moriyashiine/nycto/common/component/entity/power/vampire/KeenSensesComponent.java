@@ -73,7 +73,7 @@ public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingCo
 				NyctoPowers.KEEN_SENSES.playUseSound((ServerPlayer) obj);
 				toggle();
 			} else if (obj.slib$isSurvival() && --drainTicks == 0) {
-				if (NyctoEntityComponents.BLOOD.get(obj).drain(1)) {
+				if (NyctoAPI.drainBlood(obj, 1)) {
 					drainTicks = POWER_DRAIN_TICKS;
 				} else {
 					toggle();
@@ -123,7 +123,7 @@ public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingCo
 		if (enabled) {
 			drainTicks = 0;
 		} else {
-			NyctoEntityComponents.BLOOD.get(obj).drain(NyctoPowers.KEEN_SENSES.getCost(obj));
+			NyctoAPI.drainBlood(obj, NyctoPowers.KEEN_SENSES.getCost(obj));
 			drainTicks = POWER_DRAIN_TICKS;
 		}
 		enabled = !enabled;

@@ -1,7 +1,7 @@
 package moriyashiine.nycto.common.world.power.vampire;
 
+import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.component.level.power.BatSwarmComponent;
-import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.nycto.common.init.NyctoLevelComponents;
 import moriyashiine.nycto.common.init.NyctoPowers;
 import moriyashiine.nycto.common.init.NyctoSoundEvents;
@@ -36,6 +36,6 @@ public class BatSwarmPower extends VampireActivePower {
 		BatSwarmComponent batSwarm = NyctoLevelComponents.BAT_SWARM.get(level);
 		batSwarm.addBatSwarm(entity);
 		batSwarm.sync();
-		NyctoEntityComponents.BLOOD.get(entity).drain(NyctoPowers.BAT_SWARM.getCost(entity));
+		NyctoAPI.drainBlood(entity, NyctoPowers.BAT_SWARM.getCost(entity));
 	}
 }

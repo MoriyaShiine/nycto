@@ -1,7 +1,6 @@
 package moriyashiine.nycto.common.event.entity;
 
 import moriyashiine.nycto.api.NyctoAPI;
-import moriyashiine.nycto.common.component.entity.BloodComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
 import moriyashiine.nycto.common.init.*;
 import moriyashiine.nycto.common.tag.NyctoBlockTags;
@@ -62,13 +61,10 @@ public class VampireEvent {
 	private static class BloodVeil implements ServerLivingEntityEvents.AllowDeath {
 		@Override
 		public boolean allowDeath(LivingEntity entity, DamageSource damageSource, float damageAmount) {
-			if (entity.getHealth() - damageAmount <= 0 && NyctoAPI.isVampire(entity) && !NyctoUtil.bypassesBloodVeil(damageSource) && !hasThinBlood(entity)) {
-				BloodComponent blood = NyctoEntityComponents.BLOOD.get(entity);
-				if (blood.drain(Mth.floor(damageAmount * NyctoUtil.getArmorMultiplier(entity)))) {
-					NyctoAPI.applyHealBlock(entity, 60);
-					entity.setHealth(1);
-					return false;
-				}
+			if (entity.getHealth() - damageAmount <= 0 && NyctoAPI.isVampire(entity) && !NyctoUtil.bypassesBloodVeil(damageSource) && !hasThinBlood(entity) && NyctoAPI.drainBlood(entity, Mth.floor(damageAmount * NyctoUtil.getArmorMultiplier(entity)))) {
+				NyctoAPI.applyHealBlock(entity, 60);
+				entity.setHealth(1);
+				return false;
 			}
 			return true;
 		}
@@ -99,7 +95,7 @@ public class VampireEvent {
 	private static class DrinkBlood implements UseEntityCallback {
 		@Override
 		public InteractionResult interact(Player player, Level level, InteractionHand hand, Entity entity, @Nullable EntityHitResult hitResult) {
-			if (hand == InteractionHand.MAIN_HAND && player.isShiftKeyDown() && player.slib$exists() && player.getItemInHand(hand).isEmpty() && NyctoAPI.hasBlood(entity) && entity instanceof LivingEntity living && living.hurtTime == 0 && living.isAlive() && !living.hasInfiniteMaterials() && NyctoAPI.isVampire(player)) {
+			if (hand == InteractionHand.MAIN_HAND && player.isShiftKeyDown() && player.slib$exists() && player.getItemInHand(hand).isEmpty() && NyctoAPI.hasBlood(entity) && entity instanceof LivingEntity living && living.hurtTime == 0 && living.isAlive() && NyctoAPI.isVampire(player)) {
 				boolean qualityBlood = NyctoAPI.hasQualityBlood(entity);
 				if (!qualityBlood && NyctoAPI.hasPower(player, NyctoPowers.RICH_TASTES)) {
 					return InteractionResult.PASS;
@@ -108,17 +104,15 @@ public class VampireEvent {
 				if (vampiricThrall != null && vampiricThrall.isOwner(player)) {
 					return InteractionResult.PASS;
 				}
-				BloodComponent playerBlood = NyctoEntityComponents.BLOOD.get(player);
-				BloodComponent livingBlood = NyctoEntityComponents.BLOOD.get(living);
-				int fillAmount = (qualityBlood ? 5 : 1) + (NyctoUtil.getsMoreBlood(player) ? 2 : 0);
+				int fillAmount = (qualityBlood ? 5 : 1) + (NyctoUtil.hasBetterBloodDrinking(player) ? 2 : 0);
 				int drainAmount = qualityBlood ? 10 : 25;
 				double armorMultiplier = NyctoUtil.getArmorMultiplier(living);
 				fillAmount = Mth.ceil(fillAmount * armorMultiplier);
 				drainAmount = Mth.ceil(drainAmount * armorMultiplier);
-				if (fillAmount > 0 && playerBlood.canFill() && livingBlood.getBlood() > 0) {
+				if (fillAmount > 0 && NyctoAPI.canFillBlood(player) && NyctoAPI.canDrainBlood(living)) {
 					if (level instanceof ServerLevel serverWorld) {
 						player.swing(InteractionHand.MAIN_HAND, true);
-						if (canSafelyDrain(player, living, livingBlood, drainAmount)) {
+						if (canSafelyDrain(player, living, drainAmount)) {
 							living.hurtTime = living.hurtDuration = 10;
 							if (NyctoUtil.isVillager(living)) {
 								NyctoUtil.notifyNearbyVillagers(living, player, GossipType.MINOR_NEGATIVE, 10);
@@ -126,11 +120,11 @@ public class VampireEvent {
 						} else {
 							living.hurtServer(serverWorld, level.damageSources().source(NyctoDamageTypes.BLEED, player), 2);
 						}
-						if (livingBlood.drainAttack(drainAmount)) {
+						if (NyctoAPI.drainBloodAttack(living, drainAmount)) {
 							SLibUtils.playSound(entity, NyctoSoundEvents.BLOOD_BOTTLE_DRINK.value());
 							fillAmount = getModifiedFillAmount(fillAmount, qualityBlood, living.getRandom());
 							if (fillAmount > 0) {
-								playerBlood.fill(fillAmount);
+								NyctoAPI.fillBlood(player, fillAmount);
 							}
 						}
 					}
@@ -150,11 +144,11 @@ public class VampireEvent {
 			return fillAmount;
 		}
 
-		private static boolean canSafelyDrain(Player attacker, LivingEntity target, BloodComponent targetBloodComponent, int toDrain) {
+		private static boolean canSafelyDrain(Player attacker, LivingEntity target, int toDrain) {
 			if (target.hasEffect(NyctoMobEffects.HYPNOTIZED)) {
-				return targetBloodComponent.getBlood() - toDrain > 0;
+				return NyctoAPI.getBlood(target) - toDrain > 0;
 			}
-			if (targetBloodComponent.aboveHalfBlood()) {
+			if (NyctoEntityComponents.BLOOD.get(target).aboveHalfBlood()) {
 				return target.isSleeping() || NyctoEntityComponents.MIST_FORM.get(attacker).isEnabled();
 			}
 			return false;

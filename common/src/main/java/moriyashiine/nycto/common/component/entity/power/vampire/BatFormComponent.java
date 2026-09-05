@@ -1,5 +1,6 @@
 package moriyashiine.nycto.common.component.entity.power.vampire;
 
+import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.NyctoService;
 import moriyashiine.nycto.common.component.entity.power.util.VampireFormChangeComponent;
@@ -31,17 +32,17 @@ public class BatFormComponent extends VampireFormChangeComponent {
 		AttributeInstance maxHealth = obj.getAttribute(Attributes.MAX_HEALTH);
 		float percentage = obj.getHealth() / obj.getMaxHealth();
 		if (enabled) {
-			NyctoService.INSTANCE.applyBatFormAbilities(obj, false);
 			maxHealth.removeModifier(MAX_HEALTH_MODIFIER);
 			obj.setHealth(obj.getMaxHealth() * percentage);
+			NyctoService.INSTANCE.applyBatFormAbilities(obj, false);
 			SLibUtils.removeModelReplacementType(obj, EntityTypes.BAT);
 			drainTicks = 0;
 		} else {
-			NyctoService.INSTANCE.applyBatFormAbilities(obj, true);
 			maxHealth.addPermanentModifier(MAX_HEALTH_MODIFIER);
 			obj.setHealth(obj.getMaxHealth() * percentage);
+			NyctoService.INSTANCE.applyBatFormAbilities(obj, true);
 			SLibUtils.addModelReplacementType(obj, EntityTypes.BAT, 500);
-			NyctoEntityComponents.BLOOD.get(obj).drain(NyctoPowers.BAT_FORM.getCost(obj));
+			NyctoAPI.drainBlood(obj, NyctoPowers.BAT_FORM.getCost(obj));
 			drainTicks = POWER_DRAIN_TICKS;
 		}
 		enabled = !enabled;

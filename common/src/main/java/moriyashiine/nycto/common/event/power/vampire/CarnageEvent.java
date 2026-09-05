@@ -1,6 +1,6 @@
 package moriyashiine.nycto.common.event.power.vampire;
 
-import moriyashiine.nycto.common.component.entity.BloodComponent;
+import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import moriyashiine.strawberrylib.api.event.AfterDamageIncludingDeathEvent;
@@ -17,9 +17,8 @@ public class CarnageEvent implements AfterDamageIncludingDeathEvent {
 	@Override
 	public void afterDamage(LivingEntity victim, DamageSource source, float originalDamage, float modifiedDamage, boolean blocked) {
 		if (!blocked && SLibUtils.isAttackingPlayerCooldownWithinThreshold(0.7F) && source.getDirectEntity() instanceof LivingEntity attacker && NyctoEntityComponents.CARNAGE.get(attacker).isActive()) {
-			BloodComponent blood = NyctoEntityComponents.BLOOD.get(victim);
-			blood.drainAttack(Mth.floor(Math.min(5, modifiedDamage)));
-			blood.setBleedTicks(80);
+			NyctoAPI.drainBloodAttack(victim, Mth.floor(Math.min(5, modifiedDamage)));
+			NyctoAPI.setBleedTicks(victim, 80);
 			SLibUtils.playSound(victim, NyctoSoundEvents.CARNAGE_HIT, 1, Mth.nextFloat(victim.getRandom(), 0.8F, 1.2F));
 		}
 	}

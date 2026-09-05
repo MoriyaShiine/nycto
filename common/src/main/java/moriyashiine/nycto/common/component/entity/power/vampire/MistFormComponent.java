@@ -1,5 +1,6 @@
 package moriyashiine.nycto.common.component.entity.power.vampire;
 
+import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.component.entity.power.util.VampireFormChangeComponent;
 import moriyashiine.nycto.common.init.NyctoEntityComponents;
@@ -46,7 +47,7 @@ public class MistFormComponent extends VampireFormChangeComponent implements Cli
 		if (enabled) {
 			drainTicks = 0;
 		} else {
-			NyctoEntityComponents.BLOOD.get(obj).drain(NyctoPowers.MIST_FORM.getCost(obj));
+			NyctoAPI.drainBlood(obj, NyctoPowers.MIST_FORM.getCost(obj));
 			drainTicks = POWER_DRAIN_TICKS;
 		}
 		enabled = !enabled;

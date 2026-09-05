@@ -96,8 +96,8 @@ public class DarkFormComponent extends VampireFormChangeComponent implements Com
 			SLibUtils.removeModelReplacementType(obj, NyctoEntityTypes.DARK_FORM);
 			drainTicks = 0;
 		} else {
-			NyctoEntityComponents.BLOOD.get(obj).drain(NyctoPowers.DARK_FORM.getCost(obj));
 			SLibUtils.addModelReplacementType(obj, NyctoEntityTypes.DARK_FORM, 500);
+			NyctoAPI.drainBlood(obj, NyctoPowers.DARK_FORM.getCost(obj));
 			drainTicks = POWER_DRAIN_TICKS;
 		}
 		enabled = !enabled;

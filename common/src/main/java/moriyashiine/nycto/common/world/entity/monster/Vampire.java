@@ -6,7 +6,6 @@ import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.api.world.power.Power;
-import moriyashiine.nycto.common.component.entity.BloodComponent;
 import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.nycto.common.init.NyctoGameRules;
 import moriyashiine.nycto.common.init.NyctoPowers;
@@ -175,17 +174,11 @@ public class Vampire extends Monster {
 		boolean hurtTarget = super.doHurtTarget(level, target);
 		if (hurtTarget) {
 			swing(InteractionHand.MAIN_HAND);
-			if (NyctoAPI.hasQualityBlood(target)) {
-				BloodComponent targetBlood = NyctoEntityComponents.BLOOD.getNullable(target);
-				if (targetBlood != null) {
-					BloodComponent selfBlood = NyctoEntityComponents.BLOOD.get(this);
-					if (selfBlood.canFill()) {
-						int amount = Math.min(5, targetBlood.getBlood());
-						if (targetBlood.drainAttack(amount)) {
-							selfBlood.fill(amount);
-							SLibUtils.playSound(target, NyctoSoundEvents.BLOOD_BOTTLE_DRINK.value());
-						}
-					}
+			if (target instanceof LivingEntity living && NyctoAPI.hasQualityBlood(living) && NyctoAPI.canFillBlood(this)) {
+				int amount = Math.min(5, NyctoAPI.getBlood(living));
+				if (NyctoAPI.drainBloodAttack(living, amount)) {
+					NyctoAPI.fillBlood(this, amount);
+					SLibUtils.playSound(target, NyctoSoundEvents.BLOOD_BOTTLE_DRINK.value());
 				}
 			}
 		}

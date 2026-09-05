@@ -1,6 +1,6 @@
 package moriyashiine.nycto.common.world.power.vampire;
 
-import moriyashiine.nycto.common.init.NyctoEntityComponents;
+import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.init.NyctoPowers;
 import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import moriyashiine.nycto.common.world.entity.projectile.arrow.BloodFlechette;
@@ -37,6 +37,6 @@ public class BloodFlechettesPower extends VampireActivePower {
 			bloodFlechette.shootFromRotation(entity, entity.getXRot(), entity.getYHeadRot(), 0, 1, 12);
 			level.addFreshEntity(bloodFlechette);
 		}
-		NyctoEntityComponents.BLOOD.get(entity).drain(NyctoPowers.BLOOD_FLECHETTES.getCost(entity));
+		NyctoAPI.drainBlood(entity, NyctoPowers.BLOOD_FLECHETTES.getCost(entity));
 	}
 }

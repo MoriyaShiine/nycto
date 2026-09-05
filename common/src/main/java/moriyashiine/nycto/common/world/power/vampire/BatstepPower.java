@@ -1,6 +1,10 @@
 package moriyashiine.nycto.common.world.power.vampire;
 
-import moriyashiine.nycto.common.init.*;
+import moriyashiine.nycto.api.NyctoAPI;
+import moriyashiine.nycto.common.init.NyctoMobEffects;
+import moriyashiine.nycto.common.init.NyctoParticleTypes;
+import moriyashiine.nycto.common.init.NyctoPowers;
+import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -64,7 +68,7 @@ public class BatstepPower extends VampireActivePower {
 		entity.setDeltaMovement(Vec3.ZERO);
 		entity.needsSync = entity.hurtMarked = true;
 		entity.resetFallDistance();
-		NyctoEntityComponents.BLOOD.get(entity).drain(NyctoPowers.BATSTEP.getCost(entity));
+		NyctoAPI.drainBlood(entity, NyctoPowers.BATSTEP.getCost(entity));
 	}
 
 	private static void attack(ServerLevel level, LivingEntity attacker, LivingEntity target) {

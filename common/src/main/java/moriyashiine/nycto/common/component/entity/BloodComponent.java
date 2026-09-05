@@ -123,6 +123,10 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 		return blood < MAX_BLOOD;
 	}
 
+	public boolean canDrain() {
+		return blood > 0 && !obj.hasInfiniteMaterials();
+	}
+
 	public boolean aboveHalfBlood() {
 		return blood > MAX_BLOOD / 2;
 	}
@@ -149,11 +153,11 @@ public class BloodComponent implements AutoSyncedComponent, ServerTickingCompone
 		return false;
 	}
 
-	public boolean drainAttack(int amount) {
-		if (amount == 0 || blood == 0 || obj.isInvulnerable()) {
+	public boolean drainAttack(int amount, boolean allowBloodDrainResistance) {
+		if (amount == 0 || !canDrain()) {
 			return false;
 		}
-		if (obj.getRandom().nextFloat() <= 2 / 3F && NyctoUtil.hasBloodDrainResistance(obj)) {
+		if (allowBloodDrainResistance && obj.getRandom().nextFloat() <= 2 / 3F && NyctoUtil.hasBloodDrainResistance(obj)) {
 			SLibUtils.playSound(obj, NyctoSoundEvents.GENERIC_BLOOD_DRAIN_BLOCKED, 1, Mth.nextFloat(obj.getRandom(), 0.95F, 1.05F));
 			return false;
 		}

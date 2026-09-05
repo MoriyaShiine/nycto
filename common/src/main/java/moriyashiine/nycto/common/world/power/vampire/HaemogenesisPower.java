@@ -1,5 +1,6 @@
 package moriyashiine.nycto.common.world.power.vampire;
 
+import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.nycto.common.init.NyctoPowers;
 import moriyashiine.nycto.common.init.NyctoSoundEvents;
@@ -31,6 +32,6 @@ public class HaemogenesisPower extends VampireActivePower {
 
 	public static void startHealing(LivingEntity entity) {
 		NyctoEntityComponents.HAEMOGENESIS.get(entity).startHealing();
-		NyctoEntityComponents.BLOOD.get(entity).drain(NyctoPowers.HAEMOGENESIS.getCost(entity));
+		NyctoAPI.drainBlood(entity, NyctoPowers.HAEMOGENESIS.getCost(entity));
 	}
 }

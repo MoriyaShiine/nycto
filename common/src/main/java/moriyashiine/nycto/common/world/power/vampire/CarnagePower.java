@@ -1,5 +1,6 @@
 package moriyashiine.nycto.common.world.power.vampire;
 
+import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.nycto.common.init.NyctoPowers;
 import moriyashiine.nycto.common.init.NyctoSoundEvents;
@@ -31,6 +32,6 @@ public class CarnagePower extends VampireActivePower {
 
 	public static void activate(LivingEntity entity) {
 		NyctoEntityComponents.CARNAGE.get(entity).use();
-		NyctoEntityComponents.BLOOD.get(entity).drain(NyctoPowers.CARNAGE.getCost(entity));
+		NyctoAPI.drainBlood(entity, NyctoPowers.CARNAGE.getCost(entity));
 	}
 }

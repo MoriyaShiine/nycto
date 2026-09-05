@@ -3,7 +3,6 @@ package moriyashiine.nycto.client.gui.hud;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.component.entity.BloodComponent;
-import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElement;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -36,7 +35,7 @@ public class VampireHudElement implements HudElement {
 
 	public static void extractBlood(GuiGraphicsExtractor graphics, LivingEntity living, int x, int y, int droplets) {
 		boolean poorBlood = living.hasEffect(MobEffects.HUNGER) || !NyctoAPI.hasQualityBlood(living);
-		float blood = ((float) NyctoEntityComponents.BLOOD.get(living).getBlood() / BloodComponent.MAX_BLOOD * droplets);
+		float blood = ((float) NyctoAPI.getBlood(living) / BloodComponent.MAX_BLOOD * droplets);
 		int full = (int) blood;
 		for (int i = 0; i < full; i++) {
 			graphics.blitSprite(RenderPipelines.GUI_TEXTURED, getTexture(1, poorBlood), x - i * 8, y, 9, 9);
