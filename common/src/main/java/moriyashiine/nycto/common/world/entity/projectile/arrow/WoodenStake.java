@@ -20,9 +20,6 @@ public class WoodenStake extends AbstractArrow {
 
 	public WoodenStake(Level level, LivingEntity mob, ItemStack pickupItemStack, @Nullable ItemStack firedFromWeapon) {
 		super(NyctoEntityTypes.WOODEN_STAKE, mob, level, pickupItemStack, firedFromWeapon);
-		if (mob.hasInfiniteMaterials()) {
-			pickup = Pickup.CREATIVE_ONLY;
-		}
 	}
 
 	@Override

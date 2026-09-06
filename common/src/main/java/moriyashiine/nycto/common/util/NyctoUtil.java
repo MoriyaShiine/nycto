@@ -43,6 +43,8 @@ import java.util.function.Predicate;
 public class NyctoUtil {
 	public static int truncatedWorldSeed = 0;
 
+	// Vampire
+
 	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	public static boolean bypassesBloodVeil(DamageSource source) {
 		if (source.getDirectEntity() instanceof LivingEntity attacker) {
@@ -75,7 +77,7 @@ public class NyctoUtil {
 		return getEquippedArmorPieces(entity, NyctoItemTags.VAMPIRE_ARMOR) >= 1 || DarkFormPower.isDarkFormActive(entity);
 	}
 
-	public static boolean getsMoreBlood(LivingEntity entity) {
+	public static boolean hasBetterBloodDrinking(LivingEntity entity) {
 		return getEquippedArmorPieces(entity, NyctoItemTags.VAMPIRE_ARMOR) >= 2;
 	}
 
@@ -86,6 +88,8 @@ public class NyctoUtil {
 	public static boolean hasSunResistance(LivingEntity entity) {
 		return getEquippedArmorPieces(entity, NyctoItemTags.VAMPIRE_ARMOR) >= 4;
 	}
+
+	// Hunter
 
 	public static boolean hasBloodDrainResistance(LivingEntity entity) {
 		return getEquippedArmorPieces(entity, NyctoHunterTypes.VAMPIRE.armorTagKey) >= 1;
@@ -102,6 +106,8 @@ public class NyctoUtil {
 	public static boolean hasVampireCriticalHitImmunity(LivingEntity entity) {
 		return getEquippedArmorPieces(entity, NyctoHunterTypes.VAMPIRE.armorTagKey) >= 4;
 	}
+
+	// Misc
 
 	public static boolean isSurvivalNullable(@Nullable Entity entity) {
 		return entity instanceof LivingEntity living && living.slib$isSurvival();
@@ -132,6 +138,12 @@ public class NyctoUtil {
 		return count;
 	}
 
+	public static void hurtWithToxicTouch(LivingEntity living, float amount) {
+		if (living.level() instanceof ServerLevel level && living.hurtServer(level, level.damageSources().source(NyctoDamageTypes.TOXIC_TOUCH), amount)) {
+			living.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 110, 1));
+		}
+	}
+
 	public static void notifyNearbyVillagers(LivingEntity living, Player player, GossipType type, int value) {
 		living.level().getEntitiesOfClass(Villager.class, new AABB(living.blockPosition()).inflate(16), foundVillager -> living != foundVillager && !foundVillager.isSleeping() && !foundVillager.hasEffect(NyctoMobEffects.HYPNOTIZED) && foundVillager.hasLineOfSight(player)).forEach(foundVillager -> foundVillager.getGossips().add(player.getUUID(), type, value));
 	}
@@ -140,26 +152,10 @@ public class NyctoUtil {
 		((ServerLevel) entity.level()).sendParticles(NyctoParticleTypes.BLOOD, entity.getX(), entity.getEyeY(), entity.getZ(), NyctoParticleTypes.BLOOD_PARTICLE_COUNT, entity.getBbWidth() / 2F, Mth.nextFloat(entity.level().getRandom(), -0.1F, 0.1F), entity.getBbWidth() / 2F, 0);
 	}
 
-	public static void hurtWithToxicTouch(LivingEntity living, float amount) {
-		if (living.level() instanceof ServerLevel level && living.hurtServer(level, level.damageSources().source(NyctoDamageTypes.TOXIC_TOUCH), amount)) {
-			living.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 110, 1));
-		}
-	}
+	// Power
 
-	public static void blockPowers(Player player, Predicate<PowerInstance> condition) {
-		for (PowerInstance power : NyctoAPI.getPowers(player)) {
-			if (power.getCooldown() <= 0 && condition.test(power)) {
-				NyctoAPIImpl.setPowerCooldown(player, power.getPower(), ActivePower.BLOCKED_COOLDOWN);
-			}
-		}
-	}
-
-	public static void disableFormChangePowers(ServerLevel level, ServerPlayer player, @Nullable PowerInstance currentPower) {
-		for (PowerInstance instance : NyctoAPI.getPowers(player)) {
-			if (currentPower != instance && instance.getPower() instanceof FormChanger formChanger && formChanger.isFormActive(player)) {
-				formChanger.disable(level, player);
-			}
-		}
+	public static boolean canUsePower(Player player, PowerInstance powerInstance) {
+		return powerInstance.getCooldown() == 0 && powerInstance.getPower() instanceof ActivePower activePower && activePower.canUse(player);
 	}
 
 	public static void usePower(ServerLevel level, ServerPlayer player, PowerInstance powerInstance) {
@@ -177,7 +173,19 @@ public class NyctoUtil {
 		}
 	}
 
-	public static boolean canUsePower(Player player, PowerInstance powerInstance) {
-		return powerInstance.getCooldown() == 0 && powerInstance.getPower() instanceof ActivePower activePower && activePower.canUse(player);
+	public static void blockPowers(Player player, Predicate<PowerInstance> condition) {
+		for (PowerInstance power : NyctoAPI.getPowers(player)) {
+			if (power.getCooldown() <= 0 && condition.test(power)) {
+				NyctoAPIImpl.setPowerCooldown(player, power.getPower(), ActivePower.BLOCKED_COOLDOWN);
+			}
+		}
+	}
+
+	public static void disableFormChangePowers(ServerLevel level, ServerPlayer player, @Nullable PowerInstance currentPower) {
+		for (PowerInstance instance : NyctoAPI.getPowers(player)) {
+			if (currentPower != instance && instance.getPower() instanceof FormChanger formChanger && formChanger.isFormActive(player)) {
+				formChanger.disable(level, player);
+			}
+		}
 	}
 }

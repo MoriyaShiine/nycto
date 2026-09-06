@@ -8,7 +8,6 @@ import moriyashiine.strawberrylib.api.event.ModifyDamageTakenEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 
 public class DarkFormEvent implements ModifyDamageTakenEvent {
 	public static void init() {
@@ -18,8 +17,7 @@ public class DarkFormEvent implements ModifyDamageTakenEvent {
 	@Override
 	public float modify(Phase phase, LivingEntity victim, ServerLevel level, DamageSource source) {
 		if (phase == Phase.FINAL && DarkFormPower.isDarkFormActive(victim) && !NyctoUtil.bypassesBloodVeil(source) && !NyctoUtil.haltsVampireRegeneration(source)) {
-			int weaknesses = victim instanceof Player player ? NyctoAPI.getWeaknesses(player, NyctoPowerTags.VAMPIRE_CHOOSABLE) : 3;
-			return 1 - (0.32F / 3) * weaknesses;
+			return 1 - (0.32F / 3) * NyctoAPI.getWeaknesses(victim, NyctoPowerTags.VAMPIRE_CHOOSABLE);
 		}
 		return 1;
 	}

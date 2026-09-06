@@ -3,7 +3,6 @@ package moriyashiine.nycto.common.event.entity;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.api.init.NyctoRegistries;
 import moriyashiine.nycto.common.component.level.AuraComponent;
-import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.nycto.common.init.NyctoEntityTypes;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.nycto.common.world.entity.monster.Hunter;
@@ -41,7 +40,7 @@ public class HunterEvent {
 				}
 				if (NyctoRegistries.HUNTER_TYPE.stream().anyMatch(type -> type.shouldTarget(player))) {
 					if (originalDamage > 1 || victim.getRandom().nextBoolean() || victim.isDeadOrDying()) {
-						NyctoEntityComponents.HUNTER_HEAT.get(player).maybeIncreaseHeat(victim, victim.isDeadOrDying());
+						NyctoAPI.increaseHunterHeat(player, victim, victim.isDeadOrDying());
 					}
 				}
 			}

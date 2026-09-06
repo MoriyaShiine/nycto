@@ -2,7 +2,6 @@ package moriyashiine.nycto.common.event.item;
 
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.init.NyctoDataComponents;
-import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.nycto.common.init.NyctoItems;
 import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import moriyashiine.nycto.common.util.NyctoUtil;
@@ -43,7 +42,7 @@ public class VampiricDaggerEvent {
 					if (!VampiricDaggerItem.isFull(bloodCharge)) {
 						int drainAmount = Mth.ceil(modifiedDamage * NyctoUtil.getArmorMultiplier(victim));
 						int fillAmount = 0;
-						if (drainAmount >= DAMAGE_THRESHOLD && NyctoEntityComponents.BLOOD.get(victim).drainAttack(drainAmount)) {
+						if (drainAmount >= DAMAGE_THRESHOLD && NyctoAPI.drainBloodAttack(victim, drainAmount)) {
 							fillAmount = drainAmount;
 						}
 						if (fillAmount > 0) {

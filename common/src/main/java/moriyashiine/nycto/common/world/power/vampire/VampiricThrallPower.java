@@ -1,5 +1,6 @@
 package moriyashiine.nycto.common.world.power.vampire;
 
+import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
 import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.nycto.common.init.NyctoMobEffects;
@@ -57,7 +58,7 @@ public class VampiricThrallPower extends VampireActivePower {
 			level.getEntitiesOfClass(Mob.class, new AABB(mob.blockPosition()).inflate(32), entity -> NyctoEntityComponents.VAMPIRIC_THRALL.get(entity).isOwner(player)).forEach(HypnotizePower::forget);
 			setThrall(mob, player);
 		}
-		NyctoEntityComponents.BLOOD.get(player).drain(getCost(player));
+		NyctoAPI.drainBlood(player, getCost(player));
 	}
 
 	public static void setThrall(Mob mob, @Nullable Entity owner) {

@@ -34,6 +34,7 @@ import net.minecraft.world.entity.monster.PatrollingMonster;
 import net.minecraft.world.entity.monster.illager.Pillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -69,7 +70,7 @@ public class Hunter extends Pillager {
 	protected void readAdditionalSaveData(ValueInput input) {
 		super.readAdditionalSaveData(input);
 		setCanPickUpLoot(false);
-		entityData.set(HUNTER_TYPE_ID, input.read("HunterType", HunterType.CODEC).orElse(NyctoHunterTypes.VAMPIRE));
+		setHunterType(input.read("HunterType", HunterType.CODEC).orElse(NyctoHunterTypes.VAMPIRE));
 		ultimateTarget = input.read("UltimateTarget", UUIDUtil.AUTHLIB_CODEC).orElse(null);
 		contractPos = input.read("ContractPos", BlockPos.CODEC).orElse(null);
 		contractPathTicks = input.getIntOr("ContractPathTicks", 0);
@@ -115,14 +116,21 @@ public class Hunter extends Pillager {
 	}
 
 	@Override
+	public void performRangedAttack(LivingEntity target, float power) {
+		if (isHolding(Items.CROSSBOW)) {
+			super.performRangedAttack(target, power);
+		} else {
+			getHunterType().performNonCrossbowRangedAttack(this, target, power);
+		}
+	}
+
+	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(0, new FloatGoal(this));
 		goalSelector.addGoal(0, new PathToContractPosGoal(this));
 		goalSelector.addGoal(0, new UltimateTargetGoal(this));
 		goalSelector.addGoal(1, new OpenDoorGoal(this, true));
-		goalSelector.addGoal(2, new RangedCrossbowAttackGoal<>(this, 1, 16));
 		goalSelector.addGoal(2, new UseCustomItemGoal(this));
-		goalSelector.addGoal(3, new MeleeAttackGoal(this, 1, false));
 		goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.8));
 		goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 8));
 		goalSelector.addGoal(5, new RandomLookAroundGoal(this));
@@ -151,7 +159,7 @@ public class Hunter extends Pillager {
 			getNavigation().stop();
 			setContractPos(null);
 		}
-		if (getTarget() != null) {
+		if (getHunterType().hasMeleeAttack() && getTarget() != null) {
 			boolean mainHandRanged = getMainHandItem().getItem() instanceof ProjectileWeaponItem;
 			if (distanceTo(getTarget()) < 8) {
 				if (mainHandRanged) {
@@ -197,6 +205,12 @@ public class Hunter extends Pillager {
 		return entityData.get(HUNTER_TYPE_ID);
 	}
 
+	public void setHunterType(HunterType hunterType) {
+		getHunterType().getGoals(this).forEach((_, goal) -> goalSelector.removeGoal(goal));
+		entityData.set(HUNTER_TYPE_ID, hunterType);
+		hunterType.getGoals(this).forEach(goalSelector::addGoal);
+	}
+
 	public @Nullable Player getUltimateTarget() {
 		return ultimateTarget == null ? null : level().getPlayerByUUID(ultimateTarget);
 	}
@@ -216,7 +230,7 @@ public class Hunter extends Pillager {
 	}
 
 	public void equipGear(HunterType hunterType, boolean hasHorse) {
-		entityData.set(HUNTER_TYPE_ID, hunterType);
+		setHunterType(hunterType);
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
 			setItemSlot(slot, ItemStack.EMPTY);
 		}
@@ -245,11 +259,11 @@ public class Hunter extends Pillager {
 			level.addFreshEntity(horse);
 			entity.startRiding(horse);
 			if (Nycto.superbSteedsLoaded) {
-				HorseAttributesComponent horseAttributesComponent = SuperbSteedsEntityComponents.HORSE_ATTRIBUTES.get(horse);
-				while (horseAttributesComponent.getSpeed() < 5) {
-					horseAttributesComponent.incrementSpeed();
+				HorseAttributesComponent horseAttributes = SuperbSteedsEntityComponents.HORSE_ATTRIBUTES.get(horse);
+				while (horseAttributes.getSpeed() < 5) {
+					horseAttributes.incrementSpeed();
 				}
-				horseAttributesComponent.sync();
+				horseAttributes.sync();
 			} else {
 				horse.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.3375);
 			}

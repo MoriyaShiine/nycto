@@ -5,6 +5,7 @@ import moriyashiine.nycto.api.world.transformation.Transformation;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.util.NyctoUtil;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
@@ -15,8 +16,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class VampireWardMobEffect extends MobEffect {
-	private static final AttributeModifier NON_PLAYER_ATTACK_MODIFIER = new AttributeModifier(Nycto.id("vampire_ward"), -3, AttributeModifier.Operation.ADD_VALUE);
-	private static final AttributeModifier NON_PLAYER_SPEED_MODIFIER = new AttributeModifier(Nycto.id("vampire_ward"), -0.3, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
+	private static final Identifier MODIFIER_ID = Nycto.id("vampire_ward");
+	private static final AttributeModifier FALLBACK_ATTACK_DAMAGE_MODIFIER = new AttributeModifier(MODIFIER_ID, -3, AttributeModifier.Operation.ADD_VALUE);
+	private static final AttributeModifier FALLBACK_MOVEMENT_SPEED_MODIFIER = new AttributeModifier(MODIFIER_ID, -0.3, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
 
 	public VampireWardMobEffect(MobEffectCategory category, int color) {
 		super(category, color);
@@ -71,6 +73,6 @@ public class VampireWardMobEffect extends MobEffect {
 	}
 
 	private static boolean applyFallbackModifiers(LivingEntity entity, boolean shouldRemove) {
-		return SLibUtils.applyAttributeModifier(entity, Attributes.ATTACK_DAMAGE, NON_PLAYER_ATTACK_MODIFIER, shouldRemove) && SLibUtils.applyAttributeModifier(entity, Attributes.MOVEMENT_SPEED, NON_PLAYER_SPEED_MODIFIER, shouldRemove);
+		return SLibUtils.applyAttributeModifier(entity, Attributes.ATTACK_DAMAGE, FALLBACK_ATTACK_DAMAGE_MODIFIER, shouldRemove) && SLibUtils.applyAttributeModifier(entity, Attributes.MOVEMENT_SPEED, FALLBACK_MOVEMENT_SPEED_MODIFIER, shouldRemove);
 	}
 }

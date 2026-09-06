@@ -206,7 +206,7 @@ public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComp
 
 		private void feed(LivingEntity target) {
 			if (target == owner) {
-				if (getBlood() >= BLOOD_FILL_AMOUNT && NyctoEntityComponents.BLOOD.get(target).fill(BLOOD_FILL_AMOUNT)) {
+				if (getBlood() >= BLOOD_FILL_AMOUNT && NyctoAPI.fillBlood(target, BLOOD_FILL_AMOUNT)) {
 					SLibUtils.playSound(target, NyctoSoundEvents.BLOOD_BOTTLE_DRINK.value());
 					blood -= BLOOD_FILL_AMOUNT;
 					NyctoLevelComponents.BAT_SWARM.sync(target.level());
@@ -219,12 +219,10 @@ public class BatSwarmComponent implements AutoSyncedComponent, CommonTickingComp
 					canDrain = false;
 				}
 				target.hurt(target.damageSources().source(NyctoDamageTypes.BLEED, null, owner), 1);
-				if (canDrain) {
-					if (NyctoEntityComponents.BLOOD.get(target).drainAttack(BLOOD_DRAIN_AMOUNT)) {
-						SLibUtils.playSound(target, NyctoSoundEvents.BLOOD_BOTTLE_DRINK.value());
-						blood += BLOOD_DRAIN_AMOUNT / (qualityBlood ? 1 : 2);
-						NyctoLevelComponents.BAT_SWARM.sync(target.level());
-					}
+				if (canDrain && NyctoAPI.drainBloodAttack(target, BLOOD_DRAIN_AMOUNT)) {
+					SLibUtils.playSound(target, NyctoSoundEvents.BLOOD_BOTTLE_DRINK.value());
+					blood += BLOOD_DRAIN_AMOUNT / (qualityBlood ? 1 : 2);
+					NyctoLevelComponents.BAT_SWARM.sync(target.level());
 				}
 			}
 		}

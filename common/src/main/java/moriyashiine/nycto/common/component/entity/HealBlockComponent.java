@@ -15,7 +15,7 @@ import java.util.UUID;
 public class HealBlockComponent implements AutoSyncedComponent, CommonTickingComponent {
 	private final LivingEntity obj;
 	private UUID lifeStealer = null;
-	private int ticksToBlock = 0;
+	private int ticks = 0;
 
 	public HealBlockComponent(LivingEntity obj) {
 		this.obj = obj;
@@ -24,18 +24,18 @@ public class HealBlockComponent implements AutoSyncedComponent, CommonTickingCom
 	@Override
 	public void readData(ValueInput input) {
 		lifeStealer = input.read("LifeStealer", UUIDUtil.AUTHLIB_CODEC).orElse(null);
-		ticksToBlock = input.getIntOr("TicksToBlock", 0);
+		ticks = input.getIntOr("Ticks", 0);
 	}
 
 	@Override
 	public void writeData(ValueOutput output) {
 		output.storeNullable("LifeStealer", UUIDUtil.AUTHLIB_CODEC, lifeStealer);
-		output.putInt("TicksToBlock", ticksToBlock);
+		output.putInt("Ticks", ticks);
 	}
 
 	@Override
 	public void tick() {
-		if (ticksToBlock > 0 && --ticksToBlock == 0) {
+		if (ticks > 0 && --ticks == 0) {
 			lifeStealer = null;
 		}
 	}
@@ -44,12 +44,12 @@ public class HealBlockComponent implements AutoSyncedComponent, CommonTickingCom
 		NyctoEntityComponents.HEAL_BLOCK.sync(obj);
 	}
 
-	public int getTicksToBlock() {
-		return ticksToBlock;
+	public int getTicks() {
+		return ticks;
 	}
 
-	public void setTicksToBlock(int ticksToBlock) {
-		this.ticksToBlock = ticksToBlock;
+	public void setTicks(int ticks) {
+		this.ticks = ticks;
 	}
 
 	public void setLifeStealer(@Nullable Entity lifeStealer) {

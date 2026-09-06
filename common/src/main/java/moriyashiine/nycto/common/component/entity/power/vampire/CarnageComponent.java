@@ -13,7 +13,7 @@ import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
 
 public class CarnageComponent implements AutoSyncedComponent, CommonTickingComponent {
-	private static final AttributeModifier ATTACK_DAMAGE_MODIFIER = new AttributeModifier(Nycto.id("carnage_damage"), 2, AttributeModifier.Operation.ADD_VALUE);
+	private static final AttributeModifier ATTACK_DAMAGE_MODIFIER = new AttributeModifier(Nycto.id("carnage"), 2, AttributeModifier.Operation.ADD_VALUE);
 
 	private static final int MAX_TICKS = 300;
 

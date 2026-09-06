@@ -1,5 +1,6 @@
 package moriyashiine.nycto.common.world.power.vampire;
 
+import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.api.world.power.FormChanger;
 import moriyashiine.nycto.client.payload.PlayBloodrushSoundPayload;
 import moriyashiine.nycto.common.init.NyctoEntityComponents;
@@ -43,6 +44,6 @@ public class BloodrushPower extends VampireActivePower implements FormChanger {
 	@Override
 	public void use(ServerLevel level, ServerPlayer player) {
 		NyctoEntityComponents.BLOODRUSH.get(player).use(90);
-		NyctoEntityComponents.BLOOD.get(player).drain(getCost(player));
+		NyctoAPI.drainBlood(player, getCost(player));
 	}
 }

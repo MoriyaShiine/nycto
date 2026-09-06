@@ -1,5 +1,7 @@
 package moriyashiine.nycto.api.world.entity.huntertype;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import com.mojang.serialization.Codec;
 import moriyashiine.nycto.api.init.NyctoRegistries;
 import moriyashiine.nycto.common.init.NyctoBannerPatterns;
@@ -14,6 +16,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -36,6 +39,10 @@ public class HunterType {
 		this.armorTagKey = armorTagKey;
 	}
 
+	public Multimap<Integer, Goal> getGoals(Hunter hunter) {
+		return HashMultimap.create();
+	}
+
 	public boolean shouldTarget(LivingEntity entity) {
 		return false;
 	}
@@ -49,6 +56,13 @@ public class HunterType {
 					.build());
 			hunter.setItemSlot(EquipmentSlot.OFFHAND, shield);
 		}
+	}
+
+	public boolean hasMeleeAttack() {
+		return true;
+	}
+
+	public void performNonCrossbowRangedAttack(Hunter hunter, LivingEntity target, float power) {
 	}
 
 	public boolean shouldUseCustomItem(Hunter hunter) {

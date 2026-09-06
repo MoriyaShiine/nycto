@@ -62,11 +62,11 @@ public class HypnotizePower extends VampireActivePower {
 				}
 			}
 		});
-		NyctoEntityComponents.BLOOD.get(player).drain(getCost(player));
+		NyctoAPI.drainBlood(player, getCost(player));
 	}
 
 	public static boolean canUseOn(Player player, LivingEntity target) {
-		if (target.hasInfiniteMaterials() || !target.slib$exists() || target.is(NyctoEntityTypeTags.CANNOT_BE_HYPNOTIZED)) {
+		if (!target.slib$isSurvival() || !target.slib$exists() || target.is(NyctoEntityTypeTags.CANNOT_BE_HYPNOTIZED)) {
 			return false;
 		}
 		if (target instanceof Player other && NyctoAPI.hasPower(other, NyctoPowers.HYPNOTIZE)) {

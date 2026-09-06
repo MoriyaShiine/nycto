@@ -22,7 +22,7 @@ import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
 public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingComponent {
 	private static final int POWER_DRAIN_TICKS = 200;
 
-	private static final AttributeModifier SPEED_BONUS = new AttributeModifier(Nycto.id("keen_senses_speed"), 0.3, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+	private static final AttributeModifier MOVEMENT_SPEED_MODIFIER = new AttributeModifier(Nycto.id("keen_senses"), 0.3, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 
 	private final Player obj;
 	private boolean enabled = false;
@@ -73,7 +73,7 @@ public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingCo
 				NyctoPowers.KEEN_SENSES.playUseSound((ServerPlayer) obj);
 				toggle();
 			} else if (obj.slib$isSurvival() && --drainTicks == 0) {
-				if (NyctoEntityComponents.BLOOD.get(obj).drain(1)) {
+				if (NyctoAPI.drainBlood(obj, 1)) {
 					drainTicks = POWER_DRAIN_TICKS;
 				} else {
 					toggle();
@@ -123,12 +123,12 @@ public class KeenSensesComponent implements AutoSyncedComponent, CommonTickingCo
 		if (enabled) {
 			drainTicks = 0;
 		} else {
-			NyctoEntityComponents.BLOOD.get(obj).drain(NyctoPowers.KEEN_SENSES.getCost(obj));
+			NyctoAPI.drainBlood(obj, NyctoPowers.KEEN_SENSES.getCost(obj));
 			drainTicks = POWER_DRAIN_TICKS;
 		}
 		enabled = !enabled;
 		renderTicks = 20;
-		SLibUtils.applyAttributeModifier(obj, Attributes.MOVEMENT_SPEED, SPEED_BONUS, enabled);
+		SLibUtils.applyAttributeModifier(obj, Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_MODIFIER, enabled);
 		sync();
 	}
 }

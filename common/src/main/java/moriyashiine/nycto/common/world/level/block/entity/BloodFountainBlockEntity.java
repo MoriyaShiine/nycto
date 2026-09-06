@@ -94,7 +94,7 @@ public class BloodFountainBlockEntity extends BlockEntity {
 						}
 					}
 				}
-				NyctoEntityComponents.BLOOD.get(entity.feedingEntity).fill(fillAmount);
+				NyctoAPI.fillBlood(entity.feedingEntity, fillAmount);
 				SLibUtils.playSound(entity.feedingEntity, NyctoSoundEvents.BLOOD_BOTTLE_DRINK.value());
 				entity.bottles.set(entity.getTopIndex(), ItemStack.EMPTY);
 				entity.updateFillState();
@@ -197,8 +197,7 @@ public class BloodFountainBlockEntity extends BlockEntity {
 
 	public static boolean isHungryVampire(LivingEntity entity) {
 		if (NyctoAPI.isVampire(entity)) {
-			BloodComponent blood = NyctoEntityComponents.BLOOD.get(entity);
-			return blood.canFill() && blood.getBlood() + NyctoConsumables.BLOOD_FILL_AMOUNT < BloodComponent.MAX_BLOOD;
+			return NyctoAPI.canFillBlood(entity) && NyctoAPI.getBlood(entity) + NyctoConsumables.BLOOD_FILL_AMOUNT < BloodComponent.MAX_BLOOD;
 		}
 		return false;
 	}

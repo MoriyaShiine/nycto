@@ -4,7 +4,6 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.init.NyctoConsumeEffectTypes;
-import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.nycto.common.init.NyctoPowers;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -47,7 +46,7 @@ public record FillBloodConsumeEffect(int fillAmount, ApplyStatusEffectsConsumeEf
 			if (user instanceof Player player && NyctoAPI.hasPower(player, NyctoPowers.RICH_TASTES)) {
 				fillAmount = Mth.ceil(fillAmount / 2F);
 			}
-			NyctoEntityComponents.BLOOD.get(user).fill(fillAmount);
+			NyctoAPI.fillBlood(user, fillAmount);
 			return true;
 		}
 		return nonVampireEffects().apply(level, stack, user);

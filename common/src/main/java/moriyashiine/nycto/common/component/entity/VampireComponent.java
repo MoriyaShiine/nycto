@@ -1,10 +1,10 @@
 package moriyashiine.nycto.common.component.entity;
 
 import moriyashiine.nycto.api.NyctoAPI;
-import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.nycto.common.init.NyctoMobEffects;
 import moriyashiine.nycto.common.init.NyctoPowers;
+import moriyashiine.nycto.common.world.transformation.VampireTransformation;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -16,7 +16,7 @@ import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
 
 public class VampireComponent implements AutoSyncedComponent, CommonTickingComponent {
-	private static final AttributeModifier STEP_HEIGHT_MODIFIER = new AttributeModifier(Nycto.id("vampire"), 1, AttributeModifier.Operation.ADD_VALUE);
+	private static final AttributeModifier STEP_HEIGHT_MODIFIER = new AttributeModifier(VampireTransformation.MODIFIER_ID, 1, AttributeModifier.Operation.ADD_VALUE);
 
 	private final Player obj;
 	private int jumpStrength = 0;

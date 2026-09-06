@@ -10,11 +10,11 @@ import net.minecraft.world.entity.LivingEntity;
 
 public class MobEffectEvent {
 	public static void init() {
-		AfterDamageIncludingDeathEvent.EVENT.register(new VampireWard());
+		AfterDamageIncludingDeathEvent.EVENT.register(new Ward());
 		AfterDamageIncludingDeathEvent.EVENT.register(new Stunned());
 	}
 
-	private static class VampireWard implements AfterDamageIncludingDeathEvent {
+	private static class Ward implements AfterDamageIncludingDeathEvent {
 		@Override
 		public void afterDamage(LivingEntity victim, DamageSource source, float originalDamage, float modifiedDamage, boolean blocked) {
 			if (!blocked && !source.is(NyctoDamageTypes.TOXIC_TOUCH) && source.getDirectEntity() instanceof LivingEntity attacker && victim != attacker) {

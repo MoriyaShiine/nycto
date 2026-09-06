@@ -4,6 +4,7 @@
   "plugin": "moriyashiine.nycto.common.NyctoMixinPlugin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
+	"api.effect.LivingEntityMixin",
 	"beastform.LivingEntityMixin",
 	"beastform.PlayerMixin",
 	"beastform.integration.anthropophagy.CannibalLevelComponentMixin",

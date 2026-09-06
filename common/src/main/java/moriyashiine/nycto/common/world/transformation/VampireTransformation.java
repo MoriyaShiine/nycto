@@ -20,7 +20,7 @@ import net.minecraft.world.entity.player.Player;
 public class VampireTransformation extends Transformation {
 	public static final float VAMPIRE_EXHAUSTION_MULTIPLIER = 3.25F;
 
-	private static final Identifier ATTRIBUTE_ID = Nycto.id("vampire");
+	public static final Identifier MODIFIER_ID = Nycto.id("vampire");
 
 	public static boolean ignoreIsCalls = false;
 
@@ -48,10 +48,10 @@ public class VampireTransformation extends Transformation {
 		AttributeModifierMap modifiers = super.getAttributeModifiers(player);
 		if (!NyctoAPI.hasPower(player, NyctoPowers.HUMANITY)) {
 			int weaknesses = NyctoAPI.getWeaknesses(player, NyctoPowerTags.VAMPIRE_CHOOSABLE);
-			modifiers.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTRIBUTE_ID, 1 + (2 / 3D * weaknesses), AttributeModifier.Operation.ADD_VALUE));
-			modifiers.addModifier(Attributes.MOVEMENT_SPEED, new AttributeModifier(ATTRIBUTE_ID, 0.15 + (0.1 * weaknesses), AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
-			modifiers.addModifier(Attributes.JUMP_STRENGTH, new AttributeModifier(ATTRIBUTE_ID, 0.06 * weaknesses, AttributeModifier.Operation.ADD_VALUE));
-			modifiers.addModifier(Attributes.SAFE_FALL_DISTANCE, new AttributeModifier(ATTRIBUTE_ID, 1 + weaknesses, AttributeModifier.Operation.ADD_VALUE));
+			modifiers.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(MODIFIER_ID, 1 + (2 / 3D * weaknesses), AttributeModifier.Operation.ADD_VALUE));
+			modifiers.addModifier(Attributes.MOVEMENT_SPEED, new AttributeModifier(MODIFIER_ID, 0.15 + (0.1 * weaknesses), AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+			modifiers.addModifier(Attributes.JUMP_STRENGTH, new AttributeModifier(MODIFIER_ID, 0.06 * weaknesses, AttributeModifier.Operation.ADD_VALUE));
+			modifiers.addModifier(Attributes.SAFE_FALL_DISTANCE, new AttributeModifier(MODIFIER_ID, 1 + weaknesses, AttributeModifier.Operation.ADD_VALUE));
 		}
 		return modifiers;
 	}

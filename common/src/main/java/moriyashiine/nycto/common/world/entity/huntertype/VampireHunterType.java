@@ -1,5 +1,6 @@
 package moriyashiine.nycto.common.world.entity.huntertype;
 
+import com.google.common.collect.Multimap;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.api.world.entity.huntertype.HunterType;
 import moriyashiine.nycto.common.Nycto;
@@ -9,12 +10,23 @@ import moriyashiine.nycto.common.world.entity.monster.Hunter;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.RangedCrossbowAttackGoal;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.equipment.EquipmentAssets;
 
 public class VampireHunterType extends HunterType {
 	public VampireHunterType() {
 		super(Nycto.id("textures/entity/hunter/vampire_hunter.png"), ResourceKey.create(EquipmentAssets.ROOT_ID, Nycto.id("vampire_hunter")), NyctoItemTags.VAMPIRE_HUNTER_ARMOR);
+	}
+
+	@Override
+	public Multimap<Integer, Goal> getGoals(Hunter hunter) {
+		Multimap<Integer, Goal> goals = super.getGoals(hunter);
+		goals.put(2, new RangedCrossbowAttackGoal<>(hunter, 1, 16));
+		goals.put(3, new MeleeAttackGoal(hunter, 1, false));
+		return goals;
 	}
 
 	@Override

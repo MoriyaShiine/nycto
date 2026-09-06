@@ -1,7 +1,6 @@
 package moriyashiine.nycto.common.event.power.vampire;
 
 import moriyashiine.nycto.api.NyctoAPI;
-import moriyashiine.nycto.common.component.entity.BloodComponent;
 import moriyashiine.nycto.common.component.entity.power.vampire.VampiricThrallComponent;
 import moriyashiine.nycto.common.event.power.util.HasOwnerEvent;
 import moriyashiine.nycto.common.init.NyctoEntityComponents;
@@ -100,8 +99,8 @@ public class VampiricThrallEvent {
 	private static class RightClickOverride implements UseEntityCallback {
 		@Override
 		public InteractionResult interact(Player player, Level level, InteractionHand hand, Entity entity, @Nullable EntityHitResult hitResult) {
-			if (player.isShiftKeyDown() && player.slib$exists()) {
-				VampiricThrallComponent vampiricThrall = NyctoEntityComponents.VAMPIRIC_THRALL.getNullable(entity);
+			if (player.isShiftKeyDown() && player.slib$exists() && entity instanceof LivingEntity living) {
+				VampiricThrallComponent vampiricThrall = NyctoEntityComponents.VAMPIRIC_THRALL.getNullable(living);
 				if (vampiricThrall != null) {
 					if (vampiricThrall.hasOwner()) {
 						Set<ApplyStatusEffectsConsumeEffect> effects = new HashSet<>();
@@ -118,16 +117,13 @@ public class VampiricThrallEvent {
 							}
 						}
 						if (fillAmount > 0) {
-							BloodComponent blood = NyctoEntityComponents.BLOOD.get(entity);
-							if (blood.canFill()) {
+							if (NyctoAPI.canFillBlood(living)) {
 								if (!level.isClientSide()) {
-									blood.fill(fillAmount);
-									NyctoUtil.spawnBloodParticles(entity);
-									SLibUtils.playSound(entity, NyctoSoundEvents.BLOOD_BOTTLE_DRINK.value());
-									entity.gameEvent(GameEvent.DRINK);
-									if (entity instanceof LivingEntity living) {
-										effects.forEach(effect -> effect.apply(level, stack, living));
-									}
+									NyctoAPI.fillBlood(living, fillAmount);
+									NyctoUtil.spawnBloodParticles(living);
+									SLibUtils.playSound(living, NyctoSoundEvents.BLOOD_BOTTLE_DRINK.value());
+									living.gameEvent(GameEvent.DRINK);
+									effects.forEach(effect -> effect.apply(level, stack, living));
 									ItemStack copy = stack.copy();
 									stack.consume(1, player);
 									if (!player.isCreative() && copy.has(DataComponents.USE_REMAINDER)) {
@@ -139,7 +135,7 @@ public class VampiricThrallEvent {
 						} else if (vampiricThrall.isOwner(player) && vampiricThrall.hasFollowModes()) {
 							if (!level.isClientSide()) {
 								vampiricThrall.cycleFollowMode();
-								player.sendOverlayMessage(Component.translatable("message.nycto.cycle_follow_mode." + vampiricThrall.getFollowMode().name().toLowerCase(Locale.ROOT), entity.getName()));
+								player.sendOverlayMessage(Component.translatable("message.nycto.cycle_follow_mode." + vampiricThrall.getFollowMode().name().toLowerCase(Locale.ROOT), living.getName()));
 							}
 							return InteractionResult.SUCCESS;
 						}
