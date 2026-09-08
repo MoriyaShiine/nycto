@@ -46,7 +46,7 @@ public class VampireRenderer extends HumanoidMobRenderer<Vampire, VampireRenderS
 		super.extractRenderState(entity, state, partialTicks);
 		BloodBarrierRenderState.extractRenderState(entity, state);
 		CarnageRenderState.extractRenderState(entity, state);
-		state.attacking = entity.getEntityData().get(Vampire.ATTACKING) || state.attackTime > 0;
+		state.attacking = entity.getEntityData().get(Vampire.ATTACKING) || state.swingAnimation > 0;
 		state.speedValue *= 2;
 	}
 }

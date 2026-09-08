@@ -4,7 +4,6 @@ import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.resource.CrossFrameResourcePool;
 import moriyashiine.nycto.client.event.power.KeenSensesClientEvent;
 import moriyashiine.nycto.common.Nycto;
-import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelTargetBundle;
@@ -29,8 +28,8 @@ public abstract class GameRendererMixin {
 	@Shadow
 	public abstract RenderTarget mainRenderTarget();
 
-	@Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;doEntityOutline()V"))
-	private void nycto$keenSenses(DeltaTracker deltaTracker, boolean advanceGameTime, CallbackInfo ci) {
+	@Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;blitEntityOutline()V"))
+	private void nycto$keenSenses(CallbackInfo ci) {
 		if (KeenSensesClientEvent.shouldRenderShader()) {
 			PostChain postChain = minecraft.getShaderManager().getPostChain(Nycto.id("keen_senses"), LevelTargetBundle.MAIN_TARGETS);
 			if (postChain != null) {

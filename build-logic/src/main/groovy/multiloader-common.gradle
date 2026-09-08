@@ -8,6 +8,10 @@ version = rootProject.version
 
 repositories {
 	maven {
+		name = "Mixin Squared"
+		url = "https://maven.bawnorton.com/releases"
+	}
+	maven {
 		name = "FabricMC"
 		url = "https://maven.fabricmc.net"
 	}

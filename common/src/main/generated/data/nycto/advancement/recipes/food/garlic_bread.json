@@ -13,7 +13,7 @@
 	},
 	"has_the_recipe": {
 	  "conditions": {
-		"recipe": "nycto:garlic_bread"
+		"recipes": "nycto:garlic_bread"
 	  },
 	  "trigger": "minecraft:recipe_unlocked"
 	}

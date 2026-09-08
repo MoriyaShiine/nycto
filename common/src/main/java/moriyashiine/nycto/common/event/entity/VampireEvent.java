@@ -36,6 +36,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.gossip.GossipType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.SwingAnimation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -110,15 +111,15 @@ public class VampireEvent {
 				fillAmount = Mth.ceil(fillAmount * armorMultiplier);
 				drainAmount = Mth.ceil(drainAmount * armorMultiplier);
 				if (fillAmount > 0 && NyctoAPI.canFillBlood(player) && NyctoAPI.canDrainBlood(living)) {
-					if (level instanceof ServerLevel serverWorld) {
-						player.swing(InteractionHand.MAIN_HAND, true);
+					if (level instanceof ServerLevel serverLevel) {
+						player.swing(hand, SwingAnimation.DEFAULT, true);
 						if (canSafelyDrain(player, living, drainAmount)) {
 							living.hurtTime = living.hurtDuration = 10;
 							if (NyctoUtil.isVillager(living)) {
 								NyctoUtil.notifyNearbyVillagers(living, player, GossipType.MINOR_NEGATIVE, 10);
 							}
 						} else {
-							living.hurtServer(serverWorld, level.damageSources().source(NyctoDamageTypes.BLEED, player), 2);
+							living.hurtServer(serverLevel, level.damageSources().source(NyctoDamageTypes.BLEED, player), 2);
 						}
 						if (NyctoAPI.drainBloodAttack(living, drainAmount)) {
 							SLibUtils.playSound(entity, NyctoSoundEvents.BLOOD_BOTTLE_DRINK.value());

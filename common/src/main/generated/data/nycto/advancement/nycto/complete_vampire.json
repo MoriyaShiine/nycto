@@ -3,73 +3,69 @@
   "criteria": {
 	"complete_vampire_armor": {
 	  "conditions": {
-		"player": [
-		  {
-			"condition": "minecraft:entity_properties",
-			"entity": "this",
-			"predicate": {
-			  "minecraft:equipment": {
-				"chest": {
-				  "items": "nycto:vampire_chestplate"
-				},
-				"feet": {
-				  "items": "nycto:vampire_boots"
-				},
-				"head": {
-				  "items": "nycto:vampire_helmet"
-				},
-				"legs": {
-				  "items": "nycto:vampire_leggings"
+		"player": {
+		  "type": "minecraft:entity_properties",
+		  "entity": "this",
+		  "predicate": {
+			"minecraft:equipment": {
+			  "chest": {
+				"items": "nycto:vampire_chestplate"
+			  },
+			  "feet": {
+				"items": "nycto:vampire_boots"
+			  },
+			  "head": {
+				"items": "nycto:vampire_helmet"
+			  },
+			  "legs": {
+				"items": "nycto:vampire_leggings"
+			  }
+			},
+			"nycto:vampire": {
+			  "count": {
+				"powers": "#nycto:vampire_choosable",
+				"range": {
+				  "min": 6
 				}
 			  },
-			  "nycto:vampire": {
-				"count": {
-				  "powers": "#nycto:vampire_choosable",
-				  "range": {
-					"min": 6
-				  }
-				},
-				"vampire": true
-			  }
+			  "vampire": true
 			}
 		  }
-		]
+		}
 	  },
 	  "trigger": "minecraft:inventory_changed"
 	},
 	"complete_vampire_powers": {
 	  "conditions": {
-		"player": [
-		  {
-			"condition": "minecraft:entity_properties",
-			"entity": "this",
-			"predicate": {
-			  "minecraft:equipment": {
-				"chest": {
-				  "items": "nycto:vampire_chestplate"
-				},
-				"feet": {
-				  "items": "nycto:vampire_boots"
-				},
-				"head": {
-				  "items": "nycto:vampire_helmet"
-				},
-				"legs": {
-				  "items": "nycto:vampire_leggings"
+		"player": {
+		  "type": "minecraft:entity_properties",
+		  "entity": "this",
+		  "predicate": {
+			"minecraft:equipment": {
+			  "chest": {
+				"items": "nycto:vampire_chestplate"
+			  },
+			  "feet": {
+				"items": "nycto:vampire_boots"
+			  },
+			  "head": {
+				"items": "nycto:vampire_helmet"
+			  },
+			  "legs": {
+				"items": "nycto:vampire_leggings"
+			  }
+			},
+			"nycto:vampire": {
+			  "count": {
+				"powers": "#nycto:vampire_choosable",
+				"range": {
+				  "min": 6
 				}
 			  },
-			  "nycto:vampire": {
-				"count": {
-				  "powers": "#nycto:vampire_choosable",
-				  "range": {
-					"min": 6
-				  }
-				},
-				"vampire": true
-			  }
+			  "vampire": true
 			}
 		  }
-		]
+		}
 	  },
 	  "trigger": "nycto:change_powers"
 	}

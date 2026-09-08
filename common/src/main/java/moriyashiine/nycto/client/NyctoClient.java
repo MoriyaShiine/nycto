@@ -1,5 +1,6 @@
 package moriyashiine.nycto.client;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import eu.midnightdust.lib.config.MidnightConfig;
 import moriyashiine.nycto.api.NyctoClientAPI;
 import moriyashiine.nycto.client.event.*;
@@ -60,7 +61,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EquipmentSlot;
-import org.lwjgl.glfw.GLFW;
 
 public class NyctoClient implements ClientModInitializer {
 	private static final KeyMapping.Category KEYMAPPING_CATEGORY = KeyMapping.Category.register(Nycto.id(Nycto.MOD_ID));
@@ -68,7 +68,7 @@ public class NyctoClient implements ClientModInitializer {
 
 	public static final OptionInstance<Boolean> POWER_HOTBAR_TOGGLED = new OptionInstance<>(POWER_HOTBAR_NAME, OptionInstance.noTooltip(), (_, value) -> value ? Component.translatable("options.key.toggle") : Component.translatable("options.key.hold"), OptionInstance.BOOLEAN_VALUES, false, _ -> {
 	});
-	public static final KeyMapping POWER_HOTBAR_KEYMAPPING = KeyMappingHelper.registerKeyMapping(new ToggleKeyMapping(POWER_HOTBAR_NAME, GLFW.GLFW_KEY_R, KEYMAPPING_CATEGORY, POWER_HOTBAR_TOGGLED::get, true));
+	public static final KeyMapping POWER_HOTBAR_KEYMAPPING = KeyMappingHelper.registerKeyMapping(new ToggleKeyMapping(POWER_HOTBAR_NAME, InputConstants.KEY_R, KEYMAPPING_CATEGORY, POWER_HOTBAR_TOGGLED::get, true));
 
 	@Override
 	public void onInitializeClient() {

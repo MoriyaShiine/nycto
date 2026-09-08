@@ -10,7 +10,7 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
 public class GenerateLootEvent implements LootTableEvents.Modify {
 	public static void init() {
@@ -21,7 +21,7 @@ public class GenerateLootEvent implements LootTableEvents.Modify {
 	public void modifyLootTable(ResourceKey<LootTable> resourceKey, LootTable.Builder builder, LootTableSource lootTableSource, HolderLookup.Provider provider) {
 		if (resourceKey == BuiltInLootTables.ANCIENT_CITY || resourceKey == BuiltInLootTables.DESERT_PYRAMID || resourceKey == BuiltInLootTables.JUNGLE_TEMPLE || resourceKey == BuiltInLootTables.WOODLAND_MANSION) {
 			builder.withPool(LootPool.lootPool()
-					.setRolls(ConstantValue.exactly(1))
+					.setRolls(ContextIntProviders.exactly(1))
 					.when(LootItemRandomChanceCondition.randomChance(0.0625F))
 					.add(
 							LootItem.lootTableItem(NyctoItems.AMBROSIA_BOTTLE)

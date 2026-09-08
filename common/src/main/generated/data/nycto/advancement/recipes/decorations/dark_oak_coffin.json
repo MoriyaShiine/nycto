@@ -13,7 +13,7 @@
 	},
 	"has_the_recipe": {
 	  "conditions": {
-		"recipe": "nycto:dark_oak_coffin"
+		"recipes": "nycto:dark_oak_coffin"
 	  },
 	  "trigger": "minecraft:recipe_unlocked"
 	}

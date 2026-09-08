@@ -3,28 +3,26 @@
   "criteria": {
 	"wear_vampire_hunter_armor": {
 	  "conditions": {
-		"player": [
-		  {
-			"condition": "minecraft:entity_properties",
-			"entity": "this",
-			"predicate": {
-			  "minecraft:equipment": {
-				"chest": {
-				  "items": "nycto:vampire_hunter_chestplate"
-				},
-				"feet": {
-				  "items": "nycto:vampire_hunter_boots"
-				},
-				"head": {
-				  "items": "nycto:vampire_hunter_helmet"
-				},
-				"legs": {
-				  "items": "nycto:vampire_hunter_leggings"
-				}
+		"player": {
+		  "type": "minecraft:entity_properties",
+		  "entity": "this",
+		  "predicate": {
+			"minecraft:equipment": {
+			  "chest": {
+				"items": "nycto:vampire_hunter_chestplate"
+			  },
+			  "feet": {
+				"items": "nycto:vampire_hunter_boots"
+			  },
+			  "head": {
+				"items": "nycto:vampire_hunter_helmet"
+			  },
+			  "legs": {
+				"items": "nycto:vampire_hunter_leggings"
 			  }
 			}
 		  }
-		]
+		}
 	  },
 	  "trigger": "minecraft:inventory_changed"
 	}

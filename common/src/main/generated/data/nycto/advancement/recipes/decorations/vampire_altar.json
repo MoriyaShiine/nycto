@@ -13,7 +13,7 @@
 	},
 	"has_the_recipe": {
 	  "conditions": {
-		"recipe": "nycto:vampire_altar"
+		"recipes": "nycto:vampire_altar"
 	  },
 	  "trigger": "minecraft:recipe_unlocked"
 	}

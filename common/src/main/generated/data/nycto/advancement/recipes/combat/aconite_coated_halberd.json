@@ -13,7 +13,7 @@
 	},
 	"has_the_recipe": {
 	  "conditions": {
-		"recipe": "nycto:aconite_coated_halberd"
+		"recipes": "nycto:aconite_coated_halberd"
 	  },
 	  "trigger": "minecraft:recipe_unlocked"
 	}

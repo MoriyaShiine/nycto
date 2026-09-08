@@ -53,8 +53,8 @@ public class DarkForm extends Monster {
 			idleSneakAnimationState.animateWhen(isCrouching(), tickCount);
 			jumpAnimationState.animateWhen(jumpCooldown > 0 && !onGround(), tickCount);
 			flyAnimationState.animateWhen(jumpCooldown == 0 && !onGround(), tickCount);
-			leftAttackAnimationState.animateWhen(swingingArm == InteractionHand.OFF_HAND && swingTime > 0, tickCount);
-			rightAttackAnimationState.animateWhen(swingingArm == InteractionHand.MAIN_HAND && swingTime > 0, tickCount);
+			leftAttackAnimationState.animateWhen(getCurrentSwing() != null && getCurrentSwing().hand() == InteractionHand.OFF_HAND, tickCount);
+			rightAttackAnimationState.animateWhen(getCurrentSwing() != null && getCurrentSwing().hand() == InteractionHand.MAIN_HAND, tickCount);
 		}
 	}
 

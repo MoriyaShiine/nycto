@@ -11,7 +11,6 @@ import moriyashiine.nycto.common.world.item.*;
 import moriyashiine.strawberrylib.api.objects.records.ModifierTrio;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
-import net.fabricmc.fabric.api.registry.CompostableRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
@@ -31,6 +30,7 @@ import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.item.equipment.ArmorMaterials;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
 import java.util.List;
 
@@ -60,8 +60,10 @@ public class NyctoItems {
 	public static final Item GARLIC_WREATH = registerBlockItem(NyctoBlockItemIds.GARLIC_WREATH, NyctoBlocks.GARLIC_WREATH);
 	public static final Item ACONITE_GARLAND = registerBlockItem(NyctoBlockItemIds.ACONITE_GARLAND, NyctoBlocks.ACONITE_GARLAND);
 
-	public static final Item WILD_GARLIC = registerBlockItem(NyctoBlockItemIds.WILD_GARLIC, NyctoBlocks.WILD_GARLIC);
-	public static final Item WILD_ACONITE = registerBlockItem(NyctoBlockItemIds.WILD_ACONITE, NyctoBlocks.WILD_ACONITE);
+	public static final Item WILD_GARLIC = registerBlockItem(NyctoBlockItemIds.WILD_GARLIC, NyctoBlocks.WILD_GARLIC, properties()
+			.compostable(ContextIntProviders.COMPOSTABLE_MEDIUM));
+	public static final Item WILD_ACONITE = registerBlockItem(NyctoBlockItemIds.WILD_ACONITE, NyctoBlocks.WILD_ACONITE, properties()
+			.compostable(ContextIntProviders.COMPOSTABLE_MEDIUM));
 
 	public static final Item VAMPIRE_UPGRADE_SMITHING_TEMPLATE = registerItem(NyctoItemIds.VAMPIRE_UPGRADE_SMITHING_TEMPLATE, properties -> new SmithingTemplateItem(
 			Component.translatable(Util.makeDescriptionId("item", Nycto.id("smithing_template.generic_upgrade.applies_to"))).withStyle(ChatFormatting.BLUE),
@@ -137,14 +139,19 @@ public class NyctoItems {
 			.stacksTo(16));
 
 	public static final Item GARLIC = registerItem(NyctoBlockItemIds.GARLIC.item(), properties -> new TransformationCheckerBlockItem(NyctoBlocks.GARLIC, properties, NyctoAPI::isVampire), properties()
-			.food(NyctoFoods.GARLIC));
+			.food(NyctoFoods.GARLIC)
+			.compostable(ContextIntProviders.COMPOSTABLE_MEDIUM));
 	public static final Item GRILLED_GARLIC = registerItem(NyctoItemIds.GRILLED_GARLIC, properties()
-			.food(NyctoFoods.GRILLED_GARLIC));
+			.food(NyctoFoods.GRILLED_GARLIC)
+			.compostable(ContextIntProviders.COMPOSTABLE_MEDIUM_HIGH));
 	public static final Item GARLIC_BREAD = registerItem(NyctoItemIds.GARLIC_BREAD, properties()
-			.food(NyctoFoods.GARLIC_BREAD));
+			.food(NyctoFoods.GARLIC_BREAD)
+			.compostable(ContextIntProviders.COMPOSTABLE_ALWAYS_ADD_ONE));
 
-	public static final Item ACONITE_SEEDS = registerItem(NyctoBlockItemIds.ACONITE.item(), properties -> new BlockItem(NyctoBlocks.ACONITE, properties));
-	public static final Item ACONITE = registerItem(NyctoItemIds.ACONITE, properties -> new TransformationCheckerBlockItem(NyctoBlocks.ACONITE, properties, NyctoAPI::isWerewolf));
+	public static final Item ACONITE_SEEDS = registerItem(NyctoBlockItemIds.ACONITE.item(), properties -> new BlockItem(NyctoBlocks.ACONITE, properties), properties()
+			.compostable(ContextIntProviders.COMPOSTABLE_LOW));
+	public static final Item ACONITE = registerItem(NyctoItemIds.ACONITE, properties -> new TransformationCheckerBlockItem(NyctoBlocks.ACONITE, properties, NyctoAPI::isWerewolf), properties()
+			.compostable(ContextIntProviders.COMPOSTABLE_MEDIUM));
 
 	public static final Item HUNTER_CONTRACT = registerItem(NyctoItemIds.HUNTER_CONTRACT);
 	public static final Item VAMPIRE_HUNTER_CONTRACT = registerItem(NyctoItemIds.VAMPIRE_HUNTER_CONTRACT, properties -> new HunterContractItem(properties, NyctoHunterTypes.VAMPIRE));
@@ -191,7 +198,7 @@ public class NyctoItems {
 	public static Item registerHalberd(ResourceKey<Item> key) {
 		AttributeModifier entityInteractionRangeModifier = new AttributeModifier(Nycto.id("halberd"), 0.5, AttributeModifier.Operation.ADD_VALUE);
 		ModifierTrio modifier = new ModifierTrio(Attributes.ENTITY_INTERACTION_RANGE, entityInteractionRangeModifier, EquipmentSlotGroup.MAINHAND);
-		return registerItem(key, settings -> new AxeItem(ToolMaterial.DIAMOND, 5, -3.2F, settings), editModifiers(NyctoItems::properties, modifier));
+		return registerItem(key, editModifiers(() -> properties().axe(ToolMaterial.DIAMOND, 5, -3.2F), modifier));
 	}
 
 	private static Item.Properties drink(Consumable consumable) {
@@ -200,10 +207,6 @@ public class NyctoItems {
 				.craftRemainder(Items.GLASS_BOTTLE)
 				.usingConvertsTo(Items.GLASS_BOTTLE)
 				.stacksTo(16);
-	}
-
-	private static Item.Properties properties() {
-		return new Item.Properties();
 	}
 
 	public static void init() {
@@ -288,14 +291,6 @@ public class NyctoItems {
 			output.accept(VAMPIRE_SPAWN_EGG);
 			output.accept(HUNTER_SPAWN_EGG);
 		});
-
-		CompostableRegistry.INSTANCE.add(WILD_GARLIC, 0.65F);
-		CompostableRegistry.INSTANCE.add(WILD_ACONITE, 0.65F);
-		CompostableRegistry.INSTANCE.add(GARLIC, 0.65F);
-		CompostableRegistry.INSTANCE.add(GRILLED_GARLIC, 0.85F);
-		CompostableRegistry.INSTANCE.add(GARLIC_BREAD, 1F);
-		CompostableRegistry.INSTANCE.add(ACONITE_SEEDS, 0.3F);
-		CompostableRegistry.INSTANCE.add(ACONITE, 0.65F);
 	}
 
 	@SafeVarargs

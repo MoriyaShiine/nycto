@@ -39,11 +39,16 @@ public class NyctoDataGenerator implements DataGeneratorEntrypoint {
 
 	@Override
 	public void buildRegistry(RegistrySetBuilder registryBuilder) {
-		registryBuilder.add(Registries.CONFIGURED_FEATURE, NyctoWorldGeneration::bootstrapConfigured);
-		registryBuilder.add(Registries.PLACED_FEATURE, NyctoWorldGeneration::bootstrapPlaced);
 		registryBuilder.add(Registries.BANNER_PATTERN, NyctoBannerPatterns::bootstrap);
 		registryBuilder.add(Registries.DAMAGE_TYPE, NyctoDamageTypes::bootstrap);
+		registryBuilder.add(Registries.FEATURE, NyctoWorldGeneration::bootstrapFeature);
+		registryBuilder.add(Registries.PLACED_FEATURE, NyctoWorldGeneration::bootstrapPlacedFeature);
 		registryBuilder.add(Registries.TIMELINE, NyctoTimelines::bootstrap);
 		registryBuilder.add(Registries.VILLAGER_TRADE, NyctoVillagerTrades::bootstrap);
+	}
+
+	@Override
+	public void buildReloadableRegistry(RegistrySetBuilder registryBuilder) {
+		registryBuilder.add(NyctoRecipeProvider.create());
 	}
 }

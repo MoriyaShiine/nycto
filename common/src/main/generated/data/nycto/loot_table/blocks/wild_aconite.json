@@ -2,70 +2,49 @@
   "type": "minecraft:block",
   "pools": [
 	{
-	  "conditions": [
-		{
-		  "condition": "minecraft:survives_explosion"
-		},
-		{
-		  "condition": "minecraft:match_tool",
-		  "predicate": {
-			"items": "minecraft:shears"
-		  }
-		}
-	  ],
+	  "condition": "minecraft:tool/can_shear",
 	  "entries": [
 		{
 		  "type": "minecraft:item",
 		  "name": "nycto:wild_aconite"
 		}
 	  ],
-	  "rolls": 1.0
+	  "modifier": {
+		"type": "minecraft:explosion_decay"
+	  },
+	  "rolls": 1
 	},
 	{
-	  "conditions": [
-		{
-		  "condition": "minecraft:survives_explosion"
-		},
-		{
-		  "condition": "minecraft:inverted",
-		  "term": {
-			"condition": "minecraft:match_tool",
-			"predicate": {
-			  "items": "minecraft:shears"
-			}
-		  }
-		}
-	  ],
+	  "condition": {
+		"type": "minecraft:inverted",
+		"term": "minecraft:tool/can_shear"
+	  },
 	  "entries": [
 		{
 		  "type": "minecraft:item",
 		  "name": "nycto:aconite_seeds"
 		}
 	  ],
-	  "rolls": 1.0
+	  "modifier": {
+		"type": "minecraft:explosion_decay"
+	  },
+	  "rolls": 1
 	},
 	{
-	  "conditions": [
-		{
-		  "condition": "minecraft:survives_explosion"
-		},
-		{
-		  "condition": "minecraft:inverted",
-		  "term": {
-			"condition": "minecraft:match_tool",
-			"predicate": {
-			  "items": "minecraft:shears"
-			}
-		  }
-		}
-	  ],
+	  "condition": {
+		"type": "minecraft:inverted",
+		"term": "minecraft:tool/can_shear"
+	  },
 	  "entries": [
 		{
 		  "type": "minecraft:item",
 		  "name": "nycto:aconite"
 		}
 	  ],
-	  "rolls": 1.0
+	  "modifier": {
+		"type": "minecraft:explosion_decay"
+	  },
+	  "rolls": 1
 	}
   ]
 }

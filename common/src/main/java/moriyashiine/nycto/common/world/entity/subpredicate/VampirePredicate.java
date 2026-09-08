@@ -11,7 +11,7 @@ import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import net.minecraft.advancements.predicates.MinMaxBounds;
 import net.minecraft.advancements.predicates.entity.EntitySubPredicate;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.RegistryCodecs;
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
@@ -35,7 +35,7 @@ public record VampirePredicate(Optional<Boolean> vampire, Optional<PowerCountPre
 
 	public record PowerCountPredicate(HolderSet<Power> powers, MinMaxBounds.Ints range) {
 		public static final Codec<PowerCountPredicate> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-				RegistryCodecs.homogeneousList(NyctoRegistries.POWER_KEY).fieldOf("powers").forGetter(PowerCountPredicate::powers),
+				RegistryCodecs.holderSet(NyctoRegistries.POWER_KEY).fieldOf("powers").forGetter(PowerCountPredicate::powers),
 				MinMaxBounds.Ints.CODEC.optionalFieldOf("range", MinMaxBounds.Ints.ANY).forGetter(PowerCountPredicate::range)
 		).apply(instance, PowerCountPredicate::new));
 

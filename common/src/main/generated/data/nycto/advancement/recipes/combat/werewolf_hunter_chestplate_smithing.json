@@ -13,7 +13,7 @@
 	},
 	"has_the_recipe": {
 	  "conditions": {
-		"recipe": "nycto:werewolf_hunter_chestplate_smithing"
+		"recipes": "nycto:werewolf_hunter_chestplate_smithing"
 	  },
 	  "trigger": "minecraft:recipe_unlocked"
 	}

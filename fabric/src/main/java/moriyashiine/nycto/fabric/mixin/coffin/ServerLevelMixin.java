@@ -29,7 +29,7 @@ public abstract class ServerLevelMixin extends Level {
 		super(levelData, dimension, registryAccess, dimensionTypeRegistration, isClientSide, isDebug, biomeZoomSeed, maxChainedNeighborUpdates);
 	}
 
-	@ModifyArg(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/clock/ServerClockManager;moveToTimeMarker(Lnet/minecraft/core/Holder;Lnet/minecraft/resources/ResourceKey;)Z"))
+	@ModifyArg(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/clock/ServerClockManager;moveToTimeMarker(Lnet/minecraft/core/Holder;Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/clock/ServerClockManager$MoveResult;"))
 	private ResourceKey<ClockTimeMarker> nycto$coffin(ResourceKey<ClockTimeMarker> timeMarkerId) {
 		boolean allInCoffins = true;
 		for (ServerPlayer player : players()) {

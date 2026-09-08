@@ -13,7 +13,7 @@
 	},
 	"has_the_recipe": {
 	  "conditions": {
-		"recipe": "nycto:warped_coffin"
+		"recipes": "nycto:warped_coffin"
 	  },
 	  "trigger": "minecraft:recipe_unlocked"
 	}

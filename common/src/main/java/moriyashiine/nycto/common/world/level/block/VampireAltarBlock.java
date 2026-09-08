@@ -1,6 +1,5 @@
 package moriyashiine.nycto.common.world.level.block;
 
-import com.mojang.serialization.MapCodec;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.api.world.level.block.AltarBlock;
 import moriyashiine.nycto.common.world.inventory.VampireAltarMenu;
@@ -12,15 +11,8 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
 
 public class VampireAltarBlock extends AltarBlock {
-	public static final MapCodec<VampireAltarBlock> CODEC = simpleCodec(VampireAltarBlock::new);
-
 	public VampireAltarBlock(Properties properties) {
 		super(properties);
-	}
-
-	@Override
-	protected MapCodec<VampireAltarBlock> codec() {
-		return CODEC;
 	}
 
 	@Override

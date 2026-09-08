@@ -2,27 +2,23 @@
   "type": "minecraft:block",
   "pools": [
 	{
-	  "conditions": [
-		{
-		  "condition": "minecraft:survives_explosion"
-		}
-	  ],
+	  "condition": {
+		"type": "minecraft:survives_explosion"
+	  },
 	  "entries": [
 		{
 		  "type": "minecraft:item",
-		  "conditions": [
-			{
-			  "block": "nycto:acacia_coffin",
-			  "condition": "minecraft:block_state_property",
-			  "properties": {
-				"part": "head"
-			  }
+		  "condition": {
+			"type": "minecraft:match_block",
+			"blocks": "nycto:acacia_coffin",
+			"state": {
+			  "part": "head"
 			}
-		  ],
+		  },
 		  "name": "nycto:acacia_coffin"
 		}
 	  ],
-	  "rolls": 1.0
+	  "rolls": 1
 	}
   ]
 }

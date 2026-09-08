@@ -36,8 +36,8 @@ public class BloodBarrierLayer<S extends LivingEntityRenderState, M extends Enti
 				if (i == 0) {
 					yRotation *= -1;
 				}
-				poseStack.mulPose(Axis.YP.rotationDegrees(-state.bodyRot + yRotation));
-				submitNodeCollector.order(1).submitModel(model, state, poseStack, model.renderType(TEXTURE), lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor, null);
+				poseStack.rotateDegrees(Axis.YP, -state.bodyRot + yRotation);
+				submitNodeCollector.order(1).submitModel(model, state, poseStack, model.renderType(TEXTURE), lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
 				poseStack.popPose();
 			}
 		}

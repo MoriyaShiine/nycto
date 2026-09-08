@@ -3,17 +3,15 @@
   "criteria": {
 	"become_vampire": {
 	  "conditions": {
-		"player": [
-		  {
-			"condition": "minecraft:entity_properties",
-			"entity": "this",
-			"predicate": {
-			  "nycto:vampire": {
-				"vampire": true
-			  }
+		"player": {
+		  "type": "minecraft:entity_properties",
+		  "entity": "this",
+		  "predicate": {
+			"nycto:vampire": {
+			  "vampire": true
 			}
 		  }
-		]
+		}
 	  },
 	  "trigger": "nycto:change_transformation"
 	}

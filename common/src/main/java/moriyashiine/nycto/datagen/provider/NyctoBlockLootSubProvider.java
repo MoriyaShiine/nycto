@@ -6,7 +6,6 @@ import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootSubProvider;
 import net.minecraft.advancements.predicates.StatePropertiesPredicate;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.state.properties.BedPart;
@@ -16,8 +15,10 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.predicates.InvertedLootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.MatchBlock;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -46,14 +47,18 @@ public class NyctoBlockLootSubProvider extends FabricBlockLootSubProvider {
 		dropSelf(NyctoBlocks.BLOOD_FOUNTAIN);
 		dropSelf(NyctoBlocks.GARLIC_WREATH);
 		dropSelf(NyctoBlocks.ACONITE_GARLAND);
-		add(NyctoBlocks.WILD_GARLIC, createShearsDispatchTable(NyctoBlocks.WILD_GARLIC, applyExplosionDecay(NyctoBlocks.WILD_GARLIC, LootItem.lootTableItem(NyctoItems.GARLIC).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2))))));
-		add(NyctoBlocks.WILD_ACONITE, LootTable.lootTable().pools(List.of(
-				applyExplosionCondition(NyctoItems.WILD_ACONITE, LootPool.lootPool().add(LootItem.lootTableItem(NyctoItems.WILD_ACONITE))).when(hasShears()).build(),
-				applyExplosionCondition(NyctoItems.ACONITE_SEEDS, LootPool.lootPool().add(LootItem.lootTableItem(NyctoItems.ACONITE_SEEDS))).when(hasShears().invert()).build(),
-				applyExplosionCondition(NyctoItems.ACONITE, LootPool.lootPool().add(LootItem.lootTableItem(NyctoItems.ACONITE))).when(hasShears().invert()).build()
+		add(NyctoBlocks.WILD_GARLIC, createShearsDispatchTable(NyctoBlocks.WILD_GARLIC, applyExplosionDecay(NyctoBlocks.WILD_GARLIC,
+				LootItem.lootTableItem(NyctoItems.GARLIC).apply(SetItemCountFunction.setCount(ContextIntProviders.exactly(2)))
 		)));
-		add(NyctoBlocks.GARLIC, applyExplosionDecay(NyctoBlocks.GARLIC, LootTable.lootTable().withPool(LootPool.lootPool().add(LootItem.lootTableItem(NyctoItems.GARLIC))).withPool(LootPool.lootPool().when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(NyctoBlocks.GARLIC).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(BlockStateProperties.AGE_3, 3))).add(LootItem.lootTableItem(NyctoItems.GARLIC).apply(ApplyBonusCount.addBonusBinomialDistributionCount(registries.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE), 0.5714286F, 2))))));
-		add(NyctoBlocks.ACONITE, createCropDrops(NyctoBlocks.ACONITE, NyctoItems.ACONITE, NyctoItems.ACONITE_SEEDS, LootItemBlockStatePropertyCondition.hasBlockStateProperties(NyctoBlocks.ACONITE).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(BlockStateProperties.AGE_3, 3))));
+		add(NyctoBlocks.WILD_ACONITE, LootTable.lootTable().pools(List.of(
+				applyExplosionDecay(NyctoItems.WILD_ACONITE, LootPool.lootPool().add(LootItem.lootTableItem(NyctoItems.WILD_ACONITE))).when(hasShears()).build(),
+				applyExplosionDecay(NyctoItems.ACONITE_SEEDS, LootPool.lootPool().add(LootItem.lootTableItem(NyctoItems.ACONITE_SEEDS))).when(InvertedLootItemCondition.invert(hasShears())).build(),
+				applyExplosionDecay(NyctoItems.ACONITE, LootPool.lootPool().add(LootItem.lootTableItem(NyctoItems.ACONITE))).when(InvertedLootItemCondition.invert(hasShears())).build()
+		)));
+		LootItemCondition.Builder isGarlicMaxAge = MatchBlock.blockMatches(blocks, NyctoBlocks.GARLIC, StatePropertiesPredicate.Builder.properties().hasProperty(BlockStateProperties.AGE_3, BlockStateProperties.MAX_AGE_3));
+		add(NyctoBlocks.GARLIC, applyExplosionDecay(NyctoBlocks.GARLIC, LootTable.lootTable().withPool(LootPool.lootPool().add(LootItem.lootTableItem(NyctoItems.GARLIC))).withPool(LootPool.lootPool().when(isGarlicMaxAge).add(LootItem.lootTableItem(NyctoItems.GARLIC).apply(ApplyBonusCount.addBonusBinomialDistributionCount(enchantments.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 2))))));
+		LootItemCondition.Builder isAconiteMaxAge = MatchBlock.blockMatches(blocks, NyctoBlocks.ACONITE, StatePropertiesPredicate.Builder.properties().hasProperty(BlockStateProperties.AGE_3, BlockStateProperties.MAX_AGE_3));
+		add(NyctoBlocks.ACONITE, createCropDrops(NyctoBlocks.ACONITE, NyctoItems.ACONITE, NyctoItems.ACONITE_SEEDS, isAconiteMaxAge));
 		dropSelf(NyctoBlocks.WOODEN_STAKE);
 		add(NyctoBlocks.FIREBOMB, noDrop());
 	}

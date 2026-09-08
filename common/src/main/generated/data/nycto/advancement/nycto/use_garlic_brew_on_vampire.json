@@ -6,24 +6,24 @@
 		"item": {
 		  "items": "minecraft:potion",
 		  "predicates": {
-			"minecraft:potion_contents": [
-			  "nycto:garlic",
-			  "nycto:long_garlic",
-			  "nycto:strong_garlic"
-			]
-		  }
-		},
-		"player": [
-		  {
-			"condition": "minecraft:entity_properties",
-			"entity": "this",
-			"predicate": {
-			  "nycto:vampire": {
-				"vampire": true
-			  }
+			"minecraft:potion_contents": {
+			  "potions": [
+				"nycto:garlic",
+				"nycto:long_garlic",
+				"nycto:strong_garlic"
+			  ]
 			}
 		  }
-		]
+		},
+		"player": {
+		  "type": "minecraft:entity_properties",
+		  "entity": "this",
+		  "predicate": {
+			"nycto:vampire": {
+			  "vampire": true
+			}
+		  }
+		}
 	  },
 	  "trigger": "minecraft:consume_item"
 	},
@@ -32,17 +32,15 @@
 		"effects": {
 		  "nycto:vampire_ward": {}
 		},
-		"entity": [
-		  {
-			"condition": "minecraft:entity_properties",
-			"entity": "this",
-			"predicate": {
-			  "nycto:vampire": {
-				"vampire": true
-			  }
+		"entity": {
+		  "type": "minecraft:entity_properties",
+		  "entity": "this",
+		  "predicate": {
+			"nycto:vampire": {
+			  "vampire": true
 			}
 		  }
-		]
+		}
 	  },
 	  "trigger": "nycto:player_applies_effects"
 	}

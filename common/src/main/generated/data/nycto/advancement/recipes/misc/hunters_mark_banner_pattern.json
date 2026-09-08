@@ -13,7 +13,7 @@
 	},
 	"has_the_recipe": {
 	  "conditions": {
-		"recipe": "nycto:hunters_mark_banner_pattern"
+		"recipes": "nycto:hunters_mark_banner_pattern"
 	  },
 	  "trigger": "minecraft:recipe_unlocked"
 	}

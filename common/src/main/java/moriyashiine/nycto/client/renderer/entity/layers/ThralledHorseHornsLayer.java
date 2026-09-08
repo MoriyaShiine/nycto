@@ -46,7 +46,7 @@ public class ThralledHorseHornsLayer extends RenderLayer<HorseRenderState, Horse
 			} else if (state.bodyArmorItem.is(Items.LEATHER_HORSE_ARMOR)) {
 				color = 0xA06540;
 			}
-			submitNodeCollector.submitModel(hornsModel, state, poseStack, RenderTypes.entityCutout(TEXTURE_MAP.get(state.bodyArmorItem.getItem())), lightCoords, OverlayTexture.NO_OVERLAY, color, null, state.outlineColor, null);
+			submitNodeCollector.submitModel(hornsModel, state, poseStack, RenderTypes.entityCutout(TEXTURE_MAP.get(state.bodyArmorItem.getItem())), lightCoords, OverlayTexture.NO_OVERLAY, color, null, state.outlineColor);
 		}
 	}
 }

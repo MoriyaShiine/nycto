@@ -13,7 +13,7 @@
 	},
 	"has_the_recipe": {
 	  "conditions": {
-		"recipe": "nycto:crimson_coffin"
+		"recipes": "nycto:crimson_coffin"
 	  },
 	  "trigger": "minecraft:recipe_unlocked"
 	}

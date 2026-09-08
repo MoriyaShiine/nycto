@@ -66,7 +66,7 @@ public class BatstepPower extends VampireActivePower {
 			}, entity.getX(), entity.getY() + entity.getBbHeight() / 2, entity.getZ(), 8, entity.getBbWidth() / 4, entity.getBbHeight() / 4, entity.getBbWidth() / 4, 0);
 		}
 		entity.setDeltaMovement(Vec3.ZERO);
-		entity.needsSync = entity.hurtMarked = true;
+		entity.needsSync = entity.syncVelocity = true;
 		entity.resetFallDistance();
 		NyctoAPI.drainBlood(entity, NyctoPowers.BATSTEP.getCost(entity));
 	}

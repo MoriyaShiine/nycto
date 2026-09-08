@@ -33,9 +33,9 @@ public class BloodFlechetteRenderer extends EntityRenderer<BloodFlechette, Arrow
 	@Override
 	public void submit(ArrowRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
 		poseStack.pushPose();
-		poseStack.mulPose(Axis.YP.rotationDegrees(state.yRot - 90));
-		poseStack.mulPose(Axis.ZP.rotationDegrees(state.xRot));
-		submitNodeCollector.submitModel(model, state, poseStack, RenderTypes.entityCutout(TEXTURE), state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor, null);
+		poseStack.rotateDegrees(Axis.YP, state.yRot - 90);
+		poseStack.rotateDegrees(Axis.ZP, state.xRot);
+		submitNodeCollector.submitModel(model, state, poseStack, RenderTypes.entityCutout(TEXTURE), state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
 		poseStack.popPose();
 		super.submit(state, poseStack, submitNodeCollector, camera);
 	}

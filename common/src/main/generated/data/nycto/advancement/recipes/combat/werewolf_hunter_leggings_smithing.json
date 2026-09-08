@@ -13,7 +13,7 @@
 	},
 	"has_the_recipe": {
 	  "conditions": {
-		"recipe": "nycto:werewolf_hunter_leggings_smithing"
+		"recipes": "nycto:werewolf_hunter_leggings_smithing"
 	  },
 	  "trigger": "minecraft:recipe_unlocked"
 	}

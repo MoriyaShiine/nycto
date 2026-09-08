@@ -27,7 +27,7 @@ public abstract class AbstractCarnageAuraLayer<S extends EntityRenderState, M ex
 		if (isPowered(state)) {
 			RenderType renderType = RenderTypes.breezeWind(TEXTURE, 0, state.ageInTicks * -0.01F % 1);
 			int color = ARGB.color((int) (state.getData(CarnageRenderState.KEY).carnageOpacity * 255), 255, 255, 255);
-			submitNodeCollector.order(1).submitModel(model(), state, poseStack, renderType, lightCoords, OverlayTexture.NO_OVERLAY, color, null, state.outlineColor, null);
+			submitNodeCollector.order(1).submitModel(model(), state, poseStack, renderType, lightCoords, OverlayTexture.NO_OVERLAY, color, null, state.outlineColor);
 		}
 	}
 

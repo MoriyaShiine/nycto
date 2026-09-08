@@ -9,6 +9,7 @@ import moriyashiine.nycto.common.init.NyctoBlocks;
 import moriyashiine.nycto.common.init.NyctoEntityComponents;
 import moriyashiine.nycto.common.init.NyctoPowers;
 import moriyashiine.nycto.common.init.NyctoSoundEvents;
+import moriyashiine.nycto.common.tag.NyctoBlockTags;
 import moriyashiine.nycto.common.world.level.block.entity.BloodFountainBlockEntity;
 import moriyashiine.nycto.common.world.power.vampire.VampiricThrallPower;
 import moriyashiine.strawberrylib.api.module.SLibUtils;
@@ -98,7 +99,7 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 				}
 				if (getFollowMode() == FollowMode.FOLLOW && obj.getTarget() == null) {
 					if (owner instanceof LivingEntity living && obj.distanceTo(owner) > 24 && living.slib$exists()) {
-						obj.randomTeleport(owner.getX() + obj.getRandom().nextIntBetweenInclusive(-3, 3), owner.getY(), owner.getZ() + obj.getRandom().nextIntBetweenInclusive(-3, 3), false);
+						obj.randomTeleport(owner.getX() + obj.getRandom().nextIntBetweenInclusive(-3, 3), owner.getY(), owner.getZ() + obj.getRandom().nextIntBetweenInclusive(-3, 3), false, NyctoBlockTags.THRALL_DOES_NOT_TELEPORT_TO);
 					}
 				}
 				fountainTick();
@@ -173,7 +174,7 @@ public class VampiricThrallComponent extends HasOwnerComponent implements Server
 				fountainMemories.remove(i);
 			}
 		}
-		BlockPos.withinManhattan(obj.blockPosition(), range, range, range).forEach(pos -> {
+		BlockPos.withinManhattan(obj.blockPosition(), range).forEach(pos -> {
 			if (obj.level().getBlockEntity(pos) instanceof BloodFountainBlockEntity fountain) {
 				if (FountainMemory.canSee(obj, pos)) {
 					FountainMemory.addMemory(fountainMemories, new FountainMemory(pos.immutable(), fountain.getFilledBottles(), obj.level().getGameTime(), true));

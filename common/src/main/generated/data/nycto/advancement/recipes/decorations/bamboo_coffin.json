@@ -13,7 +13,7 @@
 	},
 	"has_the_recipe": {
 	  "conditions": {
-		"recipe": "nycto:bamboo_coffin"
+		"recipes": "nycto:bamboo_coffin"
 	  },
 	  "trigger": "minecraft:recipe_unlocked"
 	}

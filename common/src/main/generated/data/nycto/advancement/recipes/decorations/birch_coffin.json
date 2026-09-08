@@ -13,7 +13,7 @@
 	},
 	"has_the_recipe": {
 	  "conditions": {
-		"recipe": "nycto:birch_coffin"
+		"recipes": "nycto:birch_coffin"
 	  },
 	  "trigger": "minecraft:recipe_unlocked"
 	}

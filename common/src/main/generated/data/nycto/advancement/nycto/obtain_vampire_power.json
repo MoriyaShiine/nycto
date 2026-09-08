@@ -3,23 +3,21 @@
   "criteria": {
 	"obtain_vampire_power": {
 	  "conditions": {
-		"player": [
-		  {
-			"condition": "minecraft:entity_properties",
-			"entity": "this",
-			"predicate": {
-			  "nycto:vampire": {
-				"count": {
-				  "powers": "#nycto:vampire_choosable",
-				  "range": {
-					"min": 1
-				  }
-				},
-				"vampire": true
-			  }
+		"player": {
+		  "type": "minecraft:entity_properties",
+		  "entity": "this",
+		  "predicate": {
+			"nycto:vampire": {
+			  "count": {
+				"powers": "#nycto:vampire_choosable",
+				"range": {
+				  "min": 1
+				}
+			  },
+			  "vampire": true
 			}
 		  }
-		]
+		}
 	  },
 	  "trigger": "nycto:change_powers"
 	}

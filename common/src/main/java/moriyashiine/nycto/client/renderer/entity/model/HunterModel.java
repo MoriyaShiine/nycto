@@ -68,11 +68,11 @@ public class HunterModel extends IllagerModel<HunterRenderState> {
 	@Override
 	public void setupAnim(HunterRenderState state) {
 		super.setupAnim(state);
-		float attackAnim = state.attackAnim;
-		if (attackAnim > 0) {
+		float swingAnimation = state.swingAnimation;
+		if (swingAnimation > 0) {
 			HumanoidArm arm = state.mainArm;
 			ModelPart armPart = arm == HumanoidArm.RIGHT ? rightArm : leftArm;
-			body.yRot = Mth.sin(Mth.sqrt(attackAnim) * (float) (Math.PI * 2)) * 0.2F;
+			body.yRot = Mth.sin(Mth.sqrt(swingAnimation) * (float) (Math.PI * 2)) * 0.2F;
 			if (arm == HumanoidArm.LEFT) {
 				body.yRot *= -1;
 			}
@@ -83,9 +83,9 @@ public class HunterModel extends IllagerModel<HunterRenderState> {
 			rightArm.yRot = rightArm.yRot + body.yRot;
 			leftArm.yRot = leftArm.yRot + body.yRot;
 			leftArm.xRot = leftArm.xRot + body.yRot;
-			armPart.xRot -= Mth.sin((float) ((1 - Math.pow(1 - attackAnim, 3)) * Math.PI)) * 1.2F + Mth.sin(attackAnim * (float) Math.PI) * -(head.xRot - 0.7F) * 0.75F;
+			armPart.xRot -= Mth.sin((float) ((1 - Math.pow(1 - swingAnimation, 3)) * Math.PI)) * 1.2F + Mth.sin(swingAnimation * (float) Math.PI) * -(head.xRot - 0.7F) * 0.75F;
 			armPart.yRot = armPart.yRot + body.yRot * 2;
-			armPart.zRot = armPart.zRot + Mth.sin(attackAnim * (float) Math.PI) * -0.4F;
+			armPart.zRot = armPart.zRot + Mth.sin(swingAnimation * (float) Math.PI) * -0.4F;
 		}
 		coatFlap.xRot = Math.max(leftLeg.xRot, rightLeg.xRot);
 	}

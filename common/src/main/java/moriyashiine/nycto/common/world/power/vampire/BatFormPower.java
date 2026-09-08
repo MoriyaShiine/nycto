@@ -18,7 +18,7 @@ public class BatFormPower extends VampireActivePower implements FormChanger {
 		super(200);
 		SLibRegistries.registerModelReplacementCopyFunction((player, replacement) -> {
 			if (replacement instanceof Bat bat && isFormActive(player)) {
-				bat.setResting(!player.swinging && !player.hasMovedHorizontallyRecently() && !SLibUtils.isSufficientlyHigh(player, -(player.getBbHeight() + 0.01)));
+				bat.setResting(!player.isSwinging() && !player.hasMovedHorizontallyRecently() && !SLibUtils.isSufficientlyHigh(player, -(player.getBbHeight() + 0.01)));
 			}
 		});
 	}

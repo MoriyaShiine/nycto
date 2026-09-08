@@ -3,46 +3,40 @@
   "criteria": {
 	"kill_vampire_with_wooden_stake_melee": {
 	  "conditions": {
-		"entity": [
-		  {
-			"condition": "minecraft:entity_properties",
-			"entity": "this",
-			"predicate": {
-			  "nycto:vampire": {
-				"vampire": true
+		"entity": {
+		  "type": "minecraft:entity_properties",
+		  "entity": "this",
+		  "predicate": {
+			"nycto:vampire": {
+			  "vampire": true
+			}
+		  }
+		},
+		"player": {
+		  "type": "minecraft:entity_properties",
+		  "entity": "this",
+		  "predicate": {
+			"minecraft:equipment": {
+			  "mainhand": {
+				"items": "nycto:wooden_stake"
 			  }
 			}
 		  }
-		],
-		"player": [
-		  {
-			"condition": "minecraft:entity_properties",
-			"entity": "this",
-			"predicate": {
-			  "minecraft:equipment": {
-				"mainhand": {
-				  "items": "nycto:wooden_stake"
-				}
-			  }
-			}
-		  }
-		]
+		}
 	  },
 	  "trigger": "minecraft:player_killed_entity"
 	},
 	"kill_vampire_with_wooden_stake_ranged": {
 	  "conditions": {
-		"entity": [
-		  {
-			"condition": "minecraft:entity_properties",
-			"entity": "this",
-			"predicate": {
-			  "nycto:vampire": {
-				"vampire": true
-			  }
+		"entity": {
+		  "type": "minecraft:entity_properties",
+		  "entity": "this",
+		  "predicate": {
+			"nycto:vampire": {
+			  "vampire": true
 			}
 		  }
-		],
+		},
 		"killing_blow": {
 		  "direct_entity": {
 			"minecraft:entity_type": "nycto:wooden_stake"

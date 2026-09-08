@@ -6,6 +6,7 @@ import moriyashiine.nycto.api.world.entity.huntertype.HunterType;
 import moriyashiine.nycto.common.Nycto;
 import moriyashiine.nycto.common.init.NyctoHunterTypes;
 import moriyashiine.nycto.common.init.NyctoSoundEvents;
+import moriyashiine.nycto.common.tag.NyctoBlockTags;
 import moriyashiine.nycto.common.world.entity.ai.goal.hunter.PathToContractPosGoal;
 import moriyashiine.nycto.common.world.entity.ai.goal.hunter.UltimateTargetGoal;
 import moriyashiine.nycto.common.world.entity.ai.goal.hunter.UseCustomItemGoal;
@@ -169,7 +170,6 @@ public class Hunter extends Pillager {
 				swapHandStacks();
 			}
 		}
-		updateSwingTime();
 		super.aiStep();
 	}
 
@@ -252,7 +252,7 @@ public class Hunter extends Pillager {
 
 	public static void mountHorse(ServerLevel level, LivingEntity entity) {
 		Horse horse = EntityTypes.HORSE.create(level, EntitySpawnReason.TRIGGERED);
-		if (horse.randomTeleport(entity.getX(), entity.getY(), entity.getZ(), false)) {
+		if (horse.randomTeleport(entity.getX(), entity.getY(), entity.getZ(), false, NyctoBlockTags.HUNTER_DOES_NOT_TELEPORT_TO)) {
 			horse.finalizeSpawn(level, level.getCurrentDifficultyAt(entity.blockPosition()), EntitySpawnReason.TRIGGERED, null);
 			horse.setOwner(entity);
 			horse.setTamed(true);

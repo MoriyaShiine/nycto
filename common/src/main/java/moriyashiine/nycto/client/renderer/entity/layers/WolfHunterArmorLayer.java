@@ -70,7 +70,7 @@ public class WolfHunterArmorLayer extends RenderLayer<WolfRenderState, WolfModel
 		Crackiness.Level crackiness = Crackiness.WOLF_ARMOR.byDamage(armorItem);
 		if (crackiness != Crackiness.Level.NONE) {
 			Identifier damageTexture = ARMOR_CRACK_LOCATIONS.get(crackiness);
-			submitNodeCollector.submitModel(model, state, poseStack, RenderTypes.armorTranslucent(damageTexture), lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor, null);
+			submitNodeCollector.order(1).submitModel(model, state, poseStack, RenderTypes.wolfArmorCracks(damageTexture), lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
 		}
 	}
 }

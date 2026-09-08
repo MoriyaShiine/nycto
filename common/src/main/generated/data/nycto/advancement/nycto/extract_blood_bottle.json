@@ -3,7 +3,7 @@
   "criteria": {
 	"extract_blood_bottle_crafting": {
 	  "conditions": {
-		"recipe_id": "nycto:blood_extraction"
+		"recipes": "nycto:blood_extraction"
 	  },
 	  "trigger": "minecraft:recipe_crafted"
 	},

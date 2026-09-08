@@ -13,7 +13,7 @@
 	},
 	"has_the_recipe": {
 	  "conditions": {
-		"recipe": "nycto:werewolf_altar"
+		"recipes": "nycto:werewolf_altar"
 	  },
 	  "trigger": "minecraft:recipe_unlocked"
 	}

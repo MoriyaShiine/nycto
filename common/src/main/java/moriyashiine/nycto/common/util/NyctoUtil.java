@@ -34,6 +34,7 @@ import net.minecraft.world.entity.npc.wanderingtrader.WanderingTrader;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.component.SwingAnimation;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.AABB;
 import org.jspecify.annotations.Nullable;
@@ -169,7 +170,7 @@ public class NyctoUtil {
 				NyctoAPI.setPowerCooldown(player, activePower, activePower.getCooldown());
 			}
 			activePower.use(level, player);
-			player.swing(InteractionHand.MAIN_HAND, true);
+			player.swing(InteractionHand.MAIN_HAND, SwingAnimation.DEFAULT, true);
 		}
 	}
 

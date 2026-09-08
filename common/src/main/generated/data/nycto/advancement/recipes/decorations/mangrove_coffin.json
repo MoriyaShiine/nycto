@@ -13,7 +13,7 @@
 	},
 	"has_the_recipe": {
 	  "conditions": {
-		"recipe": "nycto:mangrove_coffin"
+		"recipes": "nycto:mangrove_coffin"
 	  },
 	  "trigger": "minecraft:recipe_unlocked"
 	}

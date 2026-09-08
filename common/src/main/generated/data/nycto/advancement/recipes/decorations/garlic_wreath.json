@@ -13,7 +13,7 @@
 	},
 	"has_the_recipe": {
 	  "conditions": {
-		"recipe": "nycto:garlic_wreath"
+		"recipes": "nycto:garlic_wreath"
 	  },
 	  "trigger": "minecraft:recipe_unlocked"
 	}

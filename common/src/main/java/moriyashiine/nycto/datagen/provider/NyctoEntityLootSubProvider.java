@@ -9,7 +9,7 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -22,7 +22,7 @@ public class NyctoEntityLootSubProvider extends FabricEntityLootSubProvider {
 	public void generate() {
 		add(NyctoEntityTypes.VAMPIRE, LootTable.lootTable()
 				.withPool(LootPool.lootPool()
-						.setRolls(ConstantValue.exactly(1))
+						.setRolls(ContextIntProviders.exactly(1))
 						.add(LootItem.lootTableItem(NyctoItems.VAMPIRE_BLOOD_BOTTLE))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())));
 	}

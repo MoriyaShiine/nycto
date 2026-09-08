@@ -54,6 +54,22 @@ public class NyctoBlockTagsProvider extends FabricTagsProvider.BlockTagsProvider
 				.forceAddTag(BlockTags.TRAPDOORS)
 				.forceAddTag(BlockTags.WITHER_IMMUNE);
 
+		builder(NyctoBlockTags.THRALL_DOES_NOT_TELEPORT_TO)
+				.forceAddTag(BlockTags.DANGEROUS_FOR_TELEPORTATION);
+		builder(NyctoBlockTags.HUNTER_DOES_NOT_TELEPORT_TO)
+				.forceAddTag(BlockTags.DANGEROUS_FOR_TELEPORTATION);
+
+		builder(BlockTags.BLOCKS_MOTION_NO_LEAVES)
+				.add(NyctoBlockItemIds.VAMPIRE_ALTAR)
+				.add(NyctoBlockItemIds.WEREWOLF_ALTAR)
+				.add(NyctoBlockItemIds.BLOOD_FOUNTAIN)
+				.add(NyctoBlockItemIds.WOODEN_STAKE);
+		builder(BlockTags.DANGEROUS_FOR_TELEPORTATION)
+				.add(NyctoBlockItemIds.WOODEN_STAKE)
+				.add(NyctoBlockItemIds.FIREBOMB);
+		builder(BlockTags.HAPPY_GHAST_AVOIDS)
+				.add(NyctoBlockItemIds.WOODEN_STAKE)
+				.add(NyctoBlockItemIds.FIREBOMB);
 		builder(BlockTags.MINEABLE_WITH_AXE)
 				.addTag(NyctoBlockTags.COFFINS)
 				.add(NyctoBlockItemIds.VAMPIRE_ALTAR)

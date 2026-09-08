@@ -14,7 +14,6 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 
 import static moriyashiine.strawberrylib.api.module.SLibRegistries.registerBlock;
-import static moriyashiine.strawberrylib.api.module.SLibRegistries.registerBlockType;
 import static net.minecraft.world.level.block.state.BlockBehaviour.Properties.of;
 import static net.minecraft.world.level.block.state.BlockBehaviour.Properties.ofFullCopy;
 
@@ -69,7 +68,7 @@ public class NyctoBlocks {
 			.noOcclusion()
 			.sound(SoundType.WOOD)
 			.strength(2)
-			.pushReaction(PushReaction.DESTROY)
+			.pushReaction(PushReaction.POPPED)
 			.isRedstoneConductor(Blocks::never));
 	public static final Block FIREBOMB = registerBlock(NyctoBlockItemIds.FIREBOMB, FirebombBlock::new, ofFullCopy(Blocks.FIRE));
 
@@ -79,10 +78,6 @@ public class NyctoBlocks {
 	}
 
 	public static void init() {
-		registerBlockType("vampire_altar", VampireAltarBlock.CODEC);
-		registerBlockType("blood_fountain", BloodFountainBlock.CODEC);
-		registerBlockType("wooden_stake", WoodenStakeBlock.CODEC);
-		registerBlockType("firebomb", FirebombBlock.CODEC);
 		FlammableBlockRegistry.getDefaultInstance().add(WILD_GARLIC, 60, 100);
 		FlammableBlockRegistry.getDefaultInstance().add(WILD_ACONITE, 60, 100);
 		FlammableBlockRegistry.getDefaultInstance().add(GARLIC_WREATH, 60, 100);

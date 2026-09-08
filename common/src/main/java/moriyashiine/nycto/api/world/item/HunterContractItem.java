@@ -2,6 +2,7 @@ package moriyashiine.nycto.api.world.item;
 
 import moriyashiine.nycto.api.world.entity.huntertype.HunterType;
 import moriyashiine.nycto.common.init.NyctoEntityTypes;
+import moriyashiine.nycto.common.tag.NyctoBlockTags;
 import moriyashiine.nycto.common.world.entity.monster.Hunter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -57,7 +58,7 @@ public class HunterContractItem extends Item {
 			int dZ = player.getRandom().nextIntBetweenInclusive(minH, maxH) * (player.getRandom().nextBoolean() ? 1 : -1);
 			for (int j = 0; j < amount; j++) {
 				Hunter hunter = NyctoEntityTypes.HUNTER.create(level, EntitySpawnReason.TRIGGERED);
-				if (hunter.randomTeleport(player.getX() + dX, player.getY() + dY, player.getZ() + dZ, false)) {
+				if (hunter.randomTeleport(player.getX() + dX, player.getY() + dY, player.getZ() + dZ, false, NyctoBlockTags.HUNTER_DOES_NOT_TELEPORT_TO)) {
 					if (level instanceof ServerLevel serverLevel) {
 						hunter.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(hunter.blockPosition()), EntitySpawnReason.TRIGGERED, null);
 						if (type.shouldTarget(player) && !player.isCreative()) {

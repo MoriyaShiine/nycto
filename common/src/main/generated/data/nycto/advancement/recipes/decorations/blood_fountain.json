@@ -13,7 +13,7 @@
 	},
 	"has_the_recipe": {
 	  "conditions": {
-		"recipe": "nycto:blood_fountain"
+		"recipes": "nycto:blood_fountain"
 	  },
 	  "trigger": "minecraft:recipe_unlocked"
 	}

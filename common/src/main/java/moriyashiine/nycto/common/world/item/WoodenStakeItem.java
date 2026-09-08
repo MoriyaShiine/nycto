@@ -57,7 +57,7 @@ public class WoodenStakeItem extends BlockItem implements ProjectileItem {
 					player.getCooldowns().addCooldown(item.getDefaultInstance(), getCrossbowCooldown(attacker));
 				}
 			}
-			attacker.onEquippedItemBroken(this, EquipmentSlot.MAINHAND);
+			attacker.onEquippedItemBroken(itemStack, EquipmentSlot.MAINHAND);
 			itemStack.consume(1, player);
 		}
 	}

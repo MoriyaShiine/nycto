@@ -3,19 +3,25 @@
   "criteria": {
 	"brew_garlic_brew": {
 	  "conditions": {
-		"potion": "nycto:garlic"
+		"potion": {
+		  "potions": "nycto:garlic"
+		}
 	  },
 	  "trigger": "minecraft:brewed_potion"
 	},
 	"brew_garlic_brew_long": {
 	  "conditions": {
-		"potion": "nycto:long_garlic"
+		"potion": {
+		  "potions": "nycto:long_garlic"
+		}
 	  },
 	  "trigger": "minecraft:brewed_potion"
 	},
 	"brew_garlic_brew_strong": {
 	  "conditions": {
-		"potion": "nycto:strong_garlic"
+		"potion": {
+		  "potions": "nycto:strong_garlic"
+		}
 	  },
 	  "trigger": "minecraft:brewed_potion"
 	}

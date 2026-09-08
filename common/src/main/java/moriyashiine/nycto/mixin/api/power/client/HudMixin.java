@@ -3,7 +3,7 @@ package moriyashiine.nycto.mixin.api.power.client;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import moriyashiine.nycto.client.event.PowerClientEvent;
 import moriyashiine.nycto.common.component.entity.TransformationComponent;
 import moriyashiine.nycto.common.init.NyctoEntityComponents;
@@ -33,7 +33,7 @@ public abstract class HudMixin {
 		return original;
 	}
 
-	@WrapOperation(method = "extractItemHotbar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V", ordinal = 0))
+	@WrapOperation(method = "extractItemHotbar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V", ordinal = 0))
 	private void nycto$powerHotbarTexture(GuiGraphicsExtractor instance, RenderPipeline renderPipeline, Identifier location, int x, int y, int width, int height, Operation<Void> original) {
 		TransformationComponent transformation = NyctoEntityComponents.TRANSFORMATION.get(getCameraPlayer());
 		if (PowerClientEvent.isActive(getCameraPlayer(), transformation)) {
@@ -45,7 +45,7 @@ public abstract class HudMixin {
 		original.call(instance, renderPipeline, location, x, y, width, height);
 	}
 
-	@WrapOperation(method = "extractItemHotbar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V", ordinal = 1))
+	@WrapOperation(method = "extractItemHotbar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V", ordinal = 1))
 	private void nycto$powerHotbarSelectionTexture(GuiGraphicsExtractor instance, RenderPipeline renderPipeline, Identifier location, int x, int y, int width, int height, Operation<Void> original) {
 		TransformationComponent transformation = NyctoEntityComponents.TRANSFORMATION.get(getCameraPlayer());
 		if (PowerClientEvent.isActive(getCameraPlayer(), transformation)) {
@@ -57,7 +57,7 @@ public abstract class HudMixin {
 		original.call(instance, renderPipeline, location, x, y, width, height);
 	}
 
-	@ModifyArg(method = "extractItemHotbar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V", ordinal = 1), index = 2)
+	@ModifyArg(method = "extractItemHotbar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V", ordinal = 1), index = 2)
 	private int nycto$powerHotbar(int x) {
 		TransformationComponent transformation = NyctoEntityComponents.TRANSFORMATION.get(getCameraPlayer());
 		if (PowerClientEvent.isActive(getCameraPlayer(), transformation)) {

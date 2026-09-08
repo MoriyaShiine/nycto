@@ -32,6 +32,7 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.component.SwingAnimation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.MoonPhase;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -173,7 +174,7 @@ public class Vampire extends Monster {
 	public boolean doHurtTarget(ServerLevel level, Entity target) {
 		boolean hurtTarget = super.doHurtTarget(level, target);
 		if (hurtTarget) {
-			swing(InteractionHand.MAIN_HAND);
+			swingForAttack(InteractionHand.MAIN_HAND);
 			if (target instanceof LivingEntity living && NyctoAPI.hasQualityBlood(living) && NyctoAPI.canFillBlood(this)) {
 				int amount = Math.min(5, NyctoAPI.getBlood(living));
 				if (NyctoAPI.drainBloodAttack(living, amount)) {
@@ -208,7 +209,7 @@ public class Vampire extends Monster {
 
 	public void useAbility(Power power) {
 		abilityCooldown = ABILITY_COOLDOWN;
-		swing(InteractionHand.MAIN_HAND);
+		swing(InteractionHand.MAIN_HAND, SwingAnimation.DEFAULT);
 		for (UsablePower usablePower : usablePowers) {
 			if (usablePower.power == power) {
 				usablePower.cooldown = usablePower.maxCooldown;

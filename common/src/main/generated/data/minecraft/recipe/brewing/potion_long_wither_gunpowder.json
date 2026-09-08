@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:brewing",
+  "input": {
+	"item": "minecraft:potion",
+	"potion_contents": {
+	  "potions": "nycto:long_wither"
+	}
+  },
+  "output": {
+	"components": {
+	  "minecraft:potion_contents": {
+		"potion": "nycto:long_wither"
+	  }
+	},
+	"id": "minecraft:splash_potion"
+  },
+  "reagent": {
+	"item": "minecraft:gunpowder"
+  }
+}

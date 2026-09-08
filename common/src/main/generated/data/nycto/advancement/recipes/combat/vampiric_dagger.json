@@ -13,7 +13,7 @@
 	},
 	"has_the_recipe": {
 	  "conditions": {
-		"recipe": "nycto:vampiric_dagger"
+		"recipes": "nycto:vampiric_dagger"
 	  },
 	  "trigger": "minecraft:recipe_unlocked"
 	}

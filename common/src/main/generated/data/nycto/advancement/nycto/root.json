@@ -2,17 +2,15 @@
   "criteria": {
 	"night": {
 	  "conditions": {
-		"player": [
-		  {
-			"clock": "minecraft:overworld",
-			"condition": "minecraft:time_check",
-			"period": 24000,
-			"value": {
-			  "max": 23500.0,
-			  "min": 12500.0
-			}
+		"player": {
+		  "type": "minecraft:time_check",
+		  "clock": "minecraft:overworld",
+		  "period": 24000,
+		  "value": {
+			"max": 23500,
+			"min": 12500
 		  }
-		]
+		}
 	  },
 	  "trigger": "minecraft:tick"
 	}

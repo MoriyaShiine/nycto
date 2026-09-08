@@ -13,7 +13,7 @@
 	},
 	"has_the_recipe": {
 	  "conditions": {
-		"recipe": "nycto:wolf_skull_banner_pattern"
+		"recipes": "nycto:wolf_skull_banner_pattern"
 	  },
 	  "trigger": "minecraft:recipe_unlocked"
 	}

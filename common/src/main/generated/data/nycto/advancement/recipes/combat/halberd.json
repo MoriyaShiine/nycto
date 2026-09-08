@@ -13,7 +13,7 @@
 	},
 	"has_the_recipe": {
 	  "conditions": {
-		"recipe": "nycto:halberd"
+		"recipes": "nycto:halberd"
 	  },
 	  "trigger": "minecraft:recipe_unlocked"
 	}

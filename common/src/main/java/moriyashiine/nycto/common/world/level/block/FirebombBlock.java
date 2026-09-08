@@ -1,6 +1,5 @@
 package moriyashiine.nycto.common.world.level.block;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -13,15 +12,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class FirebombBlock extends BaseFireBlock {
-	public static final MapCodec<FirebombBlock> CODEC = simpleCodec(FirebombBlock::new);
-
 	public FirebombBlock(Properties properties) {
 		super(properties, 1);
-	}
-
-	@Override
-	protected MapCodec<FirebombBlock> codec() {
-		return CODEC;
 	}
 
 	@Override

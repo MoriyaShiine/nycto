@@ -13,7 +13,7 @@
 	},
 	"has_the_recipe": {
 	  "conditions": {
-		"recipe": "nycto:vampire_bat_banner_pattern"
+		"recipes": "nycto:vampire_bat_banner_pattern"
 	  },
 	  "trigger": "minecraft:recipe_unlocked"
 	}

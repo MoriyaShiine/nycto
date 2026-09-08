@@ -13,7 +13,7 @@
 	},
 	"has_the_recipe": {
 	  "conditions": {
-		"recipe": "nycto:vampire_boots_smithing"
+		"recipes": "nycto:vampire_boots_smithing"
 	  },
 	  "trigger": "minecraft:recipe_unlocked"
 	}

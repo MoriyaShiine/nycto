@@ -1,6 +1,5 @@
 package moriyashiine.nycto.common.world.level.block;
 
-import com.mojang.serialization.MapCodec;
 import moriyashiine.nycto.common.init.NyctoDamageTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -25,19 +24,12 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jspecify.annotations.Nullable;
 
 public class WoodenStakeBlock extends Block implements SimpleWaterloggedBlock {
-	public static final MapCodec<WoodenStakeBlock> CODEC = simpleCodec(WoodenStakeBlock::new);
-
 	private static final VoxelShape SHAPE = column(14, 0, 10);
 
 	public WoodenStakeBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(defaultBlockState()
 				.setValue(BlockStateProperties.WATERLOGGED, false));
-	}
-
-	@Override
-	public MapCodec<WoodenStakeBlock> codec() {
-		return CODEC;
 	}
 
 	@Override

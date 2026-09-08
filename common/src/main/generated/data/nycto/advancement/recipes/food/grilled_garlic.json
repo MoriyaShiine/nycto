@@ -13,7 +13,7 @@
 	},
 	"has_the_recipe": {
 	  "conditions": {
-		"recipe": "nycto:grilled_garlic"
+		"recipes": "nycto:grilled_garlic"
 	  },
 	  "trigger": "minecraft:recipe_unlocked"
 	}

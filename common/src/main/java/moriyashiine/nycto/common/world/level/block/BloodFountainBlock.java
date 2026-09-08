@@ -1,6 +1,5 @@
 package moriyashiine.nycto.common.world.level.block;
 
-import com.mojang.serialization.MapCodec;
 import moriyashiine.nycto.common.init.NyctoBlockEntityTypes;
 import moriyashiine.nycto.common.init.NyctoItems;
 import moriyashiine.nycto.common.init.NyctoSoundEvents;
@@ -43,8 +42,6 @@ import java.util.Locale;
 public class BloodFountainBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
 	public static final EnumProperty<FillState> FILL_STATE = EnumProperty.create("fill_state", FillState.class);
 
-	public static final MapCodec<BloodFountainBlock> CODEC = simpleCodec(BloodFountainBlock::new);
-
 	private static final VoxelShape SHAPE = Shapes.or(column(14, 0, 6), column(3, 6, 14), column(6, 14, 16));
 
 	public BloodFountainBlock(Properties properties) {
@@ -52,11 +49,6 @@ public class BloodFountainBlock extends BaseEntityBlock implements SimpleWaterlo
 		registerDefaultState(defaultBlockState()
 				.setValue(BlockStateProperties.WATERLOGGED, false)
 				.setValue(BlockStateProperties.LOCKED, false));
-	}
-
-	@Override
-	public MapCodec<BloodFountainBlock> codec() {
-		return CODEC;
 	}
 
 	@Override

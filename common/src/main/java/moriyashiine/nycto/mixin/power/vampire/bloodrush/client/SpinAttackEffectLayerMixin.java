@@ -16,7 +16,7 @@ public class SpinAttackEffectLayerMixin {
 	@Unique
 	private static final Identifier BLOODRUSH_RIPTIDE_TEXTURE = Nycto.id("textures/entity/bloodrush/bloodrush_riptide.png");
 
-	@ModifyArg(method = "submit(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;ILnet/minecraft/client/renderer/entity/state/AvatarRenderState;FF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/SubmitNodeCollector;submitModel(Lnet/minecraft/client/model/Model;Ljava/lang/Object;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/resources/Identifier;IIILnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;)V"))
+	@ModifyArg(method = "submit(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;ILnet/minecraft/client/renderer/entity/state/AvatarRenderState;FF)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/SubmitNodeCollector;submitModel(Lnet/minecraft/client/model/Model;Ljava/lang/Object;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/resources/Identifier;III)V"))
 	private Identifier nycto$bloodrush(Identifier texture, @Local(argsOnly = true) AvatarRenderState state) {
 		BloodrushRenderState bloodrushRenderState = state.getData(BloodrushRenderState.KEY);
 		if (bloodrushRenderState != null && bloodrushRenderState.usingBloodrushLenient) {

@@ -1,6 +1,7 @@
 package moriyashiine.nycto.mixin.vampire;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import moriyashiine.nycto.api.NyctoAPI;
 import moriyashiine.nycto.common.world.power.vampire.weakness.VilePresenceWeakness;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalEntityTypeTags;
@@ -16,6 +17,7 @@ import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
@@ -27,8 +29,8 @@ public abstract class LivingEntityMixin extends Entity {
 	}
 
 	@SuppressWarnings("ConstantValue")
-	@ModifyReturnValue(method = "getVisibilityPercent", at = @At("RETURN"))
-	private double nycto$vampire(double original, Entity targetingEntity) {
+	@ModifyArg(method = "getVisibilityPercent", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/Mth;clamp(DDD)D"), index = 0)
+	private double nycto$vampire(double original, @Local(argsOnly = true) Entity targetingEntity) {
 		if (targetingEntity != null && !targetingEntity.is(ConventionalEntityTypeTags.BOSSES) && targetingEntity.is(EntityTypeTags.UNDEAD) && NyctoAPI.isVampire(this)) {
 			if ((Object) this instanceof Player player && VilePresenceWeakness.shouldApply(player)) {
 				return original;
