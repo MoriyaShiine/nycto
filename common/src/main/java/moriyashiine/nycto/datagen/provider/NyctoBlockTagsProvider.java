@@ -32,6 +32,7 @@ public class NyctoBlockTagsProvider extends FabricTagsProvider.BlockTagsProvider
 				.add(NyctoBlockItemIds.MANGROVE_COFFIN)
 				.add(NyctoBlockItemIds.CHERRY_COFFIN)
 				.add(NyctoBlockItemIds.PALE_OAK_COFFIN)
+				.add(NyctoBlockItemIds.POPLAR_COFFIN)
 				.add(NyctoBlockItemIds.BAMBOO_COFFIN)
 				.add(NyctoBlockItemIds.CRIMSON_COFFIN)
 				.add(NyctoBlockItemIds.WARPED_COFFIN);

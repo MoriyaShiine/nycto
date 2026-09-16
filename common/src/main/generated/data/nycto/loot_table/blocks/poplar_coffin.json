@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+	{
+	  "condition": {
+		"type": "minecraft:survives_explosion"
+	  },
+	  "entries": [
+		{
+		  "type": "minecraft:item",
+		  "condition": {
+			"type": "minecraft:match_block",
+			"blocks": "nycto:poplar_coffin",
+			"state": {
+			  "part": "head"
+			}
+		  },
+		  "name": "nycto:poplar_coffin"
+		}
+	  ],
+	  "rolls": 1
+	}
+  ]
+}
