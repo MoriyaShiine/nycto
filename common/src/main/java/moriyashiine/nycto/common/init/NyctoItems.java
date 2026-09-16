@@ -126,10 +126,12 @@ public class NyctoItems {
 
 	public static final Item BLOOD_BOTTLE = registerItem(NyctoItemIds.BLOOD_BOTTLE, drink(NyctoConsumables.BLOOD_BOTTLE));
 	public static final Item PLAYER_BLOOD_BOTTLE = registerItem(NyctoItemIds.PLAYER_BLOOD_BOTTLE, PlayerBloodBottleItem::new, drink(NyctoConsumables.BLOOD_BOTTLE)
-			.overrideDescription(BLOOD_BOTTLE.getDescriptionId()).modelId(Nycto.id("blood_bottle")));
+			.overrideDescription(BLOOD_BOTTLE.getDescriptionId())
+			.modelId(Nycto.id("blood_bottle")));
 	public static final Item VAMPIRE_BLOOD_BOTTLE = registerItem(NyctoItemIds.VAMPIRE_BLOOD_BOTTLE, drink(NyctoConsumables.VAMPIRE_BLOOD_BOTTLE));
 	public static final Item PLAYER_VAMPIRE_BLOOD_BOTTLE = registerItem(NyctoItemIds.PLAYER_VAMPIRE_BLOOD_BOTTLE, PlayerBloodBottleItem::new, drink(NyctoConsumables.VAMPIRE_BLOOD_BOTTLE)
-			.overrideDescription(VAMPIRE_BLOOD_BOTTLE.getDescriptionId()).modelId(Nycto.id("vampire_blood_bottle")));
+			.overrideDescription(VAMPIRE_BLOOD_BOTTLE.getDescriptionId())
+			.modelId(Nycto.id("vampire_blood_bottle")));
 	public static final Item AMBROSIA_BOTTLE = registerItem(NyctoItemIds.AMBROSIA_BOTTLE, properties()
 			.rarity(Rarity.RARE)
 			.food(NyctoFoods.AMBROSIA_BOTTLE, NyctoConsumables.AMBROSIA_BOTTLE)
