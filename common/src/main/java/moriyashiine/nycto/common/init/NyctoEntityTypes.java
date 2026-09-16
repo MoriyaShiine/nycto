@@ -19,14 +19,51 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import static moriyashiine.strawberrylib.api.module.SLibRegistries.registerEntityType;
 
 public class NyctoEntityTypes {
-	public static final EntityType<WoodenStake> WOODEN_STAKE = registerEntityType(NyctoEntityTypeIds.WOODEN_STAKE, EntityType.Builder.<WoodenStake>of(WoodenStake::new, MobCategory.MISC).sized(0.5F, 0.5F).eyeHeight(0.13F).clientTrackingRange(4).updateInterval(20));
-	public static final EntityType<Firebomb> FIREBOMB = registerEntityType(NyctoEntityTypeIds.FIREBOMB, EntityType.Builder.<Firebomb>of(Firebomb::new, MobCategory.MISC).noLootTable().sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10));
-	public static final EntityType<BloodFlechette> BLOOD_FLECHETTE = registerEntityType(NyctoEntityTypeIds.BLOOD_FLECHETTE, EntityType.Builder.<BloodFlechette>of(BloodFlechette::new, MobCategory.MISC).sized(0.5F, 0.5F).eyeHeight(0.13F).clientTrackingRange(4).updateInterval(20));
+	public static final EntityType<WoodenStake> WOODEN_STAKE = registerEntityType(NyctoEntityTypeIds.WOODEN_STAKE,
+			EntityType.Builder.<WoodenStake>of(WoodenStake::new, MobCategory.MISC)
+					.sized(0.5F, 0.5F)
+					.eyeHeight(0.13F)
+					.clientTrackingRange(4)
+					.updateInterval(20));
+	public static final EntityType<Firebomb> FIREBOMB = registerEntityType(NyctoEntityTypeIds.FIREBOMB,
+			EntityType.Builder.<Firebomb>of(Firebomb::new, MobCategory.MISC)
+					.noLootTable()
+					.sized(0.25F, 0.25F)
+					.clientTrackingRange(4)
+					.updateInterval(10));
+	public static final EntityType<BloodFlechette> BLOOD_FLECHETTE = registerEntityType(NyctoEntityTypeIds.BLOOD_FLECHETTE,
+			EntityType.Builder.<BloodFlechette>of(BloodFlechette::new, MobCategory.MISC)
+					.sized(0.5F, 0.5F)
+					.eyeHeight(0.13F)
+					.clientTrackingRange(4)
+					.updateInterval(20));
 
-	public static final EntityType<Vampire> VAMPIRE = registerEntityType(NyctoEntityTypeIds.VAMPIRE, EntityType.Builder.of(Vampire::new, MobCategory.MONSTER).sized(0.6F, 1.95F).passengerAttachments(2).ridingOffset(-0.6F).clientTrackingRange(8).notInPeaceful(), Vampire.createAttributes());
-	public static final EntityType<Hunter> HUNTER = registerEntityType(NyctoEntityTypeIds.HUNTER, EntityType.Builder.of(Hunter::new, MobCategory.MISC).noLootTable().canSpawnFarFromPlayer().sized(0.6F, 1.95F).passengerAttachments(2).ridingOffset(-0.6F).clientTrackingRange(8).notInPeaceful(), Hunter.createAttributes());
+	public static final EntityType<Vampire> VAMPIRE = registerEntityType(NyctoEntityTypeIds.VAMPIRE,
+			EntityType.Builder.of(Vampire::new, MobCategory.MONSTER)
+					.sized(0.6F, 1.95F)
+					.passengerAttachments(2)
+					.ridingOffset(-0.6F)
+					.clientTrackingRange(8)
+					.notInPeaceful(),
+			Vampire.createAttributes());
+	public static final EntityType<Hunter> HUNTER = registerEntityType(NyctoEntityTypeIds.HUNTER,
+			EntityType.Builder.of(Hunter::new, MobCategory.MISC)
+					.noLootTable()
+					.canSpawnFarFromPlayer()
+					.sized(0.6F, 1.95F)
+					.passengerAttachments(2)
+					.ridingOffset(-0.6F)
+					.clientTrackingRange(8)
+					.notInPeaceful(),
+			Hunter.createAttributes());
 
-	public static final EntityType<DarkForm> DARK_FORM = registerEntityType(NyctoEntityTypeIds.DARK_FORM, EntityType.Builder.of(DarkForm::new, MobCategory.MISC).noSave().noSummon().noLootTable().sized(0.8F, 2.75F), Mob.createMobAttributes());
+	public static final EntityType<DarkForm> DARK_FORM = registerEntityType(NyctoEntityTypeIds.DARK_FORM,
+			EntityType.Builder.of(DarkForm::new, MobCategory.MISC)
+					.noSave()
+					.noSummon()
+					.noLootTable()
+					.sized(0.8F, 2.75F),
+			Mob.createMobAttributes());
 
 	public static void init() {
 		SpawnPlacements.register(VAMPIRE, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Vampire::checkVampireSpawnRules);
