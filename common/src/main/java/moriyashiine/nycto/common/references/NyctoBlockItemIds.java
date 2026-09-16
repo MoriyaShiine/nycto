@@ -14,9 +14,9 @@ public class NyctoBlockItemIds {
 	public static final BlockItemId JUNGLE_COFFIN = blockItemId("jungle_coffin");
 	public static final BlockItemId ACACIA_COFFIN = blockItemId("acacia_coffin");
 	public static final BlockItemId DARK_OAK_COFFIN = blockItemId("dark_oak_coffin");
-	public static final BlockItemId PALE_OAK_COFFIN = blockItemId("pale_oak_coffin");
 	public static final BlockItemId MANGROVE_COFFIN = blockItemId("mangrove_coffin");
 	public static final BlockItemId CHERRY_COFFIN = blockItemId("cherry_coffin");
+	public static final BlockItemId PALE_OAK_COFFIN = blockItemId("pale_oak_coffin");
 	public static final BlockItemId BAMBOO_COFFIN = blockItemId("bamboo_coffin");
 	public static final BlockItemId CRIMSON_COFFIN = blockItemId("crimson_coffin");
 	public static final BlockItemId WARPED_COFFIN = blockItemId("warped_coffin");

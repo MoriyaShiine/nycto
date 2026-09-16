@@ -52,9 +52,9 @@ public class NyctoModelProvider extends FabricModelProvider {
 		createCoffin(generators, NyctoBlocks.JUNGLE_COFFIN, new Material(Nycto.id("block/coffin_jungle")), Blocks.JUNGLE_PLANKS);
 		createCoffin(generators, NyctoBlocks.ACACIA_COFFIN, new Material(Nycto.id("block/coffin_acacia")), Blocks.ACACIA_PLANKS);
 		createCoffin(generators, NyctoBlocks.DARK_OAK_COFFIN, new Material(Nycto.id("block/coffin_dark_oak")), Blocks.DARK_OAK_PLANKS);
-		createCoffin(generators, NyctoBlocks.PALE_OAK_COFFIN, new Material(Nycto.id("block/coffin_pale_oak")), Blocks.PALE_OAK_PLANKS);
 		createCoffin(generators, NyctoBlocks.MANGROVE_COFFIN, new Material(Nycto.id("block/coffin_mangrove")), Blocks.MANGROVE_PLANKS);
 		createCoffin(generators, NyctoBlocks.CHERRY_COFFIN, new Material(Nycto.id("block/coffin_cherry")), Blocks.CHERRY_PLANKS);
+		createCoffin(generators, NyctoBlocks.PALE_OAK_COFFIN, new Material(Nycto.id("block/coffin_pale_oak")), Blocks.PALE_OAK_PLANKS);
 		createCoffin(generators, NyctoBlocks.BAMBOO_COFFIN, new Material(Nycto.id("block/coffin_bamboo")), Blocks.BAMBOO_PLANKS);
 		createCoffin(generators, NyctoBlocks.CRIMSON_COFFIN, new Material(Nycto.id("block/coffin_crimson")), Blocks.CRIMSON_PLANKS);
 		createCoffin(generators, NyctoBlocks.WARPED_COFFIN, new Material(Nycto.id("block/coffin_warped")), Blocks.WARPED_PLANKS);

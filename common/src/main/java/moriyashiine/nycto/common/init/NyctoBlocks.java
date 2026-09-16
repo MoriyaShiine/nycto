@@ -29,9 +29,9 @@ public class NyctoBlocks {
 	public static final Block JUNGLE_COFFIN = registerCoffin(NyctoBlockItemIds.JUNGLE_COFFIN, Blocks.JUNGLE_PLANKS);
 	public static final Block ACACIA_COFFIN = registerCoffin(NyctoBlockItemIds.ACACIA_COFFIN, Blocks.ACACIA_PLANKS);
 	public static final Block DARK_OAK_COFFIN = registerCoffin(NyctoBlockItemIds.DARK_OAK_COFFIN, Blocks.DARK_OAK_PLANKS);
-	public static final Block PALE_OAK_COFFIN = registerCoffin(NyctoBlockItemIds.PALE_OAK_COFFIN, Blocks.PALE_OAK_PLANKS);
 	public static final Block MANGROVE_COFFIN = registerCoffin(NyctoBlockItemIds.MANGROVE_COFFIN, Blocks.MANGROVE_PLANKS);
 	public static final Block CHERRY_COFFIN = registerCoffin(NyctoBlockItemIds.CHERRY_COFFIN, Blocks.CHERRY_PLANKS);
+	public static final Block PALE_OAK_COFFIN = registerCoffin(NyctoBlockItemIds.PALE_OAK_COFFIN, Blocks.PALE_OAK_PLANKS);
 	public static final Block BAMBOO_COFFIN = registerCoffin(NyctoBlockItemIds.BAMBOO_COFFIN, Blocks.BAMBOO_PLANKS);
 	public static final Block CRIMSON_COFFIN = registerCoffin(NyctoBlockItemIds.CRIMSON_COFFIN, Blocks.CRIMSON_PLANKS);
 	public static final Block WARPED_COFFIN = registerCoffin(NyctoBlockItemIds.WARPED_COFFIN, Blocks.WARPED_PLANKS);

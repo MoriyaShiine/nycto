@@ -48,9 +48,9 @@ public class NyctoItems {
 	public static final Item JUNGLE_COFFIN = registerCoffin(NyctoBlockItemIds.JUNGLE_COFFIN, NyctoBlocks.JUNGLE_COFFIN);
 	public static final Item ACACIA_COFFIN = registerCoffin(NyctoBlockItemIds.ACACIA_COFFIN, NyctoBlocks.ACACIA_COFFIN);
 	public static final Item DARK_OAK_COFFIN = registerCoffin(NyctoBlockItemIds.DARK_OAK_COFFIN, NyctoBlocks.DARK_OAK_COFFIN);
-	public static final Item PALE_OAK_COFFIN = registerCoffin(NyctoBlockItemIds.PALE_OAK_COFFIN, NyctoBlocks.PALE_OAK_COFFIN);
 	public static final Item MANGROVE_COFFIN = registerCoffin(NyctoBlockItemIds.MANGROVE_COFFIN, NyctoBlocks.MANGROVE_COFFIN);
 	public static final Item CHERRY_COFFIN = registerCoffin(NyctoBlockItemIds.CHERRY_COFFIN, NyctoBlocks.CHERRY_COFFIN);
+	public static final Item PALE_OAK_COFFIN = registerCoffin(NyctoBlockItemIds.PALE_OAK_COFFIN, NyctoBlocks.PALE_OAK_COFFIN);
 	public static final Item BAMBOO_COFFIN = registerCoffin(NyctoBlockItemIds.BAMBOO_COFFIN, NyctoBlocks.BAMBOO_COFFIN);
 	public static final Item CRIMSON_COFFIN = registerCoffin(NyctoBlockItemIds.CRIMSON_COFFIN, NyctoBlocks.CRIMSON_COFFIN);
 	public static final Item WARPED_COFFIN = registerCoffin(NyctoBlockItemIds.WARPED_COFFIN, NyctoBlocks.WARPED_COFFIN);
@@ -220,9 +220,9 @@ public class NyctoItems {
 			output.accept(JUNGLE_COFFIN);
 			output.accept(ACACIA_COFFIN);
 			output.accept(DARK_OAK_COFFIN);
-			output.accept(PALE_OAK_COFFIN);
 			output.accept(MANGROVE_COFFIN);
 			output.accept(CHERRY_COFFIN);
+			output.accept(PALE_OAK_COFFIN);
 			output.accept(BAMBOO_COFFIN);
 			output.accept(CRIMSON_COFFIN);
 			output.accept(WARPED_COFFIN);

@@ -38,9 +38,9 @@ public class NyctoBlockLootSubProvider extends FabricBlockLootSubProvider {
 		add(NyctoBlocks.JUNGLE_COFFIN, createSinglePropConditionTable(NyctoBlocks.JUNGLE_COFFIN, BedBlock.PART, BedPart.HEAD));
 		add(NyctoBlocks.ACACIA_COFFIN, createSinglePropConditionTable(NyctoBlocks.ACACIA_COFFIN, BedBlock.PART, BedPart.HEAD));
 		add(NyctoBlocks.DARK_OAK_COFFIN, createSinglePropConditionTable(NyctoBlocks.DARK_OAK_COFFIN, BedBlock.PART, BedPart.HEAD));
-		add(NyctoBlocks.PALE_OAK_COFFIN, createSinglePropConditionTable(NyctoBlocks.PALE_OAK_COFFIN, BedBlock.PART, BedPart.HEAD));
 		add(NyctoBlocks.MANGROVE_COFFIN, createSinglePropConditionTable(NyctoBlocks.MANGROVE_COFFIN, BedBlock.PART, BedPart.HEAD));
 		add(NyctoBlocks.CHERRY_COFFIN, createSinglePropConditionTable(NyctoBlocks.CHERRY_COFFIN, BedBlock.PART, BedPart.HEAD));
+		add(NyctoBlocks.PALE_OAK_COFFIN, createSinglePropConditionTable(NyctoBlocks.PALE_OAK_COFFIN, BedBlock.PART, BedPart.HEAD));
 		add(NyctoBlocks.BAMBOO_COFFIN, createSinglePropConditionTable(NyctoBlocks.BAMBOO_COFFIN, BedBlock.PART, BedPart.HEAD));
 		add(NyctoBlocks.CRIMSON_COFFIN, createSinglePropConditionTable(NyctoBlocks.CRIMSON_COFFIN, BedBlock.PART, BedPart.HEAD));
 		add(NyctoBlocks.WARPED_COFFIN, createSinglePropConditionTable(NyctoBlocks.WARPED_COFFIN, BedBlock.PART, BedPart.HEAD));
