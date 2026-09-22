@@ -16,6 +16,14 @@ public abstract class PlayerMixin extends LivingEntity {
 		super(entityType, world);
 	}
 
+	@ModifyArg(method = "updatePlayerPose", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;canPlayerFitWithinBlocksAndEntitiesWhen(Lnet/minecraft/world/entity/Pose;)Z"))
+	private Pose nycto$darkFormPrediction(Pose value) {
+		if (value == Pose.SWIMMING && DarkFormPower.isDarkFormActive(this)) {
+			return Pose.CROUCHING;
+		}
+		return value;
+	}
+
 	@ModifyArg(method = "updatePlayerPose", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;setPose(Lnet/minecraft/world/entity/Pose;)V"))
 	private Pose nycto$darkForm(Pose value) {
 		if (value == Pose.SWIMMING && DarkFormPower.isDarkFormActive(this)) {
