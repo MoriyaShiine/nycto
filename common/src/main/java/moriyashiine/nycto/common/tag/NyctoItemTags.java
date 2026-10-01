@@ -9,9 +9,9 @@ public class NyctoItemTags {
 	public static final TagKey<Item> COFFINS = TagKey.create(Registries.ITEM, Nycto.id("coffins"));
 
 	public static final TagKey<Item> BEAST_UNEQUIPPABLE = TagKey.create(Registries.ITEM, Nycto.id("beast_unequippable"));
+	public static final TagKey<Item> BLOOD_BOTTLES = TagKey.create(Registries.ITEM, Nycto.id("blood_bottles"));
 	public static final TagKey<Item> HURTS_VAMPIRES = TagKey.create(Registries.ITEM, Nycto.id("hurts_vampires"));
 	public static final TagKey<Item> SAFE_EDIBLES = TagKey.create(Registries.ITEM, Nycto.id("safe_edibles"));
-	public static final TagKey<Item> USABLE_BLOOD_BOTTLES = TagKey.create(Registries.ITEM, Nycto.id("usable_blood_bottles"));
 	public static final TagKey<Item> VAMPIRE_WEAKNESSES = TagKey.create(Registries.ITEM, Nycto.id("vampire_weaknesses"));
 
 	public static final TagKey<Item> VAMPIRE_ARMOR = TagKey.create(Registries.ITEM, Nycto.id("vampire_armor"));
