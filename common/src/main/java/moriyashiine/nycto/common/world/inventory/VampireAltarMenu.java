@@ -44,6 +44,6 @@ public class VampireAltarMenu extends AltarMenu {
 
 	@Override
 	protected boolean isAlternateMaterial(ItemStack stack) {
-		return stack.is(NyctoItemTags.USABLE_BLOOD_BOTTLES);
+		return stack.is(NyctoItemTags.BLOOD_BOTTLES);
 	}
 }

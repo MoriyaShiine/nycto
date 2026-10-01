@@ -14,7 +14,7 @@ public class WolfMixin {
 	@ModifyArg(method = "isFood", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/tags/TagKey;)Z"))
 	private TagKey<Item> nycto$vampiricThrall(TagKey<Item> tag) {
 		if (NyctoEntityComponents.VAMPIRIC_THRALL.get(this).hasOwner()) {
-			return NyctoItemTags.USABLE_BLOOD_BOTTLES;
+			return NyctoItemTags.BLOOD_BOTTLES;
 		}
 		return tag;
 	}
