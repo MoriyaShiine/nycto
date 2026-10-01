@@ -1,4 +1,12 @@
 ------------------------------------------------------
+Version 26.3-b2
+------------------------------------------------------
+- dark form is now forced into crouch pose when crushed by pistons
+- vampire step height no longer applies when sneaking
+- vampiric daggers can no longer be used on players
+- rename `nycto:usable_blood_bottles` item tag to `nycto:blood_bottles`
+
+------------------------------------------------------
 Version 26.3-b1
 ------------------------------------------------------
 - update to 26.3
