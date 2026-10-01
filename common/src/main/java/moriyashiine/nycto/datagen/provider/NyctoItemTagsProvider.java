@@ -29,6 +29,9 @@ public class NyctoItemTagsProvider extends FabricTagsProvider.ItemTagsProvider {
 		builder(NyctoItemTags.BEAST_UNEQUIPPABLE)
 				.add(NyctoBlockItemIds.WOODEN_STAKE)
 				.forceAddTag(ItemTags.DURABILITY_ENCHANTABLE);
+		builder(NyctoItemTags.BLOOD_BOTTLES)
+				.add(NyctoItemIds.BLOOD_BOTTLE)
+				.add(NyctoItemIds.VAMPIRE_BLOOD_BOTTLE);
 		builder(NyctoItemTags.HURTS_VAMPIRES)
 				.addTag(NyctoItemTags.VAMPIRE_HUNTER_ARMOR)
 				.add(NyctoBlockItemIds.GARLIC_WREATH)
@@ -37,9 +40,6 @@ public class NyctoItemTagsProvider extends FabricTagsProvider.ItemTagsProvider {
 				.add(NyctoBlockItemIds.GARLIC)
 				.add(NyctoItemIds.GRILLED_GARLIC)
 				.add(NyctoItemIds.GARLIC_BREAD);
-		builder(NyctoItemTags.USABLE_BLOOD_BOTTLES)
-				.add(NyctoItemIds.BLOOD_BOTTLE)
-				.add(NyctoItemIds.VAMPIRE_BLOOD_BOTTLE);
 		builder(NyctoItemTags.VAMPIRE_WEAKNESSES)
 				.add(NyctoItemIds.GARLIC_COATED_HALBERD)
 				.add(NyctoBlockItemIds.WOODEN_STAKE);

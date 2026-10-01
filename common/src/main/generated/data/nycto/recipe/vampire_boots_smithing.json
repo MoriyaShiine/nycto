@@ -1,6 +1,6 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": "#nycto:usable_blood_bottles",
+  "addition": "#nycto:blood_bottles",
   "base": "minecraft:leather_boots",
   "result": {
 	"id": "nycto:vampire_boots"

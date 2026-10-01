@@ -37,7 +37,7 @@ public class NyctoRecipeProvider extends FabricRecipeProvider {
 			@Override
 			public void buildRecipes() {
 				stonecutterResultFromBase(RecipeCategory.DECORATIONS, Items.SKELETON_SKULL, Items.BONE_BLOCK);
-				shaped(RecipeCategory.DECORATIONS, NyctoItems.VAMPIRE_ALTAR).define('C', ItemTags.CANDLES).define('W', ItemTags.PLANKS).define('B', NyctoItemTags.USABLE_BLOOD_BOTTLES).define('I', ConventionalItemTags.COPPER_INGOTS).pattern("C C").pattern("WBW").pattern("IWI").unlockedBy("has_blood_bottle", has(NyctoItemTags.USABLE_BLOOD_BOTTLES)).save(output);
+				shaped(RecipeCategory.DECORATIONS, NyctoItems.VAMPIRE_ALTAR).define('C', ItemTags.CANDLES).define('W', ItemTags.PLANKS).define('B', NyctoItemTags.BLOOD_BOTTLES).define('I', ConventionalItemTags.COPPER_INGOTS).pattern("C C").pattern("WBW").pattern("IWI").unlockedBy("has_blood_bottle", has(NyctoItemTags.BLOOD_BOTTLES)).save(output);
 				shaped(RecipeCategory.DECORATIONS, NyctoItems.WEREWOLF_ALTAR).define('S', Items.SKELETON_SKULL).define('B', Items.BONE).define('E', Items.ENDER_PEARL).define('C', ItemTags.CANDLES).define('I', ConventionalItemTags.COPPER_INGOTS).pattern(" S ").pattern("BEB").pattern("CIC").unlockedBy("has_skeleton_skull", has(Items.SKELETON_SKULL)).save(output);
 				shaped(RecipeCategory.DECORATIONS, NyctoItems.OAK_COFFIN).define('P', Items.OAK_PLANKS).define('B', ItemTags.BEDS).pattern("PPP").pattern("PBP").pattern("PPP").unlockedBy("has_bed", has(ItemTags.BEDS)).save(output);
 				shaped(RecipeCategory.DECORATIONS, NyctoItems.SPRUCE_COFFIN).define('P', Items.SPRUCE_PLANKS).define('B', ItemTags.BEDS).pattern("PPP").pattern("PBP").pattern("PPP").unlockedBy("has_bed", has(ItemTags.BEDS)).save(output);
@@ -54,7 +54,7 @@ public class NyctoRecipeProvider extends FabricRecipeProvider {
 				shaped(RecipeCategory.DECORATIONS, NyctoItems.BLOOD_FOUNTAIN).define('S', Items.STONE_BRICK_SLAB).define('B', Items.GLASS_BOTTLE).pattern(" S ").pattern(" B ").pattern("SSS").unlockedBy("has_bottle", has(Items.GLASS_BOTTLE)).save(output);
 				shaped(RecipeCategory.DECORATIONS, NyctoItems.GARLIC_WREATH).define('S', Items.STRING).define('A', Items.ALLIUM).define('G', NyctoItems.GARLIC).pattern("SAS").pattern("GSG").pattern(" G ").unlockedBy("has_garlic", has(NyctoItems.GARLIC)).save(output);
 				shaped(RecipeCategory.DECORATIONS, NyctoItems.ACONITE_GARLAND).define('S', Items.STRING).define('C', ConventionalItemTags.COCOA_BEAN_CROPS).define('A', NyctoItems.ACONITE).pattern("SCS").pattern("ASA").pattern(" A ").unlockedBy("has_aconite", has(NyctoItems.ACONITE)).save(output);
-				shaped(RecipeCategory.COMBAT, NyctoItems.VAMPIRE_UPGRADE_SMITHING_TEMPLATE).define('I', ConventionalItemTags.IRON_INGOTS).define('B', NyctoItemTags.USABLE_BLOOD_BOTTLES).define('D', ConventionalItemTags.DIAMOND_GEMS).pattern("III").pattern("IBI").pattern("IDI").unlockedBy("has_blood_bottle", has(NyctoItemTags.USABLE_BLOOD_BOTTLES)).save(output);
+				shaped(RecipeCategory.COMBAT, NyctoItems.VAMPIRE_UPGRADE_SMITHING_TEMPLATE).define('I', ConventionalItemTags.IRON_INGOTS).define('B', NyctoItemTags.BLOOD_BOTTLES).define('D', ConventionalItemTags.DIAMOND_GEMS).pattern("III").pattern("IBI").pattern("IDI").unlockedBy("has_blood_bottle", has(NyctoItemTags.BLOOD_BOTTLES)).save(output);
 				shaped(RecipeCategory.COMBAT, NyctoItems.VAMPIRE_HUNTER_UPGRADE_SMITHING_TEMPLATE).define('I', ConventionalItemTags.IRON_INGOTS).define('G', NyctoItems.GARLIC_WREATH).define('D', ConventionalItemTags.DIAMOND_GEMS).pattern("III").pattern("IGI").pattern("IDI").unlockedBy("has_gold_ingot", has(ConventionalItemTags.GOLD_INGOTS)).save(output);
 				shaped(RecipeCategory.COMBAT, NyctoItems.WEREWOLF_HUNTER_UPGRADE_SMITHING_TEMPLATE).define('I', ConventionalItemTags.IRON_INGOTS).define('A', NyctoItems.ACONITE_GARLAND).define('D', ConventionalItemTags.DIAMOND_GEMS).pattern("III").pattern("IAI").pattern("IDI").unlockedBy("has_gold_ingot", has(ConventionalItemTags.GOLD_INGOTS)).save(output);
 				vampireSmithing(Items.LEATHER_HELMET, NyctoItems.VAMPIRE_HELMET);
@@ -95,11 +95,11 @@ public class NyctoRecipeProvider extends FabricRecipeProvider {
 				SmithingTransformRecipeBuilder.smithing(
 								of(NyctoItems.VAMPIRE_UPGRADE_SMITHING_TEMPLATE),
 								of(base),
-								tag(NyctoItemTags.USABLE_BLOOD_BOTTLES),
+								tag(NyctoItemTags.BLOOD_BOTTLES),
 								RecipeCategory.COMBAT,
 								result
 						)
-						.unlocks("has_blood_bottle", has(NyctoItemTags.USABLE_BLOOD_BOTTLES))
+						.unlocks("has_blood_bottle", has(NyctoItemTags.BLOOD_BOTTLES))
 						.save(output, getItemName(result) + "_smithing");
 			}
 

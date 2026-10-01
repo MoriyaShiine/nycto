@@ -5,7 +5,7 @@
 	  "conditions": {
 		"items": [
 		  {
-			"items": "#nycto:usable_blood_bottles"
+			"items": "#nycto:blood_bottles"
 		  }
 		]
 	  },

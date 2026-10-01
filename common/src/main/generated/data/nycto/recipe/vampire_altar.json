@@ -1,7 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "key": {
-	"B": "#nycto:usable_blood_bottles",
+	"B": "#nycto:blood_bottles",
 	"C": "#minecraft:candles",
 	"I": "#c:ingots/copper",
 	"W": "#minecraft:planks"
