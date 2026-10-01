@@ -15,7 +15,6 @@ public class NyctoDataComponents {
 	public static final DataComponentType<Integer> BLOOD_CHARGE = registerDataComponentType("blood_charge", new DataComponentType.Builder<Integer>().persistent(ExtraCodecs.POSITIVE_INT).networkSynchronized(ByteBufCodecs.VAR_INT));
 	public static final DataComponentType<Boolean> POISONED = registerDataComponentType("poisoned", new DataComponentType.Builder<Boolean>().persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
 
-	public static final DataComponentType<Boolean> PLAYER_BLOOD = registerDataComponentType("player_blood", new DataComponentType.Builder<Boolean>().persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
 	public static final DataComponentType<Boolean> VAMPIRE_BLOOD = registerDataComponentType("vampire_blood", new DataComponentType.Builder<Boolean>().persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
 
 	public static void init() {

@@ -8,7 +8,6 @@ import moriyashiine.nycto.common.world.item.VampiricDaggerItem;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingInput;
@@ -54,7 +53,7 @@ public class BloodExtractionRecipe extends CustomRecipe {
 		for (int i = 0; i < remainingItems.size(); i++) {
 			ItemStack stack = input.getItem(i);
 			if (stack.is(NyctoItems.VAMPIRIC_DAGGER)) {
-				VampiricDaggerItem.setBloodTypes(stack, false, false);
+				VampiricDaggerItem.setVampireBlood(stack, false);
 				VampiricDaggerItem.setBloodCharge(stack, 0);
 				remainingItems.set(i, stack.copy());
 			}
@@ -68,17 +67,9 @@ public class BloodExtractionRecipe extends CustomRecipe {
 	}
 
 	public static ItemStack getCraftingResult(ItemStack stack) {
-		Item result = NyctoItems.BLOOD_BOTTLE;
-		boolean vampire = stack.getOrDefault(NyctoDataComponents.VAMPIRE_BLOOD, false);
-		if (stack.getOrDefault(NyctoDataComponents.PLAYER_BLOOD, false)) {
-			if (vampire) {
-				result = NyctoItems.PLAYER_VAMPIRE_BLOOD_BOTTLE;
-			} else {
-				result = NyctoItems.PLAYER_BLOOD_BOTTLE;
-			}
-		} else if (vampire) {
-			result = NyctoItems.VAMPIRE_BLOOD_BOTTLE;
+		if (stack.getOrDefault(NyctoDataComponents.VAMPIRE_BLOOD, false)) {
+			return NyctoItems.VAMPIRE_BLOOD_BOTTLE.getDefaultInstance();
 		}
-		return result.getDefaultInstance();
+		return NyctoItems.BLOOD_BOTTLE.getDefaultInstance();
 	}
 }

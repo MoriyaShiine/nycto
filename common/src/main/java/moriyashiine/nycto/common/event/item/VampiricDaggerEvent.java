@@ -35,7 +35,7 @@ public class VampiricDaggerEvent {
 
 		@Override
 		public void afterDamage(LivingEntity victim, DamageSource source, float originalDamage, float modifiedDamage, boolean blocked) {
-			if (!blocked && modifiedDamage >= DAMAGE_THRESHOLD && NyctoAPI.hasQualityBlood(victim) && source.getDirectEntity() instanceof LivingEntity attacker) {
+			if (!blocked && modifiedDamage >= DAMAGE_THRESHOLD && !victim.slib$isPlayer() && NyctoAPI.hasQualityBlood(victim) && source.getDirectEntity() instanceof LivingEntity attacker) {
 				ItemStack stack = attacker.getMainHandItem();
 				if (stack.has(NyctoDataComponents.BLOOD_CHARGE)) {
 					int bloodCharge = VampiricDaggerItem.getBloodCharge(stack);
@@ -46,10 +46,7 @@ public class VampiricDaggerEvent {
 							fillAmount = drainAmount;
 						}
 						if (fillAmount > 0) {
-							boolean player = stack.getOrDefault(NyctoDataComponents.PLAYER_BLOOD, false), vampire = stack.getOrDefault(NyctoDataComponents.VAMPIRE_BLOOD, false);
-							if (victim.slib$isPlayer()) {
-								player = true;
-							}
+							boolean vampire = stack.getOrDefault(NyctoDataComponents.VAMPIRE_BLOOD, false);
 							if (NyctoAPI.isVampire(victim)) {
 								if (bloodCharge == 0) {
 									vampire = true;
@@ -57,7 +54,7 @@ public class VampiricDaggerEvent {
 							} else {
 								vampire = false;
 							}
-							VampiricDaggerItem.setBloodTypes(stack, player, vampire);
+							VampiricDaggerItem.setVampireBlood(stack, vampire);
 							VampiricDaggerItem.setBloodCharge(stack, Math.min(20, bloodCharge + fillAmount));
 							if (attacker instanceof Player playerAttacker && VampiricDaggerItem.isFull(stack)) {
 								ItemStack bottle = playerAttacker.getOffhandItem();
