@@ -5,15 +5,12 @@ import moriyashiine.nycto.common.init.NyctoDataComponents;
 import moriyashiine.nycto.common.init.NyctoSoundEvents;
 import moriyashiine.nycto.common.init.NyctoTriggers;
 import moriyashiine.nycto.common.world.item.crafting.BloodExtractionRecipe;
-import moriyashiine.strawberrylib.api.module.SLibUtils;
 import moriyashiine.strawberrylib.api.objects.records.ModifierTrio;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.SlotAccess;
@@ -24,7 +21,6 @@ import net.minecraft.world.inventory.ClickAction;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.TooltipDisplay;
-import net.minecraft.world.level.Level;
 
 import java.util.function.Consumer;
 
@@ -36,7 +32,6 @@ public class VampiricDaggerItem extends Item {
 	private static final AttributeModifier ENTITY_INTERACTION_RANGE_MODIFIER = new AttributeModifier(Nycto.id("vampiric_dagger"), -0.5, AttributeModifier.Operation.ADD_VALUE);
 	private static final ModifierTrio MODIFIER = new ModifierTrio(Attributes.ENTITY_INTERACTION_RANGE, ENTITY_INTERACTION_RANGE_MODIFIER, EquipmentSlotGroup.MAINHAND);
 
-	private static final Component HOLDING_PLAYER_BLOOD_TEXT = Component.translatable("tooltip.nycto.holding_player_blood").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY);
 	private static final Component HOLDING_VAMPIRE_BLOOD_TEXT = Component.translatable("tooltip.nycto.holding_vampire_blood").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY);
 
 	public VampiricDaggerItem(Properties properties) {
@@ -49,19 +44,9 @@ public class VampiricDaggerItem extends Item {
 						.component(DataComponents.DAMAGE, null)
 						.component(DataComponents.MAX_DAMAGE, null)
 						.component(DataComponents.REPAIRABLE, null)
-						.component(NyctoDataComponents.PLAYER_BLOOD, false)
 						.component(NyctoDataComponents.VAMPIRE_BLOOD, false)
 						.component(NyctoDataComponents.BLOOD_CHARGE, 0),
 				MODIFIER);
-	}
-
-	@Override
-	public InteractionResult use(Level level, Player player, InteractionHand hand) {
-		if (hand == InteractionHand.MAIN_HAND && player.hurtTime == 0 && player.isShiftKeyDown()) {
-			SLibUtils.runWithPvpBypass(() -> player.attack(player));
-			return InteractionResult.SUCCESS;
-		}
-		return super.use(level, player, hand);
 	}
 
 	@Override
@@ -88,9 +73,6 @@ public class VampiricDaggerItem extends Item {
 
 	@Override
 	public void appendHoverText(ItemStack itemStack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag tooltipFlag) {
-		if (itemStack.getOrDefault(NyctoDataComponents.PLAYER_BLOOD, false)) {
-			builder.accept(HOLDING_PLAYER_BLOOD_TEXT);
-		}
 		if (itemStack.getOrDefault(NyctoDataComponents.VAMPIRE_BLOOD, false)) {
 			builder.accept(HOLDING_VAMPIRE_BLOOD_TEXT);
 		}
@@ -119,8 +101,7 @@ public class VampiricDaggerItem extends Item {
 		return charge == MAX_CHARGE;
 	}
 
-	public static void setBloodTypes(ItemStack stack, boolean player, boolean vampire) {
-		stack.set(NyctoDataComponents.PLAYER_BLOOD, player);
+	public static void setVampireBlood(ItemStack stack, boolean vampire) {
 		stack.set(NyctoDataComponents.VAMPIRE_BLOOD, vampire);
 	}
 
@@ -134,7 +115,7 @@ public class VampiricDaggerItem extends Item {
 
 	public static void extractBlood(LivingEntity living, ItemStack dagger, ItemStack bloodBottle) {
 		if (!living.hasInfiniteMaterials()) {
-			VampiricDaggerItem.setBloodTypes(dagger, false, false);
+			VampiricDaggerItem.setVampireBlood(dagger, false);
 			VampiricDaggerItem.setBloodCharge(dagger, 0);
 		}
 		if (living instanceof ServerPlayer player) {
