@@ -53,7 +53,7 @@ public class VampireComponent implements AutoSyncedComponent, CommonTickingCompo
 	@Override
 	public void serverTick() {
 		tick();
-		SLibUtils.applyAttributeModifier(obj, Attributes.STEP_HEIGHT, STEP_HEIGHT_MODIFIER, NyctoAPI.isVampire(obj) && NyctoEntityComponents.SYNCED_CONFIG_VALUES.get(obj).hasVampireStepHeight() && !obj.hasEffect(NyctoMobEffects.VAMPIRE_WARD) && !NyctoAPI.hasSunDebuff(obj) && !NyctoAPI.hasPower(obj, NyctoPowers.HUMANITY));
+		SLibUtils.applyAttributeModifier(obj, Attributes.STEP_HEIGHT, STEP_HEIGHT_MODIFIER, !obj.isCrouching() && NyctoAPI.isVampire(obj) && NyctoEntityComponents.SYNCED_CONFIG_VALUES.get(obj).hasVampireStepHeight() && !obj.hasEffect(NyctoMobEffects.VAMPIRE_WARD) && !NyctoAPI.hasSunDebuff(obj) && !NyctoAPI.hasPower(obj, NyctoPowers.HUMANITY));
 		if (obj.level().getGameTime() % 6000 == 0) {
 			obj.resetStat(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
 		}
