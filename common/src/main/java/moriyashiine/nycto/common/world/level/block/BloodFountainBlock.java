@@ -118,7 +118,7 @@ public class BloodFountainBlock extends BaseEntityBlock implements SimpleWaterlo
 						level.playSound(null, pos, NyctoSoundEvents.BLOOD_BOTTLE_DRINK.value(), SoundSource.BLOCKS, 1, 1);
 					}
 					if (!player.hasInfiniteMaterials()) {
-						VampiricDaggerItem.setBloodTypes(itemStack, false, false);
+						VampiricDaggerItem.setVampireBlood(itemStack, false);
 						VampiricDaggerItem.setBloodCharge(itemStack, 0);
 					}
 					return InteractionResult.SUCCESS;
