@@ -35,8 +35,8 @@ public class BloodFlechette extends ThrowableProjectile {
 	protected void onHitEntity(EntityHitResult hitResult) {
 		super.onHitEntity(hitResult);
 		playSound(NyctoSoundEvents.BLOOD_FLECHETTE_HIT_ENTITY);
-		Entity entity = hitResult.getEntity();
 		if (level() instanceof ServerLevel level) {
+			Entity entity = hitResult.getEntity();
 			entity.setInvulnerableTime(0);
 			boolean wasHurt = entity.hurtServer(level, damageSources().thrown(this, getOwner()), 3);
 			if (wasHurt && NyctoAPI.hasBlood(entity) && entity instanceof LivingEntity living) {
