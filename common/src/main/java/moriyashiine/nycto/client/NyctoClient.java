@@ -72,7 +72,7 @@ public class NyctoClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		MidnightConfig.init(Nycto.MOD_ID, NyctoConfig.class);
+		MidnightConfig.register(Nycto.MOD_ID, NyctoConfig.class);
 		initItems();
 		initEntities();
 		initParticles();
