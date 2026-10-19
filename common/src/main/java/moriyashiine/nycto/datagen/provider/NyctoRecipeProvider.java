@@ -7,6 +7,7 @@ import moriyashiine.nycto.common.tag.NyctoItemTags;
 import moriyashiine.nycto.common.world.item.crafting.BloodExtractionRecipe;
 import moriyashiine.nycto.common.world.item.crafting.FoodPoisoningRecipe;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBrewingProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.advancements.Advancement;
@@ -160,22 +161,9 @@ public class NyctoRecipeProvider extends FabricRecipeProvider {
 		}
 	}
 
-	private static class NyctoBrewingProvider extends BrewingProvider {
+	private static class NyctoBrewingProvider extends FabricBrewingProvider {
 		protected NyctoBrewingProvider(RecipeOutput output) {
 			super(output);
-		}
-
-		@Override
-		protected void addContainers() {
-			addContainer(Items.LINGERING_POTION);
-			addContainer(Items.POTION);
-			addContainer(Items.SPLASH_POTION);
-		}
-
-		@Override
-		protected void addContainerTransformations() {
-			addContainerTransformation(Items.POTION, Items.GUNPOWDER, Items.SPLASH_POTION);
-			addContainerTransformation(Items.SPLASH_POTION, Items.DRAGON_BREATH, Items.LINGERING_POTION);
 		}
 
 		@Override
