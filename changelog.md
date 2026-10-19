@@ -1,4 +1,10 @@
 ------------------------------------------------------
+Version 26.3-b3
+------------------------------------------------------
+- vampires now target iron golems
+- brewing recipes are now in the nycto namespace
+
+------------------------------------------------------
 Version 26.3-b2
 ------------------------------------------------------
 - dark form is now forced into crouch pose when crushed by pistons
